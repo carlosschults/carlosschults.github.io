@@ -110,7 +110,7 @@ Digamos que você tem um método com a seguinte assinatura:
 
 O que aconteceria se você cometesse um erro e invertesse os valores ao chamar o método? O programa iria silenciosamente se comportar erro, e você nem ficaria sabendo. Com sorte, a sua empresa teria um bom processo de garantia de qualidade que poderia pegar esse erro antes de chegar no ambiente de produção. Mas ficar dependendo de sorte não é lá uma grande estratégia, concorda?
 
-Pois acontece que esse é o tipo de problema que value objects são ótimos em evitar. Você teria apenas que usar topos customizados para cada conceito em vez de tipos primitivos:
+Pois acontece que esse é o tipo de problema que value objects são ótimos em evitar. Você teria apenas que usar tipos customizados para cada conceito em vez de tipos primitivos:
 
 {% highlight c# %}
 	double  PerformSomeImportantCalculation(Distance distance,  Temperature temperature);
