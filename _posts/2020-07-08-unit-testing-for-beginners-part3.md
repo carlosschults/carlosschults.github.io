@@ -360,7 +360,7 @@ public static int Add(string numbers)
     if (numbers.Contains(','))
         return 15;
 
-    int.TryParse(numbers, outint result);
+    int.TryParse(numbers, out int result);
     return result;
 }
 {% endhighlight %}
