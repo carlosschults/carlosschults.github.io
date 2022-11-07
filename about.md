@@ -9,12 +9,15 @@ menuitem: true
 
 ## Hi. I'm Carlos.
 
-My name is Carlos Schults, and this is my professional blog (not that I have a personal blog.) I'm a software developer, consultant, instructor, and technical author. As a programmer, most of my experience is with C#
-and the .NET framework, but I've also worked with PHP, Java, Python, Ruby, Kotlin and other languages.
+![Picture by Marcio Sichieri](/img/foto.jpg)
 
-Most of my work as a technical writer has been done in partnership with [Hit Subscribe](https://hitsubscribe.com), for which I work as a freelance author, having written close to 200 article for clients such as NDepend, NCrunch, Submain, Testim.io, TechBeacon, and many more.
+Welcome to my blog! My name is Carlos Schults. I'm a 32 years old software engineer and technical writer based in Brazil. My current full-time job is at [AmbevTech](https://www.ambevtech.com.br/).
 
-As an instructor, I've taught for [ASPE Training](https://aspetraining.com/), currently called [Cprime Learning](https://www.cprime.com/learning/instructors/carlos-schults/).
+While C# is the language I'm most experienced with, I worked with several technologies during my career, including Java, Python, PHP, and even VB.NET.
+
+Sporadically, I work as a freelancer technical author. Most of my work on that space has been done in partnership with  [Hit Subscribe](https://hitsubscribe.com), having written more than 200 posts for clients such as NDepend, NCrunch, Submain, Testim.io, TechBeacon, and many more.
+
+I'm a firm believer in the thesis that if you really want to learn something, you have to teach it. In a nutshell, this blog exists so I can share helpful tidbits on software development in the hope they help someone else and in the hope _I_ learn more in the process.
 
 ## Get In Touch
 
@@ -23,3 +26,7 @@ If you want to get in touch, e-mail me at:
 `carlos at carlosschults dot net`
 
 You can also follow me on [Twitter](https://twitter.com/carlosschults) or [GitHub](https://github.com/carlosschults).
+
+## Disclaimer
+
+The views and opinions expressed here are my own and don't represent the views of my employer in any form.

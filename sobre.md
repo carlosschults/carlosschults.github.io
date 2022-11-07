@@ -6,18 +6,25 @@ ref: about
 lang: pt
 ---
 
-## Oi. Eu sou o Carlos.
+## Oi. Eu sou o Carlos
 
-Meu nome é Carlos Schults, e este é meu blog profissional (não que eu tenho um pessoal.) Eu sou um desenvolvedor de software, consultor, professor e autor técnico. Como programador, tenho mais experiência com C# e .NET, embora também trabalhado com PHP, Java, Python, Ruby, Kotlin e outras linguagens.
+![Picture by Marcio Sichieri](/img/foto.jpg)
 
-Como escritor técnico, a maior parte do meu trabalho foi feita em parceria com a empresa americana [Hit Subscribe](https://hitsubscribe.com), para a qual eu trabalho como autor freelancer. Desde dezembro de 2017, já escrevi quase 200 artigos para uma variedade de clientes, como NDepend, NCrunch, Submain, Testim.io, TechBeacon, e muitos outros. Também atuei como colunista de tecnologia do portal de notícias [Siga Mais](https://sigamais.com).
+Fico feliz de ver você em meu blog! Meu nome é Carlos Schults. Sou um desenvolvedor de software brasileiro de 32 anos. Atualmente, trabalho para a [AmbevTech](https://www.ambevtech.com.br/).
 
-Como professor, eu ministrei aulas para a empresa americana ASPE Training, hoje [Cprime Learning](https://www.cprime.com/learning/instructors/carlos-schults/).
+Embora C# seja a linguagem que eu tenho mais experiência, eu trabalhei com várias tecnologias durante a minha carreira, incluindo Java, Python, PHP and até mesmo VB.NET.
 
-## Mantenha Contato
+Esporadicamente, eu trabalho como autor técnico freelancer. A maior parte do meu trabalho nesta área foi feita em parceria com a [Hit Subscribe](https://hitsubscribe.com), tendo escrito mais de 200 artigos para sites como NDepend, NCrunch, Submain, Testim.io, TechBeacon, e mais.
 
-Caso precise falar comigo, fique à vontade para enviar um e-mail para:
+Eu acredito demais na ideia de que se você realmente quer aprender alguma coisa, você precisa ensiná-la. É por isso que esse blog existe: para que eu possa compartilhar ideias legais a respeito do desenvolvimento de software na esperança de que elas sejam úteis para alguém e que eu aprenda mais no processo.
+## Entre Em Contato!
+
+Para entrar em contato, envie um e-mail para:
 
 `carlos arroba carlosschults ponto net`
 
-Você também pode me seguir no [Twitter](https://twitter.com/carlosschults) e ver meu código no [GitHub](https://github.com/carlosschults).
+Não sou muito ativo no [Twitter](https://twitter.com/carlosschults) mas não posso lhe impedir se quiser me seguir por lá. Também estou no [GitHub](https://github.com/carlosschults).
+
+## Disclaimer
+
+Os pontos de vista nesse blog são de minha inteira responsabilidade, e não representam de modo algum posicionamentos de meu empregador.
