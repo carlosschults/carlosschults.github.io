@@ -23,18 +23,18 @@ Algumas ferramentas de controle de versão tratam o histórico do projeto como s
 
 Neste post, eu lhe mostrarei como usar `amend` e rebase interativo para fazer sua história de commits no Git ficar bonitona antes de publicá-la. Não vai ter muita teoria; eu o acompanharei através de alguns cenários comuns, mostrando como eu iria resolvê-los.
 
-Antes de terminar, vou ensiná-lo a não atirar no seu pé com estes comandos. Como explicarei, `amend` e rebases são ações destrutivas, e tem situações em que você não deve executá-las.
+Antes de terminar, vou ensiná-lo a não atirar no seu pé com estes comandos. Como explicarei, `amend` e `rebase` são ações destrutivas, e tem situações em que você não deve executá-las.
 
 ## Requisitos 
 Para acompanhar este posto, presumo que você:
 
-- Sinta-se à vontade para trabalhar com a linha de comando
-- ter Git instalado em sua máquina
-- conhecer ao menos os comandos básicos de Git
+- sabe  trabalhar com a linha de comando
+- tem o Git instalado em sua máquina
+- conhece ao menos os comandos básicos do Git
 
 Ao escrever este post, estou no Windows, usando a versão Git **2.38.1.windows.1*** e digitando meus comandos no Git Bash. Se você estiver no Linux ou OSX, acho que tudo funcionará da mesma forma, mas eu não testei.
 
-## Definindo o código VS como seu editor de texto predefinido
+## Definindo o VS Code como seu editor de texto predefinido
 Apenas um último detalhe antes da gente começar pra valer. Alguns dos comandos que você verá ao longo deste post exigirão que você edite e salve um arquivo de texto. Eles fazem isso abrindo seu editor de texto padrão conforme configurado em seu arquivo de configuração Git e esperando até que você edite, salve e feche o arquivo.
 
 Se você estiver no Windows como eu, usando o Git Bash, seu editor padrão será o Vim. Vim é um editor de texto de linha de comando, e algumas pessoas o acham intimidante. Embora aprender Vim exija algum trabalho, não é tão difícil de começar, e eu recomendaria que você investisse algum tempo para aprender pelo menos os comandos mais básicos - especialmente como sair!
@@ -43,13 +43,13 @@ Entretanto, Git permite que você escolha outros editores de texto como seu padr
 
 `git config --global core.editor "code --wait"`
 
-## Reescrevendo História: N Cenários comuns
+## Reescrevendo História: 3 Cenários comuns
 Vou mostrar alguns cenários comuns nos quais você poderá se encontrar, nos quais a reescrita da história o salvará.
 
 ### Minha Mensagem de Commit Tem Um Erro
-Você está correndo para consertar este bug de alta prioridade. Depois de horas de depuração exaustiva, você encontra o código ofensivo, conserta-o e faz o commit da mudança.
+Você está correndo para corrigir este bug de alta prioridade. Depois de horas de depuração exaustiva, você encontra o código ofensivo, faz a correção e faz o commit da mudança.
 
-Só então você vê que fez um erro de digitação. Como consertar isso?
+Só então você vê que cometeu um erro de digitação. Como corrigir isso?
 
 Vamos começar criando um repositório para que você possa praticar:
 
@@ -57,7 +57,11 @@ Vamos começar criando um repositório para que você possa praticar:
 
 Agora, vamos adicionar um novo arquivo e commitar:
 
-`touch file.txt && git add file.txt && git commit -m "fix async request in getUsers() functino"`
+```bash
+touch file.txt
+git add file.txt
+git commit -m "fix async request in getUsers() functino"`
+```
 
 Execute `git log--oneline` para ver sua mensagem de commit. Você verá algo como isto:
 
@@ -94,8 +98,8 @@ Você notará que a identificação (SHA-1) do commit é agora diferente do que 
 
 Por enquanto, você alterou com sucesso sua mensagem de commit. Parabéns!
 
-### Esqueci de incluir um arquivo
-Às vezes você tem vários arquivos alterados e quer commitar alguns, mas não todos. Na sua pressa, você deixa um ou mais arquivos para trás. Como consertar isso?
+### Esqueci de Incluir um Arquivo
+Às vezes você tem vários arquivos alterados e quer commitar alguns, mas não todos. Na sua pressa, você deixa um ou mais arquivos para trás. Como corrigir isso?
 
 `amend` ao resgate novamente.
 
@@ -123,11 +127,11 @@ Untracked files:
 
 nothing added to commit but untracked files present (use "git add" to track)
 ```
-Consertar a situação é fácil. Primeiro, você rastreia ou encena o arquivo esquecido:
+Corrigir a situação é fácil. Primeiro, você rastreia ou adiciona ao index o arquivo esquecido:
 
-"git add file2.txt".
+`git add file2.txt`
 
-Em seguida, utilizar novamente o `git commit -amend`. Seu editor irá abrir, mas neste caso, não há nada de errado com a mensagem. Basta fechar o editor e pronto: agora você tem um commit emendado que inclui o arquivo anteriormente esquecido.
+Em seguida, utilize novamente o `git commit -amend`. Seu editor irá abrir, mas neste caso, não há nada de errado com a mensagem. Basta fechar o editor e pronto: agora você tem um commit "emendado" que inclui o arquivo anteriormente esquecido.
 
 Mas se você se parece comigo, provavelmente se sentiu meio trouxa tendo aberto seu editor de texto sem nenhuma razão.
 
@@ -137,14 +141,14 @@ Felizmente, você nem sempre tem que fazer isso. Quando você quer apenas adicio
 
 Desta forma, Git não abrirá seu editor de texto, mantendo a mensagem de commit original.
 
-### QueroMesclar Vários Commits Em Um Só
+### Quero Mesclar Vários Commits Em Um Só
 A fusão de vários commits em um só é uma operação chamada "squashing". Mas por que você iria querer fazer isso?
 
 Bem, tudo se resume ao seu estilo Git. Eu gosto de fazer pequenos commits, com muita freqüência. Depois, quando estou prestes a torná-los públicos (por exemplo, ao abrir um pull request) eu os junto em um único commit, com uma mensagem bem escrita.
 
 Esta também é uma exigência comum dos mantenedores de projetos de código aberto, por isso é uma boa habilidade pra se ter. Vamos aprender como fazer isso.
 
-Primeiro, vamos criar três comitês:
+Primeiro, vamos criar três commits:
 
 ```bash
 git commit --allow-empty -m "empty commit" -m
@@ -161,7 +165,7 @@ Agora, digamos que eu preciso juntar os três commits acima em um só. Para faze
 - Mudar suas mensagens
 - Mesclar um ou mais commits
 
-Agora vem a parte que pode ser confusa, então preste atenção, por favor. Já que vamos trabalhar com os três últimos commits, dizemos que os estamos rebaseando em cima do quarto commit (contando a partir do último)
+Agora vem a parte que pode ser confusa, então preste atenção, por favor. Já que vamos trabalhar com os três últimos commits, dizemos que os estamos rebaseando em cima do quarto commit (contando a partir do último.)
 
 Então, use o comando `git log --oneline -4` para exibir os últimos quatro commits e depois copie o SHA-1 do quarto commit do resultado:
 
@@ -173,7 +177,7 @@ Copie o identificador desse commit e passe-o para o comando de rebase, assim:
 
 Naturalmente, seu valor real de SHA-1 será diferente. Mas há uma maneira mais fácil:
 
-"rebase -i HEAD~3".
+`git rebase -i HEAD~3`
 
 Para simplificar, `HEAD` aqui significa o último commit, e `~3` significa "três commits antes deste".
 
@@ -203,7 +207,7 @@ Substituir o conteúdo do arquivo por "this is now a single commit". Salve e fec
 
 Finalmente, vamos ver o resultado:
 
-`git log --oneline'.
+`git log --oneline`
 
 Isto é o que você deveria ver:
 
@@ -214,20 +218,20 @@ Como você pode ver, os três commits vazios foram substituídos por um único c
 ## Quando Não Se Deve Mexer Com a História
 Antes de terminar, vamos entender quando a mudança da história é problemática.
 
-Primeiro, entender que tanto `amend` quanto `rebase` produzem **mudanças destrutivas**. É como se eles estivessem destruindo a história e criando uma nova.
+Primeiro, entenda que tanto `amend` quanto `rebase` produzem **mudanças destrutivas**. É como se eles estivessem destruindo a história e criando uma nova.
 
 Então, imagine que você junta três commits (que já haviam sido enviados para o servidor) e depois faz o `push` desse novo commit para dentro do repositório remoto (você teria que forçar o `push` para que isso funcionasse, a propósito.) Mas enquanto você estava trabalhando, seu colega de trabalho tinha criado um branch novo a partir do (o que era então) último commit. 
 
-Esse commit não existe mais (tecnicamente, isso não é bem verdade, mas vamos fingir por um minuto que é), o que significa que eles não serão capazes de simplesmente dar o push suas mudanças. Eles terão que puxar seus novos commits e então realizar um merge potencialmente complexo a fim de conseguir que as coisas sejam ordenadas.
+Esse commit não existe mais (tecnicamente, isso não é bem verdade, mas vamos fingir por um minuto que é), o que significa que eles não serão capazes de simplesmente dar o push das suas mudanças. Eles terão que puxar seus novos commits e então realizar um merge potencialmente complexo a fim de conseguir que as coisas sejam ordenadas.
 
-Portanto, a regra de ouro é **nunca reescreva a história da qual outras pessoas dependem.** O que isto significa em específico dependerá de qualquer fluxo de trabalho ramificado que você e sua equipe utilizem. 
+Portanto, a regra de ouro é **nunca reescreva a história da qual outras pessoas dependem.** O que isto significa em específico depende do workflow de branches que você e sua equipe utilizam. 
 
 Se você usar [trunk-based development,](https://trunkbaseddevelopment.com/) nunca reescreva o branch master/main. O mesmo é verdade se seu trabalho com [GitHub Flow](https://docs.github.com/en/get-started/quickstart/github-flow). Se você usa o git-flow, isso significa nunca reescrever os branches permanentes, ou seja, master/main e develop.
 
 ## OK, Eu Menti: Toma Um Pouco De Teoria
 Ao longo deste artigo, usei expressões como "mudar a mensagem do commit", "juntar múltiplos commits em um", e assim por diante.
 
-Tecnicamente falando, tudo isso eram mentiras. Quando você utiliza comandos como `git commit --amend` ou `rebase -i`, você não está mudando nada. O que Git está fazendo é **criar novos commits***.
+Tecnicamente falando, tudo isso eram mentiras. Quando você utiliza comandos como `git commit --amend` ou `rebase -i`, você não está mudando nada. O que Git está fazendo é **criar novos commits**.
 
 Lembra-se quando você usou o `amend` pela primeira vez e eu disse que era relevante que o commit agora tinha um novo identificador? Acontece que aquele era um commit completamente novo, e o antigo ainda está por aí!
 
@@ -250,6 +254,6 @@ Lembra-se de que começamos tudo isso alterando dois commits? Bem, como dar `ame
 ## Reescreva o Passado Para Parecer (e ser) Mais Inteligente
 Reescrever a história é uma poderosa capacidade do Git. Com comandos como `git commit --amend` e `git rebase -i` você pode "mudar" seus commits passados, escondendo seus erros e fazendo parecer que você fez tudo certo desde o início. Eu faço isso o tempo todo e colho os benefícios: meus colegas de trabalho pensam que sou muito mais esperto do que realmente sou - por favor, não conta meu segredo pra eles.
 
-Falando sério agora: esses comandos são ferramentas fantásticas para você conseguir um histórico mais organizado. Com eles, você pode perder de uma vez o medo de commitar com frequência. Faça commits pequenos e frequentes, e não ligue muito para a mensagem — por exemplo, se você usa [TDD](/2020-07-08-testes-unitarios-iniciantes-parte3.md), você pode commitar toda vez que os testes passarem.
+Falando sério agora: esses comandos são ferramentas fantásticas para você conseguir um histórico mais organizado. Com eles, você pode perder de uma vez o medo de commitar com frequência. Faça commits pequenos e frequentes, e não ligue muito para a mensagem — por exemplo, se você usa [TDD](/pt/testes-unitarios-csharp-intro-tdd/), você pode commitar toda vez que os testes passarem.
 
 Depois, quando for a hora de publicar o seu trabalho, dê squash nos commits e capriche na descrição. Aproveite e adote uma convenção de mensagens de commit para você e seu time, como o [Conventional Commits](https://www.conventionalcommits.org/pt-br/v1.0.0/). Seus colegas (e seu eu futuro) vão te agradecer.
