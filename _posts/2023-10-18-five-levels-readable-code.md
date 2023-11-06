@@ -1,6 +1,6 @@
 ---
 title: "The 5 Levels of Readable Code"
-ref: fivel-levels-readable-code
+ref: five-levels-readable-code
 lang: en
 layout: post
 author: Carlos Schults
@@ -89,7 +89,7 @@ public class Person
 
 There’s nothing wrong with the above class, at least not technically. The compiler happily compiles it, and the class works as it should.
 
-However, if you’re at least somewhat experienced with C#, you noticed something weird when you saw the code: the getter and setter methods. The C# development team made the concepts of getters and setters a first-citizen class of the language early on, via the concept of properties. If there’s no additional logic involved in the setting and getting of values, the programmer can make usage of [auto-implemented properties](https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/auto-implemented-properties) with a concise result (even the backing private fields no longer need to be explicitly declared):
+However, if you’re at least somewhat experienced with C#, you noticed something weird when you saw the code: the getter and setter methods. The C# development team made the concepts of getters and setters a first-class citizen of the language early on, via the concept of properties. If there’s no additional logic involved in the setting and getting of values, the programmer can make usage of [auto-implemented properties](https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/auto-implemented-properties) with a concise result (even the backing private fields no longer need to be explicitly declared):
 
 ```csharp
 public class Person
@@ -225,7 +225,7 @@ In other words, a better and more elegant solution would be to have a **pure fun
 
 You’ve reached level 5 when you write code that speaks the language of the business. When you use terms that are the same ones that domain experts use.
 
-In other words: yeah, I’m pretty much advocating for the same thing that the pragmatic programmers call “program closer to the domain”, or that Eric Evens famously dubbed ubiquitous language in his classical—but definitely not a page-turner—tome, “Domain-Driven Design: Tackling Complexity in the Heart of Software.”
+In other words: yeah, I’m pretty much advocating for the same thing that the pragmatic programmers call “program closer to the domain”, or that Eric Evans famously dubbed ubiquitous language in his classical—but definitely not a page-turner—tome, “Domain-Driven Design: Tackling Complexity in the Heart of Software.”
 
 If your code uses unorthodox terms instead of industry terms, it makes onboarding harder when you bring in new people that are familiar with the business but new to the codebase. If the code uses different jargon than that of stakeholders, communication becomes more taxing, since it requires you to perform a constant mapping between concepts just to stay afloat.
 
