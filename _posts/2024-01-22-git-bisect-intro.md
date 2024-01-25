@@ -120,7 +120,7 @@ Now, you have to tell git about a commit that's known to be "good"—i.e. not co
 
 `git bisect good good-commit`
 
-As I said before, I created a tag to point to a known good commit to make things easier for you. But you're restricted to tags when it comes to pointing to a commit for a bisecting session. Branch names will also work, as commit SHAs and pretty much any references that resolve to a commit.
+As I said before, I created a tag to point to a known good commit to make things easier for you. But you're not restricted to tags when it comes to pointing to a commit for a bisecting session. Branch names will also work, as commit SHAs and pretty much any references that resolve to a commit.
 
 Anyway, after running the command, you'll see this:
 `status: waiting for bad commit, 1 good commit known`
@@ -276,7 +276,7 @@ And now as an image, so you can see the colors:
 
 As you can see, this commit made a change to the `if` statement that tests for negative numbers, adding an equals sign to the comparison. That way, the error will be thrown regardless of whether the `negatives` array has elements.
 
-Now that you know how the bug was introduced, it's super easy to fix it.
+Now that you know how the bug was introduced, it's super easy to fix it. To end the bisect session, just run `git bisect reset`. That way, you'll be back to the point in which you originally started.
 
 ## A Note About "Good" and "Bad"
 

@@ -120,7 +120,7 @@ Agora, você precisa informar ao git sobre um commit que é conhecido por ser "b
 
 `git bisect good good-commit`
 
-Como eu disse antes, criei uma tag para apontar para um commit bom conhecido para facilitar as coisas para você. Mas você está restrito às tags quando se trata de apontar para um commit em uma sessão de bissecção. Os nomes das ramificações também funcionam, assim como os SHAs dos commits e praticamente todas as referências que levam a um commit.
+Como eu disse antes, criei uma tag para apontar para um commit bom conhecido para facilitar as coisas para você. Mas você não está restrito às tags quando se trata de apontar para um commit em uma sessão de bissecção. Os nomes de branches também funcionam, assim como os SHAs dos commits e praticamente todas as referências que levam a um commit.
 
 De qualquer forma, depois de executar o comando, você verá o seguinte:
 `status: waiting for bad commit, 1 good commit known`
@@ -276,7 +276,7 @@ E agora como uma imagem, para que você possa ver as cores:
 
 Como você pode ver, esse commit fez uma alteração na instrução `if` que testa números negativos, adicionando um sinal de igual à comparação. Dessa forma, o erro será lançado independentemente do fato de o array `negatives` ter elementos.
 
-Agora que você sabe como o erro foi introduzido, é muito fácil corrigi-lo.
+Agora que você sabe como o erro foi introduzido, é muito fácil corrigi-lo. Para encerrar a sessão de bisect, execute `git bisect reset`. Assim, você voltará ao commit/branch onde você estava originalmente.
 
 ## Uma observação sobre "bom" e "ruim"
 
