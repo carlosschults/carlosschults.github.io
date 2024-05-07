@@ -9,11 +9,24 @@ menuitem: true
 
 This page is a collection of cheat-sheets for things that I forget often how to do.
 
+- [Databases](#databases)
+    - [Finding out all stored procedures that reference a given table in SQL Server](#sqlserverproc)
 - [Docker](#docker)
     - [Starting a RabbitMQ container](#rabbitmq)
 - [Misc](#misc)
     - [Getting the HTTP status code for a URL](#curl)
     - [Finding out the PID of a process using a specific port (Windows)](#pid)
+
+## Databases
+### <a name="sqlserverproc">Get all stored procedures that reference a given table</a>
+
+In SQL Server, to find out all stored procedures that mention/use a given table, run this:
+
+```
+SELECT Name
+FROM sys.procedures
+WHERE OBJECT_DEFINITION(OBJECT_ID) LIKE '%TableNameOrWhatever%'
+```
 
 ## Docker
 ### RabbitMQ
