@@ -9,24 +9,25 @@ menuitem: true
 
 ## Hi. I'm Carlos.
 
-![Picture by Marcio Sichieri](/img/foto.jpg)
+Welcome to my blog! My name is Carlos Schults, a software engineer and technical writer based in Brazil. 
 
-Welcome to my blog! My name is Carlos Schults. I'm a 32 years old software engineer and technical writer based in Brazil. My current full-time job is at [AmbevTech](https://www.ambevtech.com.br/).
-
-While C# is the language I'm most experienced with, I worked with several technologies during my career, including Java, Python, PHP, and even VB.NET.
+While C# is the language I'm most experienced with, I worked with several technologies during my career, including Java, Python, PHP, and even VB.NET. Despite having
+experience with frontend development (particularly with React as a framework and Typescript as a language), I specialize in backend software development.
 
 Sporadically, I work as a freelancer technical author. Most of my work on that space has been done in partnership with  [Hit Subscribe](https://hitsubscribe.com), having written more than 200 posts for clients such as NDepend, NCrunch, Submain, Testim.io, TechBeacon, and many more.
 
 I'm a firm believer in the thesis that if you really want to learn something, you have to teach it. In a nutshell, this blog exists so I can share helpful tidbits on software development in the hope they help someone else and in the hope _I_ learn more in the process.
 
-## Get In Touch
+## Open Invite
 
-If you want to get in touch, e-mail me at:
+If you'd like to talk to me about software development or technology in general, then I want to talk to you. Here are some ways we can connect:
+
+- If you're a junior developer looking for mentorship, I can help you.
+- Found a typo or any type of mistake in one of my posts? Or even just disagree with something I've written? Let me know!
+- Do you want to review a piece of writing (e.g., a blog post) before you publish? I'd be happy to help.
+- If you have recommendations for interesting books, posts, articles, or podcasts, please send them my way!
+- Or anything, really. Feel free to contact me at:
 
 `carlos at carlosschults dot net`
 
-You can also follow me on [Twitter](https://twitter.com/carlosschults) or [GitHub](https://github.com/carlosschults).
-
-## Disclaimer
-
-The views and opinions expressed here are my own and don't represent the views of my employer in any form.
+I look forward to hearing from you!

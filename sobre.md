@@ -6,25 +6,26 @@ ref: about
 lang: pt
 ---
 
-## Oi. Eu sou o Carlos
+## Oi. Eu sou o Carlos.
 
-![Picture by Marcio Sichieri](/img/foto.jpg)
+Bem-vindo ao meu blog! Meu nome é Carlos Schults, sou engenheiro de software e escritor técnico.
 
-Fico feliz de ver você em meu blog! Meu nome é Carlos Schults. Sou um desenvolvedor de software brasileiro de 32 anos. Atualmente, trabalho para a [AmbevTech](https://www.ambevtech.com.br/).
+Embora C# seja a linguagem com a qual tenho mais experiência, trabalhei com várias tecnologias durante minha carreira, incluindo Java, Python, PHP e até VB.NET. Apesar de ter experiência com desenvolvimento de front-end (particularmente com React/Tyoescript), sou especializado em desenvolvimento de software de back-end.
 
-Embora C# seja a linguagem que eu tenho mais experiência, eu trabalhei com várias tecnologias durante a minha carreira, incluindo Java, Python, PHP and até mesmo VB.NET.
+Esporadicamente, trabalho como autor técnico freelancer. A maior parte do meu trabalho nesse espaço foi feita em parceria com a [Hit Subscribe](https://hitsubscribe.com), tendo escrito mais de 200 posts para clientes como NDepend, NCrunch, Submain, Testim.io, TechBeacon e muitos outros.
 
-Esporadicamente, eu trabalho como autor técnico freelancer. A maior parte do meu trabalho nesta área foi feita em parceria com a [Hit Subscribe](https://hitsubscribe.com), tendo escrito mais de 200 artigos para sites como NDepend, NCrunch, Submain, Testim.io, TechBeacon, e mais.
+Acredito firmemente na tese de que, se você realmente quer aprender alguma coisa, precisa ensiná-la. Em resumo, este blog existe para que eu possa compartilhar informações úteis sobre desenvolvimento de software, na esperança de que elas ajudem outras pessoas e que eu aprenda mais no processo.
 
-Eu acredito demais na ideia de que se você realmente quer aprender alguma coisa, você precisa ensiná-la. É por isso que esse blog existe: para que eu possa compartilhar ideias legais a respeito do desenvolvimento de software na esperança de que elas sejam úteis para alguém e que eu aprenda mais no processo.
-## Entre Em Contato!
+## Convite aberto
 
-Para entrar em contato, envie um e-mail para:
+Se você quiser conversar comigo sobre desenvolvimento de software ou tecnologia em geral, eu quero falar com você. Aqui estão algumas maneiras de nos conectarmos:
 
-`carlos arroba carlosschults ponto net`
+- Se você for um desenvolvedor júnior em busca de orientação, posso ajudá-lo.
+- Encontrou um erro de digitação ou qualquer outro tipo de erro em uma de minhas postagens? Ou simplesmente discordou de algo que escrevi? Me avise!
+- Deseja revisar um texto (por exemplo, uma publicação de blog) antes de publicá-lo? Terei prazer em ajudar.
+- Se você tiver recomendações de livros, publicações, artigos ou podcasts interessantes, envie-as para mim!
+- Ou qualquer coisa, na verdade. Sinta-se à vontade para entrar em contato comigo em:
 
-Não sou muito ativo no [Twitter](https://twitter.com/carlosschults) mas não posso lhe impedir se quiser me seguir por lá. Também estou no [GitHub](https://github.com/carlosschults).
+carlos arroba carlosschults ponto net
 
-## Disclaimer
-
-Os pontos de vista nesse blog são de minha inteira responsabilidade, e não representam de modo algum posicionamentos de meu empregador.
+Aguardo seu contato!
