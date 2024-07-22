@@ -201,12 +201,10 @@ td{
     }
 }
 
-
-
 /**
  * Icons
  */
-.icon {
+ .icon {
 
     > svg {
         display: inline-block;
@@ -219,3 +217,51 @@ td{
         }
     }
 }
+
+/* Styles for callouts */
+.callout {
+    border-left: 5px solid #0074d9;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+    background-color: #f8f8f8;
+    position: relative;
+  }
+  
+  .callout .callout-title {
+    font-weight: bold;
+    margin-top: 0;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+  }
+  
+  .callout .callout-icon {
+    margin-right: 10px;
+    font-size: 1.5em;
+  }
+  
+  .callout-info {
+    border-left-color: #0074d9;
+  }
+  
+  .callout-warning {
+    border-left-color: #ff851b;
+  }
+  
+  .callout-success {
+    border-left-color: #2ecc40;
+  }
+  
+  .callout-error {
+    border-left-color: #ff4136;
+  }
+  
+  .callout-question {
+    border-left-color: #8a2be2;
+  }
+  
+  .callout-tip {
+    border-left-color: #2e8b57; /* Dark-ish green color */
+  }
+  
