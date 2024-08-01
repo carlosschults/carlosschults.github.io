@@ -62,7 +62,7 @@ A partir do índice, inicia-se o artigo de autoria de Sander ten Brinke. Após a
 * [Carlos de volta](#carlos-de-volta)
 
 {% capture content %}
-Este post é um complemento da minha palestra [Keep it secret, keep it safe with .NET](https://sessionize.com/s/sander-ten-brinke/keep-it-secret-keep-it-safe-with-.net/48314)! Se você não puder assistir a uma sessão dessa palestra, poderá ler esta post em vez disso! Dessa forma, o maior número possível de pessoas poderá aprender sobre o sistema de configuração do .NET e como manter os segredos em segurança!
+Este post é um complemento da minha palestra [Keep it secret, keep it safe with .NET](https://sessionize.com/s/sander-ten-brinke/keep-it-secret-keep-it-safe-with-.net/48314)! Se você não puder assistir a uma sessão dessa palestra, poderá ler este post em vez disso! Dessa forma, o maior número possível de pessoas poderá aprender sobre o sistema de configuração do .NET e como manter os segredos em segurança!
 
 Minha palestra oferece algumas informações mais detalhadas, portanto, se quiser saber mais, dê uma olhada na minha página [Speaking](https://stenbrinke.nl/speaking) para ver quando e onde darei essa palestra novamente! Você também pode [entrar em contato](https://stenbrinke.nl/about/#contact-details) se quiser que eu dê essa palestra em seu evento!
 {% endcapture %}
@@ -496,7 +496,7 @@ Usando o provedor de configuração de user secrets (segredos de usuário).
 
 ### O provedor de configuração de user secrets
 
-Mencionei o provedor de configuração de user secrets [anteriormente](#the-defaults). Esse provedor de configuração foi criado para desenvolvimento local _somente_. Ele permite que você armazene segredos em seu computador local sem precisar se preocupar com o risco de eles serem versionados no repositório git, pois são armazenados em um local diferente:
+Mencionei o provedor de configuração de user secrets [anteriormente](#os-valores-default). Esse provedor de configuração foi criado para desenvolvimento local _somente_. Ele permite que você armazene segredos em seu computador local sem precisar se preocupar com o risco de eles serem versionados no repositório git, pois são armazenados em um local diferente:
 
 * Windows: `%APPDATA%\Microsoft\UserSecrets\<user_secrets_id>\secrets.json`
 * Mac e Linux: `~/.microsoft/usersecrets/<user_secrets_id>/secrets.json`
@@ -663,13 +663,13 @@ No início deste post, mencionei que é possível conectar o sistema de configur
 Para adicioná-lo como um provedor de configuração, instale os pacotes [Azure.Extensions.AspNetCore.Configuration.Secrets](https://www.nuget.org/packages/Azure.Extensions.AspNetCore.Configuration.Secrets) e [Azure.Identity](https://www.nuget.org/packages/Azure.Identity). Em seguida, você só precisará adicionar algumas linhas de código ao seu `Program.cs` quando criar uma API mínima, por exemplo:
 
 {% highlight c# %}
-usando Azure.Identity;
+using Azure.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Host.ConfigureAppConfiguration((context, config) =>
 {
-    se (!context.HostingEnvironment.IsDevelopment())
+    if (!context.HostingEnvironment.IsDevelopment())
     {
         var keyVaultUrl = new Uri(context.Configuration.GetValue<string>(“KeyVaultUrl”));
         config.AddAzureKeyVault(keyVaultUrl, new ManagedIdentityCredential()); // Há outras opções de credenciais disponíveis. As Managed Identities serão abordadas em breve!
@@ -679,7 +679,7 @@ builder.Host.ConfigureAppConfiguration((context, config) =>
 {% endhighlight %}
 
 
-O Key Vault agora é adicionado como o provedor final e, portanto, tem [a prioridade mais alta](#the-defaults). Portanto, mesmo que outros provedores tenham um valor configurado para um segredo, o Key Vault será usado em seu lugar!
+O Key Vault agora é adicionado como o provedor final e, portanto, tem [a prioridade mais alta](#os-valores-default). Portanto, mesmo que outros provedores tenham um valor configurado para um segredo, o Key Vault será usado em seu lugar!
 
 {% capture content %}
 Os segredos estruturados devem ser armazenados no Key Vault com 2 traços (`--`) em vez de 2 sublinhados ou dois pontos devido a limitações de nomenclatura. Por exemplo, `ExternalApiSettings--ApiKey` em vez de `ExternalApiSettings:ApiKey` ou `ExternalApiSettings__ApiKey`.
@@ -691,7 +691,7 @@ Os segredos estruturados devem ser armazenados no Key Vault com 2 traços (`--`)
 Anteriormente neste post, mencionei brevemente que você pode estar em um cenário em que não é possível armazenar segredos em seu computador por motivos de segurança, por exemplo. Nesse caso, usar o Key Vault durante o desenvolvimento local resolveria esse problema. Você pode pegar o exemplo de código da seção anterior e modificá-lo da seguinte forma:
 
 {% highlight c# %}
-usando Azure.Identity;
+using Azure.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
