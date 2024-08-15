@@ -16,17 +16,29 @@ This page is a collection of cheat-sheets for things that I forget often how to 
 - [Misc](#misc)
     - [Getting the HTTP status code for a URL](#curl)
     - [Finding out the PID of a process using a specific port (Windows)](#pid)
+    - [Looking for all SQL Server Stored Procedures whose definition contain a given text](#procs)
 
 ## Databases
 ### <a name="sqlserverproc">Get all stored procedures that reference a given table</a>
 
 In SQL Server, to find out all stored procedures that mention/use a given table, run this:
 
-```
+{% highlight sql %}
 SELECT Name
 FROM sys.procedures
 WHERE OBJECT_DEFINITION(OBJECT_ID) LIKE '%TableNameOrWhatever%'
-```
+
+-- OR, a bit more detailed
+
+SELECT 
+    OBJECT_NAME(object_id) AS ProcedureName,
+    definition
+FROM 
+    sys.sql_modules
+WHERE 
+    definition LIKE '%some text%'
+    AND OBJECTPROPERTY(object_id, 'IsProcedure') = 1;
+{% endhighlight %}
 
 ## Docker
 ### RabbitMQ
