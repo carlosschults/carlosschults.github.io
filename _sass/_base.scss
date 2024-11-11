@@ -1,267 +1,307 @@
 /**
  * Reset some basic elements
  */
-body, h1, h2, h3, h4, h5, h6,
-p, blockquote, pre, hr,
-dl, dd, ol, ul, figure {
-    margin: 0;
-    padding: 0;
-}
-
-
-
-/**
- * Basic styling
- */
-body {
-    font: $base-font-weight #{$base-font-size}/#{$base-line-height} $base-font-family;
-    color: $text-color;
-    background-color: $background-color;    
-    -webkit-text-size-adjust: 100%;
-    -webkit-font-feature-settings: "kern" 1;
-    -moz-font-feature-settings: "kern" 1;
-    -o-font-feature-settings: "kern" 1;
-    font-feature-settings: "kern" 1;
-    font-kerning: normal;
-}
-
-
-
-/**
- * Set `margin-bottom` to maintain vertical rhythm
- */
-h1, h2, h3, h4, h5, h6,
-p, blockquote, pre,
-ul, ol, dl, figure,
-%vertical-rhythm {
-    margin-bottom: $spacing-unit / 2;
-}
-
-
-
-/**
- * Images
- */
-img {
-    max-width: 100%;
-    vertical-align: middle;
-}
-
-
-
-/**
- * Figures
- */
-figure > img {
-    display: block;
-}
-
-figcaption {
-    font-size: $small-font-size;
-}
-
-
-
-/**
- * Lists
- */
-ul, ol {
-    margin-left: $spacing-unit;
-}
-
-li {
-    > ul,
-    > ol {
+ body, h1, h2, h3, h4, h5, h6,
+ p, blockquote, pre, hr,
+ dl, dd, ol, ul, figure {
+     margin: 0;
+     padding: 0;
+ }
+ 
+ /**
+  * Basic styling
+  */
+ body {
+     font: $base-font-weight #{$base-font-size}/#{$base-line-height} $base-font-family;
+     color: $text-color;
+     background-color: $background-color;    
+     -webkit-text-size-adjust: 100%;
+     -webkit-font-feature-settings: "kern" 1;
+     -moz-font-feature-settings: "kern" 1;
+     -o-font-feature-settings: "kern" 1;
+     font-feature-settings: "kern" 1;
+     font-kerning: normal;
+     transition: color 0.3s ease, background-color 0.3s ease;
+ 
+     &[data-theme="dark"] {
+         color: $text-color-dark;
+         background-color: $background-color-dark;
+     }
+ }
+ 
+ /**
+  * Set `margin-bottom` to maintain vertical rhythm
+  */
+ h1, h2, h3, h4, h5, h6,
+ p, blockquote, pre,
+ ul, ol, dl, figure,
+ %vertical-rhythm {
+     margin-bottom: $spacing-unit / 2;
+ }
+ 
+ /**
+  * Images
+  */
+ img {
+     max-width: 100%;
+     vertical-align: middle;
+ }
+ 
+ /**
+  * Figures
+  */
+ figure > img {
+     display: block;
+ }
+ 
+ figcaption {
+     font-size: $small-font-size;
+ 
+     [data-theme="dark"] & {
+         color: $text-color-dark;
+     }
+ }
+ 
+ /**
+  * Lists
+  */
+ ul, ol {
+     margin-left: $spacing-unit;
+ }
+ 
+ li {
+     > ul,
+     > ol {
+          margin-bottom: 0;
+     }
+ }
+ 
+ /**
+  * Headings
+  */
+ h1, h2, h3, h4, h5, h6 {
+     font-weight: $base-font-weight;
+ 
+     [data-theme="dark"] & {
+         color: $text-color-dark;
+     }
+ }
+ 
+ /**
+  * Links
+  */
+ a {
+     color: $brand-color;
+     text-decoration: none;
+     transition: color 0.3s ease;
+ 
+     &:visited {
+         color: darken($brand-color, 15%);
+     }
+ 
+     &:hover {
+         color: $text-color;
+         text-decoration: underline;
+     }
+ 
+     [data-theme="dark"] & {
+         color: $brand-color-dark;
+ 
+         &:visited {
+             color: darken($brand-color-dark, 15%);
+         }
+ 
+         &:hover {
+             color: $text-color-dark;
+         }
+     }
+ }
+ 
+ /**
+  * Blockquotes
+  */
+ blockquote {
+     color: $grey-color;
+     border-left: 4px solid $grey-color-light;
+     padding-left: $spacing-unit / 2;
+     font-size: 18px;
+     letter-spacing: -1px;
+     font-style: italic;
+     transition: color 0.3s ease, border-left-color 0.3s ease;
+ 
+     > :last-child {
          margin-bottom: 0;
-    }
-}
-
-
-
-/**
- * Headings
- */
-h1, h2, h3, h4, h5, h6 {
-    font-weight: $base-font-weight;
-}
-
-
-
-/**
- * Links
- */
-a {
-    color: $brand-color;
-    text-decoration: none;
-
-    &:visited {
-        color: darken($brand-color, 15%);
-    }
-
-    &:hover {
-        color: $text-color;
-        text-decoration: underline;
-    }
-}
-
-
-
-/**
- * Blockquotes
- */
-blockquote {
-    color: $grey-color;
-    border-left: 4px solid $grey-color-light;
-    padding-left: $spacing-unit / 2;
-    font-size: 18px;
-    letter-spacing: -1px;
-    font-style: italic;
-
-    > :last-child {
-        margin-bottom: 0;
-    }
-}
-
-
-
-/**
- * Code formatting
- */
-pre,
-code {
-    font-size: 15px;
-    border: 1px solid $grey-color-light;
-    border-radius: 3px;
-    background-color: #eef;
-}
-
-code {
-    padding: 1px 5px;
-}
-
-pre {
-    padding: 8px 12px;
-    overflow-x: auto;
-
-    > code {
-        border: 0;
-        padding-right: 0;
-        padding-left: 0;
-    }
-}
-
-table{
-    border-collapse: collapse;
-    border-spacing: 3px;
-    border:2px solid black;
-    margin-bottom: 10px;
-}
-
-th{
-    border:2px solid #000000;
-}
-
-td{
-    border:1px solid #000000;
-}
-
-
-
-/**
- * Wrapper
- */
-.wrapper {
-    max-width: -webkit-calc(#{$content-width} - (#{$spacing-unit} * 2));
-    max-width:         calc(#{$content-width} - (#{$spacing-unit} * 2));
-    margin-right: auto;
-    margin-left: auto;
-    padding-right: $spacing-unit;
-    padding-left: $spacing-unit;
-    @extend %clearfix;
-
-    @include media-query($on-laptop) {
-        max-width: -webkit-calc(#{$content-width} - (#{$spacing-unit}));
-        max-width:         calc(#{$content-width} - (#{$spacing-unit}));
-        padding-right: $spacing-unit / 2;
-        padding-left: $spacing-unit / 2;
-    }
-}
-
-
-
-/**
- * Clearfix
- */
-%clearfix {
-
-    &:after {
-        content: "";
-        display: table;
-        clear: both;
-    }
-}
-
-/**
- * Icons
- */
+     }
+ 
+     [data-theme="dark"] & {
+         color: $grey-color-dark-theme;
+         border-left-color: $border-color-dark;
+     }
+ }
+ 
+ /**
+  * Code formatting
+  */
+ pre,
+ code {
+     font-size: 15px;
+     border: 1px solid $grey-color-light;
+     border-radius: 3px;
+     background-color: #eef;
+     transition: background-color 0.3s ease, border-color 0.3s ease;
+ 
+     [data-theme="dark"] & {
+         background-color: $code-background-dark;
+         border-color: $border-color-dark;
+         color: $text-color-dark;
+     }
+ }
+ 
+ code {
+     padding: 1px 5px;
+ }
+ 
+ pre {
+     padding: 8px 12px;
+     overflow-x: auto;
+ 
+     > code {
+         border: 0;
+         padding-right: 0;
+         padding-left: 0;
+     }
+ }
+ 
+ table {
+     border-collapse: collapse;
+     border-spacing: 3px;
+     border: 2px solid black;
+     margin-bottom: 10px;
+     transition: border-color 0.3s ease;
+ 
+     [data-theme="dark"] & {
+         border-color: $border-color-dark;
+     }
+ }
+ 
+ th {
+     border: 2px solid #000000;
+     transition: border-color 0.3s ease;
+ 
+     [data-theme="dark"] & {
+         border-color: $border-color-dark;
+     }
+ }
+ 
+ td {
+     border: 1px solid #000000;
+     transition: border-color 0.3s ease;
+ 
+     [data-theme="dark"] & {
+         border-color: $border-color-dark;
+     }
+ }
+ 
+ /**
+  * Wrapper
+  */
+ .wrapper {
+     max-width: -webkit-calc(#{$content-width} - (#{$spacing-unit} * 2));
+     max-width:         calc(#{$content-width} - (#{$spacing-unit} * 2));
+     margin-right: auto;
+     margin-left: auto;
+     padding-right: $spacing-unit;
+     padding-left: $spacing-unit;
+     @extend %clearfix;
+ 
+     @include media-query($on-laptop) {
+         max-width: -webkit-calc(#{$content-width} - (#{$spacing-unit}));
+         max-width:         calc(#{$content-width} - (#{$spacing-unit}));
+         padding-right: $spacing-unit / 2;
+         padding-left: $spacing-unit / 2;
+     }
+ }
+ 
+ /**
+  * Clearfix
+  */
+ %clearfix {
+     &:after {
+         content: "";
+         display: table;
+         clear: both;
+     }
+ }
+ 
+ /**
+  * Icons
+  */
  .icon {
-
-    > svg {
-        display: inline-block;
-        width: 16px;
-        height: 16px;
-        vertical-align: middle;
-
-        path {
-            fill: $grey-color;
-        }
-    }
-}
-
-/* Styles for callouts */
-.callout {
-    border-left: 5px solid #0074d9;
-    padding: 10px;
-    margin: 10px 0;
-    border-radius: 5px;
-    background-color: #f8f8f8;
-    position: relative;
-  }
-  
-  .callout .callout-title {
-    font-weight: bold;
-    margin-top: 0;
-    margin-bottom: 10px;
-    display: flex;
-    align-items: center;
-  }
-  
-  .callout .callout-icon {
-    margin-right: 10px;
-    font-size: 1.5em;
-  }
-  
-  .callout-info {
-    border-left-color: #0074d9;
-  }
-  
-  .callout-warning {
-    border-left-color: #ff851b;
-  }
-  
-  .callout-success {
-    border-left-color: #2ecc40;
-  }
-  
-  .callout-error {
-    border-left-color: #ff4136;
-  }
-  
-  .callout-question {
-    border-left-color: #8a2be2;
-  }
-  
-  .callout-tip {
-    border-left-color: #2e8b57; /* Dark-ish green color */
-  }
-  
+     > svg {
+         display: inline-block;
+         width: 16px;
+         height: 16px;
+         vertical-align: middle;
+ 
+         path {
+             fill: $grey-color;
+             transition: fill 0.3s ease;
+ 
+             [data-theme="dark"] & {
+                 fill: $grey-color-dark-theme;
+             }
+         }
+     }
+ }
+ 
+ /* Styles for callouts */
+ .callout {
+     border-left: 5px solid #0074d9;
+     padding: 10px;
+     margin: 10px 0;
+     border-radius: 5px;
+     background-color: #f8f8f8;
+     position: relative;
+     transition: background-color 0.3s ease;
+ 
+     [data-theme="dark"] & {
+         background-color: lighten($background-color-dark, 5%);
+     }
+ }
+ 
+ .callout .callout-title {
+     font-weight: bold;
+     margin-top: 0;
+     margin-bottom: 10px;
+     display: flex;
+     align-items: center;
+ }
+ 
+ .callout .callout-icon {
+     margin-right: 10px;
+     font-size: 1.5em;
+ }
+ 
+ .callout-info {
+     border-left-color: #0074d9;
+ }
+ 
+ .callout-warning {
+     border-left-color: #ff851b;
+ }
+ 
+ .callout-success {
+     border-left-color: #2ecc40;
+ }
+ 
+ .callout-error {
+     border-left-color: #ff4136;
+ }
+ 
+ .callout-question {
+     border-left-color: #8a2be2;
+ }
+ 
+ .callout-tip {
+     border-left-color: #2e8b57;
+ }

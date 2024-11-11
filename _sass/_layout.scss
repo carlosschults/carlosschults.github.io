@@ -1,14 +1,18 @@
 /**
  * Site header
  */
-.site-header {
+ .site-header {
     border-top: 5px solid $grey-color-dark;
     border-bottom: 1px solid $grey-color-light;
     min-height: 56px;
     background: #2D3339;
-    
-    // Positioning context for the mobile navigation icon
     position: relative;
+    transition: border-color 0.3s ease;
+
+    [data-theme="dark"] & {
+        border-bottom-color: $border-color-dark;
+        background: darken(#2D3339, 5%);
+    }
 }
 
 .site-title {
@@ -18,10 +22,18 @@
     letter-spacing: -1px;
     margin-bottom: 0;
     float: left;
+    transition: color 0.3s ease;
 
     &,
     &:visited {
         color: #ccc;
+    }
+
+    [data-theme="dark"] & {
+        &,
+        &:visited {
+            color: lighten(#ccc, 10%);
+        }
     }
 }
 
@@ -47,10 +59,16 @@
         position: absolute;
         top: 9px;
         right: $spacing-unit / 2;
-        background-color:  #2D3339;        
+        background-color: #2D3339;        
         border: 1px solid $grey-color-light;
         border-radius: 5px;
         text-align: right;
+        transition: background-color 0.3s ease, border-color 0.3s ease;
+
+        [data-theme="dark"] & {
+            background-color: darken(#2D3339, 5%);
+            border-color: $border-color-dark;
+        }
 
         .menu-icon {
             display: block;
@@ -67,6 +85,11 @@
 
                 path {
                     fill: $grey-color-dark;
+                    transition: fill 0.3s ease;
+
+                    [data-theme="dark"] & {
+                        fill: $grey-color-light;
+                    }
                 }
             }
         }
@@ -84,34 +107,45 @@
         .page-link {
             display: block;
             padding: 5px 10px;
+            margin-left: 20px;
 
             &:not(:last-child) {
                 margin-right: 0;
             }
-            margin-left: 20px;
         }
     }
 }
-
-
 
 /**
  * Site footer
  */
 .site-footer {
     border-top: 1px solid $grey-color-light;
-    padding: $spacing-unit 0;        
+    padding: $spacing-unit 0;
+    transition: border-color 0.3s ease;
+
+    [data-theme="dark"] & {
+        border-top-color: $border-color-dark;
+    }
 }
 
 .footer-heading {
     font-size: 18px;
     margin-bottom: $spacing-unit / 2;
+
+    [data-theme="dark"] & {
+        color: $text-color-dark;
+    }
 }
 
 .contact-list,
 .social-media-list {
     list-style: none;
     margin-left: 0;
+
+    [data-theme="dark"] & {
+        color: $text-color-dark;
+    }
 }
 
 .footer-col-wrapper {
@@ -119,6 +153,11 @@
     color: $grey-color;
     margin-left: -$spacing-unit / 2;
     @extend %clearfix;
+    transition: color 0.3s ease;
+
+    [data-theme="dark"] & {
+        color: $grey-color-dark-theme;
+    }
 }
 
 .footer-col {
@@ -163,8 +202,6 @@
     }
 }
 
-
-
 /**
  * Page content
  */
@@ -174,6 +211,10 @@
 
 .page-heading {
     font-size: 20px;
+
+    [data-theme="dark"] & {
+        color: $text-color-dark;
+    }
 }
 
 .post-list {
@@ -188,14 +229,21 @@
 .post-meta {
     font-size: $small-font-size;
     color: $grey-color;
+    transition: color 0.3s ease;
+
+    [data-theme="dark"] & {
+        color: $grey-color-dark-theme;
+    }
 }
 
 .post-link {
     display: block;
     font-size: 24px;
+
+    [data-theme="dark"] & {
+        color: $text-color-dark;
+    }
 }
-
-
 
 /**
  * Posts
@@ -209,13 +257,17 @@
     letter-spacing: -1px;
     line-height: 1;
 
+    [data-theme="dark"] & {
+        color: $text-color-dark;
+    }
+
     @include media-query($on-laptop) {
         font-size: 36px;
     }
 }
 
 #disqus_thread {
-  margin-top: 100px;
+    margin-top: 100px;
 }
 
 .post-content {
@@ -223,14 +275,14 @@
 
     a.previous {
         margin-top: 30px;
-	display:block;
-	float: left;
+        display: block;
+        float: left;
     }
 
     a.next {
         margin-top: 30px;
-	display: block;
-	float: right;
+        display: block;
+        float: right;
     }
 
     h2 {
@@ -254,6 +306,12 @@
 
         @include media-query($on-laptop) {
             font-size: 18px;
+        }
+    }
+
+    [data-theme="dark"] & {
+        h2, h3, h4 {
+            color: $text-color-dark;
         }
     }
 }
