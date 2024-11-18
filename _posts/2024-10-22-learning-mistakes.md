@@ -42,13 +42,13 @@ So, without further ado, here's the list of learning mistakes to avoid. For each
 Let's go!
 
 ## Table of Contents
-- [Thinking That Content Consumption == Learning](#achar-que-apenas-consumo-de-conteúdo--aprendizado)
-- [Not Applying the Content from Learning Resources](#não-aplicar-o-conteúdo-dos-recursos-de-aprendizado)
-- [Lack of Focus](#falta-de-foco)
-- [Lack of Consistency](#falta-de-consistência)
-- [Underestimating the Importance of Fundamentals](#subestimar-a-importância-das-bases)
-- [Living Under a Rock (Not Keeping Up with What's Happening)](#viver-embaixo-de-uma-pedra-não-se-antenar-com-o-que-está-acontecendo)
-- [Conclusion](#conclusão)
+- [Thinking That Content Consumption == Learning](#thinking-that-content-consumption--learning)
+- [Not Applying the Content from Learning Resources](#not-applying-the-content-from-learning-resources)
+- [Lack of Focus](#lack-of-focus)
+- [Lack of Consistency](#lack-of-consistency)
+- [Underestimating the Importance of Fundamentals](#underestimating-the-importance-of-fundamentals)
+- [Living Under a Rock (Not Keeping Up with What's Happening)](#living-under-a-rock-not-keeping-up-with-whats-happening)
+- [Conclusion](#conclusion)
 
 ## Thinking That Content Consumption == Learning
 
