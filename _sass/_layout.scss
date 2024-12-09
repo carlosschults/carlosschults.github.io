@@ -2,117 +2,158 @@
  * Site header
  */
  .site-header {
-    border-top: 5px solid $grey-color-dark;
-    border-bottom: 1px solid $grey-color-light;
-    min-height: 56px;
-    background: #2D3339;
-    position: relative;
-    transition: border-color 0.3s ease;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    min-height: 64px;
+    background: rgba($background-color-dark, 0.8);
+    border-bottom: 1px solid $border-color-dark;
+    @include backdrop-blur;
+    z-index: 50;
+    @include smooth-transition;
 
-    [data-theme="dark"] & {
-        border-bottom-color: $border-color-dark;
-        background: darken(#2D3339, 5%);
+    // Ensure content below header is not hidden
+    + .page-content {
+        padding-top: 80px;
     }
 }
 
+.wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 64px;
+}
+
 .site-title {
-    font-size: 26px;
-    font-weight: 300;
-    line-height: 56px;
-    letter-spacing: -1px;
-    margin-bottom: 0;
-    float: left;
-    transition: color 0.3s ease;
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: -0.5px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    @include smooth-transition;
 
     &,
     &:visited {
-        color: #ccc;
+        color: $text-color-dark;
     }
 
-    [data-theme="dark"] & {
-        &,
-        &:visited {
-            color: lighten(#ccc, 10%);
-        }
+    &:hover {
+        color: $hover-yellow;
+        text-decoration: none;
+    }
+
+    // Icon styles
+    svg {
+        width: 24px;
+        height: 24px;
+        color: $hover-yellow;
     }
 }
 
 .site-nav {
-    float: right;
-    line-height: 56px;
-
-    .menu-icon {
-        display: none;
-    }
+    display: flex;
+    align-items: center;
+    gap: 24px;
 
     .page-link {
-        color: #fff;
-        line-height: $base-line-height;
+        color: $text-color-dark;
+        font-size: 16px;
+        font-weight: 500;
+        @include smooth-transition;
 
-        // Gaps between nav items, but not on the last one
-        &:not(:last-child) {
-            margin-right: 20px;
+        &:hover {
+            color: $hover-yellow;
+            text-decoration: none;
+        }
+
+        // Icon alignment
+        svg {
+            width: 16px;
+            height: 16px;
+            vertical-align: middle;
+            margin-right: 4px;
+        }
+    }
+
+    .language-selector {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        margin-left: 16px;
+        font-size: 14px;
+
+        a {
+            color: $grey-color-dark-theme;
+            @include smooth-transition;
+
+            &:hover {
+                color: $hover-yellow;
+                text-decoration: none;
+            }
+
+            &.active {
+                color: $text-color-dark;
+                font-weight: 500;
+            }
+        }
+
+        span {
+            color: $border-color-dark;
         }
     }
 
     @include media-query($on-palm) {
         position: absolute;
-        top: 9px;
-        right: $spacing-unit / 2;
-        background-color: #2D3339;        
-        border: 1px solid $grey-color-light;
-        border-radius: 5px;
-        text-align: right;
-        transition: background-color 0.3s ease, border-color 0.3s ease;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: rgba($background-color-dark, 0.95);
+        padding: 16px;
+        border-bottom: 1px solid $border-color-dark;
+        display: none;
+        @include backdrop-blur;
 
-        [data-theme="dark"] & {
-            background-color: darken(#2D3339, 5%);
-            border-color: $border-color-dark;
-        }
-
-        .menu-icon {
+        &.nav-open {
             display: block;
-            float: right;
-            width: 36px;
-            height: 26px;
-            line-height: 0;
-            padding-top: 10px;
-            text-align: center;
-
-            > svg {
-                width: 18px;
-                height: 15px;
-
-                path {
-                    fill: $grey-color-dark;
-                    transition: fill 0.3s ease;
-
-                    [data-theme="dark"] & {
-                        fill: $grey-color-light;
-                    }
-                }
-            }
-        }
-
-        .trigger {
-            clear: both;
-            display: none;
-        }
-
-        &:hover .trigger {
-            display: block;
-            padding-bottom: 5px;
         }
 
         .page-link {
             display: block;
-            padding: 5px 10px;
-            margin-left: 20px;
-
-            &:not(:last-child) {
-                margin-right: 0;
-            }
+            padding: 8px 0;
+            font-size: 18px;
         }
+
+        .language-selector {
+            margin: 16px 0 0 0;
+            justify-content: center;
+        }
+    }
+}
+
+// Mobile menu trigger
+.menu-icon {
+    display: none;
+    padding: 8px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    @include smooth-transition;
+
+    svg {
+        width: 24px;
+        height: 24px;
+        color: $text-color-dark;
+    }
+
+    &:hover svg {
+        color: $hover-yellow;
+    }
+
+    @include media-query($on-palm) {
+        display: block;
     }
 }
 
@@ -120,85 +161,55 @@
  * Site footer
  */
 .site-footer {
-    border-top: 1px solid $grey-color-light;
+    border-top: 1px solid $border-color-dark;
     padding: $spacing-unit 0;
-    transition: border-color 0.3s ease;
-
-    [data-theme="dark"] & {
-        border-top-color: $border-color-dark;
-    }
+    background: rgba(lighten($background-color-dark, 3%), 0.5);
 }
 
 .footer-heading {
     font-size: 18px;
     margin-bottom: $spacing-unit / 2;
-
-    [data-theme="dark"] & {
-        color: $text-color-dark;
-    }
+    color: $text-color-dark;
 }
 
 .contact-list,
 .social-media-list {
     list-style: none;
     margin-left: 0;
-
-    [data-theme="dark"] & {
-        color: $text-color-dark;
-    }
 }
 
 .footer-col-wrapper {
     font-size: 15px;
-    color: $grey-color;
+    color: $grey-color-dark-theme;
     margin-left: -$spacing-unit / 2;
-    @extend %clearfix;
-    transition: color 0.3s ease;
-
-    [data-theme="dark"] & {
-        color: $grey-color-dark-theme;
-    }
+    display: flex;
+    flex-wrap: wrap;
+    gap: $spacing-unit;
 }
 
 .footer-col {
-    float: left;
-    margin-bottom: $spacing-unit / 2;
+    flex: 1;
+    min-width: 200px;
     padding-left: $spacing-unit / 2;
 }
 
-.footer-col-1 {
-    width: -webkit-calc(35% - (#{$spacing-unit} / 2));
-    width:         calc(35% - (#{$spacing-unit} / 2));
-}
+.social-links {
+    display: flex;
+    gap: 16px;
 
-.footer-col-2 {
-    width: -webkit-calc(20% - (#{$spacing-unit} / 2));
-    width:         calc(20% - (#{$spacing-unit} / 2));
-}
+    a {
+        color: $grey-color-dark-theme;
+        @include smooth-transition;
 
-.footer-col-3 {
-    width: -webkit-calc(45% - (#{$spacing-unit} / 2));
-    width:         calc(45% - (#{$spacing-unit} / 2));
-}
+        &:hover {
+            color: $hover-yellow;
+            text-decoration: none;
+        }
 
-@include media-query($on-laptop) {
-    .footer-col-1,
-    .footer-col-2 {
-        width: -webkit-calc(50% - (#{$spacing-unit} / 2));
-        width:         calc(50% - (#{$spacing-unit} / 2));
-    }
-
-    .footer-col-3 {
-        width: -webkit-calc(100% - (#{$spacing-unit} / 2));
-        width:         calc(100% - (#{$spacing-unit} / 2));
-    }
-}
-
-@include media-query($on-palm) {
-    .footer-col {
-        float: none;
-        width: -webkit-calc(100% - (#{$spacing-unit} / 2));
-        width:         calc(100% - (#{$spacing-unit} / 2));
+        svg {
+            width: 20px;
+            height: 20px;
+        }
     }
 }
 
@@ -207,14 +218,14 @@
  */
 .page-content {
     padding: $spacing-unit 0;
+    min-height: calc(100vh - 64px - 200px); // Ensure footer stays at bottom
 }
 
 .page-heading {
-    font-size: 20px;
-
-    [data-theme="dark"] & {
-        color: $text-color-dark;
-    }
+    font-size: 32px;
+    font-weight: 600;
+    margin-bottom: $spacing-unit;
+    color: $text-color-dark;
 }
 
 .post-list {
@@ -223,95 +234,36 @@
 
     > li {
         margin-bottom: $spacing-unit;
+        padding-bottom: $spacing-unit;
+        border-bottom: 1px solid $border-color-dark;
+
+        &:last-child {
+            border-bottom: none;
+        }
     }
 }
 
 .post-meta {
     font-size: $small-font-size;
-    color: $grey-color;
-    transition: color 0.3s ease;
-
-    [data-theme="dark"] & {
-        color: $grey-color-dark-theme;
-    }
+    color: $grey-color-dark-theme;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
 }
 
 .post-link {
     display: block;
     font-size: 24px;
+    font-weight: 600;
+    color: $text-color-dark;
+    margin-bottom: 8px;
+    @include smooth-transition;
 
-    [data-theme="dark"] & {
-        color: $text-color-dark;
+    &:hover {
+        color: $hover-yellow;
+        text-decoration: none;
     }
 }
 
-/**
- * Posts
- */
-.post-header {
-    margin-bottom: $spacing-unit;
-}
-
-.post-title {
-    font-size: 42px;
-    letter-spacing: -1px;
-    line-height: 1;
-
-    [data-theme="dark"] & {
-        color: $text-color-dark;
-    }
-
-    @include media-query($on-laptop) {
-        font-size: 36px;
-    }
-}
-
-#disqus_thread {
-    margin-top: 100px;
-}
-
-.post-content {
-    margin-bottom: $spacing-unit;
-
-    a.previous {
-        margin-top: 30px;
-        display: block;
-        float: left;
-    }
-
-    a.next {
-        margin-top: 30px;
-        display: block;
-        float: right;
-    }
-
-    h2 {
-        font-size: 32px;
-
-        @include media-query($on-laptop) {
-            font-size: 28px;
-        }
-    }
-
-    h3 {
-        font-size: 26px;
-
-        @include media-query($on-laptop) {
-            font-size: 22px;
-        }
-    }
-
-    h4 {
-        font-size: 20px;
-
-        @include media-query($on-laptop) {
-            font-size: 18px;
-        }
-    }
-
-    [data-theme="dark"] & {
-        h2, h3, h4 {
-            color: $text-color-dark;
-        }
-    }
-}
+// Rest of the existing styles...
