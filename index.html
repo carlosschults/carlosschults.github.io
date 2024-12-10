@@ -13,6 +13,7 @@ lang: en
       {% for post in year.items %}      
         <div class="post-item">
           <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
+          <span class="post-date">{{ post.date | date: '%b %d' }}</span>
           
           {% if post.tags %}
           <div class="post-tags">
@@ -21,8 +22,6 @@ lang: en
               {% endfor %}
           </div>
           {% endif %}
-          
-          <span class="post-date">{{ post.date | date: '%b %d' }}</span>
         </div>
       {% endfor %}
     {% endfor %}
