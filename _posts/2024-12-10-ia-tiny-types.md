@@ -1,7 +1,7 @@
 ---
 title: "C# Type Safe: Como a IA Generativa Torna os Tiny-Types Viáveis"
 ref: genai-tiny-types
-lang: pt-br
+lang: pt
 layout: post
 author: Carlos Schults
 description: Tiny types é uma técnica de design poderosa, raramente utilizada. Veja como os LLMs podem mudar isso.
