@@ -5,16 +5,28 @@ lang: en
 ---
 
 <div class="home">
-  <ul class="post-list">
+  <div class="post-list">
     {% assign posts_by_year = site.posts | where:"lang", page.lang | group_by_exp: "post", "post.date | date: '%Y'" %}
   
     {% for year in posts_by_year %}
       <h2>{{ year.name }}</h2>
       {% for post in year.items %}      
-        <li><a href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a> | {{ post.date | date: '%b %d' }}</li>
+        <div class="post-item">
+          <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
+          
+          {% if post.tags %}
+          <div class="post-tags">
+              {% for tag in post.tags %}
+                  <a href="/{% if page.lang == 'en'%}tag{% else %}tag_ptbr{% endif %}/{{tag}}" class="tag">{{tag}}</a>
+              {% endfor %}
+          </div>
+          {% endif %}
+          
+          <span class="post-date">{{ post.date | date: '%b %d' }}</span>
+        </div>
       {% endfor %}
     {% endfor %}
-  </ul>
-  <p class="rss-subscribe">subscribe <a href="{{ "/feed.xml" | prepend: site.baseurl }}">via RSS</a></p>
+  </div>
 
+  <p class="rss-subscribe">subscribe <a href="{{ "/feed.xml" | prepend: site.baseurl }}">via RSS</a></p>
 </div>
