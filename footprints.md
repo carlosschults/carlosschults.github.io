@@ -9,7 +9,7 @@ menuitem: true
 
 # Dev Footprints - Quick Reference
 
-This page is a collection of cheat-sheets for things that I frequently need to remember.
+This page is a collection of cheat-sheets for things that I often need to remember.
 
 ## Table of Contents
 - [Databases](#databases)
