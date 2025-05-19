@@ -289,7 +289,7 @@ Even the [documentation for the command](https://git-scm.com/docs/git-bisect#_al
 
 In such a scenario, it'd be weird to use the terms "good" and "bad". The good news is that you can use "new" and "old" instead: the _new_ commit is one that contains the property you're looking after, and the _old_ doesn't contain such property. 
 
-To use this terminology, just start a bisecting session as usual, and then run `git bisect old <COMMIT>` to indicate the old commit, and `git bisect new <COMMIT` to indicate the new one.
+To use this terminology, just start a bisecting session as usual, and then run `git bisect old <COMMIT>` to indicate the old commit, and `git bisect new <COMMIT>` to indicate the new one.
 
 Keep in mind that you can either use good/bad or old/new, but not mix the two. At any point during a session, you can run `git bisect terms` to be reminded of the terms you're using.
 
