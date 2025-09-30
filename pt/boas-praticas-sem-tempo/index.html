@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Boas Práticas De Programação Para Os Apressados | carlos schults / blog</title>
+  <link rel="apple-touch-icon" sizes="57x57" href="/img/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/img/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/img/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/img/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/img/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/img/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/img/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/img/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"  href="/img/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/img/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon-16x16.png">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="description" content="Photo by Ales Nesetril on UnsplashNOTA: Este post foi originalmente escrito para o blog da the SubMain.  Você pode ler o artigo original no site deles, em in...">
+  
+  <!-- Twitter card -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:creator" content="@carlosschults">
+  <meta name="twitter:site" content="@carlosschults">
+  <meta name="twitter:domain" content="carlosschults.net">
+  <meta name="twitter:title" content="Boas Práticas De Programação Para Os Apressados">
+  <meta name="twitter:description" content="Photo by Ales Nesetril on UnsplashNOTA: Este post foi originalmente escrito para o blog da the SubMain.  Você pode ler o artigo original no site deles, em in...">
+
+   <!-- Facebook meta -->
+  
+  
+  <meta property="og:title" content="Boas Práticas De Programação Para Os Apressados">
+  <meta property="og:site_name" content="Carlos Schults / Blog" />
+  <meta property="og:locale" content="pt_BR">  
+  <meta property="og:type" content="article" />
+  <meta property="og:image" content="https://res.cloudinary.com/dz5ppacuo/image/upload/v1539703469/coding-best-practices-1038x437_ugnhab.jpg" />  
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:width" content="1038"> 
+  <meta property="og:image:height" content="437">  
+  
+  <meta property="og:article:published_time" content="2018-10-16T00:00:00+00:00" />  
+  <meta property="og:article:author" content="Carlos Schults" />
+  
+  <meta property="og:article:tag" content="csharp" />
+  <meta property="og:article:tag" content="boas praticas" />    
+  
+  <meta property="og:url" content="https://carlosschults.net/pt/boas-praticas-sem-tempo/"/>
+  <meta property="og:description" content="Photo by Ales Nesetril on UnsplashNOTA: Este post foi originalmente escrito para o blog da the SubMain.  Você pode ler o artigo original no site deles, em in...">
+  <link rel="stylesheet" href="/css/main.css">  
+  
+   <link rel="canonical" href="https://carlosschults.net/pt/boas-praticas-sem-tempo/">
+   
+  
+  <link rel="alternate" hreflang="en" href="/en/coding-best-practices-short-time/" />
+  <link rel="alternate" hreflang="pt" href="/pt/boas-praticas-sem-tempo/" />
+  
+  <link rel="alternate" type="application/rss+xml" title="carlos schults / blog" href="https://carlosschults.net/rss.xml">
+</head>
+
+  <body>
+    <header class="site-header">
+  <div class="wrapper">    
+    <a class="site-title" href="/pt/">carlos schults / blog</a>
+    
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg viewBox="0 0 18 15">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+
+      <div class="trigger">        
+          
+          <a class="page-link" href="/sobre/">Sobre</a>
+          <a class="page-link" href="/busca/">Busca</a>
+                  
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+<div class="wrapper" style="text-align: right; line-height: 2em">
+  
+   <a href="/en/coding-best-practices-short-time/" class="en">en</a>  <a href="/pt/boas-praticas-sem-tempo/" class="pt">pt</a> 
+
+  
+  
+</div>
+
+
+    <div class="page-content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">    
+    <h2 class="postTitle" itemprop="headline">Boas Práticas De Programação Para Os Apressados</h2>
+    <p class="post-meta">   
+    <time datetime="2018-10-16T00:00:00+00:00" itemprop="datePublished">16/10/2018
+    </time> • <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">Carlos Schults</span></span>
+  <span class="tags" itemprop="keywords"> • Tags: <a href="/tag_ptbr/csharp">csharp </a> <a href="/tag_ptbr/boas praticas">boas praticas </a> </span>
+  </p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <p><img src="https://res.cloudinary.com/dz5ppacuo/image/upload/v1539703469/coding-best-practices-1038x437_ugnhab.jpg" alt="" />
+Photo by Ales Nesetril on Unsplash</p>
+
+<p><em>NOTA: Este post foi originalmente escrito para o blog da the SubMain.  Você pode <a href="https://blog.submain.com/coding-best-practices-short-time/">ler o artigo original no site deles, em inglês</a>. Quando estiver por lá, baixe e experimente o CodeIt.Right.</em></p>
+
+<p>Um dos tópicos em desenvolvimento de software que me interessa muito são boas práticas de codificação. Eu estou sempre pesquisando e buscando maneiras de aperfeiçoar meu trabalho e entregar valor de forma rápida e consistente.</p>
+
+<p>Pode ser meio espinhoso definir o que “<a href="https://www.daedtech.com/what-is-a-best-practice-in-software-development/">é realmente uma boa prática”</a>. Há pessoas que inclusive sugerem <a href="https://dzone.com/articles/death-best-practices">aposentar o termo!</a> Mas um ponto em que praticamente todos concordam é: descobrir e implementar estratégias - não importa o nome que você coloca nelas - para melhorar o resultado do seu trabalho é algo que qualquer programadora ou programador que faz jus a esse nome deveria fazer continuamente.</p>
+
+<p>Claro, não existe almoço grátis. A adoção de uma boa prática leva tempo, o que você provavelmente não tem muito sobrando para começo de conversa. Isso sem mencionar a gerência, nem sempre muito animados a tentarem coisas novas.</p>
+
+<p>Então, o que fazer se a sua equipe de desenvolvimento está sofrendo com a baixa qualidade de uma base de código, mas não tem tempo para implementar as boas práticas que remediariam a situação?</p>
+
+<p>A resposta que eu ofereço é o que eu vou chamar de “pacote emergencial de boas práticas”: uma pequena lista de boas práticas de programação que você pode adotar em relativamente pouco tempo para levar sua equipe e sua aplicação do completo caos para um estado mais gerenciável.</p>
+
+<p>Sim, eu sei que há tantos conselhos sobre boas práticas por aí que é até difícil não se sentir sobrecarregado. Por causa disso, eu restringi a minha lista de boas práticas a itens que atendam aos seguintes critérios:</p>
+
+<ul>
+  <li>As boas práticas precisam ser fundamentais, no sentido de que elas são blocos básicos a partir dos quais você pode implementar práticas mais sofisticadas depois.</li>
+  <li>Você pode adotá-las em relativamente pouco tempo. (Eu diria que uma semana é praticável.)</li>
+  <li>O seu custo é zero ou perto disso.</li>
+</ul>
+
+<p>As práticas a seguir atendem os critérios listados. E sem mais enrolação, aqui está: meu pacote emergencial de boas práticas de codificação, com itens listados na ordem que eles deveriam ser adotados, começando pelo mais crítico.</p>
+
+<h2 id="sistema-de-controle-de-versão">Sistema de Controle de Versão</h2>
+
+<p>Eu trabalhei uma vez em uma empresa de desenvolvimento de software na qual nenhum sistema de controle de versão era usado. Os arquivos de código fonte ficavam em uma pasta compartilhada que qualquer desenvolvedor podia acessar. Qual era o processo usado para poder editar um arquivo? Você provavelmente adivinhou: nós criávamos uma cópia do arquivo e adicionávamos “_OLD” ao final do nome.</p>
+
+<p>Isso aconteceu há oito ou nove anos, o que significa que as coisas devem ter melhorado, certo? Bom, provavelmente melhoraram, um pouco, mas não totalmente. Ainda tem <a href="https://twitter.com/_m_b_j_/status/938785388268806146">empresas por aí que não usam controle de versão</a>.</p>
+
+<h3 id="como-proceder">Como proceder?</h3>
+
+<p>De agora em diante, eu vou assumir que você concorda que versionamento é uma boa prática fundamental. Caso esse não seja o caso, há muitos recursos pela web afora explicando <a href="https://www.git-tower.com/learn/git/ebook/en/desktop-gui/basics/what-is-version-control#start">o que um versionador é</a> e <a href="https://www.atlassian.com/git/tutorials/what-is-version-control#benefits-of-version-control">porque você deveria usar um.</a></p>
+
+<p>Com isso resolvido, é hora de sermos mais específicos. Qual ferramenta usar? Como proceder com a sua adoção?</p>
+
+<p><a href="https://git-scm.com/">Git</a> é uma escolha sólida. E apesar de ter uma curva de aprendizado mais acentuada para<a href="https://carlosschults.net/en/git-basics-for-tfs-users">quem já está mais acostumado com sistemas de controle de versão centralizados, como Subversion ou TFVC</a>, Git é o padrão <em>de facto</em> da indústria. Então, sem sombra de dúvidas, você deve aprender git. Não fazê-lo pode prejudicar a sua carreira no futuro.</p>
+
+<p>Mas é possível que o Git não seja a melhor escolha para o seu time <strong>agora</strong>. Lembre-se, você não tem muito tempo. Nós precisamos que a sua equipe adote as boas práticas o mais rápido possível.</p>
+
+<p>Como nós podemos fazer isso? Suponha que você tenha experiência com <a href="https://subversion.apache.org/">Subversion</a>, pois esse era o versionador usado na empresa que você trabalhou anteriormente. Sua experiência com Git, porém, é nenhuma. Se esse é o caso, eu diria que Subversion é a melhor escolha para você. Ter que aprender um novo sistema e ensiná-lo para seus colegas ao mesmo tempo que o coloca em vigor na empresa seria demais: você iria apenas se sobrecarregar.</p>
+
+<h2 id="revisão-de-código">Revisão de Código</h2>
+
+<p>Eu não vou mentir: eu sou um grande fã de revisão de código. E <a href="https://www.codinghorror.com/blog/archives/000495.html">eu não estou sozinho nisso.</a>. Eu já testemunhei em primeira mão como um bom processo de revisão de código pode reduzir o número de problemas em uma aplicação, tornar o código mais consistente e, mais importante ainda, espalhar conhecimento por todo o time de desenvolvimento.</p>
+
+<p>E aqui vai uma ótima vantagem dessa prática: revisão de código é algo relativamente fácil de ser implementado. Comece da maneira mais simples possível, e então faça adaptações na sua abordagem conforme as necessidades aparecerem.</p>
+
+<h3 id="minha-definição-de-revisão-de-código">Minha Definição de Revisão de Código</h3>
+
+<p>Falar de revisão de código pode ser complicado. As pessoas às vezes tem ideias totalmente diferentes sobre o que a expressão significa. Então eu acho que uma clarificação se faz necessária.</p>
+
+<p>Eu <strong>não</strong> sou a favor de um processo de revisão de código altamente burocrático e estressante, no qual o seu código é esmiuçado, em público, durante horas. Eu não acredito que envergonhar as pessoas em público é uma forma eficaz de aumentar a qualidade de um projeto. Ao contrário, <a href="https://carlosschults.net/pt/revisao-codigo-vs-programacao-em-par/">o tipo de revisão de código que eu defendo</a> é um processo simples, geralmente iniciado ao submeter um pull request ou usando sua IDE favorita.</p>
+
+<h3 id="como-proceder-1">Como Proceder</h3>
+
+<p>Agora que nós estamos sintonizados em relação ao significado de “revisão de código”, a próxima pergunta é: “como implementar isso na prática?” Da maneira mais simples possível que funcione.</p>
+
+<p>Por exemplo, se a sua empresa desenvolve em .NET e usa TFS/TFVC, você pode começar <a href="https://marketplace.visualstudio.com/items?itemName=ColinD.ColinsALMCheckinPoliciesVS2017">instalando uma política de check-in</a> que exige uma revisão de código para cada check-in. Se a sua equipe usa GitHub, vocês podem usar <a href="https://help.github.com/articles/about-pull-requests/">pull requests</a>. Apenas comece a realizar revisões de código. Então, com o tempo, vá fazendo os ajustes e adaptações necessários.</p>
+
+<p>Estas são algumas das questões que podem surgir ao refinar o seu processo:</p>
+
+<ul>
+  <li><strong>Qual é o objetivo da revisão de código?</strong> Estamos procurando por bugs? Tentando melhorar a legibilidade?Checando se o código adere ao padrão de codificação da empresa?</li>
+  <li><strong>Como separamos “sugestões” de “impedimentos”?</strong> É OK recusar a alteração de alguém por causa de uma indentação ruim ou um nome de variável ligeiramente equivocado?</li>
+  <li><strong>O que fazer se revisor e revisado não conseguem chegar a um consenso?</strong> Trazer um mediador para dar a palavra final? E quem seria essa pessoa?</li>
+</ul>
+
+<p>A resposta para todas as perguntas acima podem ser encontradas na <strong>automação</strong>. Uma boa parte do desconforto das revisões de códigos pode ser eliminada quando você emprega um <a href="https://blog.submain.com/different-styles-code-analyzer/">analisador de código</a> para lidar com as partes automatizáveis do processo.</p>
+
+<p>Por exemplo, <a href="https://submain.com/codeit.right/features">SubMain possui um produto chamado CodeIt.Right</a> que oferece feedback em tempo real de dentro do Visual Studio, lhe alertando de possíveis problemas de codificação, inclusive corrigindo problemas quando possível.</p>
+
+<p>Ao abraçar a automação, você deixa as pessoas da equipe livres para se preocuparem com questões de mais alto nível durante as revisões, como claridade do código ou decisões arquiteturais.</p>
+
+<h2 id="builds-automatizados">Builds Automatizados</h2>
+
+<p>Talvez você esteja pensando que eu me equivoquei nessa seção. Afinal de contas, sequer faz sentido falar de builds automatizados sem mencionar testes automatizados?</p>
+
+<p>Eu vou argumentar que sim, faz sentido, por uma razão muito simples: builds automatizados eliminam o famoso problema de “<a href="https://blog.codinghorror.com/the-works-on-my-machine-certification-program/">na minha máquina funciona</a>”. </p>
+
+<p>Ter um local central onde os builds são feitos joga luz em vários tipos de problemas, de mal gerenciamento de dependências a falta de disciplina em testes.</p>
+
+<h3 id="como-proceder-2">Como Proceder</h3>
+
+<p>Meu conselho aqui é o mesmo que na seção anterior: faça a coisa mais simples possível que funcione.</p>
+
+<p>Se sua equipe já usa TFS, aprenda como <a href="https://docs.microsoft.com/en-us/vsts/build-release/actions/ci-cd-part-1">criar uma definição de build</a>. Se os seus projetos estão no GitHub, dê uma olhada no <a href="https://travis-ci.org/">Travis CI.</a></p>
+
+<p>Com o tempo, você vai melhorando a sua estratégia. Lembra dos analisadores de código que eu mencionei anteriormente? É possível integrá-los no seu processo de build. <a href="https://carlosschults.net/pt/testes-unitarios-iniciantes-parte1">Testes unitários</a> e outros tipos de testes automatizados também são uma valiosa adição.</p>
+
+<p>E por falar nisso…</p>
+
+<h2 id="ausências-notáveis">Ausências Notáveis</h2>
+
+<p>Você talvez tenha se surpreendido por minha lista de boas práticas não incluir testes unitários, mesmo eu sendo um defensor da importância de testes automatizados para a qualidade de uma aplicação. Qual é a razão disso?</p>
+
+<p>Infelizmente, adicionar testes unitários a uma aplicação legada é muito difícil, ao ponto de existir até <a href="https://www.amazon.com/Working-Effectively-Legacy-Michael-Feathers/dp/0131177052/ref=sr_1_1?ie=UTF8&amp;qid=1515443597&amp;sr=8-1&amp;keywords=working+effectively+with+legacy+code">um livro famoso</a> que foca apenas nisso. Não é uma tarefa fácil de se fazer em pouco tempo.</p>
+
+<p>Também é possível que muitos de vocês esperavam que eu falasse sobre código limpo ou os princípios <a href="https://en.wikipedia.org/wiki/SOLID_(object-oriented_design)">SOLID</a>. Eu encorajo vocês a lerem e pesquisarem sobre esses tópicos, mas eu não acredito que eles encaixam no propósito do post de hoje. Como o próprio nome deixa claro, eles são <em>princípios</em>. Pense neles como diretrizes filosóficas. Úteis? Claro. Mas não tão fáceis de decompor em conselhos pequenos, simples e acionáveis.</p>
+
+<h2 id="implemente-essas-práticas-para-ontem">Implemente Essas Práticas Para Ontem!</h2>
+
+<p>É possível que vários de vocês tenha achado essas práticas extremamente básicas e não dignas de um post. “Quem é que não usa controle de versão em 2018???”</p>
+
+<p>Bom, não é tão difícil assim encontrar evidência (anedótica, mas ainda assim) que <a href="https://softwareengineering.stackexchange.com/questions/65931/are-there-serious-companies-that-dont-use-version-control-and-continuous-integr">as coisas ainda não são tão perfeitas</a>.</p>
+
+<p>Acreditar que mesmo práticas tão fundamentais como versionamento de código ou testes automatizados são aplicadas universalmente é mais ingenuidade do que talvez queremos admitir.</p>
+
+<p>Para o restante de vocês, eu espero que essa lista seja útil.</p>
+
+<p>Você já deve ter ouvido o ditado. “Quando estiver em um buraco, para de cavar.” E é exatamente esse o tipo de ajuda que eu quis oferecer com esse post: correções rápidas e fáceis, para que você e as demais pessoas em seu tipo possam recuperar o suficiente de sanidade para poderem focar e recuperar o controle de sua aplicação, garantido sua saúde a longo prazo.</p>
+
+    
+    
+      
+    
+    
+        Encontrou algum erro no post? <a href="http://github.com/carlosschults/carlosschults.github.io/edit/master/_posts/2018-10-16-boas-praticas-sem-tempo.md">Sugira uma edição</a>      
+    
+    
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+                    
+            <a rel="previous" class="previous" href="/pt/4-erros-comuns-datetime-csharp/">&larr; 4 Erros Comuns Com Data e Hora no C# — E como evitá-los </a>
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+        	    
+            <a rel="next" class="next" href="/pt/value-objects-ferramenta/">Value Objects: Uma Técnica Para Código Auto-Documentado E Menos Erros &rarr;</a>
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+      
+    <div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+        // Store these for reloads
+        window.disqus_identifier = window.location.pathname;
+        window.disqus_url = window.location.href;
+        
+        // Set initial theme - match it with the site's theme
+        const currentTheme = document.body.getAttribute('data-theme') || 'light';
+        this.page.theme = currentTheme === 'dark' ? 'dark' : 'light';
+    };
+    
+    (function() {
+        var d = document, s = d.createElement('script');
+        s.src = '//carlosschultsblog.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>    
+  </div>
+
+</article>
+
+      </div>
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">         
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-2">
+        <ul class="social-media-list">
+          
+          <li>
+            <a href="https://github.com/carlosschults"><span class="icon icon--github"><svg viewBox="0 0 16 16"><path fill="#828282" d="M7.999,0.431c-4.285,0-7.76,3.474-7.76,7.761 c0,3.428,2.223,6.337,5.307,7.363c0.388,0.071,0.53-0.168,0.53-0.374c0-0.184-0.007-0.672-0.01-1.32 c-2.159,0.469-2.614-1.04-2.614-1.04c-0.353-0.896-0.862-1.135-0.862-1.135c-0.705-0.481,0.053-0.472,0.053-0.472 c0.779,0.055,1.189,0.8,1.189,0.8c0.692,1.186,1.816,0.843,2.258,0.645c0.071-0.502,0.271-0.843,0.493-1.037 C4.86,11.425,3.049,10.76,3.049,7.786c0-0.847,0.302-1.54,0.799-2.082C3.768,5.507,3.501,4.718,3.924,3.65 c0,0,0.652-0.209,2.134,0.796C6.677,4.273,7.34,4.187,8,4.184c0.659,0.003,1.323,0.089,1.943,0.261 c1.482-1.004,2.132-0.796,2.132-0.796c0.423,1.068,0.157,1.857,0.077,2.054c0.497,0.542,0.798,1.235,0.798,2.082 c0,2.981-1.814,3.637-3.543,3.829c0.279,0.24,0.527,0.713,0.527,1.437c0,1.037-0.01,1.874-0.01,2.129 c0,0.208,0.14,0.449,0.534,0.373c3.081-1.028,5.302-3.935,5.302-7.362C15.76,3.906,12.285,0.431,7.999,0.431z"/></svg>
+</span><span class="username">carlosschults</span></a>
+
+          </li>
+          
+
+          
+          <li>
+            <a href="https://twitter.com/carlosschults"><span class="icon icon--twitter"><svg viewBox="0 0 16 16"><path fill="#828282" d="M15.969,3.058c-0.586,0.26-1.217,0.436-1.878,0.515c0.675-0.405,1.194-1.045,1.438-1.809c-0.632,0.375-1.332,0.647-2.076,0.793c-0.596-0.636-1.446-1.033-2.387-1.033c-1.806,0-3.27,1.464-3.27,3.27 c0,0.256,0.029,0.506,0.085,0.745C5.163,5.404,2.753,4.102,1.14,2.124C0.859,2.607,0.698,3.168,0.698,3.767 c0,1.134,0.577,2.135,1.455,2.722C1.616,6.472,1.112,6.325,0.671,6.08c0,0.014,0,0.027,0,0.041c0,1.584,1.127,2.906,2.623,3.206 C3.02,9.402,2.731,9.442,2.433,9.442c-0.211,0-0.416-0.021-0.615-0.059c0.416,1.299,1.624,2.245,3.055,2.271 c-1.119,0.877-2.529,1.4-4.061,1.4c-0.264,0-0.524-0.015-0.78-0.046c1.447,0.928,3.166,1.469,5.013,1.469 c6.015,0,9.304-4.983,9.304-9.304c0-0.142-0.003-0.283-0.009-0.423C14.976,4.29,15.531,3.714,15.969,3.058z"/></svg>
+</span><span class="username">carlosschults</span></a>
+
+          </li>
+          
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-3">
+        <p>Artigos sobre desenvolvimento de software e tecnologia.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+
+    <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-92788641-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+    <script src="/js/dark-mode.js"></script>
+  </body>
+
+</html>

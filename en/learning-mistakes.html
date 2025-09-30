@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Learning Mistakes to Avoid As a Software Developer | carlos schults / blog</title>
+  <link rel="apple-touch-icon" sizes="57x57" href="/img/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/img/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/img/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/img/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/img/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/img/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/img/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/img/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"  href="/img/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/img/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon-16x16.png">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="description" content="Photo by Francisco De Legarreta C. on Unsplash      ℹ️    Info        Thanks to my friend André Gonçalves da Silva for reading and reviewing earlier drafts o...">
+  
+  <!-- Twitter card -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:creator" content="@carlosschults">
+  <meta name="twitter:site" content="@carlosschults">
+  <meta name="twitter:domain" content="carlosschults.net">
+  <meta name="twitter:title" content="Learning Mistakes to Avoid As a Software Developer">
+  <meta name="twitter:description" content="Photo by Francisco De Legarreta C. on Unsplash      ℹ️    Info        Thanks to my friend André Gonçalves da Silva for reading and reviewing earlier drafts o...">
+
+   <!-- Facebook meta -->
+  
+  
+  <meta property="og:title" content="Learning Mistakes to Avoid As a Software Developer">
+  <meta property="og:site_name" content="Carlos Schults / Blog" />
+  <meta property="og:locale" content="en_US">  
+  <meta property="og:type" content="article" />
+  <meta property="og:image" content="/img/software-developer-learning-mistakes/cover.webp" />  
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:width" content="1038"> 
+  <meta property="og:image:height" content="437">  
+  
+  <meta property="og:article:published_time" content="2024-10-22T00:00:00+00:00" />  
+  <meta property="og:article:author" content="Carlos Schults" />
+  
+  <meta property="og:article:tag" content="opinion" />
+  <meta property="og:article:tag" content="carreer" />    
+  
+  <meta property="og:url" content="https://carlosschults.net/en/learning-mistakes"/>
+  <meta property="og:description" content="Photo by Francisco De Legarreta C. on Unsplash      ℹ️    Info        Thanks to my friend André Gonçalves da Silva for reading and reviewing earlier drafts o...">
+  <link rel="stylesheet" href="/css/main.css">  
+  
+   <link rel="canonical" href="https://carlosschults.net/en/learning-mistakes">
+   
+  
+  <link rel="alternate" hreflang="en" href="/en/learning-mistakes" />
+  <link rel="alternate" hreflang="pt" href="/pt/erros-aprendizados" />
+  
+  <link rel="alternate" type="application/rss+xml" title="carlos schults / blog" href="https://carlosschults.net/feed.xml">
+</head>
+
+  <body>
+    <header class="site-header">
+  <div class="wrapper">    
+    <a class="site-title" href="/">carlos schults / blog</a>
+    
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg viewBox="0 0 18 15">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+
+      <div class="trigger">        
+          
+          <a class="page-link" href="/footprints/">Dev Footprints</a>
+          <a class="page-link" href="/readings/">Readings</a>
+          <a class="page-link" href="/about/">About</a>
+		      <a class="page-link" href="/search/">Search</a>
+                  
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+<div class="wrapper" style="text-align: right; line-height: 2em">
+  
+   <a href="/en/learning-mistakes" class="en">en</a>  <a href="/pt/erros-aprendizados" class="pt">pt</a> 
+
+  
+  
+</div>
+
+
+    <div class="page-content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">    
+    <h2 class="postTitle" itemprop="headline">Learning Mistakes to Avoid As a Software Developer</h2>
+    <p class="post-meta">   
+    <time datetime="2024-10-22T00:00:00+00:00" itemprop="datePublished">Oct 22, 2024
+    </time> • <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">Carlos Schults</span></span>
+  <span class="tags" itemprop="keywords"> • Tags: <a href="/tag/opinion">opinion </a> <a href="/tag/carreer">carreer </a> </span>
+  </p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <p><img src="/img/software-developer-learning-mistakes/cover.webp" alt="" />
+Photo by <a href="https://unsplash.com/@francisco_legarreta?utm_content=creditCopyText&amp;utm_medium=referral&amp;utm_source=unsplash">Francisco De Legarreta C.</a> on <a href="https://unsplash.com/photos/a-man-with-glasses-is-looking-at-a-laptop-hHg9MC-G8_Y?utm_content=creditCopyText&amp;utm_medium=referral&amp;utm_source=unsplash">Unsplash</a></p>
+
+<div class="callout callout-info">
+  <div class="callout-title">
+    <span class="callout-icon">ℹ️</span>
+    Info
+  </div>
+  <div class="callout-content">
+    
+<p>Thanks to my friend <a href="https://www.linkedin.com/in/andre-godasi/">André Gonçalves da Silva</a> for reading and reviewing earlier drafts of this post</p>
+
+  </div>
+</div>
+
+<p>If you work in software development, you’ve certainly heard phrases like “Never stop learning,” “You have to stay updated,” “Our field changes very quickly,” and so on.</p>
+
+<p>Of course, all these phrases are right, to some degree. But going around repeating “never stop learning” like a parrot isn’t the most <strong>useful</strong> thing in terms of providing direction for your learning.</p>
+
+<p>What often happens in practice is that many people, having never learned how to learn properly, make many learning mistakes that compromise their professional development. These mistakes can lead to slow progress, frustration, and even career stagnation - something nobody wants to experience.</p>
+
+<p>That’s why, in this post, I decided to compile what I believe are the most common learning mistakes that developers generally make. This list is the result of years of personal experience, observation of fellow developers, and many conversations with people in the field. I know what I’m talking about from practical experience because many of these mistakes are things I’ve made myself.</p>
+
+<p>(Being honest, I still make some of them and I’m always having to check myself to stop, but don’t tell anyone. ;))</p>
+
+<p>Identifying and understanding these mistakes is the first step to overcoming them. By avoiding them, you can optimize your learning process, accelerate your professional growth, and stay relevant in a field that’s always evolving.</p>
+
+<p>So, without further ado, here’s the list of learning mistakes to avoid. For each mistake, you’ll see:</p>
+
+<ul>
+  <li>the explanation of the mistake</li>
+  <li>the problem it causes</li>
+  <li>how to fix it</li>
+</ul>
+
+<p>Let’s go!</p>
+
+<h2 id="table-of-contents">Table of Contents</h2>
+<ul>
+  <li><a href="#thinking-that-content-consumption--learning">Thinking That Content Consumption == Learning</a></li>
+  <li><a href="#not-applying-the-content-from-learning-resources">Not Applying the Content from Learning Resources</a></li>
+  <li><a href="#lack-of-focus">Lack of Focus</a></li>
+  <li><a href="#lack-of-consistency">Lack of Consistency</a></li>
+  <li><a href="#underestimating-the-importance-of-fundamentals">Underestimating the Importance of Fundamentals</a></li>
+  <li><a href="#living-under-a-rock-not-keeping-up-with-whats-happening">Living Under a Rock (Not Keeping Up with What’s Happening)</a></li>
+  <li><a href="#conclusion">Conclusion</a></li>
+</ul>
+
+<h2 id="thinking-that-content-consumption--learning">Thinking That Content Consumption == Learning</h2>
+
+<p>I started the list with what I believe to be the most common learning mistake currently, simply because we live in an era where content is produced in massive quantities.</p>
+
+<h3 id="why-do-we-fall-into-this-trap">Why Do We Fall Into This Trap?</h3>
+
+<p>Consuming content is <strong>easy, convenient, and (potentially) fun.</strong> Let’s understand why:</p>
+
+<ul>
+  <li>Easy: It’s passive, you don’t have to think much or make decisions, and humans tend to seek the path of least resistance.</li>
+  <li>Convenient: You can usually consume content while doing other things:
+    <ul>
+      <li>Listen to a podcast while exercising or washing dishes</li>
+      <li>Watch a video while eating lunch</li>
+      <li>Read posts on Reddit while waiting in line at the bank</li>
+    </ul>
+  </li>
+  <li>Fun: Many creators realize that to engage their audience, they need to add entertainment value and transform the content into a performance that holds attention.</li>
+</ul>
+
+<p>There you have it - the trap is set. Then you go ahead and create a strategy to fill every free moment of your day with podcasts, YouTube videos, blog posts, Reddit, and whatever else.</p>
+
+<h3 id="the-consequences-of-this-mistake">The Consequences of This Mistake</h3>
+
+<p>In the end, you will have:</p>
+
+<ol>
+  <li>Consumed your time with superficial information</li>
+  <li>Retained almost nothing of what you consumed</li>
+  <li>A vague feeling that you “learned” something</li>
+</ol>
+
+<p>But when it comes to applying this meaningfully in your daily life? That’s where things don’t add up.</p>
+
+<p>Long-term, the consequences can be even more serious:</p>
+
+<ul>
+  <li>Professional stagnation, as you’re not really developing new skills</li>
+  <li>Frustration when realizing you’re not progressing as expected</li>
+  <li>Possible burnout from constantly trying to “keep up” with everything</li>
+</ul>
+
+<p>To be clear: the mistake here isn’t “consuming content.” It’s thinking that just mindlessly consuming content is enough for you to evolve as a professional.</p>
+
+<h3 id="how-to-fix-this-mistake">How to Fix This Mistake</h3>
+
+<p>The solution is simple in theory, which doesn’t necessarily mean it’s easy. Here it is:</p>
+
+<p><strong>Decrease the portion of your learning time spent on passive content consumption, and increase the portion spent on practical learning, especially personal projects.</strong></p>
+
+<p>Here are some suggestions:</p>
+
+<ul>
+  <li>Create or contribute to an open-source project</li>
+  <li>Make a website or application for a nonprofit, charitable organization, or your church</li>
+  <li>Solve a problem that you or a family member has by creating a simple automation</li>
+  <li>Reinvent the wheel: <a href="https://github.com/codecrafters-io/build-your-own-x">Implement a known technology or tool</a> (examples: git, Docker, an HTTP server) simply with the goal of learning.</li>
+</ul>
+
+<p>The list above isn’t exhaustive but serves just to start inspiring you. Five minutes of Google or ChatGPT will yield many ideas for cool projects to do.</p>
+
+<h2 id="not-applying-the-content-from-learning-resources">Not Applying the Content from Learning Resources</h2>
+
+<p>If you buy a book and don’t read it, you’re wasting money. If you buy the book, read it, and the learning doesn’t impact how you do your work, then you’re wasting both your money and your time!</p>
+
+<p>The same applies to courses, tutorials, and other learning resources. Being a software developer is a practical profession; how do you expect to benefit from what you’ve learned if you don’t put it into practice?</p>
+
+<p>Before anyone complains: yes, of course there are books, videos, etc., whose content doesn’t have a direct practical application. Maybe you read <a href="https://en.wikipedia.org/wiki/The_Mythical_Man-Month">The Mythical Man-Month</a> to get some insights and learn about software development history, but that doesn’t necessarily change how you write code. And that’s fine, these cases exist – use your common sense.</p>
+
+<p>How does mistake #2 differ from the previous one?</p>
+
+<p>We can summarize the first mistake as “spending 100% of your learning time consuming content.” In other words, you don’t do anything beyond consuming things.</p>
+
+<p>This mistake here is along the lines of “not applying what you learn from the content watched.”</p>
+
+<p>In other words, it’s possible to make the second mistake without making the first one. For example, you might dedicate 60% of your learning time to creating personal projects and 40% to content consumption. But if you still don’t apply in any way the content you learned in those 40% of the time, you’ll have made mistake #2. Is that clear?</p>
+
+<h3 id="reason-for-this-mistake">Reason for This Mistake</h3>
+
+<p>Why do so many people (including yours truly) make this mistake? Probably what happens here is a certain psychological pressure that many of us feel, in terms of hitting numbers. How many people do you know who create goals like this?</p>
+
+<ul>
+  <li>Read x technical books per year</li>
+  <li>Complete y courses by the second semester</li>
+  <li>etc…</li>
+</ul>
+
+<p>If you really feel like achieving this type of goal, there’s no way around it: you need to “spend” as little time as possible with each piece of content. Otherwise, the math doesn’t work.</p>
+
+<h3 id="problems-caused-by-this-mistake">Problems Caused By This Mistake</h3>
+
+<p>A serious consequence you might suffer from this mistake is lack of motivation. You read all the famous books in the field that were recommended to you, completed all the courses in your <a href="https://www.indeed.com/hire/c/info/individual-development-plan-examples">IDP</a>, and it seems like nothing changed. It’s hard to stay motivated to persist in learning when it feels like none of it has real impact on how you work.</p>
+
+<p>That’s the frustration with lack of career evolution that we mentioned in the previous mistake. Another serious consequence of this mistake is the waste of time, money, and energy itself: learning is an investment that needs to have a return to be justified.</p>
+
+<h3 id="whats-the-solution">What’s the Solution?</h3>
+
+<p>The remedy for this mistake has two steps:</p>
+
+<ol>
+  <li>Prioritize quality over quantity</li>
+  <li>Constantly apply what you learned</li>
+</ol>
+
+<p>So, here’s my practical suggestion: <strong>only start another course/book/etc. after you’ve applied the learning from the previous one.</strong></p>
+
+<p>For example, let’s say you’re taking a Udemy course. After each lesson or section, stop and create a small project where you exercise what you just learned. It doesn’t need to be a big project, or even useful. Preferably, throw it away after you finish: the important thing is the practice.</p>
+
+<p>Here are some more examples:</p>
+
+<ul>
+  <li>After watching a programming tutorial, dedicate time to replicate the project on your own, without looking at the video</li>
+  <li>Read an article about a new refactoring technique? Apply it to a personal project or at work</li>
+  <li>Heard a podcast about code best practices? Review an old project and see where you can apply these practices</li>
+</ul>
+
+<p>Regarding technical books, I recently created a rule for myself: when I finish a book, I can only start another one after I’ve applied the content of the book I just finished. This application can take different forms:</p>
+
+<ul>
+  <li>do the book’s exercises, if it has any</li>
+  <li>create one or more projects to exercise that content</li>
+  <li>propose/implement a new practice at work based on what I learned</li>
+</ul>
+
+<p>In the end, that’s what matters: that you find a way to apply the learned content to improve your professional life. A stack of books whose content didn’t impact you only serves to collect dust or as a monitor stand.</p>
+
+<h2 id="lack-of-focus">Lack of Focus</h2>
+
+<p>There are many more “learnable” things than you have time or energy to learn. You’ll never know everything, and you’ll never clear your learning queue. This is a fact and you need to accept and embrace this fact, unless you’re really in the mood for burnout.</p>
+
+<p>Unfortunately, we feel the pressure to “always be studying,” even though that phrase itself isn’t helpful—it offers no guidance about <em>what</em> to study, or what strategies to use.</p>
+
+<p>It’s common for this pressure to come from our own companies:</p>
+
+<ul>
+  <li>Read book x!</li>
+  <li>Take this course!</li>
+  <li>Complete this learning path!</li>
+</ul>
+
+<p>And these people are well-intentioned, but that doesn’t change the fact that you have a limited amount of time in your day and, more importantly, a limited amount of energy in the time you have available.</p>
+
+<p>But then you give in to the pressure and end up making the mistake of this item: jumping from course to course, book to book, tutorial to tutorial, without ever completing anything, or at least achieving any significant progress.</p>
+
+<h3 id="a-disclaimer">A Disclaimer</h3>
+
+<p>Look: I know that in day-to-day work, it’s very common to encounter a huge number of different problems that need to be solved, and the deadline is always yesterday. In these situations, often the right thing is indeed to learn just the surface level of a topic to be able to handle the demand and generate value for the user as quickly as possible.</p>
+
+<p><strong>The ability to distinguish when it’s time to invest in a certain item more deeply and when surface knowledge is enough</strong> is something that’s extremely valuable for any professional’s career, and the only way to perfect this ability is through practice.</p>
+
+<p>The mistake I point out in this item is a different situation from the above scenario. More specifically, the mistake is about trying to learn many things at the same time, in depth, with dense resources.</p>
+
+<h3 id="problems-caused-by-this-mistake-1">Problems Caused By This Mistake</h3>
+
+<p>The main problem caused by lack of focus is that you never go deep into anything. You end up with a vague impression of knowledge in a million things, but when a critical situation arises where deep knowledge would be necessary, you don’t have anything to show.</p>
+
+<p>As I’ve said before, it’s impossible to go deep into everything. But you should, indeed, go deep into the things that matter most, those that generate the most value for your career. I’m referring to those fundamentals that many people talk about, but I’ll talk more about that in another topic.</p>
+
+<h3 id="how-to-fix-it">How to Fix It</h3>
+
+<p>This mistake might be the hardest to fix, because the solution involves a high dose of self-knowledge and a very strong sense of prioritization.</p>
+
+<p>In general, the tip is: <strong>define ONE point of evolution for your career, and focus on it for a considerable time, until you evaluate that you’ve made progress.</strong></p>
+
+<p>Some examples of improvement points:</p>
+
+<ul>
+  <li>Improve my knowledge of parallelism, concurrency, and performance</li>
+  <li>Learn the main design patterns and know how to apply them in real projects</li>
+  <li>Acquire advanced SQL skills</li>
+  <li>Learn a new language and reach a productive level</li>
+</ul>
+
+<p>It’s not easy to identify this point of improvement, but here are some tips:</p>
+
+<ul>
+  <li>Ask for feedback from managers and colleagues.</li>
+  <li>Talk to a technical mentor you trust.</li>
+  <li>If you’re actively participating in job interviews and failing, analyze the points where you did poorly in the interviews to identify where to improve.</li>
+  <li>If you’re not actively looking, pretend you are. Ask a friend or mentor to do a mock interview with you, and then ask for honest feedback.</li>
+</ul>
+
+<h2 id="lack-of-consistency">Lack of Consistency</h2>
+
+<p>What’s better, dedicating 30 minutes per day to learning, every day, or 5 hours on the weekend, once every three months? The answer is obvious.</p>
+
+<p>Our profession is practical, deliberate and consistent practice is necessary for you to internalize the things you learn and know how to use them when the time comes.</p>
+
+<h3 id="consequences">Consequences</h3>
+
+<p>The consequences here are pretty obvious, right? There’s simply no way to make progress if you don’t make consistent effort. This actually applies to pretty much anything in life: physical activity, language learning, playing an instrument, and so on.</p>
+
+<p>If you invest, for example, 1 hour per week to learn something, that gives a total of about 51 hours in the year. Now, if you learn 15 minutes every day, that gives a total of 5,475 minutes in the year, <strong>which is more than 91 hours</strong>!</p>
+
+<p>Studying just once a week has another disadvantage. If something unexpected comes up and you need to miss it, when you return two weeks will have passed. This way, it becomes complicated to keep the momentum going; you need to remember where you stopped 14 days ago, and regaining the lost context isn’t easy at all.</p>
+
+<h3 id="how-to-fix-it-1">How to Fix It</h3>
+
+<p>Solving this mistake requires thinking about strategies to make learning become a natural part of your daily routine.</p>
+
+<p>To start, define <strong>duration</strong>: that is, how much time you’ll dedicate daily, in a <em>realistic</em> way. There’s no point in committing to 2 hours of daily learning if your routine simply doesn’t allow it.</p>
+
+<p>Another essential thing is choosing the <strong>time</strong> of your learning period. To really establish the habit, ideally it would be at the same time every day. When choosing this time, take into consideration how your energy levels change throughout the day. Are you a morning person? Put your learning time in the morning. If not, at night.</p>
+
+<p>I’ll give an example of what works for me. I know that if I leave my learning time for after work, I’ll be too tired and probably won’t do it. So, for me, the best is to reserve about 50 minutes before work for learning.</p>
+
+<p>To make learning a habit, the key is to integrate it into your routine and reduce friction. You know those people who sleep in their gym clothes? Same idea for studying. Leave your PC on with VS Code open in your project, or configure the browser to open directly to the Udemy course. The easier it is to start, the better.</p>
+
+<p>It’s also interesting that the time to decide what to learn and the time to learn be distinct moments. If you have 50 minutes per day for learning, but spend 20 of those minutes every day deciding what to read/practice/watch, you’re wasting 40% of your time.</p>
+
+<p>So here’s the tip: on Saturday, define your learning routine for the following week. You can create a spreadsheet defining the days and what you’ll do, or create a board in <a href="https://trello.com/">Trello</a>, or even use paper and pen, it doesn’t matter. What’s important is that you have this defined beforehand. Then, during the weekdays, you simply check and follow the planning made.</p>
+
+<p>Finally, something that works for many people is making some kind of public commitment. You declare, publicly—for example, on your LinkedIn—that you’ll study without missing for x days. The simple fact of having made this commitment often helps people maintain the routine without missing.</p>
+
+<p>A cool initiative in this sense is <a href="https://www.100daysofcode.com/">100 Days of Code</a>, which encourages people to code for 100 consecutive days, without fail, interacting with other participants in the process.</p>
+
+<h2 id="underestimating-the-importance-of-fundamentals">Underestimating the Importance of Fundamentals</h2>
+
+<p>Many people underestimate the importance of learning computer science fundamentals. Yes, I’m talking about those boring things you didn’t like studying in college: algorithms and data structures, computer theory, algorithm complexity, and so on.</p>
+
+<p>These people argue that you don’t need to know all these things to make your code work. Yes, this might be true most of the time, but not always.</p>
+
+<p>We can think of computing as several layers that abstract the previous layer. When you’re working in one layer, you usually don’t need to worry about the others. This is a good thing, and it’s literally the reason why we use abstractions: to “hide” things that aren’t essential, reducing the complexity of what you need to deal with.</p>
+
+<h3 id="consequences-1">Consequences</h3>
+
+<p>Unfortunately, abstractions aren’t perfect. As Joel Spolsky warned us more than 20 years ago, <a href="https://www.joelonsoftware.com/2002/11/11/the-law-of-leaky-abstractions/">abstractions eventually leak</a>.</p>
+
+<p>In other words: just because you use an ORM doesn’t mean you don’t have to know SQL. Even those who use a managed language like C# or Java can benefit from having an understanding of memory management: at minimum, you’ll be able to write code that uses lifetimes correctly, doesn’t create unnecessary allocations, and puts pressure on the garbage collector.</p>
+
+<p>Lack of understanding of algorithm complexity can bring down a system. You test your code locally with a few hundred values, but when it goes live and has to deal with millions of items, it simply can’t handle it.</p>
+
+<p>In summary: you can make something that “works” without knowledge of fundamentals. However, it works in some scenarios, some of the time, with unacceptable performance, and without taking edge cases into account.</p>
+
+<p>Beyond the problems that lack of a solid foundation can cause in the systems you work on, this mistake can bring another very serious consequence for your career.</p>
+
+<p>Yes, I’m talking about not being able to pass companies’ hiring processes. It’s very common for companies to use technical challenges that require good knowledge in topics like algorithms, data structures, complexity, concurrency and parallelism, the memory model of your preferred language, among others.</p>
+
+<p>Not having this knowledge means being summarily rejected in these processes.</p>
+
+<h3 id="solution">Solution</h3>
+
+<p>If you don’t have a college degree, I strongly recommend studying Computer Science. If you’ve already finished college but forgot all those topics, try to remember/reinforce these concepts.</p>
+
+<p>On the internet, you can find plenty of content about Computer Science. For example, the <a href="https://github.com/Clemensss/TeachYourselfCS-PT/blob/master/TeachYourselfCS-PT.md">Teach Yourself Computer Science</a> project has a roadmap of topics to learn, with bibliography and video lectures from renowned universities.</p>
+
+<p><a href="https://neetcode.io/roadmap">NeetCode</a> is a site that provides a roadmap for studying algorithms and data structures. It also offers courses and the ability to practice real questions used in job interviews.</p>
+
+<h2 id="living-under-a-rock-not-keeping-up-with-whats-happening">Living Under a Rock (Not Keeping Up with What’s Happening)</h2>
+
+<p>I thought it would be interesting if the last mistake was exactly the opposite of the first. While the error that opens the list was “just consuming content and thinking you’re learning,” this one is “never consuming any content at all.”</p>
+
+<h3 id="why-is-this-a-problem">Why Is This a Problem?</h3>
+
+<p>We work in a field that changes constantly, and increasingly quickly. Not staying updated can lead to:</p>
+
+<ul>
+  <li>Obsolescence of your skills</li>
+  <li>Loss of career opportunities</li>
+  <li>Difficulty in solving problems using more efficient approaches</li>
+  <li>Lack of inspiration for innovation in your daily work</li>
+</ul>
+
+<p>In other words: lack of updating hurts your performance in your current job, and at the same time reduces your chances of getting a potential new job. That’s not what you want, right?</p>
+
+<h3 id="finding-the-balance">Finding the Balance</h3>
+
+<p>On one hand, using every free second to consume every possible podcast/article/video isn’t a good strategy. It’s like eating lots of junk food: you’ll feel full, but that food won’t bring the benefits your body needs.</p>
+
+<p>But on the other hand, consuming <em>no</em> content is equally bad. As a developer, it’s extremely important that you have at least a notion of what’s happening in the software development world.</p>
+
+<h3 id="what-to-keep-on-your-radar">What to Keep on Your Radar</h3>
+
+<p>Here’s a small list of things that would be interesting to keep on your radar:</p>
+
+<ol>
+  <li>Release of technical books about topics you’re interested in, or from authors you already follow</li>
+  <li>New features in the latest version of your main language or framework</li>
+  <li>Tools or techniques that can make your life easier</li>
+  <li>Emerging industry trends (for example, AI)</li>
+</ol>
+
+<h3 id="where-to-find-relevant-content">Where to Find Relevant Content</h3>
+
+<p>There are many valuable sources of information for developers. Here are some suggestions:</p>
+
+<ol>
+  <li><strong>Reddit</strong>:
+    <ul>
+      <li><a href="https://old.reddit.com/r/programming">r/programming</a> for a general overview</li>
+      <li>Specific subreddits like <a href="https://old.reddit.com/r/csharp">r/csharp</a>, <a href="https://old.reddit.com/r/java">r/java</a>, <a href="https://old.reddit.com/r/golang">r/golang</a>, etc.</li>
+    </ul>
+  </li>
+  <li><strong>Hacker News</strong>: Excellent for news and discussions about technology in general</li>
+  <li><strong>YouTube</strong>:
+    <ul>
+      <li>Search for channels related to your specific interests</li>
+      <li>Watch technology conference talks</li>
+    </ul>
+  </li>
+  <li><strong>Technical Blogs</strong>:
+    <ul>
+      <li>From technology companies (for example, engineering blogs from <a href="https://netflixtechblog.com/">Netflix</a>, <a href="https://engineering.atspotify.com/">Spotify</a>, etc.)</li>
+      <li>From influential developers in your area</li>
+    </ul>
+  </li>
+  <li><strong>Technology Podcasts</strong>: Great for consuming information while doing other activities</li>
+</ol>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>We’ve reached the end of the list. I hope this compilation of learning mistakes you just read is useful for your career. With this list I covered what not to do, but what should you do then?</p>
+
+<p>Maybe in the future I’ll write a post just about that: how to learn the right way, and what to focus on. Leave a comment if you’re interested in something like that.</p>
+
+<p>But, for now, to know what to do, just imagine a learning strategy that’s the opposite of the mistakes above:</p>
+
+<ul>
+  <li>Learn with <strong>consistency</strong>, preferably a little every day</li>
+  <li>Have <strong>focus</strong>: prioritize one main improvement point at a time</li>
+  <li>Prefer <strong>project-based learning</strong>, supplemented in part by content consumption</li>
+  <li>When consuming content, always <strong>apply what you learned</strong> in some practical way</li>
+  <li>Learning about tools is important, but having <strong>solid fundamentals</strong> is more important</li>
+</ul>
+
+<p>Now comes the most important tip I can leave you with.</p>
+
+<p><strong>Done is better than perfect.</strong></p>
+
+<p>Skipped a day of learning? No big deal, continue the next day. Dedicated 30 minutes to your project instead of the planned 50? That’s still infinitely better than having done nothing.</p>
+
+<p>Trends are more important than data points. Going in the right direction is more significant than arbitrary goals like “I’ll read 6 technical books in 2024.”</p>
+
+<p>It’s difficult to deal with the constant development pressure we feel in this field, I know that well. As much as possible, try to relax. Don’t be too hard on yourself. You’re going in the right direction.</p>
+
+<p>Just the fact that you’ve read to the end of a post of almost 4,000 words shows that you’re much more interested in your development than most. For that, I thank you very much. If you need help, don’t hesitate to <a href="https://carlosschults.net/sobre/">get in touch.</a></p>
+
+    
+    
+      
+    
+    
+        Found a typo or mistake in the post? <a href="http://github.com/carlosschults/carlosschults.github.io/edit/master/_posts/2024-10-22-learning-mistakes.md">Suggest edit</a>
+        
+    
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+                    
+            <a rel="previous" class="previous" href="/en/git-detached-head">&larr; Git Detached Head: What This Means and How to Recover </a>
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+        	    
+            <a rel="next" class="next" href="/en/genai-tiny-types">Type-Safe C#: How GenAI Makes Tiny-Types Worth It &rarr;</a>
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+      
+    <div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+        // Store these for reloads
+        window.disqus_identifier = window.location.pathname;
+        window.disqus_url = window.location.href;
+        
+        // Set initial theme - match it with the site's theme
+        const currentTheme = document.body.getAttribute('data-theme') || 'light';
+        this.page.theme = currentTheme === 'dark' ? 'dark' : 'light';
+    };
+    
+    (function() {
+        var d = document, s = d.createElement('script');
+        s.src = '//carlosschultsblog.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>    
+  </div>
+
+</article>
+
+      </div>
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">         
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-2">
+        <ul class="social-media-list">
+          
+          <li>
+            <a href="https://github.com/carlosschults"><span class="icon icon--github"><svg viewBox="0 0 16 16"><path fill="#828282" d="M7.999,0.431c-4.285,0-7.76,3.474-7.76,7.761 c0,3.428,2.223,6.337,5.307,7.363c0.388,0.071,0.53-0.168,0.53-0.374c0-0.184-0.007-0.672-0.01-1.32 c-2.159,0.469-2.614-1.04-2.614-1.04c-0.353-0.896-0.862-1.135-0.862-1.135c-0.705-0.481,0.053-0.472,0.053-0.472 c0.779,0.055,1.189,0.8,1.189,0.8c0.692,1.186,1.816,0.843,2.258,0.645c0.071-0.502,0.271-0.843,0.493-1.037 C4.86,11.425,3.049,10.76,3.049,7.786c0-0.847,0.302-1.54,0.799-2.082C3.768,5.507,3.501,4.718,3.924,3.65 c0,0,0.652-0.209,2.134,0.796C6.677,4.273,7.34,4.187,8,4.184c0.659,0.003,1.323,0.089,1.943,0.261 c1.482-1.004,2.132-0.796,2.132-0.796c0.423,1.068,0.157,1.857,0.077,2.054c0.497,0.542,0.798,1.235,0.798,2.082 c0,2.981-1.814,3.637-3.543,3.829c0.279,0.24,0.527,0.713,0.527,1.437c0,1.037-0.01,1.874-0.01,2.129 c0,0.208,0.14,0.449,0.534,0.373c3.081-1.028,5.302-3.935,5.302-7.362C15.76,3.906,12.285,0.431,7.999,0.431z"/></svg>
+</span><span class="username">carlosschults</span></a>
+
+          </li>
+          
+
+          
+          <li>
+            <a href="https://twitter.com/carlosschults"><span class="icon icon--twitter"><svg viewBox="0 0 16 16"><path fill="#828282" d="M15.969,3.058c-0.586,0.26-1.217,0.436-1.878,0.515c0.675-0.405,1.194-1.045,1.438-1.809c-0.632,0.375-1.332,0.647-2.076,0.793c-0.596-0.636-1.446-1.033-2.387-1.033c-1.806,0-3.27,1.464-3.27,3.27 c0,0.256,0.029,0.506,0.085,0.745C5.163,5.404,2.753,4.102,1.14,2.124C0.859,2.607,0.698,3.168,0.698,3.767 c0,1.134,0.577,2.135,1.455,2.722C1.616,6.472,1.112,6.325,0.671,6.08c0,0.014,0,0.027,0,0.041c0,1.584,1.127,2.906,2.623,3.206 C3.02,9.402,2.731,9.442,2.433,9.442c-0.211,0-0.416-0.021-0.615-0.059c0.416,1.299,1.624,2.245,3.055,2.271 c-1.119,0.877-2.529,1.4-4.061,1.4c-0.264,0-0.524-0.015-0.78-0.046c1.447,0.928,3.166,1.469,5.013,1.469 c6.015,0,9.304-4.983,9.304-9.304c0-0.142-0.003-0.283-0.009-0.423C14.976,4.29,15.531,3.714,15.969,3.058z"/></svg>
+</span><span class="username">carlosschults</span></a>
+
+          </li>
+          
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-3">
+        <p>Articles on software development and technology.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+
+    <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-92788641-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+    <script src="/js/dark-mode.js"></script>
+  </body>
+
+</html>

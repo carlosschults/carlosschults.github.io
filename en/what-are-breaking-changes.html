@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>What Are Breaking Changes? | carlos schults / blog</title>
+  <link rel="apple-touch-icon" sizes="57x57" href="/img/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/img/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/img/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/img/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/img/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/img/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/img/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/img/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"  href="/img/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/img/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon-16x16.png">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="description" content="Photo by Denis Oliveira on UnsplashI’m starting a series of articles in which I’ll define some concepts or terms that are common in software development, and...">
+  
+  <!-- Twitter card -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:creator" content="@carlosschults">
+  <meta name="twitter:site" content="@carlosschults">
+  <meta name="twitter:domain" content="carlosschults.net">
+  <meta name="twitter:title" content="What Are Breaking Changes?">
+  <meta name="twitter:description" content="Photo by Denis Oliveira on UnsplashI’m starting a series of articles in which I’ll define some concepts or terms that are common in software development, and...">
+
+   <!-- Facebook meta -->
+  
+  
+  <meta property="og:title" content="What Are Breaking Changes?">
+  <meta property="og:site_name" content="Carlos Schults / Blog" />
+  <meta property="og:locale" content="en_US">  
+  <meta property="og:type" content="article" />
+  <meta property="og:image" content="/img/what-are-breaking-changes/cover.jpg" />  
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:width" content="1038"> 
+  <meta property="og:image:height" content="437">  
+  
+  <meta property="og:article:published_time" content="2025-09-26T00:00:00+00:00" />  
+  <meta property="og:article:author" content="Carlos Schults" />
+  
+  <meta property="og:article:tag" content="from_a_to_z" />
+  <meta property="og:article:tag" content="breaking_changes" />    
+  
+  <meta property="og:url" content="https://carlosschults.net/en/what-are-breaking-changes"/>
+  <meta property="og:description" content="Photo by Denis Oliveira on UnsplashI’m starting a series of articles in which I’ll define some concepts or terms that are common in software development, and...">
+  <link rel="stylesheet" href="/css/main.css">  
+  
+   <link rel="canonical" href="https://carlosschults.net/en/what-are-breaking-changes">
+   
+  
+  <link rel="alternate" hreflang="en" href="/en/what-are-breaking-changes" />
+  <link rel="alternate" hreflang="pt" href="/pt/o-que-sao-breaking-changes" />
+  
+  <link rel="alternate" type="application/rss+xml" title="carlos schults / blog" href="https://carlosschults.net/feed.xml">
+</head>
+
+  <body>
+    <header class="site-header">
+  <div class="wrapper">    
+    <a class="site-title" href="/">carlos schults / blog</a>
+    
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg viewBox="0 0 18 15">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+
+      <div class="trigger">        
+          
+          <a class="page-link" href="/footprints/">Dev Footprints</a>
+          <a class="page-link" href="/readings/">Readings</a>
+          <a class="page-link" href="/about/">About</a>
+		      <a class="page-link" href="/search/">Search</a>
+                  
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+<div class="wrapper" style="text-align: right; line-height: 2em">
+  
+   <a href="/en/what-are-breaking-changes" class="en">en</a>  <a href="/pt/o-que-sao-breaking-changes" class="pt">pt</a> 
+
+  
+  
+</div>
+
+
+    <div class="page-content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">    
+    <h2 class="postTitle" itemprop="headline">What Are Breaking Changes?</h2>
+    <p class="post-meta">   
+    <time datetime="2025-09-26T00:00:00+00:00" itemprop="datePublished">Sep 26, 2025
+    </time> • <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">Carlos Schults</span></span>
+  <span class="tags" itemprop="keywords"> • Tags: <a href="/tag/from_a_to_z">from_a_to_z </a> <a href="/tag/breaking_changes">breaking_changes </a> </span>
+  </p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <p><img src="/img/what-are-breaking-changes/cover.jpg" alt="" />
+Photo by <a href="https://unsplash.com/@denisolvr?utm_content=creditCopyText&amp;utm_medium=referral&amp;utm_source=unsplash">Denis Oliveira</a> on <a href="https://unsplash.com/photos/grayscale-photography-of-speedboat-yplNhhXxBtM?utm_content=creditCopyText&amp;utm_medium=referral&amp;utm_source=unsplash">Unsplash</a></p>
+
+<p>I’m starting a series of articles in which I’ll define some concepts or terms that are common in software development, and I’m starting with <strong>Breaking Changes</strong>. After all, why start with A like a normal person?</p>
+
+<p>Ok, but…why write such a series?</p>
+
+<p>Mainly because I want to create the resources I wish I had when I was starting out.</p>
+
+<p>Back then, it used to drive me crazy when people would just casually say things like I was already familiar with them.</p>
+
+<p>Mind you, I’m an <del>old</del> experienced developer, which means in my time I didn’t have an AI buddy to just ask those things. Yeah, Google was already a thing, how <del>old</del> experienced do you think I am? Jesus!</p>
+
+<p>The problem is that often explanations you’d find by Googling weren’t that great. Often, Stack Overflow helped, but not always. Nowadays, of course, you can ask your favorite LLM side-kick to explain things to you, if you don’t mind the generic tone, depleted of any authentic human voice or anecdotes.</p>
+
+<p>So, I’m writing these articles to help beginners out there understand a bit better some key software development concepts, one at a time, in a simple and hopefully engaging way, courtesy of yours truly.</p>
+
+<p>Let’s begin?</p>
+
+<h2 id="what-is-a-breaking-change">What is a breaking change?</h2>
+<p>“Breaking change” means any change you make to your software that can cause the code of its users to break, after they upgrade. Breaking changes only make sense when you think about software that you create and somehow distribute for third-party users.</p>
+
+<p><img src="https://imgs.xkcd.com/comics/workflow.png" alt="The relevant XKCD" title="There is always a relevant XKCD" /></p>
+
+<p>Think of things like:</p>
+
+<ul>
+  <li>APIs</li>
+  <li>libraries/packages</li>
+  <li>frameworks</li>
+  <li>CLI tools</li>
+</ul>
+
+<p>Let’s see an example. While developing an application for your company, you extracted some common functionality as a library and decided to publish that as an open-source package hosted on <a href="https://www.nuget.org">https://www.nuget.org</a>.</p>
+
+<p>After a while, you publish a new version in which you change the name of one of the most important and used methods inside the package. Users upgrade to your newest version and now their code doesn’t compile, because it still refers to the method using the original name. <strong>That’s a breaking change!</strong></p>
+
+<div class="callout callout-info">
+  <div class="callout-title">
+    <span class="callout-icon">ℹ️</span>
+    NOTE
+  </div>
+  <div class="callout-content">
+    
+<p>Important: for something to be a breaking change, it’s not required that 100% of the users break when they upgrade. In our example, it’s possible that not all users were actually using that specific method in their code which means their code wouldn’t have broken. But the change is still a breaking change, because the potential for breaking is there.</p>
+
+
+  </div>
+</div>
+
+<h2 id="examples-of-breaking-changes">Examples of Breaking Changes</h2>
+
+<p>In practice, what types of changes are breaking changes?</p>
+
+<p>I’d say the most common one, or at least what most people would think of as a breaking change, would be deleting or renaming things.</p>
+
+<p>If you rename an API endpoint, a public class or method from your package, or a command from your CLI, code that uses those things will no longer work. And, for all practical effects, renaming is the same as deleting, because that old version no longer exists.</p>
+
+<p><img src="/img/travolta.gif" alt="&quot;Confused John Travolta looking for something&quot;" /></p>
+
+<p><em>Where is the method that was here?</em></p>
+
+<p>There are other types of breaking changes, though, so let’s review some of them.</p>
+
+<h3 id="new-required-parameters">New Required Parameters</h3>
+
+<p>If you add new parameters to a method, and they are required, then all existing code that calls the method will now fail to compile. The solution here would be to add new parameters as optional, or even create a new method.</p>
+
+<h3 id="removed-optional-parameters-or-made-them-required">Removed optional parameters or made them required</h3>
+
+<p>This is a logical continuation of the previous one. If you remove an optional parameter, code that calls that method padding the parameter will now break. On the other hand, if you make an optional parameter required, the opposite happens: now all of the places that don’t pass the parameter will break.</p>
+
+<h3 id="new-members-added-to-an-interface">New Members Added To An Interface</h3>
+
+<p>Here I’m talking specifically about statically typed languages that have the concept of an interface in which you define behaviors that client classes need to implement.</p>
+
+<p>Adding a new member to an interface is a breaking change because now all classes that implement it wouldn’t have implemented the new member.</p>
+
+<p>Recently-ish, the C# team solved this problem in a way that sparked some controversy: adding the possibility of <a href="https://devblogs.microsoft.com/dotnet/default-implementations-in-interfaces/">implementing methods on the interfaces themselves!</a></p>
+
+<h3 id="changed-the-type-of-a-method-parameter">Changed the Type of a Method Parameter</h3>
+
+<p>If you change the type of a parameter from, say, <code class="language-plaintext highlighter-rouge">string</code> to <code class="language-plaintext highlighter-rouge">int</code>, you’re making sure that a lot of client code will break.</p>
+
+<h3 id="changed-return-type-of-a-method-or-function">Changed return type of a method or function</h3>
+
+<p>Again, depending on the old and new types, this might not even break, but it’s still a breaking change in general.</p>
+
+<h3 id="changed-parameter-order">Changed parameter order</h3>
+
+<p>This one is interesting because it might break in a different way than the others. For most of the examples I’ve been giving so far, “breaking” means that the code that consumes your code will fail to compile.</p>
+
+<p>With this one, you can do it in such a way that the code still compiles, but it fails to work properly.</p>
+
+<p>For instance, see this code:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">IReadOnlyList</span><span class="p">&lt;</span><span class="n">Product</span><span class="p">&gt;&gt;</span> <span class="nf">GetProductsByCategory</span><span class="p">(</span><span class="kt">int</span> <span class="n">categoryId</span><span class="p">,</span> <span class="kt">int</span> <span class="n">companyId</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="c1">// implementation</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>If you inverted the order between <code class="language-plaintext highlighter-rouge">categoryId</code> and <code class="language-plaintext highlighter-rouge">companyId</code>, the code would still compile but it wouldn’t work properly. It’d still be a breaking change, but one that fails in a subtler way.</p>
+
+<p>Of course if the two parameters are of different types, then it would fail in the sense of failing to compile. And that’s why a lot of people argue that you shouldn’t use primitives for things like ids, but create your own <a href="https://carlosschults.net/en/genai-tiny-types">tiny types</a> for that.</p>
+
+<h3 id="modified-error-handling-behavior-throwing-different-exceptions">Modified error handling behavior (throwing different exceptions)</h3>
+
+<p>If your method used to throw a certain type of exception and now it throws a different one, that’s a breaking change, because code that was written to catch that specific first exception won’t work for the new one, unless it inherits from the first one.</p>
+
+<h3 id="made-public-methods-or-properties-private">Made public methods or properties private</h3>
+
+<p>For the client this is, effectively, the same as deleting them, so it’s an obvious breaking change.</p>
+
+<h3 id="added-authentication-requirements-where-none-existed">Added authentication requirements where none existed</h3>
+
+<p>Up until now, all of the examples were for libraries or packages. Now we’re going to see a few examples for web APIs. The first one has to do with authentication: if a given endpoint didn’t require authentication but now does, that’s a breaking change, because existing code that used to call that will now get a <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status/401">401 Unauthorized</a> error.</p>
+
+<h3 id="added-new-required-properties-to-a-payload">Added new required properties to a payload</h3>
+
+<p>That’s akin to adding new required properties to a public method, right? If your endpoint now expects a different payload than what it did before, existing code will break, likely getting a <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status/400">400 Bad Request</a> error.</p>
+
+<h3 id="rename-or-delete-an-endpoint">Rename or delete an endpoint</h3>
+
+<p>This one is self explanatory.</p>
+
+<h2 id="what-to-do-about-breaking-changes">What to do about breaking changes?</h2>
+
+<p>This should be obvious by now but let’s spell it out: breaking changes are A Bad Thing™. You should avoid them like the plague.</p>
+
+<p>If you distribute any code of software publicly and there are people who depend on it, you won’t want to keep breaking their workflows frequently, or they’ll be mad at you, rightly so.</p>
+
+<p>Sometimes there’s no use, though. You just need to do a breaking change, be it removing a method or class that has become obsolete, or changing the signature of a function.</p>
+
+<p>When you have to do something like this, a few things are advised.</p>
+
+<h3 id="gradually-deprecation">Gradually Deprecation</h3>
+
+<p>Adding a breaking change is something that you shouldn’t take lightly because it can dramatically disrupt the workflow of your users. Also, don’t do it all of a sudden, out of the blue, and in one step.</p>
+
+<p>Before removing obsolete classes/methods/etc, first publicly announce you’re doing so, several versions in advance. Then, you mark that artifact as deprecated somehow, but still don’t remove it. For instance, in C# you can use the <a href="https://learn.microsoft.com/en-us/dotnet/api/system.obsoleteattribute?view=net-9.0">Obsolete</a> attribute.</p>
+
+<p>Then, after a few versions, you then finally do your breaking change.</p>
+
+<h3 id="add-instructions-to-your-release-notes">Add Instructions to Your Release Notes</h3>
+
+<p>If you’re publishing software publicly for third-party use, you probably have some sort of release notes where you communicate what were the changes in this new version. Leverage that.</p>
+
+<p>When it’s time to actually publish a version with a breaking change, use your release notes to describe, in detail, what the change is and how it will affect your users.</p>
+
+<p>Usually, when a breaking change consists of retiring a method/class/endpoint, it comes accompanied by a new way of performing the same thing. After all, you wouldn’t be retiring the old way just because.</p>
+
+<p>In those cases, also use your release notes to explain in detail how users can adapt their code to migrate from the old to the new way of doing the task.</p>
+
+<h3 id="use-semantic-versioning">Use Semantic Versioning</h3>
+
+<p>Finally, use <a href="https://semver.org/">Semantic Versioning</a> and use the version number to communicate that this is a breaking change, by releasing a major version.</p>
+
+<p>Semantic Versioning (or SemVer for short) is a standard for versioning in which you use a version number in this format: major.minor.patch.</p>
+
+<p>When your new version only contains bug fixes, and they don’t add breaking changes, you increment the patch component.</p>
+
+<p>For instance:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>2.0.0 -&gt; 2.0.1
+</code></pre></div></div>
+
+<p>If the version contains new functionality that doesn’t break compatibility, then you increment the minor component and reset the patch component:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>2.0.1 -&gt; 2.1.0
+</code></pre></div></div>
+
+<p>Now comes the most important part. When your version contains breaking changes, either cause by new functionality, bug fixes, or both, you increment the major number and reset the other two:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>2.1.0 -&gt; 3.0.0
+</code></pre></div></div>
+
+<p>That way, you clearly communicate to your users the presence or absence of breaking changes in your newest release.</p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>In this post, I explained the concept of a breaking change, why it’s usually bad, and what to do about it. Quick recap:</p>
+
+<ul>
+  <li>Breaking changes are changes that break the code of your users, in the context of software that is distributed to third-party users.</li>
+  <li>Avoid adding breaking changes to your software, because they harm the experience of your clients.</li>
+  <li>Sometimes you can’t help but add a breaking change. In those cases, use gradual deprecation, communicate clearly what changed and how to adapt, and use semantic versioning.</li>
+</ul>
+
+<p>I think that’s all. Thanks for reading, I hope this has been useful and I’ll see you again in the next installment of this series, in which I’ll probably go back to letter A, because I’m just weird like that.</p>
+
+    
+    
+      
+    
+    
+        Found a typo or mistake in the post? <a href="http://github.com/carlosschults/carlosschults.github.io/edit/master/_posts/2025-09-26-what-are-breaking-changes.md">Suggest edit</a>
+        
+    
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+                    
+            <a rel="previous" class="previous" href="/en/improve-developer-experience">&larr; How to Improve Developer Experience: 7 Things to Change </a>
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+      
+    <div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+        // Store these for reloads
+        window.disqus_identifier = window.location.pathname;
+        window.disqus_url = window.location.href;
+        
+        // Set initial theme - match it with the site's theme
+        const currentTheme = document.body.getAttribute('data-theme') || 'light';
+        this.page.theme = currentTheme === 'dark' ? 'dark' : 'light';
+    };
+    
+    (function() {
+        var d = document, s = d.createElement('script');
+        s.src = '//carlosschultsblog.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>    
+  </div>
+
+</article>
+
+      </div>
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">         
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-2">
+        <ul class="social-media-list">
+          
+          <li>
+            <a href="https://github.com/carlosschults"><span class="icon icon--github"><svg viewBox="0 0 16 16"><path fill="#828282" d="M7.999,0.431c-4.285,0-7.76,3.474-7.76,7.761 c0,3.428,2.223,6.337,5.307,7.363c0.388,0.071,0.53-0.168,0.53-0.374c0-0.184-0.007-0.672-0.01-1.32 c-2.159,0.469-2.614-1.04-2.614-1.04c-0.353-0.896-0.862-1.135-0.862-1.135c-0.705-0.481,0.053-0.472,0.053-0.472 c0.779,0.055,1.189,0.8,1.189,0.8c0.692,1.186,1.816,0.843,2.258,0.645c0.071-0.502,0.271-0.843,0.493-1.037 C4.86,11.425,3.049,10.76,3.049,7.786c0-0.847,0.302-1.54,0.799-2.082C3.768,5.507,3.501,4.718,3.924,3.65 c0,0,0.652-0.209,2.134,0.796C6.677,4.273,7.34,4.187,8,4.184c0.659,0.003,1.323,0.089,1.943,0.261 c1.482-1.004,2.132-0.796,2.132-0.796c0.423,1.068,0.157,1.857,0.077,2.054c0.497,0.542,0.798,1.235,0.798,2.082 c0,2.981-1.814,3.637-3.543,3.829c0.279,0.24,0.527,0.713,0.527,1.437c0,1.037-0.01,1.874-0.01,2.129 c0,0.208,0.14,0.449,0.534,0.373c3.081-1.028,5.302-3.935,5.302-7.362C15.76,3.906,12.285,0.431,7.999,0.431z"/></svg>
+</span><span class="username">carlosschults</span></a>
+
+          </li>
+          
+
+          
+          <li>
+            <a href="https://twitter.com/carlosschults"><span class="icon icon--twitter"><svg viewBox="0 0 16 16"><path fill="#828282" d="M15.969,3.058c-0.586,0.26-1.217,0.436-1.878,0.515c0.675-0.405,1.194-1.045,1.438-1.809c-0.632,0.375-1.332,0.647-2.076,0.793c-0.596-0.636-1.446-1.033-2.387-1.033c-1.806,0-3.27,1.464-3.27,3.27 c0,0.256,0.029,0.506,0.085,0.745C5.163,5.404,2.753,4.102,1.14,2.124C0.859,2.607,0.698,3.168,0.698,3.767 c0,1.134,0.577,2.135,1.455,2.722C1.616,6.472,1.112,6.325,0.671,6.08c0,0.014,0,0.027,0,0.041c0,1.584,1.127,2.906,2.623,3.206 C3.02,9.402,2.731,9.442,2.433,9.442c-0.211,0-0.416-0.021-0.615-0.059c0.416,1.299,1.624,2.245,3.055,2.271 c-1.119,0.877-2.529,1.4-4.061,1.4c-0.264,0-0.524-0.015-0.78-0.046c1.447,0.928,3.166,1.469,5.013,1.469 c6.015,0,9.304-4.983,9.304-9.304c0-0.142-0.003-0.283-0.009-0.423C14.976,4.29,15.531,3.714,15.969,3.058z"/></svg>
+</span><span class="username">carlosschults</span></a>
+
+          </li>
+          
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-3">
+        <p>Articles on software development and technology.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+
+    <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-92788641-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+    <script src="/js/dark-mode.js"></script>
+  </body>
+
+</html>

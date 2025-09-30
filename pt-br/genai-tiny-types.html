@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>C# Type Safe: Como a IA Generativa Torna os Tiny-Types Viáveis | carlos schults / blog</title>
+  <link rel="apple-touch-icon" sizes="57x57" href="/img/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/img/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/img/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/img/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/img/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/img/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/img/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/img/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"  href="/img/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/img/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon-16x16.png">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="description" content="É estranho como nossa memória funciona, não é? Não consigo lembrar exatamente o que jantei há duas noites, ou o motivo pelo qual deixei de ir à academia em a...">
+  
+  <!-- Twitter card -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:creator" content="@carlosschults">
+  <meta name="twitter:site" content="@carlosschults">
+  <meta name="twitter:domain" content="carlosschults.net">
+  <meta name="twitter:title" content="C# Type Safe: Como a IA Generativa Torna os Tiny-Types Viáveis">
+  <meta name="twitter:description" content="É estranho como nossa memória funciona, não é? Não consigo lembrar exatamente o que jantei há duas noites, ou o motivo pelo qual deixei de ir à academia em a...">
+
+   <!-- Facebook meta -->
+  
+  
+  <meta property="og:title" content="C# Type Safe: Como a IA Generativa Torna os Tiny-Types Viáveis">
+  <meta property="og:site_name" content="Carlos Schults / Blog" />
+  <meta property="og:locale" content="pt_BR">  
+  <meta property="og:type" content="article" />
+  <meta property="og:image" content="https://res.cloudinary.com/dz5ppacuo/image/upload/v1466341001/csharp-min_buiizq.png" />  
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:width" content="1038"> 
+  <meta property="og:image:height" content="437">  
+  
+  <meta property="og:article:published_time" content="2024-12-10T00:00:00+00:00" />  
+  <meta property="og:article:author" content="Carlos Schults" />
+  
+  <meta property="og:article:tag" content="csharp" />
+  <meta property="og:article:tag" content="ai" />
+  <meta property="og:article:tag" content="software-design" />
+  <meta property="og:article:tag" content="best-practices" />    
+  
+  <meta property="og:url" content="https://carlosschults.net/pt-br/genai-tiny-types"/>
+  <meta property="og:description" content="É estranho como nossa memória funciona, não é? Não consigo lembrar exatamente o que jantei há duas noites, ou o motivo pelo qual deixei de ir à academia em a...">
+  <link rel="stylesheet" href="/css/main.css">  
+  
+   <link rel="canonical" href="https://carlosschults.net/pt-br/genai-tiny-types">
+   
+  
+  <link rel="alternate" hreflang="en" href="/en/genai-tiny-types" />
+  <link rel="alternate" hreflang="pt" href="/pt-br/genai-tiny-types" />
+  
+  <link rel="alternate" type="application/rss+xml" title="carlos schults / blog" href="https://carlosschults.net/rss.xml">
+</head>
+
+  <body>
+    <header class="site-header">
+  <div class="wrapper">    
+    <a class="site-title" href="/pt/">carlos schults / blog</a>
+    
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg viewBox="0 0 18 15">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+
+      <div class="trigger">        
+          
+          <a class="page-link" href="/sobre/">Sobre</a>
+          <a class="page-link" href="/busca/">Busca</a>
+                  
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+<div class="wrapper" style="text-align: right; line-height: 2em">
+  
+   <a href="/en/genai-tiny-types" class="en">en</a>  <a href="/pt-br/genai-tiny-types" class="pt">pt</a> 
+
+  
+  
+</div>
+
+
+    <div class="page-content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">    
+    <h2 class="postTitle" itemprop="headline">C# Type Safe: Como a IA Generativa Torna os Tiny-Types Viáveis</h2>
+    <p class="post-meta">   
+    <time datetime="2024-12-10T00:00:00+00:00" itemprop="datePublished">10/12/2024
+    </time> • <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">Carlos Schults</span></span>
+  <span class="tags" itemprop="keywords"> • Tags: <a href="/tag_ptbr/csharp">csharp </a> <a href="/tag_ptbr/ai">ai </a> <a href="/tag_ptbr/software-design">software-design </a> <a href="/tag_ptbr/best-practices">best-practices </a> </span>
+  </p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <p><img src="https://res.cloudinary.com/dz5ppacuo/image/upload/v1466341001/csharp-min_buiizq.png" alt="" /></p>
+
+<p>É estranho como nossa memória funciona, não é? Não consigo lembrar exatamente o que jantei há duas noites, ou o motivo pelo qual deixei de ir à academia em alguns dias da semana passada.
+Mas me lembro vividamente de um bug específico que corrigi no meu primeiro emprego como programador depois de me formar na faculdade.</p>
+
+<p>Havia este método que não estava funcionando corretamente, e sua assinatura era algo assim:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">void</span> <span class="nf">ProcessOrder</span><span class="p">(</span><span class="kt">int</span> <span class="n">orderId</span><span class="p">,</span> <span class="kt">int</span> <span class="n">customerId</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Eu revisei o código e não consegui encontrar nada de errado. Mas quando comecei a debugar, percebi que o local da chamada estava passando os argumentos na ordem errada — ou seja, <code class="language-plaintext highlighter-rouge">customerId</code> primeiro e depois <code class="language-plaintext highlighter-rouge">orderId</code>.</p>
+
+<p>Erros como este são fáceis de cometer e difíceis de detectar mesmo em revisões de código. Até mesmo os testes podem deixar passar, já que você pode ter o azar de fornecer valores que acidentalmente fazem o código funcionar sem explodir tudo.</p>
+
+<p>Como acontece, existe uma ótima maneira de prevenir problemas como o que acabei de descrever. O problema? A maioria dos desenvolvedores acharia que é trabalho demais para se preocupar.</p>
+
+<h2 id="tiny-types-a-melhor-técnica-de-design-de-software-que-ninguém-usa">Tiny Types: A Melhor Técnica de Design de Software Que Ninguém Usa</h2>
+
+<p>Eu sei, eu sei. Vou ser o primeiro a admitir que este título é exagerado. “Uma Técnica Interessante de Design de Software Que Muitas Pessoas Não Usam” simplesmente não tem o mesmo impacto, foi mal.</p>
+
+<p>Então, o que é essa coisa de “tiny types”? É uma solução radical para o code smell de obsessão primitiva. Essencialmente, em vez de usar tipos primitivos para conceitos de domínio — por exemplo, usar um <code class="language-plaintext highlighter-rouge">int</code> para representar um identificador único — você envolve todos eles usando um <a href="/pt/value-objects-ferramenta/">objeto de valor</a> extremamente simples.</p>
+
+<p>Usando tiny types, poderíamos reescrever a assinatura do método anterior assim:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">void</span> <span class="nf">ProcessOrder</span><span class="p">(</span><span class="n">OrderId</span> <span class="n">orderId</span><span class="p">,</span> <span class="n">CustomerId</span> <span class="n">customerId</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h3 id="implementando-um-tiny-type">Implementando um Tiny Type</h3>
+<p>Como seria o tipo <code class="language-plaintext highlighter-rouge">OrderId</code>?</p>
+
+<p>Para começar, já que <code class="language-plaintext highlighter-rouge">OrderId</code> deve envolver um int, ele deve receber um int como parâmetro e armazená-lo em algum lugar. Vejamos:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">public</span> <span class="k">class</span> <span class="nc">OrderId</span>
+<span class="p">{</span>
+    <span class="k">private</span> <span class="k">readonly</span> <span class="kt">int</span> <span class="n">_value</span><span class="p">;</span>
+    <span class="k">public</span> <span class="nf">OrderId</span><span class="p">(</span><span class="kt">int</span> <span class="k">value</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="k">value</span> <span class="p">&lt;=</span> <span class="m">0</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">throw</span> <span class="k">new</span> <span class="nf">ArgumentOutOfRangeException</span><span class="p">(</span>
+                <span class="k">nameof</span><span class="p">(</span><span class="k">value</span><span class="p">),</span>
+                 <span class="s">"Value must be a positive integer!"</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="n">_value</span> <span class="p">=</span> <span class="k">value</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Acho que o exemplo acima é um bom começo, você não concorda? Recebemos um int como parâmetro, validamos e lançamos uma exceção em caso de valores zero ou negativos, e então o atribuímos a um campo privado readonly, o que é apropriado, já que <code class="language-plaintext highlighter-rouge">OrderId</code>, como um objeto de valor, deve ser imutável.</p>
+
+<p>Você sabe do que mais os objetos de valor — e, por consequência, os tiny types — precisam? Igualdade estrutural. Ou seja, ao compará-los, devemos considerar apenas seus valores, não se suas referências apontam para o mesmo objeto.</p>
+
+<p>Então, vamos começar sobrescrevendo <code class="language-plaintext highlighter-rouge">Equals</code>:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">public</span> <span class="k">override</span> <span class="kt">bool</span> <span class="nf">Equals</span><span class="p">(</span><span class="kt">object</span><span class="p">?</span> <span class="n">obj</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="kt">var</span> <span class="n">other</span> <span class="p">=</span> <span class="n">obj</span> <span class="k">as</span> <span class="n">OrderId</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">other</span> <span class="p">==</span> <span class="k">null</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="k">false</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">other</span><span class="p">.</span><span class="n">_value</span> <span class="p">==</span> <span class="n">_value</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>(Para um estilo C# mais moderno, poderíamos ter usado pattern matching, mas acho que a abordagem acima é mais clara.)</p>
+
+<p>Agora recebo um aviso do compilador porque meu tipo sobrescreve <code class="language-plaintext highlighter-rouge">Equals</code> mas não <code class="language-plaintext highlighter-rouge">GetHashCode</code>, então vamos corrigir isso:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">public</span> <span class="k">override</span> <span class="kt">int</span> <span class="nf">GetHashCode</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="k">return</span> <span class="n">_value</span><span class="p">.</span><span class="nf">GetHashCode</span><span class="p">();</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Como <code class="language-plaintext highlighter-rouge">OrderId</code> é um tipo simples representando valores únicos e imutáveis, ele deveria realmente ser uma <code class="language-plaintext highlighter-rouge">struct</code> em vez de uma classe, de acordo com as <a href="https://learn.microsoft.com/pt-br/dotnet/standard/design-guidelines/type">Diretrizes de Design de Tipos da Microsoft</a>:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Structs são o caso geral de tipos de valor e devem ser reservadas para tipos pequenos e simples, semelhantes aos primitivos da linguagem.
+</code></pre></div></div>
+
+<p>Mas as diretrizes de design também dizem que todas as structs devem implementar a interface <code class="language-plaintext highlighter-rouge">IEquatable&lt;T&gt;</code>, então vamos fazer isso. Aliás, já que estamos aqui, vamos também implementar <code class="language-plaintext highlighter-rouge">IComparable&lt;T&gt;</code> e dar overload nos operadores de comparação:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">public</span> <span class="k">struct</span> <span class="nc">OrderId</span> <span class="p">:</span> <span class="n">IEquatable</span><span class="p">&lt;</span><span class="n">OrderId</span><span class="p">&gt;,</span> <span class="n">IComparable</span><span class="p">&lt;</span><span class="n">OrderId</span><span class="p">&gt;</span>
+<span class="p">{</span>
+    <span class="k">private</span> <span class="k">readonly</span> <span class="kt">int</span> <span class="n">_value</span><span class="p">;</span>
+    <span class="k">public</span> <span class="nf">OrderId</span><span class="p">(</span><span class="kt">int</span> <span class="k">value</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="k">value</span> <span class="p">&lt;=</span> <span class="m">0</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">throw</span> <span class="k">new</span> <span class="nf">ArgumentOutOfRangeException</span><span class="p">(</span>
+                <span class="k">nameof</span><span class="p">(</span><span class="k">value</span><span class="p">),</span>
+                 <span class="s">"Value must be a positive integer!"</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="n">_value</span> <span class="p">=</span> <span class="k">value</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="k">override</span> <span class="kt">bool</span> <span class="nf">Equals</span><span class="p">(</span><span class="kt">object</span><span class="p">?</span> <span class="n">obj</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">obj</span> <span class="k">is</span> <span class="n">OrderId</span> <span class="n">other</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">return</span> <span class="n">_value</span> <span class="p">==</span> <span class="n">other</span><span class="p">.</span><span class="n">_value</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="k">false</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="kt">bool</span> <span class="nf">Equals</span><span class="p">(</span><span class="n">OrderId</span> <span class="n">other</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="n">_value</span> <span class="p">==</span> <span class="n">other</span><span class="p">.</span><span class="n">_value</span><span class="p">;</span>
+
+    <span class="k">public</span> <span class="k">override</span> <span class="kt">int</span> <span class="nf">GetHashCode</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="n">_value</span><span class="p">.</span><span class="nf">GetHashCode</span><span class="p">();</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="kt">int</span> <span class="nf">CompareTo</span><span class="p">(</span><span class="n">OrderId</span> <span class="n">other</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="n">_value</span><span class="p">.</span><span class="nf">CompareTo</span><span class="p">(</span><span class="n">other</span><span class="p">.</span><span class="n">_value</span><span class="p">);</span>
+
+    <span class="k">public</span> <span class="k">static</span> <span class="kt">bool</span> <span class="k">operator</span> <span class="p">==(</span><span class="n">OrderId</span> <span class="n">left</span><span class="p">,</span> <span class="n">OrderId</span> <span class="n">right</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="n">left</span><span class="p">.</span><span class="nf">Equals</span><span class="p">(</span><span class="n">right</span><span class="p">);</span>
+    <span class="k">public</span> <span class="k">static</span> <span class="kt">bool</span> <span class="k">operator</span> <span class="p">!=(</span><span class="n">OrderId</span> <span class="n">left</span><span class="p">,</span> <span class="n">OrderId</span> <span class="n">right</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">!(</span><span class="n">left</span> <span class="p">==</span> <span class="n">right</span><span class="p">);</span>
+    <span class="k">public</span> <span class="k">static</span> <span class="kt">bool</span> <span class="k">operator</span> <span class="p">&lt;(</span><span class="n">OrderId</span> <span class="n">left</span><span class="p">,</span> <span class="n">OrderId</span> <span class="n">right</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="n">left</span><span class="p">.</span><span class="nf">CompareTo</span><span class="p">(</span><span class="n">right</span><span class="p">)</span> <span class="p">&lt;</span> <span class="m">0</span><span class="p">;</span>
+    <span class="k">public</span> <span class="k">static</span> <span class="kt">bool</span> <span class="k">operator</span> <span class="p">&gt;(</span><span class="n">OrderId</span> <span class="n">left</span><span class="p">,</span> <span class="n">OrderId</span> <span class="n">right</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="n">left</span><span class="p">.</span><span class="nf">CompareTo</span><span class="p">(</span><span class="n">right</span><span class="p">)</span> <span class="p">&gt;</span> <span class="m">0</span><span class="p">;</span>
+    <span class="k">public</span> <span class="k">static</span> <span class="kt">bool</span> <span class="k">operator</span> <span class="p">&lt;=(</span><span class="n">OrderId</span> <span class="n">left</span><span class="p">,</span> <span class="n">OrderId</span> <span class="n">right</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="n">left</span><span class="p">.</span><span class="nf">CompareTo</span><span class="p">(</span><span class="n">right</span><span class="p">)</span> <span class="p">&lt;=</span> <span class="m">0</span><span class="p">;</span>
+    <span class="k">public</span> <span class="k">static</span> <span class="kt">bool</span> <span class="k">operator</span> <span class="p">&gt;=(</span><span class="n">OrderId</span> <span class="n">left</span><span class="p">,</span> <span class="n">OrderId</span> <span class="n">right</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="n">left</span><span class="p">.</span><span class="nf">CompareTo</span><span class="p">(</span><span class="n">right</span><span class="p">)</span> <span class="p">&gt;=</span> <span class="m">0</span><span class="p">;</span>
+    
+    <span class="k">public</span> <span class="k">override</span> <span class="kt">string</span> <span class="nf">ToString</span><span class="p">()</span> <span class="p">=&gt;</span> <span class="n">_value</span><span class="p">.</span><span class="nf">ToString</span><span class="p">();</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Existem mais coisas que poderíamos adicionar, como conversões implícitas/explícitas, mas nosso tipo já é funcional como está. Para aqueles que usam C# moderno, poderíamos alcançar o mesmo com uma sintaxe mais concisa:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">public</span> <span class="k">readonly</span> <span class="n">record</span> <span class="k">struct</span> <span class="nc">OrderId</span> <span class="p">:</span> <span class="n">IComparable</span><span class="p">&lt;</span><span class="n">OrderId</span><span class="p">&gt;</span>
+<span class="p">{</span>
+    <span class="k">private</span> <span class="k">readonly</span> <span class="kt">int</span> <span class="n">_value</span><span class="p">;</span>
+
+    <span class="k">public</span> <span class="nf">OrderId</span><span class="p">(</span><span class="kt">int</span> <span class="k">value</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="k">value</span> <span class="p">&lt;=</span> <span class="m">0</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">throw</span> <span class="k">new</span> <span class="nf">ArgumentOutOfRangeException</span><span class="p">(</span>
+                <span class="k">nameof</span><span class="p">(</span><span class="k">value</span><span class="p">),</span>
+                <span class="s">"O valor deve ser um inteiro positivo!"</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="n">_value</span> <span class="p">=</span> <span class="k">value</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="kt">int</span> <span class="nf">CompareTo</span><span class="p">(</span><span class="n">OrderId</span> <span class="n">other</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="n">_value</span><span class="p">.</span><span class="nf">CompareTo</span><span class="p">(</span><span class="n">other</span><span class="p">.</span><span class="n">_value</span><span class="p">);</span>
+
+    <span class="k">public</span> <span class="k">static</span> <span class="kt">bool</span> <span class="k">operator</span> <span class="p">&lt;(</span><span class="n">OrderId</span> <span class="n">left</span><span class="p">,</span> <span class="n">OrderId</span> <span class="n">right</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="n">left</span><span class="p">.</span><span class="nf">CompareTo</span><span class="p">(</span><span class="n">right</span><span class="p">)</span> <span class="p">&lt;</span> <span class="m">0</span><span class="p">;</span>
+    <span class="k">public</span> <span class="k">static</span> <span class="kt">bool</span> <span class="k">operator</span> <span class="p">&gt;(</span><span class="n">OrderId</span> <span class="n">left</span><span class="p">,</span> <span class="n">OrderId</span> <span class="n">right</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="n">left</span><span class="p">.</span><span class="nf">CompareTo</span><span class="p">(</span><span class="n">right</span><span class="p">)</span> <span class="p">&gt;</span> <span class="m">0</span><span class="p">;</span>
+    <span class="k">public</span> <span class="k">static</span> <span class="kt">bool</span> <span class="k">operator</span> <span class="p">&lt;=(</span><span class="n">OrderId</span> <span class="n">left</span><span class="p">,</span> <span class="n">OrderId</span> <span class="n">right</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="n">left</span><span class="p">.</span><span class="nf">CompareTo</span><span class="p">(</span><span class="n">right</span><span class="p">)</span> <span class="p">&lt;=</span> <span class="m">0</span><span class="p">;</span>
+    <span class="k">public</span> <span class="k">static</span> <span class="kt">bool</span> <span class="k">operator</span> <span class="p">&gt;=(</span><span class="n">OrderId</span> <span class="n">left</span><span class="p">,</span> <span class="n">OrderId</span> <span class="n">right</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="n">left</span><span class="p">.</span><span class="nf">CompareTo</span><span class="p">(</span><span class="n">right</span><span class="p">)</span> <span class="p">&gt;=</span> <span class="m">0</span><span class="p">;</span>
+    
+    <span class="k">public</span> <span class="k">override</span> <span class="kt">string</span> <span class="nf">ToString</span><span class="p">()</span> <span class="p">=&gt;</span> <span class="n">_value</span><span class="p">.</span><span class="nf">ToString</span><span class="p">();</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h3 id="tiny-types-são-muito-caros">Tiny Types São Muito Caros</h3>
+<p>Meu pequeno tipo <code class="language-plaintext highlighter-rouge">OrderId</code> ali ocupa 42 linhas no meu Visual Studio. Sim, existem algumas escolhas estilísticas envolvidas — por exemplo, eu não gosto quando as linhas têm mais de 80 caracteres de comprimento — mas mesmo assim, é bastante trabalho.</p>
+
+<p>A versão mais concisa, que aproveita o recurso record do C# moderno, é mais curta, mas ainda requer uma quantidade razoável de código.</p>
+
+<p>Agora imagine fazer isso para todos os ids em sua aplicação! E não apenas ids, claro. Imagine fazer isso para mais tipos que exigem validação/análise mais complexa:</p>
+<ul>
+  <li>CEPs</li>
+  <li>Placas de carro</li>
+  <li>Números de telefone.</li>
+</ul>
+
+<p>E assim por diante.</p>
+
+<p>Essa é a principal razão pela qual desenvolvedores que conhecem esta técnica não a usam. Mesmo quando gostam da ideia e entendem como ela poderia ser benéfica, eles acham que fazer tudo isso não vale o trabalho.</p>
+
+<h2 id="llms-ao-resgate">LLMs ao Resgate</h2>
+
+<p>Já se passaram dois anos desde que a OpenAI <a href="https://openai.com/index/chatgpt/">apresentou o ChatGPT ao mundo</a>, e tenho experimentado com LLMs desde então. Minha opinião atual sobre eles é que sua proposta de valor para desenvolvedores experientes é dupla:</p>
+<ul>
+  <li>Eles atuam como um substituto do Google ao aprender algo novo</li>
+  <li>Eles atuam como um gerador de código para coisas mundanas que eu preferiria não fazer.</li>
+</ul>
+
+<p>Há alguns meses, tornei-me um assinante pago do <a href="https://claude.ai">Claude</a>. Tenho usado principalmente como auxílio em um projeto hobby no qual estou trabalhando, e devo dizer que estou muito satisfeito com os resultados que obtenho, já que o Claude é muito melhor que o ChatGPT para tarefas de programação.</p>
+
+<p>Fui ao Claude com o seguinte prompt:</p>
+
+<blockquote>
+  <p>Gere um tipo chamado OrderId. Deve ser um wrapper sobre um int. Não permita valores zero ou negativos. Implemente igualdade, hash code, sobrecarga de operadores de comparação e igualdade.</p>
+
+  <p>Não adicione conversões explícitas ou implícitas.</p>
+</blockquote>
+
+<p>E este é o resultado que obtive:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">public</span> <span class="k">readonly</span> <span class="k">struct</span> <span class="nc">OrderId</span> <span class="p">:</span> <span class="n">IEquatable</span><span class="p">&lt;</span><span class="n">OrderId</span><span class="p">&gt;,</span> <span class="n">IComparable</span><span class="p">&lt;</span><span class="n">OrderId</span><span class="p">&gt;</span>
+<span class="p">{</span>
+    <span class="k">private</span> <span class="k">readonly</span> <span class="kt">int</span> <span class="k">value</span><span class="p">;</span>
+
+    <span class="k">public</span> <span class="nf">OrderId</span><span class="p">(</span><span class="kt">int</span> <span class="k">value</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="k">value</span> <span class="p">&lt;=</span> <span class="m">0</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">throw</span> <span class="k">new</span> <span class="nf">ArgumentException</span><span class="p">(</span><span class="s">"Order ID must be greater than zero"</span><span class="p">,</span> <span class="k">nameof</span><span class="p">(</span><span class="k">value</span><span class="p">));</span>
+        <span class="p">}</span>
+        <span class="k">this</span><span class="p">.</span><span class="k">value</span> <span class="p">=</span> <span class="k">value</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="k">override</span> <span class="kt">bool</span> <span class="nf">Equals</span><span class="p">(</span><span class="kt">object</span><span class="p">?</span> <span class="n">obj</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="n">obj</span> <span class="k">is</span> <span class="n">OrderId</span> <span class="n">other</span> <span class="p">&amp;&amp;</span> <span class="nf">Equals</span><span class="p">(</span><span class="n">other</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="kt">bool</span> <span class="nf">Equals</span><span class="p">(</span><span class="n">OrderId</span> <span class="n">other</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="k">value</span> <span class="p">==</span> <span class="n">other</span><span class="p">.</span><span class="k">value</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="k">override</span> <span class="kt">int</span> <span class="nf">GetHashCode</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="k">value</span><span class="p">.</span><span class="nf">GetHashCode</span><span class="p">();</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="kt">int</span> <span class="nf">CompareTo</span><span class="p">(</span><span class="n">OrderId</span> <span class="n">other</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="k">value</span><span class="p">.</span><span class="nf">CompareTo</span><span class="p">(</span><span class="n">other</span><span class="p">.</span><span class="k">value</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="k">static</span> <span class="kt">bool</span> <span class="k">operator</span> <span class="p">==(</span><span class="n">OrderId</span> <span class="n">left</span><span class="p">,</span> <span class="n">OrderId</span> <span class="n">right</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="n">left</span><span class="p">.</span><span class="nf">Equals</span><span class="p">(</span><span class="n">right</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="k">static</span> <span class="kt">bool</span> <span class="k">operator</span> <span class="p">!=(</span><span class="n">OrderId</span> <span class="n">left</span><span class="p">,</span> <span class="n">OrderId</span> <span class="n">right</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="p">!(</span><span class="n">left</span> <span class="p">==</span> <span class="n">right</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="k">static</span> <span class="kt">bool</span> <span class="k">operator</span> <span class="p">&lt;(</span><span class="n">OrderId</span> <span class="n">left</span><span class="p">,</span> <span class="n">OrderId</span> <span class="n">right</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="n">left</span><span class="p">.</span><span class="nf">CompareTo</span><span class="p">(</span><span class="n">right</span><span class="p">)</span> <span class="p">&lt;</span> <span class="m">0</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="k">static</span> <span class="kt">bool</span> <span class="k">operator</span> <span class="p">&lt;=(</span><span class="n">OrderId</span> <span class="n">left</span><span class="p">,</span> <span class="n">OrderId</span> <span class="n">right</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="n">left</span><span class="p">.</span><span class="nf">CompareTo</span><span class="p">(</span><span class="n">right</span><span class="p">)</span> <span class="p">&lt;=</span> <span class="m">0</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="k">static</span> <span class="kt">bool</span> <span class="k">operator</span> <span class="p">&gt;(</span><span class="n">OrderId</span> <span class="n">left</span><span class="p">,</span> <span class="n">OrderId</span> <span class="n">right</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="n">left</span><span class="p">.</span><span class="nf">CompareTo</span><span class="p">(</span><span class="n">right</span><span class="p">)</span> <span class="p">&gt;</span> <span class="m">0</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="k">static</span> <span class="kt">bool</span> <span class="k">operator</span> <span class="p">&gt;=(</span><span class="n">OrderId</span> <span class="n">left</span><span class="p">,</span> <span class="n">OrderId</span> <span class="n">right</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="n">left</span><span class="p">.</span><span class="nf">CompareTo</span><span class="p">(</span><span class="n">right</span><span class="p">)</span> <span class="p">&gt;=</span> <span class="m">0</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="k">override</span> <span class="kt">string</span> <span class="nf">ToString</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="k">value</span><span class="p">.</span><span class="nf">ToString</span><span class="p">();</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>É um bom começo, mas ainda não estou completamente satisfeito:</p>
+
+<blockquote>
+  <p>Pode torná-lo um record para que a implementação seja mais concisa? Além disso, use métodos com corpo de expressão para as linhas únicas.</p>
+</blockquote>
+
+<p>E agora o Claude me deu isso:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">public</span> <span class="k">readonly</span> <span class="n">record</span> <span class="k">struct</span> <span class="nc">OrderId</span> <span class="p">:</span> <span class="n">IComparable</span><span class="p">&lt;</span><span class="n">OrderId</span><span class="p">&gt;</span>
+<span class="p">{</span>
+    <span class="k">private</span> <span class="k">readonly</span> <span class="kt">int</span> <span class="k">value</span><span class="p">;</span>
+
+    <span class="k">public</span> <span class="nf">OrderId</span><span class="p">(</span><span class="kt">int</span> <span class="k">value</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="k">value</span> <span class="p">&lt;=</span> <span class="m">0</span><span class="p">)</span>
+             <span class="k">throw</span> <span class="k">new</span> <span class="nf">ArgumentException</span><span class="p">(</span><span class="s">"Order ID must be greater than zero"</span><span class="p">,</span> <span class="k">nameof</span><span class="p">(</span><span class="k">value</span><span class="p">));</span>
+        <span class="k">this</span><span class="p">.</span><span class="k">value</span> <span class="p">=</span> <span class="k">value</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="kt">int</span> <span class="nf">CompareTo</span><span class="p">(</span><span class="n">OrderId</span> <span class="n">other</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="k">value</span><span class="p">.</span><span class="nf">CompareTo</span><span class="p">(</span><span class="n">other</span><span class="p">.</span><span class="k">value</span><span class="p">);</span>
+
+    <span class="k">public</span> <span class="k">static</span> <span class="kt">bool</span> <span class="k">operator</span> <span class="p">&lt;(</span><span class="n">OrderId</span> <span class="n">left</span><span class="p">,</span> <span class="n">OrderId</span> <span class="n">right</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="n">left</span><span class="p">.</span><span class="nf">CompareTo</span><span class="p">(</span><span class="n">right</span><span class="p">)</span> <span class="p">&lt;</span> <span class="m">0</span><span class="p">;</span>
+    <span class="k">public</span> <span class="k">static</span> <span class="kt">bool</span> <span class="k">operator</span> <span class="p">&lt;=(</span><span class="n">OrderId</span> <span class="n">left</span><span class="p">,</span> <span class="n">OrderId</span> <span class="n">right</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="n">left</span><span class="p">.</span><span class="nf">CompareTo</span><span class="p">(</span><span class="n">right</span><span class="p">)</span> <span class="p">&lt;=</span> <span class="m">0</span><span class="p">;</span>
+    <span class="k">public</span> <span class="k">static</span> <span class="kt">bool</span> <span class="k">operator</span> <span class="p">&gt;(</span><span class="n">OrderId</span> <span class="n">left</span><span class="p">,</span> <span class="n">OrderId</span> <span class="n">right</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="n">left</span><span class="p">.</span><span class="nf">CompareTo</span><span class="p">(</span><span class="n">right</span><span class="p">)</span> <span class="p">&gt;</span> <span class="m">0</span><span class="p">;</span>
+    <span class="k">public</span> <span class="k">static</span> <span class="kt">bool</span> <span class="k">operator</span> <span class="p">&gt;=(</span><span class="n">OrderId</span> <span class="n">left</span><span class="p">,</span> <span class="n">OrderId</span> <span class="n">right</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="n">left</span><span class="p">.</span><span class="nf">CompareTo</span><span class="p">(</span><span class="n">right</span><span class="p">)</span> <span class="p">&gt;=</span> <span class="m">0</span><span class="p">;</span>
+
+    <span class="k">public</span> <span class="k">override</span> <span class="kt">string</span> <span class="nf">ToString</span><span class="p">()</span> <span class="p">=&gt;</span> <span class="k">value</span><span class="p">.</span><span class="nf">ToString</span><span class="p">();</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Finalmente, fui ao Claude e perguntei isto:</p>
+
+<blockquote>
+  <p>Imagine que existe uma classe <code class="language-plaintext highlighter-rouge">Order</code> que precisa ser salva no banco de dados. 
+Usamos Entity Framework. Como garantir que tudo funcione já que este modelo usa o tipo <code class="language-plaintext highlighter-rouge">OrderId</code>?</p>
+</blockquote>
+
+<p>E esta é minha resposta, completa com o modelo e a configuração necessária do EF para lidar com nosso
+tipo personalizado:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">.</span><span class="n">HasConversion</span><span class="p">&lt;</span><span class="n">OrderIdValueConverter</span><span class="p">&gt;()</span>
+                <span class="p">.</span><span class="nf">ValueGeneratedOnAdd</span><span class="p">();</span> <span class="c1">// Usar auto-incremento do banco de dados</span>
+            
+            <span class="n">builder</span><span class="p">.</span><span class="nf">Property</span><span class="p">(</span><span class="n">o</span> <span class="p">=&gt;</span> <span class="n">o</span><span class="p">.</span><span class="n">CustomerName</span><span class="p">)</span>
+                <span class="p">.</span><span class="nf">IsRequired</span><span class="p">()</span>
+                <span class="p">.</span><span class="nf">HasMaxLength</span><span class="p">(</span><span class="m">200</span><span class="p">);</span>
+
+            <span class="n">builder</span><span class="p">.</span><span class="nf">Property</span><span class="p">(</span><span class="n">o</span> <span class="p">=&gt;</span> <span class="n">o</span><span class="p">.</span><span class="n">TotalAmount</span><span class="p">)</span>
+                <span class="p">.</span><span class="nf">HasPrecision</span><span class="p">(</span><span class="m">18</span><span class="p">,</span> <span class="m">2</span><span class="p">);</span>
+        <span class="p">});</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="conclusão">Conclusão</h2>
+<p>Este post tinha dois objetivos. Primeiro, apresentar o conceito de tiny types para aqueles de vocês que nunca ouviram falar dele. Espero que concordem que, apesar de ser uma ideia simples, o padrão tiny types é algo que pode ajudar você a escrever código mais robusto.</p>
+
+<p>Segundo, e de forma mais ampla, demonstrar como os LLMs podem desempenhar um papel interessante no fomento de um melhor design de software. No passado, muitas técnicas de design de software podem ter sido descartadas por serem consideradas trabalho demais para valer a pena. Agora, com a ajuda do Claude, ChatGPT ou assistentes de código como o Copilot, podemos agilizar a escrita de código “chato”, o que faz com que a economia das técnicas de design, como a que apresentei neste post, faça mais sentido.</p>
+
+    
+    
+      
+    
+    
+        Encontrou algum erro no post? <a href="http://github.com/carlosschults/carlosschults.github.io/edit/master/_posts/2024-12-10-ia-tiny-types.md">Sugira uma edição</a>      
+    
+    
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+                    
+            <a rel="previous" class="previous" href="/pt/erros-aprendizados">&larr; Erros de Aprendizado Para Se Evitar Como Desenvolvedor de Software </a>
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+        	    
+            <a rel="next" class="next" href="/pt/git-switch-branch">Git Switch Branch: Tudo o Que Você Precisa Saber &rarr;</a>
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+      
+    <div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+        // Store these for reloads
+        window.disqus_identifier = window.location.pathname;
+        window.disqus_url = window.location.href;
+        
+        // Set initial theme - match it with the site's theme
+        const currentTheme = document.body.getAttribute('data-theme') || 'light';
+        this.page.theme = currentTheme === 'dark' ? 'dark' : 'light';
+    };
+    
+    (function() {
+        var d = document, s = d.createElement('script');
+        s.src = '//carlosschultsblog.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>    
+  </div>
+
+</article>
+
+      </div>
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">         
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-2">
+        <ul class="social-media-list">
+          
+          <li>
+            <a href="https://github.com/carlosschults"><span class="icon icon--github"><svg viewBox="0 0 16 16"><path fill="#828282" d="M7.999,0.431c-4.285,0-7.76,3.474-7.76,7.761 c0,3.428,2.223,6.337,5.307,7.363c0.388,0.071,0.53-0.168,0.53-0.374c0-0.184-0.007-0.672-0.01-1.32 c-2.159,0.469-2.614-1.04-2.614-1.04c-0.353-0.896-0.862-1.135-0.862-1.135c-0.705-0.481,0.053-0.472,0.053-0.472 c0.779,0.055,1.189,0.8,1.189,0.8c0.692,1.186,1.816,0.843,2.258,0.645c0.071-0.502,0.271-0.843,0.493-1.037 C4.86,11.425,3.049,10.76,3.049,7.786c0-0.847,0.302-1.54,0.799-2.082C3.768,5.507,3.501,4.718,3.924,3.65 c0,0,0.652-0.209,2.134,0.796C6.677,4.273,7.34,4.187,8,4.184c0.659,0.003,1.323,0.089,1.943,0.261 c1.482-1.004,2.132-0.796,2.132-0.796c0.423,1.068,0.157,1.857,0.077,2.054c0.497,0.542,0.798,1.235,0.798,2.082 c0,2.981-1.814,3.637-3.543,3.829c0.279,0.24,0.527,0.713,0.527,1.437c0,1.037-0.01,1.874-0.01,2.129 c0,0.208,0.14,0.449,0.534,0.373c3.081-1.028,5.302-3.935,5.302-7.362C15.76,3.906,12.285,0.431,7.999,0.431z"/></svg>
+</span><span class="username">carlosschults</span></a>
+
+          </li>
+          
+
+          
+          <li>
+            <a href="https://twitter.com/carlosschults"><span class="icon icon--twitter"><svg viewBox="0 0 16 16"><path fill="#828282" d="M15.969,3.058c-0.586,0.26-1.217,0.436-1.878,0.515c0.675-0.405,1.194-1.045,1.438-1.809c-0.632,0.375-1.332,0.647-2.076,0.793c-0.596-0.636-1.446-1.033-2.387-1.033c-1.806,0-3.27,1.464-3.27,3.27 c0,0.256,0.029,0.506,0.085,0.745C5.163,5.404,2.753,4.102,1.14,2.124C0.859,2.607,0.698,3.168,0.698,3.767 c0,1.134,0.577,2.135,1.455,2.722C1.616,6.472,1.112,6.325,0.671,6.08c0,0.014,0,0.027,0,0.041c0,1.584,1.127,2.906,2.623,3.206 C3.02,9.402,2.731,9.442,2.433,9.442c-0.211,0-0.416-0.021-0.615-0.059c0.416,1.299,1.624,2.245,3.055,2.271 c-1.119,0.877-2.529,1.4-4.061,1.4c-0.264,0-0.524-0.015-0.78-0.046c1.447,0.928,3.166,1.469,5.013,1.469 c6.015,0,9.304-4.983,9.304-9.304c0-0.142-0.003-0.283-0.009-0.423C14.976,4.29,15.531,3.714,15.969,3.058z"/></svg>
+</span><span class="username">carlosschults</span></a>
+
+          </li>
+          
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-3">
+        <p>Artigos sobre desenvolvimento de software e tecnologia.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+
+    <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-92788641-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+    <script src="/js/dark-mode.js"></script>
+  </body>
+
+</html>

@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Coding Best Practices When You’re Short On Time | carlos schults / blog</title>
+  <link rel="apple-touch-icon" sizes="57x57" href="/img/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/img/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/img/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/img/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/img/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/img/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/img/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/img/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"  href="/img/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/img/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon-16x16.png">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="description" content="Photo by Ales Nesetril on UnsplashEditorial note: I originally wrote this post for the SubMain blog.  You can check out the original here, at their site. Whi...">
+  
+  <!-- Twitter card -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:creator" content="@carlosschults">
+  <meta name="twitter:site" content="@carlosschults">
+  <meta name="twitter:domain" content="carlosschults.net">
+  <meta name="twitter:title" content="Coding Best Practices When You’re Short On Time">
+  <meta name="twitter:description" content="Photo by Ales Nesetril on UnsplashEditorial note: I originally wrote this post for the SubMain blog.  You can check out the original here, at their site. Whi...">
+
+   <!-- Facebook meta -->
+  
+  
+  <meta property="og:title" content="Coding Best Practices When You’re Short On Time">
+  <meta property="og:site_name" content="Carlos Schults / Blog" />
+  <meta property="og:locale" content="en_US">  
+  <meta property="og:type" content="article" />
+  <meta property="og:image" content="https://res.cloudinary.com/dz5ppacuo/image/upload/v1539703469/coding-best-practices-1038x437_ugnhab.jpg" />  
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:width" content="1038"> 
+  <meta property="og:image:height" content="437">  
+  
+  <meta property="og:article:published_time" content="2018-10-16T00:00:00+00:00" />  
+  <meta property="og:article:author" content="Carlos Schults" />
+  
+  <meta property="og:article:tag" content="csharp" />
+  <meta property="og:article:tag" content="best practices" />    
+  
+  <meta property="og:url" content="https://carlosschults.net/en/coding-best-practices-short-time/"/>
+  <meta property="og:description" content="Photo by Ales Nesetril on UnsplashEditorial note: I originally wrote this post for the SubMain blog.  You can check out the original here, at their site. Whi...">
+  <link rel="stylesheet" href="/css/main.css">  
+  
+  <link rel="canonical" href="https://blog.submain.com/coding-best-practices-short-time/">
+   
+  
+  <link rel="alternate" hreflang="en" href="/en/coding-best-practices-short-time/" />
+  <link rel="alternate" hreflang="pt" href="/pt/boas-praticas-sem-tempo/" />
+  
+  <link rel="alternate" type="application/rss+xml" title="carlos schults / blog" href="https://carlosschults.net/feed.xml">
+</head>
+
+  <body>
+    <header class="site-header">
+  <div class="wrapper">    
+    <a class="site-title" href="/">carlos schults / blog</a>
+    
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg viewBox="0 0 18 15">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+
+      <div class="trigger">        
+          
+          <a class="page-link" href="/footprints/">Dev Footprints</a>
+          <a class="page-link" href="/readings/">Readings</a>
+          <a class="page-link" href="/about/">About</a>
+		      <a class="page-link" href="/search/">Search</a>
+                  
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+<div class="wrapper" style="text-align: right; line-height: 2em">
+  
+   <a href="/en/coding-best-practices-short-time/" class="en">en</a>  <a href="/pt/boas-praticas-sem-tempo/" class="pt">pt</a> 
+
+  
+  
+</div>
+
+
+    <div class="page-content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">    
+    <h2 class="postTitle" itemprop="headline">Coding Best Practices When You’re Short On Time</h2>
+    <p class="post-meta">   
+    <time datetime="2018-10-16T00:00:00+00:00" itemprop="datePublished">Oct 16, 2018
+    </time> • <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">Carlos Schults</span></span>
+  <span class="tags" itemprop="keywords"> • Tags: <a href="/tag/csharp">csharp </a> <a href="/tag/best practices">best practices </a> </span>
+  </p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <p><img src="https://res.cloudinary.com/dz5ppacuo/image/upload/v1539703469/coding-best-practices-1038x437_ugnhab.jpg" alt="" />
+Photo by Ales Nesetril on Unsplash</p>
+
+<p><em>Editorial note: I originally wrote this post for the SubMain blog.  You can <a href="https://blog.submain.com/coding-best-practices-short-time/">check out the original here, at their site</a>. While you’re there, download and try their CodeIt.Right product.</em></p>
+
+<p>One topic in software development that really fascinates me is coding best practices. I’m always searching for ways to improve my work and deliver value in a fast and consistent manner.</p>
+
+<p>It can be tricky to define what a “<a href="https://www.daedtech.com/what-is-a-best-practice-in-software-development/">coding best practice” is</a>. Some people are even in favor of <a href="https://dzone.com/articles/death-best-practices">downright retiring the term!</a> But one thing pretty much everyone agrees upon is this: coming up with and implementing strategies—by whatever name you call them—to improve the output of one’s work is something that any developer worth his or her salt should be continuously doing.</p>
+
+<p>Of course, there’s no free lunch. The adoption of a best practice takes time…and sometimes you just don’t have much of that to begin with. And then there’s management, whose buy-in is not always guaranteed.</p>
+
+<p>So, what to do if your development team is struggling with the poor quality of a codebase while lacking time to implement best practices that would help?</p>
+
+<p>The answer I offer you today is what I’ll call the “coding best practices emergency pack”: <em>a small list of coding best practices that you can adopt on relatively short notice to get your team and your codebase from utter chaos to a more manageable state</em>.</p>
+
+<p>Because there’s lots of advice on coding best practices out there, to the point where it’s hard not to feel overwhelmed, I narrowed down my list of emergency-pack best practices by requiring they meet three criteria:</p>
+
+<ul>
+  <li>They must be fundamental, in the sense that they’re the building blocks with which you can implement more sophisticated practices later.</li>
+  <li>You can adopt them in relatively short notice. (I’d say a week is feasible.)</li>
+  <li>Their cost is free or very low.</li>
+</ul>
+
+<p>The practices that follow all fit these parameters. And without further ado, here it is: my coding best practices emergency pack, with items listed in the order they should be implemented and starting with the most critical one.</p>
+
+<h2 id="version-control-system">Version Control System</h2>
+
+<p>I once worked for a software development shop where no version control system was used. The source files were placed in a shared folder that every developer could access. What was the process we used when editing a file? Yeah, you guessed it:  we’d simply create a copy of the file and rename it to “filename_old.ext” or something like that.</p>
+
+<p>This was about eight or nine years ago. So maybe things have improved, right? Well, they certainly have, to some extent, but not completely. There are still <a href="https://twitter.com/_m_b_j_/status/938785388268806146">companies out there that don’t use a VCS</a>.</p>
+
+<h3 id="how-to-proceed">How to Proceed?</h3>
+
+<p>From now on, I’ll just assume you agree that a VCS is a fundamental coding best practice. If that’s not the case, there’s plenty of resources out there explaining <a href="https://www.git-tower.com/learn/git/ebook/en/desktop-gui/basics/what-is-version-control#start">what a VCS is</a> and <a href="https://www.atlassian.com/git/tutorials/what-is-version-control#benefits-of-version-control">why should you use one.</a></p>
+
+<p>With that out of the way, it’s time to get to specifics. Which tool should you use? How to go about its adoption?</p>
+
+<p><a href="https://git-scm.com/">Git</a> is a solid choice. And despite having a steeper learning curve for <a href="https://carlosschults.net/en/git-basics-for-tfs-users">those more used to centralized version control systems, such as Subversion or TFVC</a>, it’s <em>de facto</em> standard in our industry. So by all means, learn it, since not doing so can harm your career in the future.</p>
+
+<p>But it’s possible that Git is not the best choice for your team <strong>right now</strong>. Remember, you’re short on time. So we need to get your team to adopt these coding best practices ASAP.</p>
+
+<p>How do we do this? So, let’s say you have experience with <a href="https://subversion.apache.org/">Subversion</a>, having used it at your previous company, but you have no experience with Git at all. If that’s the case, I’d say Subversion is the best choice for you. The overhead of learning a new system and teaching it to your co-workers while putting it into production would be too great.</p>
+
+<h2 id="code-review">Code Review</h2>
+
+<p>I’m not going to lie: I <em>love </em>code reviews—and <a href="https://www.codinghorror.com/blog/archives/000495.html">I’m not alone in that</a>. I’ve witnessed firsthand how a good code review can reduce the number of bugs in a codebase, make the code look and feel more consistent, and perhaps best of all, spread knowledge throughout a development team.</p>
+
+<p>And here’s a major selling point: a code review practice is relatively easy to implement. Start as simple as you can, and then tweak and experiment with your approach as the need arises.</p>
+
+<h3 id="what-do-i-mean-by-code-review">What Do I Mean by Code Review?</h3>
+
+<p>Talking about “code review” can be tricky. People sometimes mean widely different things when they use the term, so I think it warrants further clarification.</p>
+
+<p>I’m not in favor of a highly stressful and bureaucratic code review process, where your code is scrutinized and criticized in public for hours. I don’t believe in public shaming as a tool for achieving quality. On the contrary, <a href="https://blog.submain.com/code-review-vs-pair-programming-2/">the type of code review I advocate for</a> is a lightweight and low-stress process, usually initiated by submitting a pull request or using your favorite IDE.</p>
+
+<h3 id="how-to-proceed-1">How to Proceed </h3>
+
+<p>Since we’re now on the same page about what a code review should look like, how would one go about implementing the practice? My answer is, not surprisingly, “the simplest way that could possibly work.” </p>
+
+<p>For instance, if yours is a .NET shop using TFS/TFVC, you can start by <a href="https://marketplace.visualstudio.com/items?itemName=ColinD.ColinsALMCheckinPoliciesVS2017">installing a check-in policy</a> that requires a code review for each check-in. If your team uses GitHub, you can use <a href="https://help.github.com/articles/about-pull-requests/">pull requests</a>. Just start performing reviews so you and your team can get used to it. Then, with time, start tuning and perfecting your approach.</p>
+
+<p>Here are some of the questions that can appear as you refine your process for this:</p>
+
+<ul>
+  <li><strong>What’s the goal of a code review?</strong> Are we looking for bugs? Trying to improve readability? Checking adherence to the company’s coding standard?</li>
+  <li><strong>Where do we draw the line between “suggestions” and “impediments”?</strong> Is it OK to give a thumbs-down to someone’s code for bad indentation or a slightly off variable name?</li>
+  <li><strong>What do when reviewer and reviewee can’t come to a consensus?</strong> Bring in a mediator to give the final word? And who should be this mediator? The lead developer?</li>
+</ul>
+
+<p>The answer to all of these questions can be found in <strong>automation</strong>. Much of the awkwardness of a code review can be removed when you employ a <a href="https://blog.submain.com/different-styles-code-analyzer/">code analyzer</a> to handle the automatable portions of the process.</p>
+
+<p>For instance, <a href="https://submain.com/codeit.right/features">SubMain’s CodeIt.Right</a> will give you real-time feedback from inside Visual Studio, alerting you of possible coding issues and even automatically fix code smells and violations for you.</p>
+
+<p>By employing automation, you set your developers free to worry about higher level concerns when performing reviews, such as code clarity or architectural decisions.</p>
+
+<h2 id="automated-builds">Automated Builds</h2>
+
+<p>You may be thinking that I’ve got it wrong. After all, does it even make sense to talk about automated builds without mentioning automated tests?</p>
+
+<p>Well, I’m going argue that yes, it does make sense, and for one very simple reason: it eliminates “<a href="https://blog.codinghorror.com/the-works-on-my-machine-certification-program/">it works on my machine</a>” syndrome. </p>
+
+<p>By having a central place where builds are performed, you shed light on all kinds of problems, from poor management of dependencies to bad test discipline.</p>
+
+<h3 id="how-to-proceed-2">How to Proceed</h3>
+
+<p>My advice here is the same as before: do the simplest thing that could work.</p>
+
+<p>If your team already uses TFS, then learn how to create a <a href="https://docs.microsoft.com/en-us/vsts/build-release/actions/ci-cd-part-1">build definition and you’re good to go</a>. On the other hand, if you host your projects on GitHub, you might be interested in taking a look at <a href="https://travis-ci.org/">Travis CI.</a></p>
+
+<p>With time, you should improve your strategy. Remember the static code analyzers I mentioned earlier? You can integrate them into your build process. Unit testing and other kinds of automated tests are a very important addition as well.</p>
+
+<p>Speaking of which…</p>
+
+<h2 id="notable-absences">Notable Absences</h2>
+
+<p>You might be surprised to see that I haven’t included unit testing in the list of coding best practices, <a href="https://carlosschults.net/en/unit-testing-for-beginners-part1/">despite being myself a firm believer in the importance of automated testing</a> to the overall quality of a codebase. And why is that?</p>
+
+<p>Adding unit tests to a legacy application, unfortunately, is <em>hard</em>, to the point that there’s even <a href="https://www.amazon.com/Working-Effectively-Legacy-Michael-Feathers/dp/0131177052/ref=sr_1_1?ie=UTF8&amp;qid=1515443597&amp;sr=8-1&amp;keywords=working+effectively+with+legacy+code">a famous book</a>that focuses solely on this. It’s just not a feasible task for you to tackle quickly.</p>
+
+<p>In a similar fashion, it’s possible that a portion of readers expected me to talk about clean code or the <a href="https://en.wikipedia.org/wiki/SOLID_(object-oriented_design)">SOLID</a>principles. I do encourage you to research and learn about these topics,  but I don’t think they’re a good fit for the purpose of this post. They are, as the name already points out, principles. Think of them as philosophical guidelines—useful, but not as easy to break down into simple, actionable advice.</p>
+
+<h2 id="deploy-your-package-asap">Deploy Your Package ASAP!</h2>
+
+<p>It’s possible that some of you found these practices to be extremely basic and not post-worthy. “Who doesn’t use version control in twenty-freaking-eighteen???” I hear you saying.</p>
+
+<p>Well, it really doesn’t take long to find evidence (anecdotal, but still) that <a href="https://softwareengineering.stackexchange.com/questions/65931/are-there-serious-companies-that-dont-use-version-control-and-continuous-integr">things are not all sunshine and rainbows</a>. To believe that even basic coding best practices, such as using version control or automated testing, are universally applied is probably more wishful thinking than what we’d like to believe.</p>
+
+<p>For the rest of you, I hope this list proves useful.</p>
+
+<p>You know what they say. “When in a hole, stop digging.” And that’s exactly the type of help I wanted to offer with this post: a quick and easy fix, meant to give you and your teammates just enough sanity that you can focus and regain control of your application, ensuring its long-term health.</p>
+
+    
+    
+      
+    
+    
+        Found a typo or mistake in the post? <a href="http://github.com/carlosschults/carlosschults.github.io/edit/master/_posts/2018-10-16-coding-best-practices-short-time.md">Suggest edit</a>
+        
+    
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+                    
+            <a rel="previous" class="previous" href="/en/4-common-datetime-mistakes-csharp/">&larr; 4 Common Datetime Mistakes in C# — And How to Avoid Them </a>
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+        	    
+            <a rel="next" class="next" href="/en/value-objects-tool/">Value Objects: A Tool for Self-Documented Code and Fewer Errors &rarr;</a>
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+      
+    <div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+        // Store these for reloads
+        window.disqus_identifier = window.location.pathname;
+        window.disqus_url = window.location.href;
+        
+        // Set initial theme - match it with the site's theme
+        const currentTheme = document.body.getAttribute('data-theme') || 'light';
+        this.page.theme = currentTheme === 'dark' ? 'dark' : 'light';
+    };
+    
+    (function() {
+        var d = document, s = d.createElement('script');
+        s.src = '//carlosschultsblog.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>    
+  </div>
+
+</article>
+
+      </div>
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">         
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-2">
+        <ul class="social-media-list">
+          
+          <li>
+            <a href="https://github.com/carlosschults"><span class="icon icon--github"><svg viewBox="0 0 16 16"><path fill="#828282" d="M7.999,0.431c-4.285,0-7.76,3.474-7.76,7.761 c0,3.428,2.223,6.337,5.307,7.363c0.388,0.071,0.53-0.168,0.53-0.374c0-0.184-0.007-0.672-0.01-1.32 c-2.159,0.469-2.614-1.04-2.614-1.04c-0.353-0.896-0.862-1.135-0.862-1.135c-0.705-0.481,0.053-0.472,0.053-0.472 c0.779,0.055,1.189,0.8,1.189,0.8c0.692,1.186,1.816,0.843,2.258,0.645c0.071-0.502,0.271-0.843,0.493-1.037 C4.86,11.425,3.049,10.76,3.049,7.786c0-0.847,0.302-1.54,0.799-2.082C3.768,5.507,3.501,4.718,3.924,3.65 c0,0,0.652-0.209,2.134,0.796C6.677,4.273,7.34,4.187,8,4.184c0.659,0.003,1.323,0.089,1.943,0.261 c1.482-1.004,2.132-0.796,2.132-0.796c0.423,1.068,0.157,1.857,0.077,2.054c0.497,0.542,0.798,1.235,0.798,2.082 c0,2.981-1.814,3.637-3.543,3.829c0.279,0.24,0.527,0.713,0.527,1.437c0,1.037-0.01,1.874-0.01,2.129 c0,0.208,0.14,0.449,0.534,0.373c3.081-1.028,5.302-3.935,5.302-7.362C15.76,3.906,12.285,0.431,7.999,0.431z"/></svg>
+</span><span class="username">carlosschults</span></a>
+
+          </li>
+          
+
+          
+          <li>
+            <a href="https://twitter.com/carlosschults"><span class="icon icon--twitter"><svg viewBox="0 0 16 16"><path fill="#828282" d="M15.969,3.058c-0.586,0.26-1.217,0.436-1.878,0.515c0.675-0.405,1.194-1.045,1.438-1.809c-0.632,0.375-1.332,0.647-2.076,0.793c-0.596-0.636-1.446-1.033-2.387-1.033c-1.806,0-3.27,1.464-3.27,3.27 c0,0.256,0.029,0.506,0.085,0.745C5.163,5.404,2.753,4.102,1.14,2.124C0.859,2.607,0.698,3.168,0.698,3.767 c0,1.134,0.577,2.135,1.455,2.722C1.616,6.472,1.112,6.325,0.671,6.08c0,0.014,0,0.027,0,0.041c0,1.584,1.127,2.906,2.623,3.206 C3.02,9.402,2.731,9.442,2.433,9.442c-0.211,0-0.416-0.021-0.615-0.059c0.416,1.299,1.624,2.245,3.055,2.271 c-1.119,0.877-2.529,1.4-4.061,1.4c-0.264,0-0.524-0.015-0.78-0.046c1.447,0.928,3.166,1.469,5.013,1.469 c6.015,0,9.304-4.983,9.304-9.304c0-0.142-0.003-0.283-0.009-0.423C14.976,4.29,15.531,3.714,15.969,3.058z"/></svg>
+</span><span class="username">carlosschults</span></a>
+
+          </li>
+          
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-3">
+        <p>Articles on software development and technology.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+
+    <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-92788641-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+    <script src="/js/dark-mode.js"></script>
+  </body>
+
+</html>

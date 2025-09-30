@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Revisão de Código vs Programação em Par: Qual a sua equipe deve escolher? | carlos schults / blog</title>
+  <link rel="apple-touch-icon" sizes="57x57" href="/img/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/img/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/img/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/img/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/img/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/img/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/img/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/img/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"  href="/img/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/img/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon-16x16.png">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="description" content="NOTA: Eu escrevi este post originalmente para o blog da SubMain. Você pode conferir o artigo original no site deles, em inglês. Enquanto estiver por lá, dê u...">
+  
+  <!-- Twitter card -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:creator" content="@carlosschults">
+  <meta name="twitter:site" content="@carlosschults">
+  <meta name="twitter:domain" content="carlosschults.net">
+  <meta name="twitter:title" content="Revisão de Código vs Programação em Par: Qual a sua equipe deve escolher?">
+  <meta name="twitter:description" content="NOTA: Eu escrevi este post originalmente para o blog da SubMain. Você pode conferir o artigo original no site deles, em inglês. Enquanto estiver por lá, dê u...">
+
+   <!-- Facebook meta -->
+  
+  
+  <meta property="og:title" content="Revisão de Código vs Programação em Par: Qual a sua equipe deve escolher?">
+  <meta property="og:site_name" content="Carlos Schults / Blog" />
+  <meta property="og:locale" content="pt_BR">  
+  <meta property="og:type" content="article" />
+  <meta property="og:image" content="https://res.cloudinary.com/dz5ppacuo/image/upload/v1516470435/code-review-vs-pair-programming1038x437_w99q2t.jpg" />  
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:width" content="1038"> 
+  <meta property="og:image:height" content="437">  
+  
+  <meta property="og:article:published_time" content="2018-01-24T00:00:00+00:00" />  
+  <meta property="og:article:author" content="Carlos Schults" />
+  
+  <meta property="og:article:tag" content="programacao em par" />
+  <meta property="og:article:tag" content="boas praticas" />
+  <meta property="og:article:tag" content="revisao de codigo" />
+  <meta property="og:article:tag" content="metodologias ageis" />    
+  
+  <meta property="og:url" content="https://carlosschults.net/pt/revisao-codigo-vs-programacao-em-par/"/>
+  <meta property="og:description" content="NOTA: Eu escrevi este post originalmente para o blog da SubMain. Você pode conferir o artigo original no site deles, em inglês. Enquanto estiver por lá, dê u...">
+  <link rel="stylesheet" href="/css/main.css">  
+  
+   <link rel="canonical" href="https://carlosschults.net/pt/revisao-codigo-vs-programacao-em-par/">
+   
+  
+  <link rel="alternate" hreflang="en" href="/en/code-review-vs-pair-programming/" />
+  <link rel="alternate" hreflang="pt" href="/pt/revisao-codigo-vs-programacao-em-par/" />
+  
+  <link rel="alternate" type="application/rss+xml" title="carlos schults / blog" href="https://carlosschults.net/rss.xml">
+</head>
+
+  <body>
+    <header class="site-header">
+  <div class="wrapper">    
+    <a class="site-title" href="/pt/">carlos schults / blog</a>
+    
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg viewBox="0 0 18 15">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+
+      <div class="trigger">        
+          
+          <a class="page-link" href="/sobre/">Sobre</a>
+          <a class="page-link" href="/busca/">Busca</a>
+                  
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+<div class="wrapper" style="text-align: right; line-height: 2em">
+  
+   <a href="/en/code-review-vs-pair-programming/" class="en">en</a>  <a href="/pt/revisao-codigo-vs-programacao-em-par/" class="pt">pt</a> 
+
+  
+  
+</div>
+
+
+    <div class="page-content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">    
+    <h2 class="postTitle" itemprop="headline">Revisão de Código vs Programação em Par: Qual a sua equipe deve escolher?</h2>
+    <p class="post-meta">   
+    <time datetime="2018-01-24T00:00:00+00:00" itemprop="datePublished">24/01/2018
+    </time> • <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">Carlos Schults</span></span>
+  <span class="tags" itemprop="keywords"> • Tags: <a href="/tag_ptbr/programacao em par">programacao em par </a> <a href="/tag_ptbr/boas praticas">boas praticas </a> <a href="/tag_ptbr/revisao de codigo">revisao de codigo </a> <a href="/tag_ptbr/metodologias ageis">metodologias ageis </a> </span>
+  </p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <p><img src="https://res.cloudinary.com/dz5ppacuo/image/upload/v1516470435/code-review-vs-pair-programming1038x437_w99q2t.jpg" alt="" /></p>
+
+<p><em>NOTA: Eu escrevi este post originalmente para o blog da SubMain. Você pode <a href="https://blog.submain.com/code-review-vs-pair-programming-2/">conferir o artigo original no site deles, em inglês</a>. Enquanto estiver por lá, dê uma conferida no CodeIt.Right, uma ferramenta que pode lhe ajudar com automação de revisões de código.</em></p>
+
+<p>Algumas semanas atrás, eu estava olhando o Twitter quando vi isso:</p>
+
+<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">Pair Programming &gt; Code Review</p>&mdash; Rafael Ponte (@rponte) <a href="https://twitter.com/rponte/status/932390250848178176?ref_src=twsrc%5Etfw">November 19, 2017</a></blockquote>
+<script async="" src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<p>O que se seguiu foi uma breve discussão entre o autor e eu. Ele apresentou bons argumentos, mas eu continuei não convencido de que programação em par (<em>pair programming</em>) era um vencedor tão óbvio.</p>
+
+<p>Como eu já havia implementado práticas de revisão de código (<em>code review</em>) com sucesso e também pareado até certo ponto, eu não tinha dificuldades em ver como as duas práticas podem ser valiosas. Mas será que uma deles é claramente <em>melhor</em> que a outra? Revisão de código e programação em par são intercambiáveis, ou há cenários em que um ou outro claramente se destaca?</p>
+
+<p>É o que vou responder hoje. Vamos lá.</p>
+
+<h2 id="o-que-quero-dizer-por-revisão-de-código">O que quero dizer por “Revisão de Código”</h2>
+
+<p>Imagine a seguinte cena: você é um(a) jovem programador(a) em seu primeiro trabalho com desenvolvimento de software. Após terminar sua primeira tarefa, você é convocado(a) a uma sala de reunião; lá você encontra o desenvolvedor líder e três desenvolvedores seniores. Um monitor enorme está ligado exibindo seu código. Hora da revisão!</p>
+
+<p>Durante duas horas e meia sofridas, seu código é julgado sem só enquanto você sua profusamente. Desde suas decisões de projeto até as mais triviais preferências estilísticas, nada escapa da enxurrada de críticas.</p>
+
+<p>É essa a cena exibida na sua mente quando você vê as palavras “revisão de código”?</p>
+
+<p>Boa notícias pra você, então. Este <em>não</em> é o tipo de revisão de código sobre o qual estou falando. Ao invés, pense em um processo bem leve e informal. Você submete seu código para revisão criando um pull request ou mesmo usando alguma funcionalidade incorporada na sua IDE.</p>
+
+<h3 id="a-parte-boa">A parte boa</h3>
+
+<p>Após tocar brevemente no “o que” e no “como” de uma revisão de código, hora de abordarmos o “por que”. Por que o seu time deve adotar a prática? Quais são os benefícios?</p>
+
+<p>A primeira razão, não surpreendentemente, é <strong>detectar bugs</strong>. Eu aposto que você é familiar com aquela velha pérola de sabedoria que diz que <a href="https://www.cs.umd.edu/projects/SoftEng/ESEG/papers/82.78.pdf">quanto mais tarde um defeito é encontrado, maior é o custo para sua resolução</a>. Sendo assim, por que não usar um processo relativamente barato que pode encontrar <a href="https://www.cs.umd.edu/projects/SoftEng/ESEG/papers/82.78.pdf">até 60% dos defeitos</a>?</p>
+
+<p>Outra razão para a sua empresa adotar revisões de código: melhorar a <strong>legibilidade do código</strong>. Tentar ler e entender um trecho novo de código frequentemente leva à descoberta de problemas como:</p>
+
+<ul>
+  <li>Nomes ruins.</li>
+  <li>Indentação errada.</li>
+  <li>Ocorrências de <a href="https://en.wikipedia.org/wiki/Cargo_cult_programming">programação cargo cult</a>.</li>
+  <li>Código não idiomático.</li>
+</ul>
+
+<p>O revisor também pode encontrar <em>corner cases</em> que passaram despercebidos ou ajudar na avaliação de performance do código escrito.</p>
+
+<p>E chegamos à última razão. Uma revisão de código bem feita pode <strong>espalhar conhecimento pelo time.</strong> Isso destrói ilhas de conhecimento na equipe, melhorando a qualidade final do produto.</p>
+
+<h3 id="a-parte-ruim">A parte ruim</h3>
+
+<p>Enquanto alguns dizem que a revisão de código é a <a href="https://blog.codinghorror.com/code-reviews-just-do-it/">prática mais importante que você deve adotar</a> para aperfeiçoar seu código, <a href="https://blog.nelhage.com/2010/06/i-hate-code-review/">tal entusiasmo não é universal</a>. Assim, não poderíamos deixar de falar também das potenciais desvantagens da prática.</p>
+
+<p>A queixa mais comum sobre revisão de código tem a ver com <strong>tempo</strong>. Quando você envia algum código para revisão, você obviamente precisa esperar até que a revisão seja finalizada.</p>
+
+<p>O que fazer durante a espera? Idealmente, sua equipe deveria quebrar o trabalho disponível em unidades pequenas e discretas, que possam ser resolvidas de maneira mais ou menos independente. Nem sempre isso é prático, porém. E falando nisso, <strong>a própria troca constante de tarefas pode ser prejudicial para seu foco e produtividade</strong>.</p>
+
+<p>Digamos que o Bruno gastou <em>x</em> horas implementando uma funcionalidade. Então a Ana revisa o trabalho dele e diz que a implementação está completamente errada, e ele precisa refazer tudo. <strong>Aquelas <em>x</em> horas de desenvolvimento acabaram de ir para o lixo</strong>.</p>
+
+<p>Finalmente, às vezes as pessoas desperdiçam quantidades ridículas de tempo <strong>discutindo sobre detalhes estéticos inúteis</strong>, como a posição das chaves, ou se devem ou não incluir um underscore no nome de um campo privado. Infelizmente, debates idiotas assim às vezes escalam para níveis que tornam o local de trabalho tóxico.</p>
+
+<h2 id="programação-em-par-mais-que-uma-super-revisão-de-código">Programação em Par: Mais que uma super revisão de código</h2>
+
+<p>Programação em par é uma técnica na qual duas pessoas colaboram no código juntas, na mesma estação de trabalho.</p>
+
+<p>Elas periodicamente revezam em dois papéis. O <em>piloto</em> escreve o código, pensando em voz alta para explicar suas decisões e o que está pensando. O <em>navegador</em> observa o piloto, dando feedback e opiniões em tempo real.</p>
+
+<p>Seria a programação em par nada mais que “<em>code review on steroids</em>”, <a href="https://blog.codinghorror.com/pair-programming-vs-code-reviews/">como coloca Jeff Atwood</a>?</p>
+
+<p>Talvez não. Um dos princípios básicos das metologias ágeis é que o desenvolvimento de software se beneficia de ciclos de feedback curtos. Levando isso em consideração, trazer a revisão de código para o mais cedo possível no processo faria bastante sentido, por estar em harmonia com os princípios ágeis.</p>
+
+<h3 id="a-parte-boa-1">A parte boa</h3>
+
+<p>Não deveria ser surpresa que a programação em par compartilha vários dos benefícios da revisão de código, como detecção de bugs, melhoras na legibilidade do código e propagação de conhecimento pela equipe.</p>
+
+<p>Mas a programação em par também pode oferecer benefícios exclusivos, tais como:</p>
+
+<ul>
+  <li><strong>Mais foco</strong>. A presença de um colega ao lado pode exercer uma certa pressão, lhe mantendo motivado na tarefa a ser realizada.</li>
+  <li><strong>Ciclos de feedback mais curtos.</strong>. Já que seu par está revisando seu código o tempo todo, existe um risco muito menor de desperdiçar tempo graças a feedback tardio.</li>
+  <li><strong>Aumento no uso de outras boas práticas da Engenharia de Software</strong>. Como sugerido por um estudo realizado na Universidade Estadual da Carolina do Norte, <a href="https://collaboration.csc.ncsu.edu/laurie/Papers/ESE%20WilliamsPairProgramming_V2.pdf">equipes usando programação em par tendem a usar mais práticas de desenvolvimento como testes unitários, integração contínua e a criação de padrões de código</a>.</li>
+</ul>
+
+<h3 id="a-parte-ruim-1">A parte ruim</h3>
+
+<p>Assim como no caso da revisão de código, programação em par está longe de ser uma prática universalmente aceita. Enquanto muitas pessoas amam a prática, <a href="https://web.archive.org/web/20110101145142/https://tersesystems.com/2010/12/29/where-pair-programming-fails-for-me">outras não têm histórias tão felizes para contar</a></p>
+
+<p>Vamos começar com uma reclamação comum: programação em par <strong>pode ser extremamente cansativa</strong>. Na verdade, não é incomum ourvir que <a href="https://softwareengineering.stackexchange.com/a/9518">parear é mais eficaz quando usado por blocos de tempo curtos — de 1 hora a 2 horas e meia.</a></p>
+
+<p>Evidentemente, um número ímpar de integrantes na equipe não combina muito bem com programação em par. Mas um número flutuante de pessoal disponível é inevitável.</p>
+
+<p>O próximo item na nossa lista de problemas é o fato de que programação em par não é muito compatível com trabalho remoto. Você pode ter uma ideia melhor do problema após ouvir o que Daniel Kaplan, que escreveu “<a href="https://builttoadapt.io/what-its-like-to-pair-for-a-year-86d048494324">What It’s Like to Pair for a Year</a>,” tem a dizer sobre programação em par:</p>
+
+<blockquote>
+  <p>These scheduling interruptions happen, but on a typical day we avoid them by having the pairs show up at the same time (for breakfast and standup), go to lunch at the same time, and leave at the same time. This maximizes the time the pairs are pairing.</p>
+</blockquote>
+
+<p>Em tradução livre, com grifo meu:</p>
+
+<blockquote>
+  <p>Tais interrupções ocorrem, mas em um dia típico nós conseguimos evitá-las <strong>fazendo com que os pares cheguem na mesma hora (para café da manhã e reunião em pé), vão almoçar no mesmo horário, e vão para casa no mesmo horário</strong>. Isso maximiza o tempo que os pares passam programando juntos.</p>
+</blockquote>
+
+<p>Então, programação em par <strong>requer sincronismo</strong>, o que pode torná-la uma opção inviável para equipes remotas (ou mesmo equipes que trabalham no mesmo local mas tem horários extremamente flexíveis).</p>
+
+<p>Tem gente que argumenta que trabalhar em pares pode <strong>prejudicar a criatividade e impedir experimentações.</strong> Durante uma sessão em par, pode ser considerado rude desperdiçar o tempo de seu par tentando uma abordagem experimental que pode talvez não dar em nada. Então, a decisão mais segura possível tende a prevalecer sempre, mesmo que não seja a melhor possível.</p>
+
+<p>Finalmente, a programação em par não fornece um dos benefícios chave da revisão de código posterior: ter uma pessoa com zero contexto analisando o código produzido. As duas pessoas do par <strong>compartilham contexto desde o início da sessão</strong>, o que não deve ser subestimado. As pessoas têm uma tendência a <a href="https://en.wikipedia.org/wiki/IKEA_effect">superestimar o valor de suas contribuições e criar laços emocionais com o que elas criam</a>; por isso é tão importante conseguir uma outra pessoa que, livre desses laços, será capaz de oferecer um julgamento mais claro.</p>
+
+<h2 id="revisão-de-código-vs-programação-em-par-o-veredito">Revisão de Código vs Programação em Par: O Veredito?</h2>
+<p>Eu cheguei à conclusão de que, embora revisão de código e programação em par <em>pareçam</em> equivalentes, na verdade não são. Existe uma intersecção ali, mas cada prática também apresenta benefícios e desafios únicos.</p>
+
+<p>Não tem como fugir do fato de que programação em par, apesar de seus benefícios, requer um número par de pessoas, trabalhando ao mesmo tempo. Se seu time consiste de pessoas vivendo em diversos fusos horários diferentes (ou mesmo uma equipe local mas com horário flexível), é fácil decidir: revisão de código na cabeça.</p>
+
+<p>Se a sua equipe não se encaixa na descrição acima, então eu digo: <strong>faça uma tentativa com programação em par</strong>. Contanto que você se esforce para acomodar e ter empatia com <a href="https://www.amazon.com/Quiet-Power-Introverts-World-Talking/dp/0307352153/ref=asap_bc?ie=UTF8">diferentes tipos de personalidades</a> e não torne obrigatório, programação em par pode ser benéfica para sua equipe.</p>
+
+<p>Finalmente, não há nada lhe impedindo de usar <em>ambas</em> práticas. Você pode adotar programação em par como o <em>Modus Operandi</em> padrão e deixar e revisão de código para preencher os vácuos onde o pareamento não funciona tão bem.</p>
+
+<h2 id="de-um-jeito-ou-de-outro-abrace-a-automação">De um jeito ou de outro, abrace a automação</h2>
+<p>Imagine que você escreve para uma publicação, como uma revista. Após finalizar um rascunho, ele precisa ser submetido para revisão. Será que faz sentido para a editora gastar todo seu tempo procurando por erros de ortografia? É claro que não! Nós temos ferramentas para checar tais erros de forma automática, liberando a editora para procurar por problemas em um nível mais alto, como vocabulário mal escolhido, falta de coesão, tom inapropriado, e todas aquelas coisas sobre as quais a sua professora de português não dava sossego.</p>
+
+<p>Com software não é diferente. Ao usar <a href="https://submain.com/products/codeit.right.aspx">uma ferramenta de revisão de códigos automatizados</a>, você pode eliminar muitas das discussões inúteis que acontecem frequentemente em revisões de código ou sessões de programação em par. Não vai ter mais briga sobre convenções estéticas e de nomenclatura, posição de chaves e outras trivialidades inúteis.</p>
+
+<p>You can also employ a static analysis tool to warn you about potential bugs and opportunities for refactoring. That way, the reviewer/navigator is free to focus on the high-level stuff that requires human creativity, intelligence, and empathy.</p>
+
+<p>Você também pode usar uma ferramenta de análise estática para lhe alertar sobre potenciais bugs e oportunidades para refatoração. Assim, o revisor/navegador fica livre para focar em preocupações de mais alto nível que necessitam da criatividade, inteligência e empatia humanas.</p>
+
+<h2 id="confiança-e-respeito">Confiança e respeito</h2>
+<p>Quando estava pesquisando para escrever esse post, um tema aparecia bastante: pessoas afirmando que revisão de código surge devido à falta de confiança em nossos desenvolvedores ou que programação em par os infantiliza.</p>
+
+<p>Eu não poderia discordar mais.</p>
+
+<p>É exatamente por respeitarmos nossos colegas e clientes que devemos empregar técnicas e ferramentas à nossa disposição para melhorar a qualidade do trabalho que produzimos.</p>
+
+<p>Não é falta de confiança. É reconhecer que programar é difícil e às vezes, só um cérebro pode não dar conta do recado.</p>
+
+
+    
+    
+      
+    
+    
+        Encontrou algum erro no post? <a href="http://github.com/carlosschults/carlosschults.github.io/edit/master/_posts/2018-01-24-review-de-codigo-vs-programacao-em-par.md">Sugira uma edição</a>      
+    
+    
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+                    
+            <a rel="previous" class="previous" href="/pt/cargo-cult-programming/">&larr; Programação Cargo Cult É A Arte de Programar Por Coincidência </a>
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+        	    
+            <a rel="next" class="next" href="/pt/4-erros-comuns-datetime-csharp/">4 Erros Comuns Com Data e Hora no C# — E como evitá-los &rarr;</a>
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+      
+    <div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+        // Store these for reloads
+        window.disqus_identifier = window.location.pathname;
+        window.disqus_url = window.location.href;
+        
+        // Set initial theme - match it with the site's theme
+        const currentTheme = document.body.getAttribute('data-theme') || 'light';
+        this.page.theme = currentTheme === 'dark' ? 'dark' : 'light';
+    };
+    
+    (function() {
+        var d = document, s = d.createElement('script');
+        s.src = '//carlosschultsblog.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>    
+  </div>
+
+</article>
+
+      </div>
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">         
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-2">
+        <ul class="social-media-list">
+          
+          <li>
+            <a href="https://github.com/carlosschults"><span class="icon icon--github"><svg viewBox="0 0 16 16"><path fill="#828282" d="M7.999,0.431c-4.285,0-7.76,3.474-7.76,7.761 c0,3.428,2.223,6.337,5.307,7.363c0.388,0.071,0.53-0.168,0.53-0.374c0-0.184-0.007-0.672-0.01-1.32 c-2.159,0.469-2.614-1.04-2.614-1.04c-0.353-0.896-0.862-1.135-0.862-1.135c-0.705-0.481,0.053-0.472,0.053-0.472 c0.779,0.055,1.189,0.8,1.189,0.8c0.692,1.186,1.816,0.843,2.258,0.645c0.071-0.502,0.271-0.843,0.493-1.037 C4.86,11.425,3.049,10.76,3.049,7.786c0-0.847,0.302-1.54,0.799-2.082C3.768,5.507,3.501,4.718,3.924,3.65 c0,0,0.652-0.209,2.134,0.796C6.677,4.273,7.34,4.187,8,4.184c0.659,0.003,1.323,0.089,1.943,0.261 c1.482-1.004,2.132-0.796,2.132-0.796c0.423,1.068,0.157,1.857,0.077,2.054c0.497,0.542,0.798,1.235,0.798,2.082 c0,2.981-1.814,3.637-3.543,3.829c0.279,0.24,0.527,0.713,0.527,1.437c0,1.037-0.01,1.874-0.01,2.129 c0,0.208,0.14,0.449,0.534,0.373c3.081-1.028,5.302-3.935,5.302-7.362C15.76,3.906,12.285,0.431,7.999,0.431z"/></svg>
+</span><span class="username">carlosschults</span></a>
+
+          </li>
+          
+
+          
+          <li>
+            <a href="https://twitter.com/carlosschults"><span class="icon icon--twitter"><svg viewBox="0 0 16 16"><path fill="#828282" d="M15.969,3.058c-0.586,0.26-1.217,0.436-1.878,0.515c0.675-0.405,1.194-1.045,1.438-1.809c-0.632,0.375-1.332,0.647-2.076,0.793c-0.596-0.636-1.446-1.033-2.387-1.033c-1.806,0-3.27,1.464-3.27,3.27 c0,0.256,0.029,0.506,0.085,0.745C5.163,5.404,2.753,4.102,1.14,2.124C0.859,2.607,0.698,3.168,0.698,3.767 c0,1.134,0.577,2.135,1.455,2.722C1.616,6.472,1.112,6.325,0.671,6.08c0,0.014,0,0.027,0,0.041c0,1.584,1.127,2.906,2.623,3.206 C3.02,9.402,2.731,9.442,2.433,9.442c-0.211,0-0.416-0.021-0.615-0.059c0.416,1.299,1.624,2.245,3.055,2.271 c-1.119,0.877-2.529,1.4-4.061,1.4c-0.264,0-0.524-0.015-0.78-0.046c1.447,0.928,3.166,1.469,5.013,1.469 c6.015,0,9.304-4.983,9.304-9.304c0-0.142-0.003-0.283-0.009-0.423C14.976,4.29,15.531,3.714,15.969,3.058z"/></svg>
+</span><span class="username">carlosschults</span></a>
+
+          </li>
+          
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-3">
+        <p>Artigos sobre desenvolvimento de software e tecnologia.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+
+    <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-92788641-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+    <script src="/js/dark-mode.js"></script>
+  </body>
+
+</html>

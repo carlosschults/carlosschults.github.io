@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>C# 7 Features Worth Knowing - Part 2 | carlos schults / blog</title>
+  <link rel="apple-touch-icon" sizes="57x57" href="/img/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/img/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/img/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/img/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/img/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/img/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/img/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/img/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"  href="/img/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/img/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon-16x16.png">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="description" content="In this post we’ll see some more new features from C# 7.0.">
+  
+  <!-- Twitter card -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:creator" content="@carlosschults">
+  <meta name="twitter:site" content="@carlosschults">
+  <meta name="twitter:domain" content="carlosschults.net">
+  <meta name="twitter:title" content="C# 7 Features Worth Knowing - Part 2">
+  <meta name="twitter:description" content="In this post we’ll see some more new features from C# 7.0.">
+
+   <!-- Facebook meta -->
+  
+  
+  <meta property="og:title" content="C# 7 Features Worth Knowing - Part 2">
+  <meta property="og:site_name" content="Carlos Schults / Blog" />
+  <meta property="og:locale" content="en_US">  
+  <meta property="og:type" content="article" />
+  <meta property="og:image" content="https://res.cloudinary.com/dz5ppacuo/image/upload/v1489452722/charp7-features-cover_ciekql.jpg" />  
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:width" content="1038"> 
+  <meta property="og:image:height" content="437">  
+  
+  <meta property="og:article:published_time" content="2017-06-05T00:00:00+00:00" />  
+  <meta property="og:article:author" content="Carlos Schults" />
+  
+  <meta property="og:article:tag" content="csharp" />
+  <meta property="og:article:tag" content="beginners" />    
+  
+  <meta property="og:url" content="https://carlosschults.net/en/csharp-7-features-part-2/"/>
+  <meta property="og:description" content="In this post we’ll see some more new features from C# 7.0.">
+  <link rel="stylesheet" href="/css/main.css">  
+  
+   <link rel="canonical" href="https://carlosschults.net/en/csharp-7-features-part-2/">
+   
+  
+  <link rel="alternate" hreflang="en" href="/en/csharp-7-features-part-2/" />
+  <link rel="alternate" hreflang="pt" href="/pt/funcionalidades-csharp-7-parte-2" />
+  
+  <link rel="alternate" type="application/rss+xml" title="carlos schults / blog" href="https://carlosschults.net/feed.xml">
+</head>
+
+  <body>
+    <header class="site-header">
+  <div class="wrapper">    
+    <a class="site-title" href="/">carlos schults / blog</a>
+    
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg viewBox="0 0 18 15">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+
+      <div class="trigger">        
+          
+          <a class="page-link" href="/footprints/">Dev Footprints</a>
+          <a class="page-link" href="/readings/">Readings</a>
+          <a class="page-link" href="/about/">About</a>
+		      <a class="page-link" href="/search/">Search</a>
+                  
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+<div class="wrapper" style="text-align: right; line-height: 2em">
+  
+   <a href="/en/csharp-7-features-part-2/" class="en">en</a>  <a href="/pt/funcionalidades-csharp-7-parte-2" class="pt">pt</a> 
+
+  
+  
+</div>
+
+
+    <div class="page-content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">    
+    <h2 class="postTitle" itemprop="headline">C# 7 Features Worth Knowing - Part 2</h2>
+    <p class="post-meta">   
+    <time datetime="2017-06-05T00:00:00+00:00" itemprop="datePublished">Jun 5, 2017
+    </time> • <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">Carlos Schults</span></span>
+  <span class="tags" itemprop="keywords"> • Tags: <a href="/tag/csharp">csharp </a> <a href="/tag/beginners">beginners </a> </span>
+  </p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <p><img src="https://res.cloudinary.com/dz5ppacuo/image/upload/v1489452722/charp7-features-cover_ciekql.jpg" alt="" /></p>
+
+<p>In this post we’ll see some more new features from C# 7.0.
+<!--more--></p>
+
+<p>In <a href="https://carlosschults.net/en/csharp-7-features/">the first part of this series</a>, we talked about some new features from C#, namely: literal improvements, out variables, more <em>expression-bodied</em> members and throw expressions.</p>
+
+<p>Today we’ll see: <strong>Tuples</strong> and <strong>Local Functions</strong>. But before we go on, I’d like to thank my friend Gunter Italiano Ribeiro for reviewing this article.</p>
+
+<h2 id="tuples">Tuples</h2>
+
+<p>Have you ever felt the need to write a method that returned more than one value? I’d bet you have. In previous versions of the C# language, there were some options available. You could use an out parameter, or even create a type for that, but each one of these had their own problems. Out parameters are non-intuitive and can complicate the design; creating a custom type just for this can be overkill.</p>
+
+<p>In C# 7.0 you have a new option, by using <strong>tuple types</strong> and <strong>tuple literals</strong>. With this feature you can easily declare a method that returns more than one value. Let’s see an example:</p>
+
+<script src="https://gist.github.com/carlosschults/37689aeb84ed4fdff067eab72690a035.js"></script>
+
+<p>You’re probably familiar with the <code class="language-plaintext highlighter-rouge">TryXXX</code> pattern, used, for instance, in the <code class="language-plaintext highlighter-rouge">System.Int32</code> BCL type. These sort of methods generally use an out parameter to return the resulting value (or the type default value, in case the parsing operation does not succeed).</p>
+
+<p>The method above contains a <code class="language-plaintext highlighter-rouge">TryParse</code> method in the <code class="language-plaintext highlighter-rouge">ZipCode</code> class. Take a look at the method’s signature.</p>
+
+<p>When you write more than one type in the method’s return, you’re using a <em>tuple type</em>.  Don’t worry, you’re going to get used to it.</p>
+
+<p>Right at the start of the method, we pass the specified text for a private method that actually performs the validation and returns a boolean value.</p>
+
+<p>After the validation, we return a <em>tuple literal</em>, which consists in a new instance of the <code class="language-plaintext highlighter-rouge">ZipCode</code> class and a boolean flag indicating whether the parsing operation succeeded.</p>
+
+<p>Nice, but what about the other side? How the function caller deals with this sort of return value? Let’s see:</p>
+
+<script src="https://gist.github.com/carlosschults/81b46fd01a187d866a41c0a74c8fc430.js"></script>
+
+<p>If you hover over the variable name, you’ll see its type described, unsurprisingly, as <code class="language-plaintext highlighter-rouge">(ZipCode, bool)</code>.</p>
+
+<p><img src="https://res.cloudinary.com/dz5ppacuo/image/upload/v1495494940/csharp7-part2-fig1_pnmlx5.png" alt="" /></p>
+
+<p>You can access each tuple element by using <code class="language-plaintext highlighter-rouge">zipParsingResult.Item1</code>, <code class="language-plaintext highlighter-rouge">zipParsingResult.Item2</code>, and son on.</p>
+
+<script src="https://gist.github.com/carlosschults/f4a1cf2fea5808474fb126888c436f55.js"></script>
+
+<p>However, you’re not forced to use the default names. There’s nothing stopping you from using more descritive naems:</p>
+
+<script src="https://gist.github.com/carlosschults/eb3d649160d4a72a8d94b8ae79eefa2c.js"></script>
+
+<p>The calling code becomes more readable:</p>
+
+<script src="https://gist.github.com/carlosschults/5f5c85d832af66094a68c4a59bdb23d7.js"></script>
+
+<p>There’s still another way of accessing a tuple’s items. By using a functionality called <strong>Deconstruction</strong>, you can easily split a tuple’s elements into variables.</p>
+
+<p>You can declare the variables by using their types:</p>
+
+<script src="https://gist.github.com/carlosschults/cccbc00f7b154bb897c332e4f8ed614c.js"></script>
+
+<p>Type inference also works here, and you have two options: you can use the <code class="language-plaintext highlighter-rouge">var</code> keyword for each variable, or to use it just once for all variables, placing it outside the parenthesis.</p>
+
+<script src="https://gist.github.com/carlosschults/225e608c7b844df46084b6a7af5b6ac2.js"></script>
+
+<p>You don’t even need to declare the variables at the deconstruction moment. It’s perfectly valid to deconstruct a tuple into already existent variables.</p>
+
+<h3 id="some-notes">Some notes</h3>
+
+<p>Tuples are <a href="https://carlosschults.net/en/value-reference-types-in-csharp//"><em>Value Types</em></a>. Equality for tuples works in the way you’d probably expect: two tuples are considered equals if their items have the same values and they return the same <code class="language-plaintext highlighter-rouge">HashCode</code>. The names of the items are not relevant</p>
+
+<script src="https://gist.github.com/carlosschults/c8200f265b19c59a117d8ad5c347805b.js"></script>
+
+<p>Assignment also works in the intuitive way. As long as they’re assignable to each other, two tuples can freely be assigned to one another. As in the previous case, the item’s names don’t matter.</p>
+
+<script src="https://gist.github.com/carlosschults/feb631d45a4d8b067c502a14eb4730ea.js"></script>
+
+<p>Currently, for this feature to work, you must install a nuget package called <code class="language-plaintext highlighter-rouge">System.ValueTuple</code>. In Visual Studio, go to <strong>Tools</strong> &gt; <strong>NuGet Package Manager</strong> &gt; <strong>Package Manager Console.</strong>.</p>
+
+<p>The Package Manager Console Windows will be shown. Type <code class="language-plaintext highlighter-rouge">Install-Package System.ValueTuple</code> and press <code class="language-plaintext highlighter-rouge">ENTER</code>.</p>
+
+<h3 id="but-what-about-systemtuple">But what about <code class="language-plaintext highlighter-rouge">System.Tuple</code>?</h3>
+
+<p>Maybe you’re wondering: why so much noise about tuples, if the .Net Framework has had the <code class="language-plaintext highlighter-rouge">System.Tuple</code> reference type since its 4.0 version? Why don’t we just stick to the older type?</p>
+
+<p>Well, <a href="https://stackoverflow.com/questions/41084411/whats-the-difference-between-system-valuetuple-and-system-tuple">this Stack Overflow answers it pretty well</a>, but I’ll try to summarize it here.</p>
+
+<p>Firstly, as already mentioned, the older type is a <em>reference type</em>, and the new one is a <em>value type</em>, with all the usual implications.</p>
+
+<p>But the really important differences have to do with convenience and readability. If you use <code class="language-plaintext highlighter-rouge">System.Tuple</code> there is no deconstruction; you can only access the items by using the default names, which makes the code harder to read and understand.</p>
+
+<h2 id="local-functions">Local Functions</h2>
+
+<p>A <strong>Local Function</strong> is exactly what its name suggests: a function that can be declared inside another function.</p>
+
+<script src="https://gist.github.com/carlosschults/0aebfaf7d900d3b47a2d142a676dbb01.js"></script>
+
+<p>As you’ve noticed, the inner function can access the values available for the outer function.</p>
+
+<p>Of course, the example shown above is deliberately simple; in production, you’d probably just write the code in <code class="language-plaintext highlighter-rouge">Log()</code> in the external methods and be done with it.</p>
+
+<p>It’d also be possible to use a <code class="language-plaintext highlighter-rouge">delegate</code> for that:</p>
+
+<script src="https://gist.github.com/carlosschults/045204806458c6563cd3a8b20a63133f.js"></script>
+
+<p>It seems that everything we can do with a local function is also possible to do with private methods or delegates. Do we really need this feature?</p>
+
+<p>Giovani Bassi give us some reasons to use this feature:</p>
+
+<blockquote>
+
+  <ul>
+    <li>Sintaxe consistente com a já utilizada em métodos;</li>
+    <li>Não há necessidade de criar um delegate, ou referenciar Func, Action, ou algo parecido;</li>
+    <li>Lambdas e delegates causam alocações extras, funções locais não;</li>
+    <li>Ref e out são permitidos;</li>
+    <li>Tipos genéricos são permitidos;</li>
+    <li>É possível referenciar funções ainda não declaradas.</li>
+  </ul>
+</blockquote>
+
+<p>In free translation:</p>
+
+<blockquote>
+
+  <ul>
+    <li>Sintaxe consistent with the one already used in methods;</li>
+    <li>No need to create a delegate, or reference Func, Action, or something like that;</li>
+    <li>Lambdas and delegates cause extra allocations, local functions don’t;</li>
+    <li>Ref and out are allowed;</li>
+    <li>Generic types are allowed;</li>
+    <li>It’s possible to reference functions not yet declared.</li>
+  </ul>
+</blockquote>
+
+<p>Of course you could just use a private method. But the local function has this nice property of not being acessible to the rest of your class, making it impossible to be accidentally called.</p>
+
+<p>Mads Torgersen shows us a situation for which local functions are the perfect solution:</p>
+
+<blockquote>
+  <p>As an example, methods implemented as iterators commonly need a non-iterator wrapper method for eagerly checking the arguments at the time of the call. (The iterator itself doesn’t start running until MoveNext is called). Local functions are perfect for this scenario:</p>
+</blockquote>
+
+<script src="https://gist.github.com/carlosschults/34b77038c058f261f615e739c7f9ea2a.js"></script>
+
+<p>You could turn <code class="language-plaintext highlighter-rouge">Iterator()</code> into a private method, sure, but that would be: 1) redundant and not very elegant, since it would require you to repeat the same signature from the outer function; and 2) less safe, because another part of the code could call the method without performing the validation.</p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>Today we’ve talked about <strong>Tuples</strong> and <strong>Local Functions</strong>, two new features from C# that, at first sight, can look harmless, but have potential to change the way you write code in interesting ways.</p>
+
+<p>Local functions? At first, I didn’t really liked it, I must admit. Or rather: I couldn’t understand what would they be useful for. After some research, I understood their use cases.</p>
+
+<p>With tuples, it’s a whole other story. I believe every C# developer with some experience under their belt has felt the need to return more than one value from a method and was frustrated with the available options. Now using tuples we finally have an elegant, easy-to-use solution, that makes the code less clumsy and more readable.</p>
+
+<p>Not everything is perfect though. Some developers already express concerns with these features. For instance, local functions could encourage the creation of large methods.</p>
+
+<p>Tuples, on the other hand, could be over-used in situations that require <em>objects</em>, making the code more procedural.</p>
+
+<p>My opinion about all of this is very simple: every tool can be abused. It’s up to us, professionals, and to our teams, to exercise our common-sense while using these (and other) features. By the way, as I mentioned in <a href="https://carlosschults.net/en/are-private-methods-a-code-smell/">my article about private methods</a>, code review and/or pair-programming can be of invaluable help in situations like these.</p>
+
+<p>Thanks for reading. See you next time.</p>
+
+<h2 id="references">References</h2>
+
+<ul>
+  <li><a href="https://blogs.msdn.microsoft.com/dotnet/2017/03/09/new-features-in-c-7-0/">https://blogs.msdn.microsoft.com/dotnet/2017/03/09/new-features-in-c-7-0/</a></li>
+  <li><a href="https://www.lambda3.com.br/2016/04/novidades-do-c-7-local-functions/">https://www.lambda3.com.br/2016/04/novidades-do-c-7-local-functions/</a> (pt-br)</li>
+</ul>
+
+    
+    
+      
+    
+    
+        Found a typo or mistake in the post? <a href="http://github.com/carlosschults/carlosschults.github.io/edit/master/_posts/2017-06-05-csharp-7-features-part-2.md">Suggest edit</a>
+        
+    
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+                    
+            <a rel="previous" class="previous" href="/en/git-basics-for-tfs-users">&larr; Git basics for TFS/TFVC users </a>
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+        	    
+            <a rel="next" class="next" href="/en/unit-testing-for-beginners-part2/">Unit testing for beginners - Part 2 &rarr;</a>
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+      
+    <div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+        // Store these for reloads
+        window.disqus_identifier = window.location.pathname;
+        window.disqus_url = window.location.href;
+        
+        // Set initial theme - match it with the site's theme
+        const currentTheme = document.body.getAttribute('data-theme') || 'light';
+        this.page.theme = currentTheme === 'dark' ? 'dark' : 'light';
+    };
+    
+    (function() {
+        var d = document, s = d.createElement('script');
+        s.src = '//carlosschultsblog.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>    
+  </div>
+
+</article>
+
+      </div>
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">         
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-2">
+        <ul class="social-media-list">
+          
+          <li>
+            <a href="https://github.com/carlosschults"><span class="icon icon--github"><svg viewBox="0 0 16 16"><path fill="#828282" d="M7.999,0.431c-4.285,0-7.76,3.474-7.76,7.761 c0,3.428,2.223,6.337,5.307,7.363c0.388,0.071,0.53-0.168,0.53-0.374c0-0.184-0.007-0.672-0.01-1.32 c-2.159,0.469-2.614-1.04-2.614-1.04c-0.353-0.896-0.862-1.135-0.862-1.135c-0.705-0.481,0.053-0.472,0.053-0.472 c0.779,0.055,1.189,0.8,1.189,0.8c0.692,1.186,1.816,0.843,2.258,0.645c0.071-0.502,0.271-0.843,0.493-1.037 C4.86,11.425,3.049,10.76,3.049,7.786c0-0.847,0.302-1.54,0.799-2.082C3.768,5.507,3.501,4.718,3.924,3.65 c0,0,0.652-0.209,2.134,0.796C6.677,4.273,7.34,4.187,8,4.184c0.659,0.003,1.323,0.089,1.943,0.261 c1.482-1.004,2.132-0.796,2.132-0.796c0.423,1.068,0.157,1.857,0.077,2.054c0.497,0.542,0.798,1.235,0.798,2.082 c0,2.981-1.814,3.637-3.543,3.829c0.279,0.24,0.527,0.713,0.527,1.437c0,1.037-0.01,1.874-0.01,2.129 c0,0.208,0.14,0.449,0.534,0.373c3.081-1.028,5.302-3.935,5.302-7.362C15.76,3.906,12.285,0.431,7.999,0.431z"/></svg>
+</span><span class="username">carlosschults</span></a>
+
+          </li>
+          
+
+          
+          <li>
+            <a href="https://twitter.com/carlosschults"><span class="icon icon--twitter"><svg viewBox="0 0 16 16"><path fill="#828282" d="M15.969,3.058c-0.586,0.26-1.217,0.436-1.878,0.515c0.675-0.405,1.194-1.045,1.438-1.809c-0.632,0.375-1.332,0.647-2.076,0.793c-0.596-0.636-1.446-1.033-2.387-1.033c-1.806,0-3.27,1.464-3.27,3.27 c0,0.256,0.029,0.506,0.085,0.745C5.163,5.404,2.753,4.102,1.14,2.124C0.859,2.607,0.698,3.168,0.698,3.767 c0,1.134,0.577,2.135,1.455,2.722C1.616,6.472,1.112,6.325,0.671,6.08c0,0.014,0,0.027,0,0.041c0,1.584,1.127,2.906,2.623,3.206 C3.02,9.402,2.731,9.442,2.433,9.442c-0.211,0-0.416-0.021-0.615-0.059c0.416,1.299,1.624,2.245,3.055,2.271 c-1.119,0.877-2.529,1.4-4.061,1.4c-0.264,0-0.524-0.015-0.78-0.046c1.447,0.928,3.166,1.469,5.013,1.469 c6.015,0,9.304-4.983,9.304-9.304c0-0.142-0.003-0.283-0.009-0.423C14.976,4.29,15.531,3.714,15.969,3.058z"/></svg>
+</span><span class="username">carlosschults</span></a>
+
+          </li>
+          
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-3">
+        <p>Articles on software development and technology.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+
+    <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-92788641-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+    <script src="/js/dark-mode.js"></script>
+  </body>
+
+</html>

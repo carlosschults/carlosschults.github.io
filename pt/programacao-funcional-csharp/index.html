@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Programação Funcional em C#: Mapeando, Filtrando e Reduzindo Em Busca de Código Limpo | carlos schults / blog</title>
+  <link rel="apple-touch-icon" sizes="57x57" href="/img/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/img/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/img/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/img/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/img/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/img/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/img/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/img/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"  href="/img/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/img/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon-16x16.png">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="description" content="NOTA: Este post foi originalmente publicado no blog da SubMain. Você pode ler o original aqui, em inglês. Aproveite para conferir o CodeIt.Right, um produto ...">
+  
+  <!-- Twitter card -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:creator" content="@carlosschults">
+  <meta name="twitter:site" content="@carlosschults">
+  <meta name="twitter:domain" content="carlosschults.net">
+  <meta name="twitter:title" content="Programação Funcional em C#: Mapeando, Filtrando e Reduzindo Em Busca de Código Limpo">
+  <meta name="twitter:description" content="NOTA: Este post foi originalmente publicado no blog da SubMain. Você pode ler o original aqui, em inglês. Aproveite para conferir o CodeIt.Right, um produto ...">
+
+   <!-- Facebook meta -->
+  
+  
+  <meta property="og:title" content="Programação Funcional em C#: Mapeando, Filtrando e Reduzindo Em Busca de Código Limpo">
+  <meta property="og:site_name" content="Carlos Schults / Blog" />
+  <meta property="og:locale" content="pt_BR">  
+  <meta property="og:type" content="article" />
+  <meta property="og:image" content="https://res.cloudinary.com/dz5ppacuo/image/upload/v1548200356/Untitled_xfahmy.jpg" />  
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:width" content="1038"> 
+  <meta property="og:image:height" content="437">  
+  
+  <meta property="og:article:published_time" content="2019-01-22T00:00:00+00:00" />  
+  <meta property="og:article:author" content="Carlos Schults" />
+  
+  <meta property="og:article:tag" content="csharp" />
+  <meta property="og:article:tag" content="boas praticas" />
+  <meta property="og:article:tag" content="programacao funcional" />    
+  
+  <meta property="og:url" content="https://carlosschults.net/pt/programacao-funcional-csharp/"/>
+  <meta property="og:description" content="NOTA: Este post foi originalmente publicado no blog da SubMain. Você pode ler o original aqui, em inglês. Aproveite para conferir o CodeIt.Right, um produto ...">
+  <link rel="stylesheet" href="/css/main.css">  
+  
+   <link rel="canonical" href="https://carlosschults.net/pt/programacao-funcional-csharp/">
+   
+  
+  <link rel="alternate" hreflang="en" href="/en/functional-programming-csharp/" />
+  <link rel="alternate" hreflang="pt" href="/pt/programacao-funcional-csharp/" />
+  
+  <link rel="alternate" type="application/rss+xml" title="carlos schults / blog" href="https://carlosschults.net/rss.xml">
+</head>
+
+  <body>
+    <header class="site-header">
+  <div class="wrapper">    
+    <a class="site-title" href="/pt/">carlos schults / blog</a>
+    
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg viewBox="0 0 18 15">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+
+      <div class="trigger">        
+          
+          <a class="page-link" href="/sobre/">Sobre</a>
+          <a class="page-link" href="/busca/">Busca</a>
+                  
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+<div class="wrapper" style="text-align: right; line-height: 2em">
+  
+   <a href="/en/functional-programming-csharp/" class="en">en</a>  <a href="/pt/programacao-funcional-csharp/" class="pt">pt</a> 
+
+  
+  
+</div>
+
+
+    <div class="page-content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">    
+    <h2 class="postTitle" itemprop="headline">Programação Funcional em C#: Mapeando, Filtrando e Reduzindo Em Busca de Código Limpo</h2>
+    <p class="post-meta">   
+    <time datetime="2019-01-22T00:00:00+00:00" itemprop="datePublished">22/01/2019
+    </time> • <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">Carlos Schults</span></span>
+  <span class="tags" itemprop="keywords"> • Tags: <a href="/tag_ptbr/csharp">csharp </a> <a href="/tag_ptbr/boas praticas">boas praticas </a> <a href="/tag_ptbr/programacao funcional">programacao funcional </a> </span>
+  </p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <p><img src="https://res.cloudinary.com/dz5ppacuo/image/upload/v1548200356/Untitled_xfahmy.jpg" alt="" /></p>
+
+<p><em>NOTA: Este post foi originalmente publicado no blog da SubMain. Você pode <a href="https://blog.submain.com/csharp-functional-programming/">ler o original aqui, em inglês</a>. Aproveite para conferir o CodeIt.Right, um produto que pode ajudar a melhorar seu código.</em></p>
+
+<p>Você provavelmente pensa no C# como uma linguagem orientada a objeto. Mas é possível que você, ao programar em C#, tenha usado conceitos de programação funcional sem sequer ter notado.</p>
+
+<p>O post de hoje trata desse tema. Vou começar abordando as vantagens da programação funcional, mostrando a justificativa se aplicá-la mesmo usando uma assim chamada linguagem orientada a objetos. Depois vou explicar como você já está usando um pouco do estilo funcional em seu código C#, mesmo sem estar ciente disso. Finalmente, vou demonstrar como aplicar um pouco de pensamento funcional ao seu código pode torná-lo mais limpo, seguro e mais expressivo.</p>
+
+<h2 id="programação-funcional-em-c-por-quê">Programação Funcional em C#: Por quê?</h2>
+
+<p>Nós sabemos que o .NET framework oferece algumas capacidades funcionais na forma dos métodos de extensão do LINQ, mas qual seria a vantagem de usá-las?</p>
+
+<p>Para responder bem essa pergunta, precisamos voltar um passo e entender os atrativos da programação funcional em si. Na minha opinião, para começar a entender os benefícios da programação funcional você precisa primeiro entender dois tópicos: <strong>funções puras</strong> e <strong>imutabilidade</strong>.</p>
+
+<p><strong>Funções puras</strong> são funções que apenas podem acessar os valores que receberam por argumentos e, como consequência, não podem ter nenhum efeito colateral. <strong>Imutabilidade</strong> se refere a objetos ou estruturas de dados que, uma vez inicializados, não podem sofrer nenhuma mudança em seus valores. Isso os torna mais fáceis de entender e seguros para serem usados em código com múltiplas threads.</p>
+
+<h2 id="operações-fundamentais-da-programação-funcional-e-como-executá-las-usando-c">Operações Fundamentais da Programação Funcional e Como Executá-las Usando C#</h2>
+
+<p>Como já cobrimos o <em>o quê</em> e o <em>porquê</em> da programação funcional, está na hora de vermos o <em>como</em>.</p>
+
+<p>Eu vou abordar três operações: <strong>map</strong>, <strong>filter</strong> e <strong>reduce</strong>. Vou começar mostrando alguns problemas, usando uma abordagem procedural tradicional para resolvê-los. Em seguida, vou apresentar a alternativa usando o estilo funcional.</p>
+
+<h2 id="map">Map</h2>
+
+<p>Em termos simples, a operação “map” recebe uma sequência de valores, aplica alguma transformação em cada um dos itens, e retorna uma nova sequência contendo os valores resultantes. Vamos ver alguns exemplos:</p>
+
+<p>Imagine que você escreveu o código a seguir, devido à requisição de algum cliente:</p>
+
+<figure class="highlight"><pre><code class="language-c#" data-lang="c#">	<span class="k">static</span> <span class="k">void</span> <span class="nf">AddThreeToEachElement</span><span class="p">(</span><span class="kt">int</span><span class="p">[]</span> <span class="n">arr</span><span class="p">)</span>
+	<span class="p">{</span>
+	    <span class="k">for</span> <span class="p">(</span><span class="kt">var</span> <span class="n">i</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span> <span class="n">i</span> <span class="p">&lt;</span> <span class="n">arr</span><span class="p">.</span><span class="n">Length</span><span class="p">;</span> <span class="n">i</span><span class="p">++)</span>
+	    <span class="p">{</span>
+	       <span class="n">arr</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="p">+=</span> <span class="m">3</span><span class="p">;</span>
+	    <span class="p">}</span>
+	<span class="p">}</span></code></pre></figure>
+
+<p>É uma função que adiciona três a cada elemento do <a href="https://blog.submain.com/c-array/">array</a> de inteiros especificado. Bem tranquilo.</p>
+
+<p>Então aparece o pedido de uma nova função. Dessa vez, é para adicionar cinco a cada elemento do vetor. Ignorando a <a href="https://en.wikipedia.org/wiki/Rule_of_three_(computer_programming)">regra de três,</a> você pula direto para uma versão generalizada, parametrizando o número a ser adicionado:</p>
+
+<figure class="highlight"><pre><code class="language-c#" data-lang="c#">	<span class="k">static</span> <span class="k">void</span> <span class="nf">AddNumberToEachElement</span><span class="p">(</span><span class="kt">int</span><span class="p">[]</span> <span class="n">arr</span><span class="p">,</span> <span class="kt">int</span> <span class="n">n</span><span class="p">)</span>
+	<span class="p">{</span>
+	   <span class="k">for</span> <span class="p">(</span><span class="kt">var</span> <span class="n">i</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span> <span class="n">i</span> <span class="p">&lt;</span> <span class="n">arr</span><span class="p">.</span><span class="n">Length</span><span class="p">;</span> <span class="n">i</span><span class="p">++)</span>
+	   <span class="p">{</span>
+	        <span class="n">arr</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="p">+=</span> <span class="n">n</span><span class="p">;</span>
+	   <span class="p">}</span>
+	<span class="p">}</span></code></pre></figure>
+
+<p>Então aparece um novo pedido. Agora você tem que escrever uma função para multiplicar cada elemento do array especificado por três. Não vou me dar ao trabalho de adicionar o código de exemplo, porque seria bem trivial. A esse ponto, você já sabe o suficiente para evitar fixar o número no código, então você provavelmente vai pular direto para uma versão generalizada. Mesmo assim, alguma duplicação ainda vai permanecer: o laço de repetição em si. E se você pudesse manter o loop e parametrizar a ação a ser aplicada nos itens?</p>
+
+<h3 id="a-maneira-funcional">A Maneira Funcional</h3>
+
+<p>Leve em consideração o que você acabou de ler sobre funções puras—e também seu conhecimento prévio de <a href="https://blog.submain.com/coding-best-practices-short-time/">boas práticas de programação</a> em geral—e pense em maneiras nas quais o código do exemplo poderia ser melhorado.</p>
+
+<p>No meu ponto de vista, os problemas principais são:</p>
+
+<ul>
+  <li><strong>O código é muito específico</strong>. Não é fácil modificá-lo para acomodar outras transformações a serem aplicadas nos elementos do array. O código só faz uma soma, e é só.</li>
+  <li><strong>Muito código boilerplate</strong>. Olhe novamente o exemplo anterior. Conte as linhas. Há sete, das quais apenas uma realmente tem algo a ver com a regra de negócio do método.</li>
+</ul>
+
+<p>Como que o estilo funcional pode melhorar isso? O código a seguir mostra como eu reescreveria o exemplo em F#, por exemplo:</p>
+
+<figure class="highlight"><pre><code class="language-c#" data-lang="c#">	<span class="k">let</span> <span class="n">result</span> <span class="p">=</span> <span class="n">Seq</span><span class="p">.</span><span class="nf">map</span> <span class="p">(</span><span class="n">fun</span> <span class="n">x</span> <span class="p">-&gt;</span> <span class="n">x</span> <span class="p">+</span> <span class="m">3</span><span class="p">)</span> <span class="n">numbers</span></code></pre></figure>
+
+<p>Aqui, “numbers” represente uma sequência de números que eu consegui de alguma forma. Então eu uso a função <strong>map</strong> que pertence ao módulo <strong>Seq</strong>, passando a sequência como um dos parâmetros, junto com uma função que recebe um número inteiro e adiciona três a ele.</p>
+
+<h3 id="o-jeito-funcional-sabor-c">O Jeito Funcional, sabor C#</h3>
+
+<p>O .NET implementa a operação map na forma do método de extensão do LINQ chamado “Select.” Então, para converter o código em F# acima para C#, você faria assim:</p>
+
+<p>var result = numbers.Select(x =&gt; x + 3);</p>
+
+<p>É importante salientar o que o tipo da sequência resultante não precisa ser o mesmo da sequência de entrada. Você tem uma lista de objetos do tipo “Employee” e precisa recuperar os seus ids, na forma de uma sequência de ints? Fácil:</p>
+
+<figure class="highlight"><pre><code class="language-c#" data-lang="c#">	<span class="n">List</span><span class="p">&lt;</span><span class="n">Employee</span><span class="p">&gt;</span> <span class="n">employees</span> <span class="p">=</span> <span class="n">EmployeeRepository</span><span class="p">.</span><span class="nf">All</span><span class="p">();</span>
+	<span class="n">IEnumerable</span><span class="p">&lt;</span><span class="kt">int</span><span class="p">&gt;</span> <span class="n">ids</span> <span class="p">=</span> <span class="n">employees</span><span class="p">.</span><span class="nf">Select</span><span class="p">(</span><span class="n">x</span> <span class="p">=&gt;</span> <span class="n">x</span><span class="p">.</span><span class="n">Id</span><span class="p">);</span></code></pre></figure>
+
+<h2 id="filter">Filter</h2>
+
+<p>A operação filter é, sem dúvida, a mais fácil das três. Ela tem um nome bastante intuitivo, e a necessidade de se filtrar coisas é algo tão comum na programação que eu tenho certeza de que você adivinhou o que ela faz só pelo nome (caso já não soubesse antes).</p>
+
+<p>Mesmo assim, vamos defini-la. A operação filter filtra uma sequência, retornando uma nova sequência contendo apenas os itens aprovados por um ou mais critérios especificados.</p>
+
+<h3 id="o-jeito-imperativo">O Jeito Imperativo</h3>
+
+<p>Já que nós usamos o exemplo de “employees” na seção anterior, vamos continuar dentro do mesmo tema. Digamos que você precise recuperar uma lista com os funcionários que tenham tirado pelo menos três dias de atestado médico.</p>
+
+<p>Em um estilo mais procedura, você provavelmente escreveria algo assim:</p>
+
+<figure class="highlight"><pre><code class="language-c#" data-lang="c#">	<span class="k">public</span> <span class="k">static</span> <span class="n">List</span><span class="p">&lt;</span><span class="n">Employee</span><span class="p">&gt;</span> <span class="nf">GetEmployeesWithAtLeastNSickdays</span><span class="p">(</span><span class="n">List</span><span class="p">&lt;</span><span class="n">Employee</span><span class="p">&gt;</span> <span class="n">employees</span><span class="p">,</span> <span class="kt">int</span> <span class="n">number</span><span class="p">)</span>
+	<span class="p">{</span>
+	    <span class="n">List</span><span class="p">&lt;</span><span class="n">Employee</span><span class="p">&gt;</span> <span class="n">result</span> <span class="p">=</span> <span class="k">new</span> <span class="n">List</span><span class="p">&lt;</span><span class="n">Employee</span><span class="p">&gt;();</span>
+	
+	    <span class="k">foreach</span> <span class="p">(</span><span class="kt">var</span> <span class="n">e</span> <span class="k">in</span> <span class="n">employees</span><span class="p">)</span>
+	    <span class="p">{</span>
+	        <span class="k">if</span> <span class="p">(</span><span class="n">e</span><span class="p">.</span><span class="n">Sickdays</span> <span class="p">&gt;=</span> <span class="n">number</span><span class="p">)</span>
+	        <span class="p">{</span>
+	            <span class="n">result</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="n">e</span><span class="p">);</span>
+	        <span class="p">}</span>   
+	    <span class="p">}</span>
+	
+	    <span class="k">return</span> <span class="n">result</span><span class="p">;</span>
+	<span class="p">}</span></code></pre></figure>
+
+<p>Eu não acho que o código acima esteja errado. O nome do método é um pouco longo, porém bastante descritivo. O código faz o que promete. E a legibilidade está boa.</p>
+
+<p>Mas da mesma forma que no exemplo anterior, nós poderíamos fazer o argumento de que o código está poluído demais Podemos dizer quem, na prática, a única linha que faz algo relacionado à lógica do problema é o teste do if. Todas as outras linhas são código boilerplate. Será que a abordagem funcional consegue melhorar a situação?</p>
+
+<h3 id="a-maneira-funcional-1">A Maneira Funcional</h3>
+
+<p>Vamos reescrever o código acima usando LINQ:</p>
+
+<figure class="highlight"><pre><code class="language-c#" data-lang="c#">	<span class="k">public</span> <span class="k">static</span> <span class="n">List</span><span class="p">&lt;</span><span class="n">Employee</span><span class="p">&gt;</span> <span class="nf">GetEmployeesWithAtLeastNSickdays</span><span class="p">(</span><span class="n">List</span><span class="p">&lt;</span><span class="n">Employee</span><span class="p">&gt;</span> <span class="n">employees</span><span class="p">,</span> <span class="kt">int</span> <span class="n">number</span><span class="p">)</span>
+	<span class="p">{</span>
+	    <span class="k">return</span> <span class="n">employees</span><span class="p">.</span><span class="nf">Where</span><span class="p">(</span><span class="n">x</span> <span class="p">=&gt;</span> <span class="n">x</span><span class="p">.</span><span class="n">SickDays</span> <span class="p">&gt;=</span> <span class="n">n</span><span class="p">).</span><span class="nf">ToList</span><span class="p">();</span>
+	<span class="p">}</span></code></pre></figure>
+
+<p>Here we use the “Where” extension method, passing the filtering criterium as a delegate. To be honest, the outer method became not very useful since it just delegates the work. In real life, I’d get rid of it.</p>
+
+<p>Aqui nós usamos o método “Here”, passando o critério de filtragem como parâmetro. Para ser honesto, o método de fora não é tão útil, já que ele só delega o trabalho para o método do LINQ. Na vida real, em código de produção, eu jogaria ele fora.</p>
+
+<h2 id="reduce">Reduce</h2>
+
+<p>Geralmente, a operação reduce é a que algumas pessoas costumam ter dificuldade entendendo. Mas não tem nada de difícil. Pense dessa forma: você tem uma sequência de alguma coisa, e também tem uma função que recebe duas dessas coisas e retorna uma.</p>
+
+<p>Então você começa a aplicar a função. Você a aplica nos dois primeiros elementos na sequência e guarda o resultado. Então aplica de novo, com o resultado e o terceiro elemento. Depois faz a mesma coisa, aplicando a função ao resultado da última etapa e o quarto elemento, e assim sucessivamente.</p>
+
+<p>O exemplo clássico do reduce é a soma de uma lista de números, então é exatamente isso que vamos fazer.</p>
+
+<h3 id="o-modo-imperativo">O Modo Imperativo</h3>
+
+<p>Suponha que temos que somar um punhado de números inteiros. Poderíamos fazer assim:</p>
+
+<figure class="highlight"><pre><code class="language-c#" data-lang="c#">	<span class="k">public</span> <span class="kt">int</span> <span class="nf">Sum</span><span class="p">(</span><span class="n">IEnumerable</span><span class="p">&lt;</span><span class="kt">int</span><span class="p">&gt;</span> <span class="n">numbers</span><span class="p">)</span>
+	<span class="p">{</span>
+	    <span class="kt">var</span> <span class="n">result</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span>
+	    <span class="k">foreach</span> <span class="p">(</span><span class="kt">var</span> <span class="n">number</span> <span class="k">in</span> <span class="n">numbers</span><span class="p">)</span>
+	    <span class="p">{</span>
+	        <span class="n">result</span> <span class="p">+=</span> <span class="n">number</span><span class="p">;</span>
+	    <span class="p">}</span>
+	
+	    <span class="k">return</span> <span class="n">result</span><span class="p">;</span>
+	<span class="p">}</span></code></pre></figure>
+
+<p>A essa altura do campeonato você já pode até prever o que eu tenho a dizer a respeito desse código: não está necessariamente errado, mas é pouco flexível e cheio de ruído. Mas a programação funcional pode nos salvar.</p>
+
+<h3 id="o-modo-funcional">O Modo Funcional</h3>
+
+<p>No .NET framework, a operação “reduce” toma a forma do método de extensão “Aggregate”. Dessa vez, vou me livrar do método externo e escrever a solução usando LINQ de uma vez:</p>
+
+<figure class="highlight"><pre><code class="language-c#" data-lang="c#">	<span class="kt">var</span> <span class="n">sum</span> <span class="p">=</span> <span class="n">number</span><span class="p">.</span><span class="nf">Aggregate</span><span class="p">((</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="n">x</span> <span class="p">+</span> <span class="n">y</span><span class="p">);</span></code></pre></figure>
+
+<p>A aparência disso é um pouco mais complexa, mas não se assuste. Nesse caso, nós estamos apenas passando uma função que recebe dois parâmetros ao invés de um só, como nos exemplos anteriores. Precisa ser assim, já que a função precisa ser aplicada a dois elementos da sequência cada vez.</p>
+
+<p>But as it turns out, there’s an even easier way of solving this particular problem (adding a bunch of numbers). Since summing a sequence of numbers is such a common use case, there’s a dedicated method to do just that. It’s called, not surprisingly, “Sum”:</p>
+
+<p>Mas na verdade tem uma maneira ainda mais fácil de resolver esse problema em particular (somar vários números).
+Sendo esse um caso de uso tão comum, o framework disponibiliza um método dedicado para fazer só isso. O qual, surpreendendo a um total de zero pessoas, é chamado de “Sum”:</p>
+
+<figure class="highlight"><pre><code class="language-c#" data-lang="c#">	<span class="kt">var</span> <span class="n">sum</span> <span class="p">=</span> <span class="n">numbers</span><span class="p">.</span><span class="nf">Sum</span><span class="p">();</span></code></pre></figure>
+
+<p>Para que serve o “Aggregate”, então? Adicionar uma lista de números é apenas uma das muitas aplicações do reduce, mas você pode usá-lo com qualquer operação binária, como concatenação de strings ou a soma de tipos customizados.</p>
+
+<h2 id="o-veredito-a-abordagem-funcional-é-melhor">O Veredito: A Abordagem Funcional é Melhor?</h2>
+
+<p>Após esses exemplos, você talvez esteja em dúvida se o jeito funcional de fazer as coisas é realmente melhor. Seria extremamente difícil definir o que “melhor” significa, então nem vou tentar. Vamos considerar outro critério: legibilidade.</p>
+
+<p>Apesar de sabermos que legibilidade de código <a href="https://blog.submain.com/evaluate-code-readability/">também pode ser bastante subjetiva,</a> eu diria que sim, os exemplos funcionais são mais legíveis. Imagine que nós recuperar e somar todos os salários dos funcionários com mais de cinco anos de casa. Nós poderíamos facilmente fazer isso usando um loop, dentro do qual nós testaríamos a condição e acumularíamos o salário em uma variável, caso o teste tenha retornado verdadeiro.</p>
+
+<p>Ou poderíamos escrever isso:</p>
+
+<figure class="highlight"><pre><code class="language-c#" data-lang="c#">	<span class="kt">var</span> <span class="n">sum</span> <span class="p">=</span> <span class="n">employees</span><span class="p">.</span><span class="nf">Where</span><span class="p">(</span><span class="n">x</span> <span class="p">=&gt;</span> <span class="n">x</span><span class="p">.</span><span class="n">CompanyTimeInYears</span> <span class="p">&gt;</span> <span class="m">5</span><span class="p">).</span><span class="nf">Select</span><span class="p">(</span><span class="n">x</span> <span class="p">=&gt;</span> <span class="n">x</span><span class="p">.</span><span class="n">Salary</span><span class="p">).</span><span class="nf">Sum</span><span class="p">();</span></code></pre></figure>
+
+<p>Eu honestamente acredito que essa versão é mais legível (e melhor, em geral) que a abordagem procedural. É mais declarativa. Ela demonstra a intenção do <strong>que</strong> estamos tentando fazer sem se preocupar tanto com o <strong>como</strong>.</p>
+
+<p>It almost reads like natural language: “The list of employees where their time in the company is greater than five years, select their salary and sum them”.</p>
+
+<p>Para quem entende inglês, quase parece linguagem natural: “Da lista de todos os funcionários, onde o tempo de empresa é mais de cinco anos, selecione o salário e some.”</p>
+
+<h2 id="uso-um-pouco-de-tempero-funcional-e-deixe-seu-código-mais-saboroso">Uso Um Pouco de Tempero Funcional e Deixe Seu Código Mais Saboroso</h2>
+
+<p>Muitas pessoas usam LINQ por anos sem nem perceber que estão usando conceitos de programação funcional. Eu enxergo isso como prova de que a programação funcional não está além das capacidades do típico desenvolvedor enterprise que não tem uma sólida formação matemática.</p>
+
+<p>Alguns dos conceitos apresentados aqui não são novos nem restritos à programação funcional. Os benefícios de distinguir entre funções que causam efeitos colaterais e as que não causam é a base de princípios como <a href="https://en.wikipedia.org/wiki/Command%E2%80%93query_separation">command-query separation (CQS)</a>, por exemplo.</p>
+
+<p>O objetivo desse post não é ensinar programação funcional para ninguém. Isso está além das minhas capacidades, já que eu ainda estou aprendendo. E além disso, <a href="https://fsharpforfunandprofit.com">existem ótimos recursos para aprender programação funcional, para aqueles que se interessarem</a>.</p>
+
+<p>Ao contrário, o que eu queria fazer aqui era mostrar um pouco do que um estilo funcional pode fazer com seu código: torná-lo mais expressivo, conciso e declarativo. Agora depende de você aplicar o estilo funcional ao código que você escreve.</p>
+
+    
+    
+      
+    
+    
+        Encontrou algum erro no post? <a href="http://github.com/carlosschults/carlosschults.github.io/edit/master/_posts/2019-01-22-csharp-programacao-funcional.md">Sugira uma edição</a>      
+    
+    
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+                    
+            <a rel="previous" class="previous" href="/pt/value-objects-ferramenta/">&larr; Value Objects: Uma Técnica Para Código Auto-Documentado E Menos Erros </a>
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+        	    
+            <a rel="next" class="next" href="/pt/afiando-a-serra/">Afiando a Serra: 4 Dicas Rápidas Para Sua Equipe &rarr;</a>
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+      
+    <div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+        // Store these for reloads
+        window.disqus_identifier = window.location.pathname;
+        window.disqus_url = window.location.href;
+        
+        // Set initial theme - match it with the site's theme
+        const currentTheme = document.body.getAttribute('data-theme') || 'light';
+        this.page.theme = currentTheme === 'dark' ? 'dark' : 'light';
+    };
+    
+    (function() {
+        var d = document, s = d.createElement('script');
+        s.src = '//carlosschultsblog.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>    
+  </div>
+
+</article>
+
+      </div>
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">         
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-2">
+        <ul class="social-media-list">
+          
+          <li>
+            <a href="https://github.com/carlosschults"><span class="icon icon--github"><svg viewBox="0 0 16 16"><path fill="#828282" d="M7.999,0.431c-4.285,0-7.76,3.474-7.76,7.761 c0,3.428,2.223,6.337,5.307,7.363c0.388,0.071,0.53-0.168,0.53-0.374c0-0.184-0.007-0.672-0.01-1.32 c-2.159,0.469-2.614-1.04-2.614-1.04c-0.353-0.896-0.862-1.135-0.862-1.135c-0.705-0.481,0.053-0.472,0.053-0.472 c0.779,0.055,1.189,0.8,1.189,0.8c0.692,1.186,1.816,0.843,2.258,0.645c0.071-0.502,0.271-0.843,0.493-1.037 C4.86,11.425,3.049,10.76,3.049,7.786c0-0.847,0.302-1.54,0.799-2.082C3.768,5.507,3.501,4.718,3.924,3.65 c0,0,0.652-0.209,2.134,0.796C6.677,4.273,7.34,4.187,8,4.184c0.659,0.003,1.323,0.089,1.943,0.261 c1.482-1.004,2.132-0.796,2.132-0.796c0.423,1.068,0.157,1.857,0.077,2.054c0.497,0.542,0.798,1.235,0.798,2.082 c0,2.981-1.814,3.637-3.543,3.829c0.279,0.24,0.527,0.713,0.527,1.437c0,1.037-0.01,1.874-0.01,2.129 c0,0.208,0.14,0.449,0.534,0.373c3.081-1.028,5.302-3.935,5.302-7.362C15.76,3.906,12.285,0.431,7.999,0.431z"/></svg>
+</span><span class="username">carlosschults</span></a>
+
+          </li>
+          
+
+          
+          <li>
+            <a href="https://twitter.com/carlosschults"><span class="icon icon--twitter"><svg viewBox="0 0 16 16"><path fill="#828282" d="M15.969,3.058c-0.586,0.26-1.217,0.436-1.878,0.515c0.675-0.405,1.194-1.045,1.438-1.809c-0.632,0.375-1.332,0.647-2.076,0.793c-0.596-0.636-1.446-1.033-2.387-1.033c-1.806,0-3.27,1.464-3.27,3.27 c0,0.256,0.029,0.506,0.085,0.745C5.163,5.404,2.753,4.102,1.14,2.124C0.859,2.607,0.698,3.168,0.698,3.767 c0,1.134,0.577,2.135,1.455,2.722C1.616,6.472,1.112,6.325,0.671,6.08c0,0.014,0,0.027,0,0.041c0,1.584,1.127,2.906,2.623,3.206 C3.02,9.402,2.731,9.442,2.433,9.442c-0.211,0-0.416-0.021-0.615-0.059c0.416,1.299,1.624,2.245,3.055,2.271 c-1.119,0.877-2.529,1.4-4.061,1.4c-0.264,0-0.524-0.015-0.78-0.046c1.447,0.928,3.166,1.469,5.013,1.469 c6.015,0,9.304-4.983,9.304-9.304c0-0.142-0.003-0.283-0.009-0.423C14.976,4.29,15.531,3.714,15.969,3.058z"/></svg>
+</span><span class="username">carlosschults</span></a>
+
+          </li>
+          
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-3">
+        <p>Artigos sobre desenvolvimento de software e tecnologia.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+
+    <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-92788641-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+    <script src="/js/dark-mode.js"></script>
+  </body>
+
+</html>

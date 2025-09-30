@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Cargo Cult Programming Is The Art of Programming by Coincidence | carlos schults / blog</title>
+  <link rel="apple-touch-icon" sizes="57x57" href="/img/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/img/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/img/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/img/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/img/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/img/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/img/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/img/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"  href="/img/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/img/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon-16x16.png">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="description" content="Editorial note: I originally wrote this post for the NDepend blog.  You can check out the original here, at their site. While you’re there, download NDepend ...">
+  
+  <!-- Twitter card -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:creator" content="@carlosschults">
+  <meta name="twitter:site" content="@carlosschults">
+  <meta name="twitter:domain" content="carlosschults.net">
+  <meta name="twitter:title" content="Cargo Cult Programming Is The Art of Programming by Coincidence">
+  <meta name="twitter:description" content="Editorial note: I originally wrote this post for the NDepend blog.  You can check out the original here, at their site. While you’re there, download NDepend ...">
+
+   <!-- Facebook meta -->
+  
+  
+  <meta property="og:title" content="Cargo Cult Programming Is The Art of Programming by Coincidence">
+  <meta property="og:site_name" content="Carlos Schults / Blog" />
+  <meta property="og:locale" content="en_US">  
+  <meta property="og:type" content="article" />
+  <meta property="og:image" content="https://res.cloudinary.com/dz5ppacuo/image/upload/v1516152067/cargo-cult-programming-1037x438_spoxet.jpg" />  
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:width" content="1038"> 
+  <meta property="og:image:height" content="437">  
+  
+  <meta property="og:article:published_time" content="2018-01-17T00:00:00+00:00" />  
+  <meta property="og:article:author" content="Carlos Schults" />
+  
+  <meta property="og:article:tag" content="csharp" />
+  <meta property="og:article:tag" content="best practices" />
+  <meta property="og:article:tag" content="cargo cult programming" />    
+  
+  <meta property="og:url" content="https://carlosschults.net/en/cargo-cult-programming/"/>
+  <meta property="og:description" content="Editorial note: I originally wrote this post for the NDepend blog.  You can check out the original here, at their site. While you’re there, download NDepend ...">
+  <link rel="stylesheet" href="/css/main.css">  
+  
+  <link rel="canonical" href="https://blog.ndepend.com/cargo-cult-programming/">
+   
+  
+  <link rel="alternate" hreflang="en" href="/en/cargo-cult-programming/" />
+  <link rel="alternate" hreflang="pt" href="/pt/cargo-cult-programming/" />
+  
+  <link rel="alternate" type="application/rss+xml" title="carlos schults / blog" href="https://carlosschults.net/feed.xml">
+</head>
+
+  <body>
+    <header class="site-header">
+  <div class="wrapper">    
+    <a class="site-title" href="/">carlos schults / blog</a>
+    
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg viewBox="0 0 18 15">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+
+      <div class="trigger">        
+          
+          <a class="page-link" href="/footprints/">Dev Footprints</a>
+          <a class="page-link" href="/readings/">Readings</a>
+          <a class="page-link" href="/about/">About</a>
+		      <a class="page-link" href="/search/">Search</a>
+                  
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+<div class="wrapper" style="text-align: right; line-height: 2em">
+  
+   <a href="/en/cargo-cult-programming/" class="en">en</a>  <a href="/pt/cargo-cult-programming/" class="pt">pt</a> 
+
+  
+  
+</div>
+
+
+    <div class="page-content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">    
+    <h2 class="postTitle" itemprop="headline">Cargo Cult Programming Is The Art of Programming by Coincidence</h2>
+    <p class="post-meta">   
+    <time datetime="2018-01-17T00:00:00+00:00" itemprop="datePublished">Jan 17, 2018
+    </time> • <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">Carlos Schults</span></span>
+  <span class="tags" itemprop="keywords"> • Tags: <a href="/tag/csharp">csharp </a> <a href="/tag/best practices">best practices </a> <a href="/tag/cargo cult programming">cargo cult programming </a> </span>
+  </p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <p><img src="https://res.cloudinary.com/dz5ppacuo/image/upload/v1516152067/cargo-cult-programming-1037x438_spoxet.jpg" alt="" /></p>
+
+<p><em>Editorial note: I originally wrote this post for the NDepend blog.  You can <a href="https://blog.ndepend.com/cargo-cult-programming/">check out the original here, at their site</a>. While you’re there, download NDepend and give it a try.</em></p>
+
+<p>I first learned about cargo cult programming a few years ago. I remember thinking back then, “What a strange name for a programming-related concept.”</p>
+
+<p>If you share my past self’s astonishment, then today’s post is for you!</p>
+
+<p>First, you’ll see what cargo cult programming is and why you should care. Then, we’re going to look at some practical examples, using the C# language. Finally, we’ll close with advice about what you can do, as a developer, to avoid falling into this trap.</p>
+
+<h2 id="cargo-cult-programming-doing-stuff-just-because">Cargo Cult Programming: Doing Stuff Just Because</h2>
+
+<p><a href="https://en.wikipedia.org/wiki/Cargo_cult_programming">According to Wikipedia</a>, “Cargo cult programming is a style of computer programming characterized by the ritual inclusion of code or program structures that serve no real purpose.”</p>
+
+<p>In other words, it’s when a developer writes code without really understanding it. The developer may use a very trial-and-error approach—maybe copy and paste some code from somewhere else and then tweak it and test it until works, or sort of works. Then the developer will stop tweaking the code, for fear it will stop working. In the process, maybe they leave some lines of code that don’t do anything.</p>
+
+<p>Or maybe they tried to use an idiom they picked up from another developer while failing to understand that the contexts are different and it’s useless in the current situation.</p>
+
+<p>Finally, it might just be lack of education: maybe the developer has a poor mental model of how the tools they’re using really work.</p>
+
+<h2 id="why-is-cargo-cult-programming-a-problem">Why is Cargo Cult Programming a Problem?</h2>
+<p>As Eric Lippert puts it, <a href="https://blogs.msdn.microsoft.com/ericlippert/2004/03/01/syntax-semantics-micronesian-cults-and-novice-programmers/">cargo cult programmers struggle to make meaningful changes to a program</a> and end up using a trial-and-error approach since they don’t understand the inner workings of the code they’re about to change.</p>
+
+<p>This is not so different from what the <a href="https://pragprog.com/the-pragmatic-programmer/extracts/coincidence">Pragmatic Bookshelf calls “programming by coincidence”</a>:</p>
+
+<blockquote>
+  <p>Fred doesn’t know why the code is failing because he didn’t know why it worked in the first place. It seemed to work, given the limited “testing” that Fred did, but that was just a coincidence.</p>
+</blockquote>
+
+<p>That single sentence pretty much sums it up for me: if you don’t know how or why your code works, neither will you understand what happened when it no longer works.</p>
+
+<h2 id="origin-of-the-term">Origin of the Term</h2>
+<p>Although practices that are considered cargo cult today <a href="https://en.wikipedia.org/wiki/Cargo_cult#First_occurrences">have been recorded as early as the late 19th century</a>, the term itself dates from 1945, when it was first used to describe practices that emerged during and after World War II between Melanesian islanders.</p>
+
+<p>These islanders would mimic the soldiers’ behavior, such as dressing up as flight controllers and waving sticks, hoping that airplanes would descend from the skies with a lot of cargo.</p>
+
+<p>Since then, the term cargo cult has been used in a variety of contexts to mean <strong>to imitate form without content</strong>—to perfectly copy the superficial elements while failing to understand the deeper meanings and workings of whatever one’s trying to emulate.</p>
+
+<h2 id="talk-is-cheap-show-me-the-code">Talk is Cheap; Show Me the Code!</h2>
+<p>Enough with the history lesson. Time to see some code! I’m going to show you five examples of cargo cult programming in the C# language.</p>
+
+<h3 id="checking-a-non-nullable-value-type-for-null">Checking a Non-Nullable Value Type for Null</h3>
+<p>This one is a pet peeve of mine since I see it a lot in production code. It goes like this:</p>
+
+<figure class="highlight"><pre><code class="language-c#" data-lang="c#">	<span class="k">public</span> <span class="n">Product</span> <span class="nf">Find</span><span class="p">(</span><span class="kt">int</span> <span class="n">id</span><span class="p">)</span>
+	<span class="p">{</span>
+   	   <span class="k">if</span> <span class="p">(</span><span class="n">id</span> <span class="p">!=</span> <span class="k">null</span><span class="p">)</span> <span class="c1">// this check is useless</span>
+	   <span class="p">{</span>
+	       <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">"This line will always get reached."</span><span class="p">);</span>
+	   <span class="p">}</span>
+	
+	   <span class="k">return</span> <span class="k">new</span> <span class="nf">Product</span><span class="p">();</span>
+	<span class="p">}</span></code></pre></figure>
+
+<p>Here we have a developer that probably doesn’t grok the <a href="https://carlosschults.net/en/value-reference-types-in-csharp/">difference between value and reference types</a>. It would be completely forgivable, in the case of a junior developer, except for the fact that the compiler warns you about that.</p>
+
+<p>You could argue that I’m nitpicking. After all, the code will run fine in spite of this. In fact, the check won’t even be included in the resulting IL, as you can see from this print of a decompiling tool:</p>
+
+<p><img src="https://res.cloudinary.com/dz5ppacuo/image/upload/v1515684957/just-decompile1_qk69k2.png" alt="An image depicting a code excerpt that does not contain the null check." /></p>
+
+<p>You can see in this code snippet that the compiler has optimized the null check out.</p>
+
+<p>There are plenty of worse problems, granted. Yes, the application won’t <em>crash</em> because of this. So what’s the big deal?</p>
+
+<p>Well, for starters, I’d be worried about a development shop where the sole quality measure was “it runs without crashing.” But the real problem is that this type of code shows a lack of understanding of some fundamental characteristics of the language and platform that can bite you in the future.</p>
+
+<h3 id="unnecessary-use-of-tolist-in-linq-to-object-queries">Unnecessary Use of ToList() in LINQ to Object Queries</h3>
+<p>Like the previous one, this is something I routinely see in production code. Consider the code below:</p>
+
+<figure class="highlight"><pre><code class="language-c#" data-lang="c#">	<span class="kt">var</span> <span class="n">result</span> <span class="p">=</span> <span class="n">users</span><span class="p">.</span><span class="nf">ToList</span><span class="p">()</span>
+	<span class="p">.</span><span class="nf">Where</span><span class="p">(</span><span class="n">x</span> <span class="p">=&gt;</span> <span class="n">x</span><span class="p">.</span><span class="n">PremiumUser</span><span class="p">)</span>
+	<span class="p">.</span><span class="nf">ToList</span><span class="p">()</span>
+	<span class="p">.</span><span class="nf">Select</span><span class="p">(</span><span class="n">x</span> <span class="p">=&gt;</span> <span class="k">new</span> <span class="p">{</span> <span class="n">Name</span> <span class="p">=</span> <span class="n">x</span><span class="p">.</span><span class="n">Name</span><span class="p">,</span> <span class="n">Birth</span> <span class="p">=</span> <span class="n">x</span><span class="p">.</span><span class="n">DateOfBirth</span> <span class="p">})</span>
+	<span class="p">.</span><span class="nf">ToList</span><span class="p">();</span></code></pre></figure>
+
+<p>The problem we have here is that these calls to <code class="language-plaintext highlighter-rouge">ToList()</code> are completely unnecessary (except maybe the last one, if you really needed the result to be a <code class="language-plaintext highlighter-rouge">List</code> and not only an <code class="language-plaintext highlighter-rouge">IEnumerable</code>).</p>
+
+<p>In my experience, this happens when the developer doesn’t understand the nature of LINQ; they erroneously think that the LINQ methods belong to the concrete type <code class="language-plaintext highlighter-rouge">List&lt;T&gt;</code> instead of being extension methods that can be used with any <code class="language-plaintext highlighter-rouge">IEnumerable&lt;T&gt;</code> implementation.</p>
+
+<p>By calling <code class="language-plaintext highlighter-rouge">ToList()</code> several times like this, the developer creates several new lists, which can be detrimental to the performance of the application.</p>
+
+<p>You could rewrite the code above like this:</p>
+
+<figure class="highlight"><pre><code class="language-c#" data-lang="c#">	<span class="kt">var</span> <span class="n">result</span> <span class="p">=</span> <span class="n">users</span><span class="p">.</span><span class="nf">Where</span><span class="p">(</span><span class="n">x</span> <span class="p">=&gt;</span> <span class="n">x</span><span class="p">.</span><span class="n">PremiumUser</span><span class="p">).</span><span class="nf">Select</span><span class="p">(</span><span class="n">x</span> <span class="p">=&gt;</span> <span class="k">new</span> <span class="p">{</span> <span class="n">Name</span> <span class="p">=</span> <span class="n">x</span><span class="p">.</span><span class="n">Name</span><span class="p">,</span> <span class="n">Birth</span> <span class="p">=</span> <span class="n">x</span><span class="p">.</span><span class="n">DateOfBirth</span> <span class="p">});</span></code></pre></figure>
+
+<h3 id="unnecessary-conversions">Unnecessary Conversions</h3>
+<p>Consider the following line:</p>
+
+<figure class="highlight"><pre><code class="language-c#" data-lang="c#">	<span class="n">DateTime</span> <span class="n">creationDate</span> <span class="p">=</span> <span class="n">DateTime</span><span class="p">.</span><span class="nf">Parse</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s">"creation_date"</span><span class="p">].</span><span class="nf">ToString</span><span class="p">());</span></code></pre></figure>
+
+<p>Here we have not only one but two unnecessary conversions. First, the developer creates a new string and then parses it to <code class="language-plaintext highlighter-rouge">DateTime</code> when a simple cast would have sufficed:</p>
+
+<figure class="highlight"><pre><code class="language-c#" data-lang="c#">	<span class="n">DateTime</span> <span class="n">creationDate</span> <span class="p">=</span> <span class="p">(</span><span class="n">DateTime</span><span class="p">)</span><span class="n">row</span><span class="p">[</span><span class="s">"creation_date"</span><span class="p">];</span></code></pre></figure>
+
+<p>This example assumes that the underlying database type is some specific type for dealing with dates (for instance, <code class="language-plaintext highlighter-rouge">date</code> or <code class="language-plaintext highlighter-rouge">datetime</code> in SQL Server). Of course, if you were using an inadequate type (such as <code class="language-plaintext highlighter-rouge">varchar</code>) then this would be a problem of its own.</p>
+
+<h3 id="try-catch-everywhere">Try-Catch Everywhere</h3>
+<p>Also known as Pokémon syndrome (“Gotta catch ’em all!”), the anti-pattern here is to add a try-catch block to every single line that could possibly throw an exception.</p>
+
+<p>Bonus points if the code is attempting to catch <code class="language-plaintext highlighter-rouge">System.Exception</code> instead of a more specific exception, thus blurring the distinction between expected and unexpected errors.</p>
+
+<p>More bonus points if the catch block doesn’t contain any code at all!</p>
+
+<p>The general advice here is this: never catch unless you have a very specific reason for doing so. Otherwise, just the let the exception bubble up until it’s dealt with by the top-level exception handler.</p>
+
+<p>If this advice seems vague (“How would I know if I have the right reason for catching an exception?”), that’s because it is vague. It’s beyond the scope of this post to go deeper into this matter, but <a href="https://blogs.msdn.microsoft.com/ericlippert/2008/09/10/vexing-exceptions/">Eric Lippert’s excellent article called “Vexing Exceptions”</a> will greatly improve your understanding of exception handling.</p>
+
+<h3 id="using-stringbuilder-everywhere">Using StringBuilder Everywhere</h3>
+<p>It’s the stuff of superhero movies: after reading somewhere that concatenating strings by using the ‘+’ operator is incredibly inefficient, the well-meaning developer takes upon themselves the Herculean task of updating every single concatenation in the codebase to <code class="language-plaintext highlighter-rouge">StringBuilder</code>.</p>
+
+<p>The reasoning for this is, of course, that <code class="language-plaintext highlighter-rouge">System.String</code> is immutable. So every time you “modify” a string, you’re in fact creating a new instance in memory, which can hurt performance pretty badly.</p>
+
+<p>Well, guess what? The compiler is pretty smart. Let’s say you have the following line:</p>
+
+<figure class="highlight"><pre><code class="language-c#" data-lang="c#">	<span class="kt">string</span> <span class="n">a</span> <span class="p">=</span> <span class="s">"Hello "</span> <span class="p">+</span> <span class="s">"World"</span><span class="p">;</span></code></pre></figure>
+
+<p>This, in fact, gets translated to</p>
+
+<figure class="highlight"><pre><code class="language-c#" data-lang="c#">	<span class="kt">string</span> <span class="n">a</span> <span class="p">=</span> <span class="s">"Hello World"</span><span class="p">;</span></code></pre></figure>
+
+<p>The fast rule of thumb is it’s fine to use the simple concatenation when you know the number of strings to append in compile time. Otherwise, a <a href="https://stackoverflow.com/a/21644889"><code class="language-plaintext highlighter-rouge">StringBuilder</code> probably makes more sense</a>.</p>
+
+<p>Of course, some scenarios aren’t that clear-cut. The only advice worth giving here is to do your homework. When in doubt, research and benchmark to your heart’s content.</p>
+
+<p>I’ll leave you with more sound advice from Eric Lippert:</p>
+
+<blockquote>
+  <p>Unnecessary code changes are expensive and dangerous; <strong>don’t make performance-based changes unless you’ve identified a performance problem.</strong></p>
+</blockquote>
+
+<h2 id="is-there-a-remedy">Is There a Remedy?</h2>
+<p>I’d say it’s fair to assume that more inexperienced developers are more prone to commit mistakes due to cargo cult programming. But no developer is really immune to it, independent of their knowledge or experience.</p>
+
+<p>We’re only human after all. Tiredness, deadlines, cognitive biases, and (to be really honest) the eventual laziness can turn even the best developer into a cargo cult programmer.</p>
+
+<p>Unfortunately, there’s no 100%  guaranteed way of preventing this from happening. Yet there are some measures you could take to, at least, decrease the odds.</p>
+
+<p>Let’s take a look at some of them.</p>
+
+<h3 id="use-code-reviewpair-programming">Use Code Review/Pair Programming</h3>
+<p>The first measure you could take to avoid cargo cult programming is to simply get a second pair of eyes on your code. The benefits of having a second person reviewing each line of code before it goes to production can’t be overstated. And while code review and pair programming aren’t perfect equivalents, both of these practices will bring you this benefit.</p>
+
+<h3 id="always-test-your-hypothesis">Always Test Your Hypothesis</h3>
+<p>Write unit tests (and other types of tests as well). Monitor your application in production. If something doesn’t perform well, benchmark the heck out of it. Don’t just assume things. Testing your hypothesis can bring valuable insights and save you when your intuition gets it wrong.</p>
+
+<h3 id="read-other-peoples-code">Read Other People’s Code</h3>
+<p>Reading other people’s code is a great way to learn. It’s a perfect tool to compare your own ideas and assumptions against what other developers are doing, exposing you to novel concepts that can force you to gain a deeper understanding of the issues at hand.</p>
+
+<p>In the era of <a href="https://github.com/">GitHub</a>, there isn’t much of an excuse for not doing that.</p>
+
+<h3 id="learn-from-your-tools">Learn From Your Tools</h3>
+<p>There are currently a plethora of tools that can help <a href="https://www.ndepend.com/">your team improve the quality of their code</a>. Here’s the thing, though: you shouldn’t just use these tools. You should also learn from them. If you use NDepend, <a href="https://www.ndepend.com/default-rules/webframe.html">read about its rules</a>. Try and understand the rationale behind them. What are the principles and best practices that guided its authors when coming up with the rules?</p>
+
+<p>The same goes for other types of tools—and even the warnings the compiler gives you.</p>
+
+<h2 id="computer-science-not-computer-superstition">Computer Science, Not Computer <em>Superstition</em></h2>
+<p>Even though no one is immune to cargo cult programming, we should strive to overcome it. There’s hard-earned industry wisdom at our disposal, slowly generated over more than seven decades. Let’s use it. Let’s understand our tools and our craft and write better software.</p>
+
+    
+    
+      
+    
+    
+        Found a typo or mistake in the post? <a href="http://github.com/carlosschults/carlosschults.github.io/edit/master/_posts/2018-01-17-cargo-cult-programming.md">Suggest edit</a>
+        
+    
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+                    
+            <a rel="previous" class="previous" href="/en/csharp-8-features/">&larr; C# 8.0 Features: A Glimpse of the Future </a>
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+        	    
+            <a rel="next" class="next" href="/en/code-review-vs-pair-programming/">Code Review vs Pair-Programming: Which One Should Your Team Pick? &rarr;</a>
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+      
+    <div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+        // Store these for reloads
+        window.disqus_identifier = window.location.pathname;
+        window.disqus_url = window.location.href;
+        
+        // Set initial theme - match it with the site's theme
+        const currentTheme = document.body.getAttribute('data-theme') || 'light';
+        this.page.theme = currentTheme === 'dark' ? 'dark' : 'light';
+    };
+    
+    (function() {
+        var d = document, s = d.createElement('script');
+        s.src = '//carlosschultsblog.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>    
+  </div>
+
+</article>
+
+      </div>
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">         
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-2">
+        <ul class="social-media-list">
+          
+          <li>
+            <a href="https://github.com/carlosschults"><span class="icon icon--github"><svg viewBox="0 0 16 16"><path fill="#828282" d="M7.999,0.431c-4.285,0-7.76,3.474-7.76,7.761 c0,3.428,2.223,6.337,5.307,7.363c0.388,0.071,0.53-0.168,0.53-0.374c0-0.184-0.007-0.672-0.01-1.32 c-2.159,0.469-2.614-1.04-2.614-1.04c-0.353-0.896-0.862-1.135-0.862-1.135c-0.705-0.481,0.053-0.472,0.053-0.472 c0.779,0.055,1.189,0.8,1.189,0.8c0.692,1.186,1.816,0.843,2.258,0.645c0.071-0.502,0.271-0.843,0.493-1.037 C4.86,11.425,3.049,10.76,3.049,7.786c0-0.847,0.302-1.54,0.799-2.082C3.768,5.507,3.501,4.718,3.924,3.65 c0,0,0.652-0.209,2.134,0.796C6.677,4.273,7.34,4.187,8,4.184c0.659,0.003,1.323,0.089,1.943,0.261 c1.482-1.004,2.132-0.796,2.132-0.796c0.423,1.068,0.157,1.857,0.077,2.054c0.497,0.542,0.798,1.235,0.798,2.082 c0,2.981-1.814,3.637-3.543,3.829c0.279,0.24,0.527,0.713,0.527,1.437c0,1.037-0.01,1.874-0.01,2.129 c0,0.208,0.14,0.449,0.534,0.373c3.081-1.028,5.302-3.935,5.302-7.362C15.76,3.906,12.285,0.431,7.999,0.431z"/></svg>
+</span><span class="username">carlosschults</span></a>
+
+          </li>
+          
+
+          
+          <li>
+            <a href="https://twitter.com/carlosschults"><span class="icon icon--twitter"><svg viewBox="0 0 16 16"><path fill="#828282" d="M15.969,3.058c-0.586,0.26-1.217,0.436-1.878,0.515c0.675-0.405,1.194-1.045,1.438-1.809c-0.632,0.375-1.332,0.647-2.076,0.793c-0.596-0.636-1.446-1.033-2.387-1.033c-1.806,0-3.27,1.464-3.27,3.27 c0,0.256,0.029,0.506,0.085,0.745C5.163,5.404,2.753,4.102,1.14,2.124C0.859,2.607,0.698,3.168,0.698,3.767 c0,1.134,0.577,2.135,1.455,2.722C1.616,6.472,1.112,6.325,0.671,6.08c0,0.014,0,0.027,0,0.041c0,1.584,1.127,2.906,2.623,3.206 C3.02,9.402,2.731,9.442,2.433,9.442c-0.211,0-0.416-0.021-0.615-0.059c0.416,1.299,1.624,2.245,3.055,2.271 c-1.119,0.877-2.529,1.4-4.061,1.4c-0.264,0-0.524-0.015-0.78-0.046c1.447,0.928,3.166,1.469,5.013,1.469 c6.015,0,9.304-4.983,9.304-9.304c0-0.142-0.003-0.283-0.009-0.423C14.976,4.29,15.531,3.714,15.969,3.058z"/></svg>
+</span><span class="username">carlosschults</span></a>
+
+          </li>
+          
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-3">
+        <p>Articles on software development and technology.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+
+    <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-92788641-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+    <script src="/js/dark-mode.js"></script>
+  </body>
+
+</html>

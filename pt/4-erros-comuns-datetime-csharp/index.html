@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>4 Erros Comuns Com Data e Hora no C# — E como evitá-los | carlos schults / blog</title>
+  <link rel="apple-touch-icon" sizes="57x57" href="/img/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/img/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/img/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/img/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/img/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/img/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/img/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/img/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"  href="/img/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/img/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon-16x16.png">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="description" content="NOTA: Eu escrevi este post originalmente para o blog da SubMain.  Você pode conferir o original no site deles, em inglês. Enquanto estiver por lá, dê uma con...">
+  
+  <!-- Twitter card -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:creator" content="@carlosschults">
+  <meta name="twitter:site" content="@carlosschults">
+  <meta name="twitter:domain" content="carlosschults.net">
+  <meta name="twitter:title" content="4 Erros Comuns Com Data e Hora no C# — E como evitá-los">
+  <meta name="twitter:description" content="NOTA: Eu escrevi este post originalmente para o blog da SubMain.  Você pode conferir o original no site deles, em inglês. Enquanto estiver por lá, dê uma con...">
+
+   <!-- Facebook meta -->
+  
+  
+  <meta property="og:title" content="4 Erros Comuns Com Data e Hora no C# — E como evitá-los">
+  <meta property="og:site_name" content="Carlos Schults / Blog" />
+  <meta property="og:locale" content="pt_BR">  
+  <meta property="og:type" content="article" />
+  <meta property="og:image" content="https://res.cloudinary.com/dz5ppacuo/image/upload/v1531165684/4-datetime-mistakes-1038x437_nm6csc.jpg" />  
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:width" content="1038"> 
+  <meta property="og:image:height" content="437">  
+  
+  <meta property="og:article:published_time" content="2018-07-11T00:00:00+00:00" />  
+  <meta property="og:article:author" content="Carlos Schults" />
+  
+  <meta property="og:article:tag" content="csharp" />
+  <meta property="og:article:tag" content="boas praticas" />
+  <meta property="og:article:tag" content="tempo" />    
+  
+  <meta property="og:url" content="https://carlosschults.net/pt/4-erros-comuns-datetime-csharp/"/>
+  <meta property="og:description" content="NOTA: Eu escrevi este post originalmente para o blog da SubMain.  Você pode conferir o original no site deles, em inglês. Enquanto estiver por lá, dê uma con...">
+  <link rel="stylesheet" href="/css/main.css">  
+  
+   <link rel="canonical" href="https://carlosschults.net/pt/4-erros-comuns-datetime-csharp/">
+   
+  
+  <link rel="alternate" hreflang="en" href="/en/4-common-datetime-mistakes-csharp/" />
+  <link rel="alternate" hreflang="pt" href="/pt/4-erros-comuns-datetime-csharp/" />
+  
+  <link rel="alternate" type="application/rss+xml" title="carlos schults / blog" href="https://carlosschults.net/rss.xml">
+</head>
+
+  <body>
+    <header class="site-header">
+  <div class="wrapper">    
+    <a class="site-title" href="/pt/">carlos schults / blog</a>
+    
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg viewBox="0 0 18 15">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+
+      <div class="trigger">        
+          
+          <a class="page-link" href="/sobre/">Sobre</a>
+          <a class="page-link" href="/busca/">Busca</a>
+                  
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+<div class="wrapper" style="text-align: right; line-height: 2em">
+  
+   <a href="/en/4-common-datetime-mistakes-csharp/" class="en">en</a>  <a href="/pt/4-erros-comuns-datetime-csharp/" class="pt">pt</a> 
+
+  
+  
+</div>
+
+
+    <div class="page-content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">    
+    <h2 class="postTitle" itemprop="headline">4 Erros Comuns Com Data e Hora no C# — E como evitá-los</h2>
+    <p class="post-meta">   
+    <time datetime="2018-07-11T00:00:00+00:00" itemprop="datePublished">11/07/2018
+    </time> • <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">Carlos Schults</span></span>
+  <span class="tags" itemprop="keywords"> • Tags: <a href="/tag_ptbr/csharp">csharp </a> <a href="/tag_ptbr/boas praticas">boas praticas </a> <a href="/tag_ptbr/tempo">tempo </a> </span>
+  </p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <p><img src="https://res.cloudinary.com/dz5ppacuo/image/upload/v1531165684/4-datetime-mistakes-1038x437_nm6csc.jpg" alt="" /></p>
+
+<p><em>NOTA: Eu escrevi este post originalmente para o blog da SubMain.  Você pode <a href="https://blog.submain.com/4-common-datetime-mistakes-c-avoid/">conferir o original no site deles, em inglês</a>. Enquanto estiver por lá, dê uma conferida no CodeIt.Right, uma ferramenta que pode lhe ajudar com problemas relacionados a tempo e muitos outros.</em></p>
+
+<p>Você se lembra daqueles posts no estilo “inverdades que programadores acreditam sobre <em>X</em>” que ficaram bastante populares em blogs de software há alguns anos? O primeiro foi sobre <a href="https://www.kalzumeus.com/2010/06/17/falsehoods-programmers-believe-about-names/">nomes</a>, mas logo apareceram vários outros, cobrindo tópicos como <a href="https://www.mjt.me.uk/posts/falsehoods-programmers-believe-about-addresses/">endereços</a>, <a href="https://wiesmann.codiferes.net/wordpress/?p=15187&amp;lang=en">geografia</a> e <a href="https://wiesmann.codiferes.net/wordpress/?p=22201">compras online</a>.</p>
+
+<p>O meu favorito era <a href="https://infiniteundo.com/post/25326999628/falsehoods-programmers-believe-about-time">o post sobre tempo</a>. Até esse ponto, eu não havia pensado profundamente sobre tempo e e suas intricacies, e eu fiquei intrigado em saber que um domínio tão fundamental pudesse ser um terreno tão fértil para bugs e confusões.</p>
+
+<p>Agora, mesmo eu tendo gostado do post, eu vejo um problema com ele: o post lista vários suposições erradas, e basicamente para por aí. Quem lê o artigo provavelmente termina se perguntando:</p>
+
+<ul>
+  <li>Por que essas suposições são falsas?</li>
+  <li>Qual é a probabilidade de eu me dar mal por causa dessas inverdades?</li>
+  <li>Qual é a maneira adequada de lidar com esses problemas?</li>
+</ul>
+
+<p>O artigo é interessante, mas eu acho que faria sentido oferecer informações um pouco mais acionáveis.</p>
+
+<p>E é exatamente esse é o objetivo do post de hoje. Eu vou mostrar 4 erros comuns que as pessoas cometem ao lidar com tempo em C#/.NET. E não para por aí. Eu também vou mostrar o que você deve fazer para evitar esses erros e tornar seu código mais seguro e mais fácil de ser compreendido.</p>
+
+<h2 id="1-calculando-durações-de-maneira-ingênua">1. Calculando Durações de Maneira Ingênua</h2>
+
+<p>Considere o código abaixo:</p>
+
+<script src="https://gist.github.com/carlosschults/3e18612b9a9238382b6d4fa3c574a231.js"></script>
+
+<p>Ele funciona corretamente? Depende de onde e quando ele será executado.</p>
+
+<p>Quando você usa <code class="language-plaintext highlighter-rouge">DateTime.Now</code>, o valor que você obtém representa a data e hora locais em relação à máquina atual (ou seja, a propriedade <code class="language-plaintext highlighter-rouge">Kind</code> está configurada para <code class="language-plaintext highlighter-rouge">Local</code>).</p>
+
+<p>Se o lugar que você mora observa Horário de Verão, então você sabe que existe um dia do ano no qual você deve adiantar os relógios em uma certa medida (geralmente 1 hora, embora existam lugares que ajustam por outras quantidades). E é claro, existe também um dia no qual o oposto acontece.</p>
+
+<p>Agora imagine o que seguinte: hoje é 12 de março de 2017, e você more na cidade de Nova York. Você começa a usar o programa acima. O método <code class="language-plaintext highlighter-rouge">StartMatch()</code> é executado exatamente às 13h. Uma hora e quinze minutos mais tarde, o método <code class="language-plaintext highlighter-rouge">EndMatch</code> é executado. O cálculo é realizado e o texto abaixo é exibido:</p>
+
+<p><em>Duration of the match: 00:02:15</em></p>
+
+<p>Eu imagino que você compreendeu o que aconteceu aqui: quando os relógios estavam prestes a marcar 14h, o Horário de Verão entrou em efeito, movendo-os diretamente para 15h. Então o método <code class="language-plaintext highlighter-rouge">EndMatch</code> recuperou o horário atual, somando uma hora adicional ao cálculo. Se o experimento tivesse acontecido no fim do Horário de Verão, o resultado seria apenas 15 minutos!</p>
+
+<p>Sim, o código mostrado é apenas um exemplo, uma brincadeira. Mas e se fosse algo mais sério? Uma aplicação de folha de pagamento, digamos. Você gostaria de pagar o valor errado a um funcionário?</p>
+
+<h3 id="o-que-fazer">O que fazer?</h3>
+
+<p>Quando precisar calcular a duração de atividades humanas, use UTC para os tempos de início e fim. Dessa forma, você será capaz de <strong>referenciar de maneira não ambígua um ponto específico no tempo</strong>. Ao invés de usar a propriedade <code class="language-plaintext highlighter-rouge">Now</code>, use <code class="language-plaintext highlighter-rouge">UtcNow</code> para recuperar a data e hora já em formato UTC para realizar os cálculos:</p>
+
+<script src="https://gist.github.com/carlosschults/82492845edaa8f8fc16c646ed2bbcf2a.js"></script>
+
+<p>Mas e se os valores <code class="language-plaintext highlighter-rouge">DateTime</code> que você tem já são do tipo <code class="language-plaintext highlighter-rouge">Local</code>? Nesse caso, você deve usar o método <code class="language-plaintext highlighter-rouge">ToUniversalTime()</code> para convertê-los para UTC:</p>
+
+<script src="https://gist.github.com/carlosschults/58837695af07386836753ef6541233aa.js"></script>
+
+<h3 id="uma-rápida-advertência-sobre-touniversaltime">Uma Rápida Advertência Sobre <code class="language-plaintext highlighter-rouge">ToUniversalTime()</code></h3>
+
+<p>O uso do método <code class="language-plaintext highlighter-rouge">ToUniversalTime()</code> - e seu irmão, <code class="language-plaintext highlighter-rouge">ToLocalTime()</code> - pode ser um pouco chato. O problema é que esses métodos fazem suposições sobre o que você quer baseados no valor da propriedade <code class="language-plaintext highlighter-rouge">Kind</code> do objeto datetime que você tem, o que pode trazer resultados inesperados.</p>
+
+<p>Ao chamar <code class="language-plaintext highlighter-rouge">ToUniversalTime()</code>, uma das seguintes coisas vai acontecer:</p>
+
+<ul>
+  <li>Se <code class="language-plaintext highlighter-rouge">Kind</code> estiver configurado como UTC, o mesmo valor é retornado.</li>
+  <li>Por outro lado, se estiver configurado como <code class="language-plaintext highlighter-rouge">Local</code>, então o valor correspondente em UTC é retornado.</li>
+  <li>Finalmente, se <code class="language-plaintext highlighter-rouge">Kind</code> estiver como <code class="language-plaintext highlighter-rouge">Unspecified</code>, <strong>então é assumido que o objeto sempre teve a intenção de ser local,</strong>, e você recebe o valor correspondente à conversão para UTC.</li>
+</ul>
+
+<p>O problema aqui é que <a href="https://codeofmatt.com/2013/04/25/the-case-against-datetime-now/#localkindsdontroundtrip">valores de data/hora locais não não “transportáveis”</a>. Como assim? Eles são locais enquanto eles permanecerem no contexto da máquina atual. Se você salva um datetime local para um banco de dados e depois o recupera de lá, a informação de que ele é local se perde: agora ele é <code class="language-plaintext highlighter-rouge">Unspecified</code>.</p>
+
+<p>Assim, o seguinte cenário pode acontecer:</p>
+
+<ul>
+  <li>Você recupera a data e hora atuais usando <code class="language-plaintext highlighter-rouge">DateTime.UtcNow</code>.</li>
+  <li>Você salva esse valor no banco de dados.</li>
+  <li>Outra parte do código recupera esse valor. Sem estar ciente de que o valor já está em UTC, chama o método <code class="language-plaintext highlighter-rouge">ToUniversalTime()</code> na instância.</li>
+  <li>Como o valor recuperado do banco possui o tipo <code class="language-plaintext highlighter-rouge">Unspecified</code>, o método vai tratá-lo como local e realizar uma conversão desnecessária, gerando um valor errado.</li>
+</ul>
+
+<p>Como evitar que isso aconteça? Uma prática recomendada é usar UTC para armazenar o tempo em que um evento aconteceu. Minha sugestão é seguir esse conselho e também esse fato bem explícito. Coloque o sufixo “UTC” em cada coluna de tabela no banco de dados e também em nomes de propriedades que se referem a um valor em UTC. Ao invés de “Inclusao”, use “InclusaoUTC” e assim por diante. Não é tão bonito, mas com certeza é mais claro.</p>
+
+<h2 id="2-não-usar-utc-quando-deveria-e-vice-versa">2. Não Usar UTC Quando Deveria (e vice-versa)</h2>
+
+<p>Nós podemos definir isso como uma regra universal: use UTC para registrar quando eventos aconteceram. Ao logar, auditar, e registrar todo tipo de <em>timestamps</em> na sua aplicação, UTC é a resposta.</p>
+
+<p>Então, é só usar UTC em todo lugar! Certo? Não, não tão rápido.</p>
+
+<p>Digamos que você precisa ser capaz de reconstruir o tempo local - na perspectiva do usuário - de quando algo aconteceu, e a única informação que você tem é um <em>timestamp</em> em UTC. Mal dia.</p>
+
+<p>Em casos assim, faria mais sentido (a) registrar o momento em UTC e gravar também o fuso horário do usuário ou (b) usar o tipo <code class="language-plaintext highlighter-rouge">DateTimeOffset</code>, que armazena a data/hora local junto com o deslocamento, ou <em>offset</em>, para UTC, permitindo que você reconstrua o valor em UTC quando precisar.</p>
+
+<p>Outro caso de uso comum para o qual UTC não é a solução correta é  <a href="https://stackoverflow.com/questions/19626177/how-to-store-repeating-dates-keeping-in-mind-daylight-savings-time?noredirect=1&amp;lq=1">o agendamento de eventos locais no futuro</a>. Você não quer que seu alarme acorde você uma hora mais cedo ou uma hora mais tarde nos dias de transição do Horário de Verão, certo? Pois é exatamente isso que aconteceria se você configurasse o seu alarme pelo horário UTC.</p>
+
+<h2 id="3-não-validar-entrada-dos-usuários">3. Não Validar Entrada dos Usuários</h2>
+
+<p>Imagine que você criou uma aplicação desktop simples que permite que usuários configurem lembretes. A pessoa informa a data e hora que quer receber o lembrete, clica em um botão, e pronto.</p>
+
+<p>Tudo parece estar funcionando direito até que alguém do Brasil envia um e-mail para você, reclamando que o lembrete que ela configurou para 15 de outubro às 0h15 não funcionou. O que será que aconteceu?</p>
+
+<h3 id="o-horário-de-verão-contra-ataca">O Horário de Verão Contra Ataca</h3>
+
+<p>O vilão aqui é o bom e velho Horário de Verão novamente. Em 2017, o Horário de Verão no Brasil começou à meia-noite do dia 15 de outubro. Então, a combinação de data e hora que a usuária informou <strong>simplesmente não existe em seu fuso-horário!</strong></p>
+
+<p>É claro que o problema oposto também é possível. Quando o Horário de Verão chega ao fim e os relógios são atrasados, isso <strong>gera horas ambíguas</strong>.</p>
+
+<h3 id="qual-é-a-solução">Qual É A Solução?</h3>
+
+<p>Como lidar com esse tipo de problema no C#? A classe <code class="language-plaintext highlighter-rouge">TimeZoneInfo</code> pode lhe salvar. Ela serve para representar um fuso horário e também oferece métodos para verificar se um determinado objeto <code class="language-plaintext highlighter-rouge">DateTime</code> é válido:</p>
+
+<script src="https://gist.github.com/carlosschults/2b94d57390b3518294730c01003f159c.js"></script>
+
+<p>Mas o que fazer então? O que deveria substituir os comentários “do something” nos trechos acima?</p>
+
+<p>Você poderia mostrar uma mensagem dizendo que a data informada é inválida. Ou você poderia escolher outra data para a pessoa automaticamente.</p>
+
+<p>Vamos abordar o caso das horas inválidas primeiro. Suas opções são: mover para frente ou para trás. É uma decisão meio arbitrária, então qual você deve escolher? Por exemplo, o app do Google Calendar no Android move para frente. E até que faz sentido se você parar pra pensar. Isso é exatamente o que seus relógios fizeram devido ao horário de verão. Por que sua aplicação não pode fazer o mesmo?</p>
+
+<p>E no caso das horas ambíguas? Você também tem duas opções: escolher entre a primeira e segunda ocorrências. Novamente, é meio arbitrário, mas eu aconselho você a escolher a primeira ocorrência, pelo simples fato de tornar as coisas mais simples.</p>
+
+<h2 id="4-confundir-um-offset--com-um-fuso-horário">4. Confundir um <em>Offset</em>  com um Fuso Horário</h2>
+
+<p>Considere o timestamp a seguir: 1995-07-14T13:05:00.0000000-03:00. Quando alguém pergunta o que o “-03:00” no final é chamado, muita gente responde “o fuso horário”.</p>
+
+<p>A questão é essa. Essas pessoas provavelmente assumem corretamente que o número representa o offset, ou deslocamento, em relação a UTC. Também é provável que elas sabem que podem reconstruir a hora correspondente em UTC por meio desse offset. (Muitos desenvolvedores não entendem que, em uma string assim, o offset já está aplicado: para obter o tempo em UTC, você deve inverter o sinal do offset. E só depois, aplicá-lo ao valor da hora).</p>
+
+<p>O erro está em achar que o offset é a única informação que um fuso horário representa. Mas não é. Um fuso horário é uma área geográfica, e contém muitas informações, tais como:</p>
+
+<ul>
+  <li>Um ou mais offsets. (Horário de verão existe, afinal de contas.)</li>
+  <li>As datas nas quais as transições do horário de verão acontecem. (As quais podem mudar e mudam, sempre que os políticos resolvem).</li>
+  <li>A quantidade de tempo pelo qual os relógios são atrasados ou adiantados na transição. (Não é uma hora em todo lugar.)</li>
+  <li>O registro histórico das mudanças nas regras acima.</li>
+</ul>
+
+<p>Em resumo: não tente adivinhar um fuso horário pelo offset. Você vai errar a maioria das vezes.</p>
+
+<h2 id="quer-aprender-sobre-tempo-já-não-era-sem-tempo">Quer aprender sobre tempo? Já não era sem tempo!</h2>
+
+<p>Esta lista não é de forma alguma exausitiva. Eu apenas quis oferecer a vocês uma introdução ao fascinante e meio bizarro mundo dos problemas com hora e data em programação. Há muitos recursos valiosos por aí, como<a href="https://stackoverflow.com/tags/timezone/info">a tag time zone no Stack Overflow</a> ou blogs como <a href="https://codeblog.jonskeet.uk/">o de Jon Skeet</a> e <a href="https://codeofmatt.com/">o de Matt Johnson</a> que são autores da popular biblioteca NodaTime.</p>
+
+<p>E finalmente, sempre use as ferramentas que estão à sua disposição. Por exemplo, <a href="https://blog.submain.com/codeit-right-rules-explained-part-2/">o produto da SubMain chamado CodeIt.Right</a> tem uma regra que você a especificar um <code class="language-plaintext highlighter-rouge">IFormatProvider</code> em situações nas quais é opcional, o que pode acabar salvando você de bugs difíceis ao fazer tratamento de datas.</p>
+
+    
+    
+      
+    
+    
+        Encontrou algum erro no post? <a href="http://github.com/carlosschults/carlosschults.github.io/edit/master/_posts/2018-07-11-4-erros-comuns-datetime-csharp.md">Sugira uma edição</a>      
+    
+    
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+                    
+            <a rel="previous" class="previous" href="/pt/revisao-codigo-vs-programacao-em-par/">&larr; Revisão de Código vs Programação em Par: Qual a sua equipe deve escolher? </a>
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+        	    
+            <a rel="next" class="next" href="/pt/boas-praticas-sem-tempo/">Boas Práticas De Programação Para Os Apressados &rarr;</a>
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+      
+    <div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+        // Store these for reloads
+        window.disqus_identifier = window.location.pathname;
+        window.disqus_url = window.location.href;
+        
+        // Set initial theme - match it with the site's theme
+        const currentTheme = document.body.getAttribute('data-theme') || 'light';
+        this.page.theme = currentTheme === 'dark' ? 'dark' : 'light';
+    };
+    
+    (function() {
+        var d = document, s = d.createElement('script');
+        s.src = '//carlosschultsblog.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>    
+  </div>
+
+</article>
+
+      </div>
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">         
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-2">
+        <ul class="social-media-list">
+          
+          <li>
+            <a href="https://github.com/carlosschults"><span class="icon icon--github"><svg viewBox="0 0 16 16"><path fill="#828282" d="M7.999,0.431c-4.285,0-7.76,3.474-7.76,7.761 c0,3.428,2.223,6.337,5.307,7.363c0.388,0.071,0.53-0.168,0.53-0.374c0-0.184-0.007-0.672-0.01-1.32 c-2.159,0.469-2.614-1.04-2.614-1.04c-0.353-0.896-0.862-1.135-0.862-1.135c-0.705-0.481,0.053-0.472,0.053-0.472 c0.779,0.055,1.189,0.8,1.189,0.8c0.692,1.186,1.816,0.843,2.258,0.645c0.071-0.502,0.271-0.843,0.493-1.037 C4.86,11.425,3.049,10.76,3.049,7.786c0-0.847,0.302-1.54,0.799-2.082C3.768,5.507,3.501,4.718,3.924,3.65 c0,0,0.652-0.209,2.134,0.796C6.677,4.273,7.34,4.187,8,4.184c0.659,0.003,1.323,0.089,1.943,0.261 c1.482-1.004,2.132-0.796,2.132-0.796c0.423,1.068,0.157,1.857,0.077,2.054c0.497,0.542,0.798,1.235,0.798,2.082 c0,2.981-1.814,3.637-3.543,3.829c0.279,0.24,0.527,0.713,0.527,1.437c0,1.037-0.01,1.874-0.01,2.129 c0,0.208,0.14,0.449,0.534,0.373c3.081-1.028,5.302-3.935,5.302-7.362C15.76,3.906,12.285,0.431,7.999,0.431z"/></svg>
+</span><span class="username">carlosschults</span></a>
+
+          </li>
+          
+
+          
+          <li>
+            <a href="https://twitter.com/carlosschults"><span class="icon icon--twitter"><svg viewBox="0 0 16 16"><path fill="#828282" d="M15.969,3.058c-0.586,0.26-1.217,0.436-1.878,0.515c0.675-0.405,1.194-1.045,1.438-1.809c-0.632,0.375-1.332,0.647-2.076,0.793c-0.596-0.636-1.446-1.033-2.387-1.033c-1.806,0-3.27,1.464-3.27,3.27 c0,0.256,0.029,0.506,0.085,0.745C5.163,5.404,2.753,4.102,1.14,2.124C0.859,2.607,0.698,3.168,0.698,3.767 c0,1.134,0.577,2.135,1.455,2.722C1.616,6.472,1.112,6.325,0.671,6.08c0,0.014,0,0.027,0,0.041c0,1.584,1.127,2.906,2.623,3.206 C3.02,9.402,2.731,9.442,2.433,9.442c-0.211,0-0.416-0.021-0.615-0.059c0.416,1.299,1.624,2.245,3.055,2.271 c-1.119,0.877-2.529,1.4-4.061,1.4c-0.264,0-0.524-0.015-0.78-0.046c1.447,0.928,3.166,1.469,5.013,1.469 c6.015,0,9.304-4.983,9.304-9.304c0-0.142-0.003-0.283-0.009-0.423C14.976,4.29,15.531,3.714,15.969,3.058z"/></svg>
+</span><span class="username">carlosschults</span></a>
+
+          </li>
+          
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-3">
+        <p>Artigos sobre desenvolvimento de software e tecnologia.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+
+    <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-92788641-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+    <script src="/js/dark-mode.js"></script>
+  </body>
+
+</html>

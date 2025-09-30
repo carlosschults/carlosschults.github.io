@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Unit testing for beginners - Part 1 | carlos schults / blog</title>
+  <link rel="apple-touch-icon" sizes="57x57" href="/img/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/img/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/img/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/img/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/img/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/img/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/img/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/img/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"  href="/img/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/img/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon-16x16.png">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="description" content="Maybe, some time in your career, you might have worked on an incredibly complex application, with an enormous, poorly-documented code base, full of hacks, un...">
+  
+  <!-- Twitter card -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:creator" content="@carlosschults">
+  <meta name="twitter:site" content="@carlosschults">
+  <meta name="twitter:domain" content="carlosschults.net">
+  <meta name="twitter:title" content="Unit testing for beginners - Part 1">
+  <meta name="twitter:description" content="Maybe, some time in your career, you might have worked on an incredibly complex application, with an enormous, poorly-documented code base, full of hacks, un...">
+
+   <!-- Facebook meta -->
+  
+  
+  <meta property="og:title" content="Unit testing for beginners - Part 1">
+  <meta property="og:site_name" content="Carlos Schults / Blog" />
+  <meta property="og:locale" content="en_US">  
+  <meta property="og:type" content="article" />
+  <meta property="og:image" content="https://res.cloudinary.com/dz5ppacuo/image/upload/v1459979937/testes-unitarios-iniciantes-min_povcse.png" />  
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:width" content="1038"> 
+  <meta property="og:image:height" content="437">  
+  
+  <meta property="og:article:published_time" content="2016-04-09T00:00:00+00:00" />  
+  <meta property="og:article:author" content="Carlos Schults" />
+  
+  <meta property="og:article:tag" content="software-testing" />
+  <meta property="og:article:tag" content="beginners" />
+  <meta property="og:article:tag" content="unit-testing" />
+  <meta property="og:article:tag" content="unit-testing-series" />
+  <meta property="og:article:tag" content="automated-tests" />
+  <meta property="og:article:tag" content="agile" />    
+  
+  <meta property="og:url" content="https://carlosschults.net/en/unit-testing-for-beginners-part1/"/>
+  <meta property="og:description" content="Maybe, some time in your career, you might have worked on an incredibly complex application, with an enormous, poorly-documented code base, full of hacks, un...">
+  <link rel="stylesheet" href="/css/main.css">  
+  
+   <link rel="canonical" href="https://carlosschults.net/en/unit-testing-for-beginners-part1/">
+   
+  
+  <link rel="alternate" hreflang="en" href="/en/unit-testing-for-beginners-part1/" />
+  <link rel="alternate" hreflang="pt" href="/pt/testes-unitarios-iniciantes-parte1" />
+  
+  <link rel="alternate" type="application/rss+xml" title="carlos schults / blog" href="https://carlosschults.net/feed.xml">
+</head>
+
+  <body>
+    <header class="site-header">
+  <div class="wrapper">    
+    <a class="site-title" href="/">carlos schults / blog</a>
+    
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg viewBox="0 0 18 15">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+
+      <div class="trigger">        
+          
+          <a class="page-link" href="/footprints/">Dev Footprints</a>
+          <a class="page-link" href="/readings/">Readings</a>
+          <a class="page-link" href="/about/">About</a>
+		      <a class="page-link" href="/search/">Search</a>
+                  
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+<div class="wrapper" style="text-align: right; line-height: 2em">
+  
+   <a href="/en/unit-testing-for-beginners-part1/" class="en">en</a>  <a href="/pt/testes-unitarios-iniciantes-parte1" class="pt">pt</a> 
+
+  
+  
+</div>
+
+
+    <div class="page-content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">    
+    <h2 class="postTitle" itemprop="headline">Unit testing for beginners - Part 1</h2>
+    <p class="post-meta">   
+    <time datetime="2016-04-09T00:00:00+00:00" itemprop="datePublished">Apr 9, 2016
+    </time> • <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">Carlos Schults</span></span>
+  <span class="tags" itemprop="keywords"> • Tags: <a href="/tag/software-testing">software-testing </a> <a href="/tag/beginners">beginners </a> <a href="/tag/unit-testing">unit-testing </a> <a href="/tag/unit-testing-series">unit-testing-series </a> <a href="/tag/automated-tests">automated-tests </a> <a href="/tag/agile">agile </a> </span>
+  </p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <p><img src="https://res.cloudinary.com/dz5ppacuo/image/upload/v1459979937/testes-unitarios-iniciantes-min_povcse.png" alt="" /></p>
+
+<p>Maybe, some time in your career, you might have worked on an incredibly complex application, with an enormous, poorly-documented code base, full of hacks, unnecessary couplings, with a confused architecture and no specifications at all. That kind of app you’d call a miracle if it even works. Maybe I’ve just described your current project!
+<!--more--></p>
+
+<p><em>This post is part of a series. <a href="http://carlosschults.net/tag/unit-testing-series/">See all the articles in the series.</a></em></p>
+
+<p>In this type of project, it’s very common for the developers to get afraid of touching the code, cause they know that if they do, something is going to break for sure. And worse: it’s going to break in production, most likely.</p>
+
+<p>Now, imagine that your application is completely covered by an alarm system. Every time a feature stops working, the alarm goes off. The developers are immediately notified, and someone can take action and solve the problem as soon as possible.</p>
+
+<p>Imagine yet that this alarm system consists of hundreds of smaller systems. Each subsystem must watch a very specific part of your application. In order for the main system to function properly, each subsystem must be totally independent from the others.</p>
+
+<p>The adoption of such a system would bring several benefits. First of all, developers would lose the fear of touching the code. Code refactoring would become easier to do, and it would be done more often. As a consequence, the quality of the code would improve.</p>
+
+<p>The development process itself would be simplified. The alarm system would dramatically reduce the need for slow manual tests, thus speeding the release to the users.</p>
+
+<p>Finally, the need for independence between the subsystems would promote the reduction of coupling between modules of the application.</p>
+
+<p>It sounds too good to be true? Well, it isn’t. This “alarm system” is exactly the benefit you get after adding a suite of unit tests to your application.</p>
+
+<h2 id="what-are-unit-tests">What are unit tests?</h2>
+
+<p>Let’s see what Wikipedia tells us:</p>
+
+<blockquote>
+  <p>In computer programming, unit testing is a software testing method by which individual units of source code, […] are tested to determine whether they are fit for use. Intuitively, one can view a unit as the smallest testable part of an application.  […]
+ Unit tests are typically written and run by software developers to ensure that code meets its design and behaves as intended.</p>
+</blockquote>
+
+<p>The first thing worth mentioning is that unit tests <strong>don’t have the goal of testing the system as a whole</strong>. On the contrary, they test small pieces of the application - the units. And what is a unit? There are several conflicting points of view on this, several “schools of thought”. But it’s safe to say that, in a context of Object Oriented Programming, most people would consider the class as being a unit.</p>
+
+<p>Right after this, we see that unit tests are usually written and run by programmers. This is interesting for two reasons: first, it apparently goes against the idea that programmers don’t make good testers (I’m going back to this point later). And more importantly than that, it shows the principal feature of unit tests: they are <strong>automated</strong>.</p>
+
+<p>Bear in mind that there are a lot of types of automated tests, but here we’re only talking about unit tests (which, according to several authors, such as <a href="https://martinfowler.com/bliki/TestPyramid.html">Martin Fowler</a>, are the ones who benefits the application the most).</p>
+
+<p>In practice, unit tests are classes that contains methods who test small and isolated pieces of functionality. These classes are created with the aid of a test framework (such as JUnit in Java, NUnit or Microsoft Test in .Net). Then, the tests can be run via command line, by your IDE or even by an automated build service.</p>
+
+<p><img src="https://res.cloudinary.com/dz5ppacuo/image/upload/v1460211309/teste00_bnsbfl.png" alt="Example of test case in C#" /></p>
+
+<p>After the tests are run, you get an immediate feedback about which tests failed and which ones succeeded, along with the run time of each one of them.</p>
+
+<p><img src="https://res.cloudinary.com/dz5ppacuo/image/upload/v1459979476/teste01_ciglca.png" alt="Windows displaying the result of a test run" /></p>
+
+<p>With this feedback, you can decide on your best course of action. Ideally, a failing test should signal something wrong in the production code. The production code should then be fixed so the test can pass.</p>
+
+<h2 id="benefits-of-unit-tests">Benefits of unit tests</h2>
+
+<p>In the beginning of the post, while using the alarm system metaphor, I’ve talked about some of the benefits that unit tests can provide, for instance:</p>
+
+<ul>
+  <li>they promote and facilitate code refactoring;</li>
+  <li>they promote architectural improvement of the system;</li>
+  <li>they can simplify and accelerate the release of the product to the final users;</li>
+</ul>
+
+<p>Another benefit worth mention is that unit tests <strong>document the code</strong>. Think of it: for each production class in your system, there are several test cases, that exercise every possible use of this class. A good test suite could help a recent hire to quickly gain familiarity with the code base.</p>
+
+<p>That is, the best type of documentation: the one that is alive, executable, always up-to-date, and never lies.</p>
+
+<p>We must also mention that a good and comprehensive test suite helps to prevent bug regression. It’s a best practice to create a new test every time a new bug is found. That way, if the bug ever comes back due to a change, the test is going to show you.</p>
+
+<p>Finally, one of the more important benefits that test automation can provide is cost reduction. Oddly enough, I don’t see this benefit being talked about too much - maybe because it’s more related to the business side of things. Let’s say that your team tests the whole application, every time your about to release. You use four testers, working full-time, during two weeks. Just do the math and you’ll see that <strong>manual tests are freaking expensive!</strong></p>
+
+<p>Worse yet: they are expensive twice. First, there’s the cost itself, that you can calculate with the formula <em>hourly rate of tester x number of testers x hours spent in testing</em>. Pretty straightforward, no surprises here.</p>
+
+<p>But, besides that, there is also an <a href="https://en.wikipedia.org/wiki/Opportunity_cost">opportunity cost</a>: if professionals are spending time doing manual tests that could be automated, then they are <em>NOT</em> doing other tasks that could have a greater ROI to the company.</p>
+
+<h2 id="common-misconceptions">Common misconceptions</h2>
+
+<p>In this section, I’m going to try to clarify some of the myths and misconceptions that some people have about unit testing.</p>
+
+<h3 id="programmers-shouldnt-write-tests-because-they-are-bad-testers">Programmers shouldn’t write tests, because they are bad testers</h3>
+
+<p>There is a widespread notion that programmers shouldn’t test their own code. The rationale for this is that the developers would unconsciously avoid to use the app in a way that would break it. And from experience I can say that this indeed happens. I’ve lost count of how many times a coworker found bugs in an app I made after literally <strong>seconds</strong> of using it, in spite of the fact that I had already tested it a lot without making it fail.</p>
+
+<p>The important point here is: <strong>there are tests and tests</strong>. Often, when people say that developers shouldn’t test, they’re talking about system tests, also called end-to-end tests. Such tests mean to test the system as a whole, which is not the goal of unit tests, as I said before.</p>
+
+<p>Maybe, it’s just lack of information: the person probably doesn’t know the nature and purpose of unit tests, and mistake them for end-to-end tests.</p>
+
+<h2 id="writing-unit-tests-is-a-waste-of-time-its-like-coding-the-same-thing-twice">Writing unit tests is a waste of time; it’s like coding the same thing twice</h2>
+
+<p>When you try to convince management that unit tests are worth it, it would be wise to focus on cost reduction. But, what about the developers? How to convince them to spend time writing test code, when they’re already in tight deadlines and under a lot of pressure?</p>
+
+<p>So, don’t be so surprised if you try to sell unit testing to your fellow developers, and they just say to you: “Wast of time. We’re not going to do that”.</p>
+
+<p>What these people don’t grasp is that <em>they’re already testing their own code all the time, even if they don’t call it that way</em>. Not convinced? Well, I bet your development work-flow looks something like this:</p>
+
+<ul>
+  <li>Write a bit of code</li>
+  <li>Compile</li>
+  <li>Run the app, test the new feature
+    <ul>
+      <li>If it works, start to code next functionality;</li>
+      <li>If if doesn’t, debug until you find what’s wrong, then fix it.</li>
+    </ul>
+  </li>
+  <li>Repeat</li>
+</ul>
+
+<p>What we propose is just to swap the “write production code -&gt; compile -&gt; test manually -&gt; debug -&gt; repeat” cycle for the “write production code -&gt; write test code -&gt; run tests -&gt; fix production code if necessary”.</p>
+
+<p>You could argue that the cycles are the same - they kind of are. But the big advantage of unit tests is that, once written, they are easily repeatable until the end of the project’s life. You “waste time” only once. Or better, you <strong>invest</strong> time and effort in the beginning, in order to create the tests, and seize the benefits for indefinite time.</p>
+
+<h3 id="unit-tests-replace-all-manual-tests">Unit tests replace all manual tests</h3>
+
+<p>Unit tests are not the only types of tests that can be beneficial to a project. We can also use several other types of automated tests such as <strong>integration tests</strong> and <em>acceptance tests</em>.</p>
+
+<p><img src="https://res.cloudinary.com/dz5ppacuo/image/upload/v1460217453/testing_triangle-300x233_nzq8kx.jpg" alt="Testing pyramid, showing the ideal ratio of different types of software testing" /></p>
+
+<p>That doesn’t mean that manual testing should be extinct. On the contrary, manual tests still have an important role in quality assurance processes. Ideally, manual tests should focus on the areas that can’t be automated, like usability testing.</p>
+
+<p>In regards to agile methodologies, it is key that the Product Owner/Client/Business Person approves and accepts the user stories before they are included in a release.</p>
+
+<p>Exploratory manual tests, that doesn’t follow a script, can be useful to detect certain kinds of bugs. Most automated test cases tend to focus on the “Happy Path”, that is, the scenario in which everything went right.
+In real life, is very common for the users to use the application in…hm…“creative” ways. So, when you put the system under stress, using it in ways that the developers never intended, nasty bugs that would otherwise keep hidden, can show up.</p>
+
+<p>Of course, once the bug is found, you should immediately write a test that exposes it. That way, if the bug ever comes back, it’ll be easily detected.</p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>Unit testing - and automated software testing, in general - is a huge subject. There are a lot of books about it, there are master’s theses about it. So, of course I can’t do justice to this subject with a mere blog post.</p>
+
+<p>But I sincerely hope that I had made a proper introduction to unit tests and clarified some of the questions that beginners usually have. If you have a question, suggestion or criticism, the comment are is all yours.</p>
+
+<p>This post is the first one in a series dedicated to unit testing.
+Next post: time to get your hands dirty! I’m going to show how to create your first unit test!</p>
+
+<p>See you there!</p>
+
+    
+    
+      
+    
+    
+        Found a typo or mistake in the post? <a href="http://github.com/carlosschults/carlosschults.github.io/edit/master/_posts/2016-04-09-unit-testing-for-beginners-part1.md">Suggest edit</a>
+        
+    
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+                    
+            <a rel="previous" class="previous" href="/en/book-review-pragmatic-programmer/">&larr; Book Review: The Pragmatic Programmer </a>
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+        	    
+            <a rel="next" class="next" href="/en/how-to-choose-good-names/">Ten tips to help you choose good names &rarr;</a>
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+      
+    <div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+        // Store these for reloads
+        window.disqus_identifier = window.location.pathname;
+        window.disqus_url = window.location.href;
+        
+        // Set initial theme - match it with the site's theme
+        const currentTheme = document.body.getAttribute('data-theme') || 'light';
+        this.page.theme = currentTheme === 'dark' ? 'dark' : 'light';
+    };
+    
+    (function() {
+        var d = document, s = d.createElement('script');
+        s.src = '//carlosschultsblog.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>    
+  </div>
+
+</article>
+
+      </div>
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">         
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-2">
+        <ul class="social-media-list">
+          
+          <li>
+            <a href="https://github.com/carlosschults"><span class="icon icon--github"><svg viewBox="0 0 16 16"><path fill="#828282" d="M7.999,0.431c-4.285,0-7.76,3.474-7.76,7.761 c0,3.428,2.223,6.337,5.307,7.363c0.388,0.071,0.53-0.168,0.53-0.374c0-0.184-0.007-0.672-0.01-1.32 c-2.159,0.469-2.614-1.04-2.614-1.04c-0.353-0.896-0.862-1.135-0.862-1.135c-0.705-0.481,0.053-0.472,0.053-0.472 c0.779,0.055,1.189,0.8,1.189,0.8c0.692,1.186,1.816,0.843,2.258,0.645c0.071-0.502,0.271-0.843,0.493-1.037 C4.86,11.425,3.049,10.76,3.049,7.786c0-0.847,0.302-1.54,0.799-2.082C3.768,5.507,3.501,4.718,3.924,3.65 c0,0,0.652-0.209,2.134,0.796C6.677,4.273,7.34,4.187,8,4.184c0.659,0.003,1.323,0.089,1.943,0.261 c1.482-1.004,2.132-0.796,2.132-0.796c0.423,1.068,0.157,1.857,0.077,2.054c0.497,0.542,0.798,1.235,0.798,2.082 c0,2.981-1.814,3.637-3.543,3.829c0.279,0.24,0.527,0.713,0.527,1.437c0,1.037-0.01,1.874-0.01,2.129 c0,0.208,0.14,0.449,0.534,0.373c3.081-1.028,5.302-3.935,5.302-7.362C15.76,3.906,12.285,0.431,7.999,0.431z"/></svg>
+</span><span class="username">carlosschults</span></a>
+
+          </li>
+          
+
+          
+          <li>
+            <a href="https://twitter.com/carlosschults"><span class="icon icon--twitter"><svg viewBox="0 0 16 16"><path fill="#828282" d="M15.969,3.058c-0.586,0.26-1.217,0.436-1.878,0.515c0.675-0.405,1.194-1.045,1.438-1.809c-0.632,0.375-1.332,0.647-2.076,0.793c-0.596-0.636-1.446-1.033-2.387-1.033c-1.806,0-3.27,1.464-3.27,3.27 c0,0.256,0.029,0.506,0.085,0.745C5.163,5.404,2.753,4.102,1.14,2.124C0.859,2.607,0.698,3.168,0.698,3.767 c0,1.134,0.577,2.135,1.455,2.722C1.616,6.472,1.112,6.325,0.671,6.08c0,0.014,0,0.027,0,0.041c0,1.584,1.127,2.906,2.623,3.206 C3.02,9.402,2.731,9.442,2.433,9.442c-0.211,0-0.416-0.021-0.615-0.059c0.416,1.299,1.624,2.245,3.055,2.271 c-1.119,0.877-2.529,1.4-4.061,1.4c-0.264,0-0.524-0.015-0.78-0.046c1.447,0.928,3.166,1.469,5.013,1.469 c6.015,0,9.304-4.983,9.304-9.304c0-0.142-0.003-0.283-0.009-0.423C14.976,4.29,15.531,3.714,15.969,3.058z"/></svg>
+</span><span class="username">carlosschults</span></a>
+
+          </li>
+          
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-3">
+        <p>Articles on software development and technology.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+
+    <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-92788641-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+    <script src="/js/dark-mode.js"></script>
+  </body>
+
+</html>

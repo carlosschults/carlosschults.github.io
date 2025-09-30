@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>C# Regex: How Regular Expressions Work in C#, With Examples | carlos schults / blog</title>
+  <link rel="apple-touch-icon" sizes="57x57" href="/img/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/img/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/img/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/img/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/img/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/img/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/img/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/img/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"  href="/img/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/img/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon-16x16.png">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="description" content="Editorial note: I originally wrote this post for the Stackify blog.  You can check out the original here, at their site.Text manipulation is one of the most ...">
+  
+  <!-- Twitter card -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:creator" content="@carlosschults">
+  <meta name="twitter:site" content="@carlosschults">
+  <meta name="twitter:domain" content="carlosschults.net">
+  <meta name="twitter:title" content="C# Regex: How Regular Expressions Work in C#, With Examples">
+  <meta name="twitter:description" content="Editorial note: I originally wrote this post for the Stackify blog.  You can check out the original here, at their site.Text manipulation is one of the most ...">
+
+   <!-- Facebook meta -->
+  
+  
+  <meta property="og:title" content="C# Regex: How Regular Expressions Work in C#, With Examples">
+  <meta property="og:site_name" content="Carlos Schults / Blog" />
+  <meta property="og:locale" content="en_US">  
+  <meta property="og:type" content="article" />
+  <meta property="og:image" content="https://res.cloudinary.com/dz5ppacuo/image/upload/v1513817072/csharp8-1037x438_skogpz.jpg" />  
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:width" content="1038"> 
+  <meta property="og:image:height" content="437">  
+  
+  <meta property="og:article:published_time" content="2024-05-07T00:00:00+00:00" />  
+  <meta property="og:article:author" content="Carlos Schults" />
+  
+  <meta property="og:article:tag" content="csharp" />
+  <meta property="og:article:tag" content="regex" />
+  <meta property="og:article:tag" content="regular_expressions" />
+  <meta property="og:article:tag" content="tutorial" />    
+  
+  <meta property="og:url" content="https://carlosschults.net/en/csharp-regex"/>
+  <meta property="og:description" content="Editorial note: I originally wrote this post for the Stackify blog.  You can check out the original here, at their site.Text manipulation is one of the most ...">
+  <link rel="stylesheet" href="/css/main.css">  
+  
+  <link rel="canonical" href="https://stackify.com/c-regex-how-regular-expressions-work-in-c-with-examples/">
+   
+  
+  <link rel="alternate" hreflang="en" href="/en/csharp-regex" />
+  <link rel="alternate" hreflang="pt" href="/pt/csharp-expressoes-regulares" />
+  
+  <link rel="alternate" type="application/rss+xml" title="carlos schults / blog" href="https://carlosschults.net/feed.xml">
+</head>
+
+  <body>
+    <header class="site-header">
+  <div class="wrapper">    
+    <a class="site-title" href="/">carlos schults / blog</a>
+    
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg viewBox="0 0 18 15">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+
+      <div class="trigger">        
+          
+          <a class="page-link" href="/footprints/">Dev Footprints</a>
+          <a class="page-link" href="/readings/">Readings</a>
+          <a class="page-link" href="/about/">About</a>
+		      <a class="page-link" href="/search/">Search</a>
+                  
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+<div class="wrapper" style="text-align: right; line-height: 2em">
+  
+   <a href="/en/csharp-regex" class="en">en</a>  <a href="/pt/csharp-expressoes-regulares" class="pt">pt</a> 
+
+  
+  
+</div>
+
+
+    <div class="page-content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">    
+    <h2 class="postTitle" itemprop="headline">C# Regex: How Regular Expressions Work in C#, With Examples</h2>
+    <p class="post-meta">   
+    <time datetime="2024-05-07T00:00:00+00:00" itemprop="datePublished">May 7, 2024
+    </time> • <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">Carlos Schults</span></span>
+  <span class="tags" itemprop="keywords"> • Tags: <a href="/tag/csharp">csharp </a> <a href="/tag/regex">regex </a> <a href="/tag/regular_expressions">regular_expressions </a> <a href="/tag/tutorial">tutorial </a> </span>
+  </p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <p><img src="https://res.cloudinary.com/dz5ppacuo/image/upload/v1513817072/csharp8-1037x438_skogpz.jpg" alt="" />
+<em>Editorial note: I originally wrote this post for the Stackify blog.  You can <a href="https://stackify.com/c-regex-how-regular-expressions-work-in-c-with-examples/">check out the original here, at their site</a>.</em></p>
+
+<p>Text manipulation is one of the most common tasks in programming with virtually all major programming languages usually supporting regex (regular expression) via their standard libraries. C# is no exception, so today we bring you a C# regex guide.</p>
+
+<p>You’ll learn what regexes are, why you’d want to use them and how to get started in a comprehensive, approachable manner. That way, you can start using regular expressions to solve real problems ASAP.</p>
+
+<p>Buckle up for your regex learning journey, starting now!</p>
+
+<h2 id="what-is-regex">What Is Regex?</h2>
+<p>A regular expression (regex) is an expression containing one or many characters that expresses a given pattern in text. If that sounds a little vague, an example will help. Consider a date in the following format:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>28-JUL-2023
+</code></pre></div></div>
+
+<p>Using a regex, we can express that format like this:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[0-9]{2}-[A-Z]{3}-[0-9]{4}
+</code></pre></div></div>
+
+<p>Note that the regular expression above expresses a pattern with:</p>
+
+<ul>
+  <li>two numeric digits followed by a hyphen</li>
+  <li>three upper-case letters followed by a hyphen</li>
+  <li>four more numbers</li>
+</ul>
+
+<p>You’ll learn more about what each part of a regex means in a minute. For now, just bear in mind that the regex above doesn’t <em>know</em> anything about dates. It just happens that we were able to devise a regular expression that matches the pattern or shape of the date. All of the following match with that regex, even though they’re not valid dates:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>32-ABC-7894
+30-FEV-1978
+00-AAA-9999
+</code></pre></div></div>
+
+<h2 id="is-there-regex-in-c">Is There Regex in C#?</h2>
+
+<p>Yes, of course. But that doesn’t come from the language itself. Instead, regex support comes from <a href="https://learn.microsoft.com/en-us/dotnet/standard/class-library-overview">.NET’s BCL (Base Class Library),</a> which is essentially C#’s standard library.</p>
+
+<h2 id="why-use-regex-in-c">Why Use Regex In C#?</h2>
+
+<p>As you’ve seen, regex is something to use to express a pattern that can match a given text. </p>
+
+<p>In practice, all uses of regex in C# or other languages boil down to three reasons: validation, manipulation and extraction.</p>
+
+<h3 id="validation">Validation</h3>
+
+<p>An incredibly common use case for regex is data validation. For instance, let’s say you have a web form and want to ensure a certain field only accepts inputs in a specific format. How to solve that? Regex comes to the rescue.</p>
+
+<h3 id="manipulation">Manipulation</h3>
+
+<p>Sometimes you need to change information within text. Let’s go back to the previous example. Imagine for compliance reasons you need to remove all phone numbers from this body of text and replace them with the word “REDACTED.” Again, regexes would be a perfect fit for this situation.</p>
+
+<p>Interestingly, programming languages are not alone in using regular expressions to solve problems. Even text editors such as Notepad++ offer find-and-replace features powered by regexes.</p>
+
+<h3 id="extraction">Extraction</h3>
+
+<p>Let’s say you have considerable amounts of text. This text contains telephone numbers that you need to extract. You know the format of those numbers and the fact that they’re inside the text, but that’s the extent of your knowledge.</p>
+
+<p>How would you go about extracting that information? A neat C# regex would certainly come in handy in that situation.</p>
+
+<h2 id="how-to-use-regex-in-c-getting-started-in-practice">How to Use Regex In C#: Getting Started in Practice</h2>
+
+<p>C# is an <a href="https://stackify.com/oop-concepts-c-sharp/">OOP language</a>, so it shouldn’t be a surprise that you’ll use a class for your C# regex work. More specifically, the class I’m talking about is appropriately called Regex and resides in the System.Text.RegularExpressions namespace<strong>.</strong></p>
+
+<h3 id="c-regex-a-validation-example">C# Regex: A Validation Example</h3>
+
+<p>Let’s start with a simple validation example on how to use regex to validate whether several strings match a given pattern. The first step is to add the following <strong>using</strong> statement to your code:</p>
+
+<p>using System.Text.RegularExpressions;</p>
+
+<p>Now, let’s create an array of strings and populate it with some values:</p>
+
+<figure class="highlight"><pre><code class="language-c#" data-lang="c#"><span class="kt">var</span> <span class="n">candidates</span> <span class="p">=</span> <span class="k">new</span><span class="p">[]</span>
+<span class="p">{</span>
+    <span class="s">"28-JUL-2023"</span><span class="p">,</span>
+    <span class="s">"whatever"</span><span class="p">,</span>
+    <span class="s">"89-ABC-1234"</span><span class="p">,</span>
+    <span class="s">"11-JUN-2022"</span><span class="p">,</span>
+    <span class="s">"11-JUN-2022, a date plus other stuff"</span><span class="p">,</span>
+    <span class="s">"This is certainly not a date"</span>
+<span class="p">};</span></code></pre></figure>
+
+<p>Finally, we’ll loop through the values and use the <code class="language-plaintext highlighter-rouge">IsMatch</code> static method from the <code class="language-plaintext highlighter-rouge">Regex</code> class to verify which of the strings matches our desired pattern:</p>
+
+<figure class="highlight"><pre><code class="language-c#" data-lang="c#"><span class="kt">var</span> <span class="n">pattern</span> <span class="p">=</span> <span class="s">"[0-9]{2}-[A-Z]{3}-[0-9]{4}"</span><span class="p">;</span>
+<span class="k">foreach</span> <span class="p">(</span><span class="kt">var</span> <span class="n">c</span> <span class="k">in</span> <span class="n">candidates</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">Regex</span><span class="p">.</span><span class="nf">IsMatch</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">pattern</span><span class="p">))</span>
+    <span class="p">{</span>
+        <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">$"The string '</span><span class="p">{</span><span class="n">c</span><span class="p">}</span><span class="s">' matches the pattern '</span><span class="p">{</span><span class="n">pattern</span><span class="p">}</span><span class="s">'"</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span></code></pre></figure>
+
+<p>Before going further, let’s break down the pattern piece by piece:</p>
+
+<ul>
+  <li><strong>[0-9]{2}:</strong> The first part means “Match exactly two characters, that must be digits from 0 to 9.”</li>
+  <li><strong>-:</strong> This character matches exactly a hyphen.</li>
+  <li><strong>[A-Z]{3}:</strong> Here, the expression says, “Let’s match exactly three characters, which can be any of the letters from A to Z.”</li>
+  <li><strong>-:</strong> This matches another hyphen</li>
+  <li><strong>[0-9]{4}:</strong> This should be easy to understand by now, right? Exactly four numbers.</li>
+</ul>
+
+<p>Now, let’s run the code and see what we get:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>The string '28-JUL-2023' matches the pattern '[0-9]{2}-[A-Z]{3}-[0-9]{4}'
+The string '89-ABC-1234' matches the pattern '[0-9]{2}-[A-Z]{3}-[0-9]{4}'
+The string '11-JUN-2022' matches the pattern '[0-9]{2}-[A-Z]{3}-[0-9]{4}'
+The string '11-JUN-2022, a date plus other stuff' matches the pattern '[0-9]{2}-[A-Z]{3}-[0-9]{4}'
+</code></pre></div></div>
+
+<p>The first three results probably didn’t surprise you. I even include something that’s not a date but matches the pattern we’re using in order to really drive home the point that regular expressions are about patterns and shapes and not about any semantics of the data we’re looking for.</p>
+
+<p>However, the fourth result might’ve surprised you. The text indeed starts with data that matches the pattern we’re looking for, but then it has some additional text. And even then, this string matched!</p>
+
+<p>The explanation for this behavior is simple, and it’s spelled out for us in the <a href="https://learn.microsoft.com/en-us/dotnet/api/system.text.regularexpressions.regex.ismatch?view=net-7.0#system-text-regularexpressions-regex-ismatch(system-string-system-string)">summary</a> for the <code class="language-plaintext highlighter-rouge">IsMatch</code> method:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Indicates whether the specified regular expression finds a match in the specified input string.
+</code></pre></div></div>
+
+<p>The regular expression indeed found a match in the specified input string (“11-JUN-2022, a date plus other stuff”), and that’s why it was considered a match.</p>
+
+<p>But what if we wanted an exact match? In that case, you’d have to change the pattern, adding a circumflex accent (“^”) to the star of the pattern and a dollar sign (“$”) to its end. In other words, here’s how the pattern should look now:</p>
+
+<figure class="highlight"><pre><code class="language-c#" data-lang="c#"><span class="kt">var</span> <span class="n">pattern</span> <span class="p">=</span> <span class="s">"^[0-9]{2}-[A-Z]{3}-[0-9]{4}$"</span><span class="p">;</span></code></pre></figure>
+
+<p>If we run the code now, it displays only the strings that are an exact match with the pattern:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>The string '28-JUL-2023' matches the pattern '^[0-9]{2}-[A-Z]{3}-[0-9]{4}
+</code></pre></div></div>
+
+<h3 id="c-regex-a-manipulation-example">C# Regex: A Manipulation Example</h3>
+
+<p>Consider you have a body of text containing sensible user data. Due to privacy/compliance concerns, you want to redact those data points. Luckily for you, it’s quite easy to use a regex for that. </p>
+
+<p>Let’s start by creating an array containing names and phone numbers for fictitious people:</p>
+
+<figure class="highlight"><pre><code class="language-c#" data-lang="c#"><span class="kt">var</span> <span class="n">contacts</span> <span class="p">=</span> <span class="k">new</span><span class="p">[]</span> <span class="p">{</span>
+    <span class="s">"Emily Johnson,(555) 123-4567"</span><span class="p">,</span>
+    <span class="s">"Benjamin Williams,(555) 987-6543"</span><span class="p">,</span>
+    <span class="s">"Olivia Davis,(555) 222-3333"</span><span class="p">,</span>
+    <span class="s">"Alexander Smith,(555) 444-5555"</span><span class="p">,</span>
+    <span class="s">"Sophia Brown,(555) 777-8888"</span><span class="p">,</span>
+    <span class="s">"William Anderson,(555) 111-2222"</span><span class="p">,</span>
+    <span class="s">"Ava Martinez,(555) 666-7777"</span><span class="p">,</span>
+    <span class="s">"James Thompson,(555) 888-9999"</span><span class="p">,</span>
+    <span class="s">"Isabella Wilson,(555) 333-4444"</span><span class="p">,</span>
+    <span class="s">"Michael Taylor,(555) 777-1111"</span>
+<span class="p">};</span></code></pre></figure>
+
+<p>Then, let’s create the pattern to match the phone numbers:</p>
+
+<figure class="highlight"><pre><code class="language-c#" data-lang="c#"><span class="kt">var</span> <span class="n">pattern</span> <span class="p">=</span> <span class="s">@"\([0-9]{3}\)\s[0-9]{3}-[0-9]{4}"</span><span class="p">;</span></code></pre></figure>
+
+<p>The pattern above is a bit more involved than the ones we used earlier, but it’s still simple. There are a couple of new elements, though:</p>
+
+<ul>
+  <li><strong>The backward slash (\):</strong> We need it here in order to escape the opening and closing parenthesis, which is a character with meaning in a regular expression. In this instance, we actually do want to match a “(” character, so we need to escape it.</li>
+  <li><strong>The \s character:</strong> matches a single space.</li>
+</ul>
+
+<p>Finally, let’s loop through this array and, for each item, use the <code class="language-plaintext highlighter-rouge">Regex.Replace</code> method to generate a new string in which the phone number is replaced by all zeroes:</p>
+
+<figure class="highlight"><pre><code class="language-c#" data-lang="c#"><span class="k">foreach</span> <span class="p">(</span><span class="kt">var</span> <span class="n">contact</span> <span class="k">in</span> <span class="n">contacts</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span>
+        <span class="n">Regex</span><span class="p">.</span><span class="nf">Replace</span><span class="p">(</span><span class="n">contact</span><span class="p">,</span> <span class="n">pattern</span><span class="p">,</span> <span class="s">"(000) 000-0000"</span><span class="p">));</span>
+<span class="p">}</span></code></pre></figure>
+
+<p>Using the Replace static method is easy. Though it has several overloads, the one we use just takes three arguments:</p>
+
+<ul>
+  <li>the input string</li>
+  <li>the pattern you want to match</li>
+  <li>the replacement string</li>
+</ul>
+
+<p>After running the code, here’s the output we get:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Emily Johnson,(000) 000-0000
+Benjamin Williams,(000) 000-0000
+Olivia Davis,(000) 000-0000
+Alexander Smith,(000) 000-0000
+Sophia Brown,(000) 000-0000
+William Anderson,(000) 000-0000
+Ava Martinez,(000) 000-0000
+James Thompson,(000) 000-0000
+Isabella Wilson,(000) 000-0000
+Michael Taylor,(000) 000-0000
+</code></pre></div></div>
+
+<h3 id="c-regex-an-extraction-example">C# Regex: An Extraction Example</h3>
+
+<p>For our last example, let’s extract data from a string using a regular expression. Let’s start by converting the array from the previous example into a single string:</p>
+
+<figure class="highlight"><pre><code class="language-c#" data-lang="c#"><span class="kt">var</span> <span class="n">contacts</span> <span class="p">=</span>
+    <span class="s">"Emily Johnson+(555) 123-4567"</span> <span class="p">+</span>
+    <span class="s">"\nBenjamin Williams+(555) 987-6543"</span> <span class="p">+</span>
+    <span class="s">"\nOlivia Davis+(555) 222-3333"</span> <span class="p">+</span>
+    <span class="s">"\nAlexander Smith+(555) 444-5555"</span> <span class="p">+</span>
+    <span class="s">"\nSophia Brown+(555) 777-8888"</span> <span class="p">+</span>
+    <span class="s">"\nWilliam Anderson+(555) 111-2222"</span> <span class="p">+</span>
+    <span class="s">"\nAva Martinez+(555) 666-7777"</span> <span class="p">+</span>
+    <span class="s">"\nJames Thompson+(555) 888-9999"</span> <span class="p">+</span>
+    <span class="s">"\nIsabella Wilson+(555) 333-4444"</span> <span class="p">+</span>
+    <span class="s">"\nMichael Taylor+(555) 777-1111"</span><span class="p">;</span></code></pre></figure>
+
+<p>Then, we define the pattern again (same one) and use the Matches static method to get all of the matches from the string:</p>
+
+<figure class="highlight"><pre><code class="language-c#" data-lang="c#"><span class="kt">var</span> <span class="n">pattern</span> <span class="p">=</span> <span class="s">@"\([0-9]{3}\)\s[0-9]{3}-[0-9]{4}"</span><span class="p">;</span>
+<span class="n">MatchCollection</span> <span class="n">matches</span> <span class="p">=</span> <span class="n">Regex</span><span class="p">.</span><span class="nf">Matches</span><span class="p">(</span><span class="n">contacts</span><span class="p">,</span> <span class="n">pattern</span><span class="p">);</span></code></pre></figure>
+
+<p>The <code class="language-plaintext highlighter-rouge">MatchCollection</code> class holds all of the strings that matched the pattern we gave to the method. This object is enumerable, so we can loop over it with a foreach:</p>
+
+<figure class="highlight"><pre><code class="language-c#" data-lang="c#"><span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">"Here are the extracted phone numbers:"</span><span class="p">);</span>
+<span class="k">foreach</span> <span class="p">(</span><span class="n">Match</span> <span class="n">match</span> <span class="k">in</span> <span class="n">matches</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="n">match</span><span class="p">.</span><span class="n">Value</span><span class="p">);</span>
+<span class="p">}</span></code></pre></figure>
+
+<p>And, finally, our results: </p>
+
+<figure class="highlight"><pre><code class="language-c#" data-lang="c#"><span class="n">Here</span> <span class="n">are</span> <span class="n">the</span> <span class="n">extracted</span> <span class="n">phone</span> <span class="n">numbers</span><span class="p">:</span>
+<span class="p">(</span><span class="m">555</span><span class="p">)</span> <span class="m">123</span><span class="p">-</span><span class="m">4567</span>
+<span class="p">(</span><span class="m">555</span><span class="p">)</span> <span class="m">987</span><span class="p">-</span><span class="m">6543</span>
+<span class="p">(</span><span class="m">555</span><span class="p">)</span> <span class="m">222</span><span class="p">-</span><span class="m">3333</span>
+<span class="p">(</span><span class="m">555</span><span class="p">)</span> <span class="m">444</span><span class="p">-</span><span class="m">5555</span>
+<span class="p">(</span><span class="m">555</span><span class="p">)</span> <span class="m">777</span><span class="p">-</span><span class="m">8888</span>
+<span class="p">(</span><span class="m">555</span><span class="p">)</span> <span class="m">111</span><span class="p">-</span><span class="m">2222</span>
+<span class="p">(</span><span class="m">555</span><span class="p">)</span> <span class="m">666</span><span class="p">-</span><span class="m">7777</span>
+<span class="p">(</span><span class="m">555</span><span class="p">)</span> <span class="m">888</span><span class="p">-</span><span class="m">9999</span>
+<span class="p">(</span><span class="m">555</span><span class="p">)</span> <span class="m">333</span><span class="p">-</span><span class="m">4444</span>
+<span class="p">(</span><span class="m">555</span><span class="p">)</span> <span class="m">777</span><span class="p">-</span><span class="m">1111</span></code></pre></figure>
+
+<h2 id="c-regex-an-indispensable-tool">C# Regex: An Indispensable Tool</h2>
+
+<p>As we said in the intro, text manipulation is a staple of programming, and regular expressions make this task easier. In this C# regex guide, you’ve learned what regular expressions are, their most common usage scenarios and how to get started with regular expressions in C#.</p>
+
+<p>Before departing, a few tips:</p>
+
+<ul>
+  <li>Experiment more with the <code class="language-plaintext highlighter-rouge">Regex</code> class. It offers plenty of features, and the methods we’ve used today have many overloads with useful capabilities.</li>
+  <li>Learn more and practice writing regular expressions. <a href="https://regexr.com/">Here’s a great site</a> you can use.</li>
+  <li>Educate yourself on the performance considerations of C# regex. For instance, read this <a href="https://learn.microsoft.com/en-us/dotnet/standard/base-types/compilation-and-reuse-in-regular-expressions?redirectedfrom=MSDN">Microsoft article on the compilation and reuse of regular expressions</a>.</li>
+</ul>
+
+<p>Finally, if you want to learn more about C# in general, you’re in the right place. The Stackify blog is full of useful resources. As a suggestion, take a look at <a href="https://stackify.com/unit-test-frameworks-csharp/">the pros and cons of the top 3 unit test frameworks for C#</a>, <a href="https://stackify.com/csharp-catch-all-exceptions/">how to catch exceptions and find application errors in C#</a>, and <a href="https://stackify.com/what-is-c-reflection/">how C# reflection works</a> next.</p>
+
+<p>Thanks for reading!</p>
+
+    
+    
+      
+    
+    
+        Found a typo or mistake in the post? <a href="http://github.com/carlosschults/carlosschults.github.io/edit/master/_posts/2024-05-07-csharp-regex.md">Suggest edit</a>
+        
+    
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+                    
+            <a rel="previous" class="previous" href="/en/git-create-branch">&larr; Git Create Branch: 4 Ways To Do It </a>
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+        	    
+            <a rel="next" class="next" href="/en/git-detached-head">Git Detached Head: What This Means and How to Recover &rarr;</a>
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+      
+    <div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+        // Store these for reloads
+        window.disqus_identifier = window.location.pathname;
+        window.disqus_url = window.location.href;
+        
+        // Set initial theme - match it with the site's theme
+        const currentTheme = document.body.getAttribute('data-theme') || 'light';
+        this.page.theme = currentTheme === 'dark' ? 'dark' : 'light';
+    };
+    
+    (function() {
+        var d = document, s = d.createElement('script');
+        s.src = '//carlosschultsblog.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>    
+  </div>
+
+</article>
+
+      </div>
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">         
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-2">
+        <ul class="social-media-list">
+          
+          <li>
+            <a href="https://github.com/carlosschults"><span class="icon icon--github"><svg viewBox="0 0 16 16"><path fill="#828282" d="M7.999,0.431c-4.285,0-7.76,3.474-7.76,7.761 c0,3.428,2.223,6.337,5.307,7.363c0.388,0.071,0.53-0.168,0.53-0.374c0-0.184-0.007-0.672-0.01-1.32 c-2.159,0.469-2.614-1.04-2.614-1.04c-0.353-0.896-0.862-1.135-0.862-1.135c-0.705-0.481,0.053-0.472,0.053-0.472 c0.779,0.055,1.189,0.8,1.189,0.8c0.692,1.186,1.816,0.843,2.258,0.645c0.071-0.502,0.271-0.843,0.493-1.037 C4.86,11.425,3.049,10.76,3.049,7.786c0-0.847,0.302-1.54,0.799-2.082C3.768,5.507,3.501,4.718,3.924,3.65 c0,0,0.652-0.209,2.134,0.796C6.677,4.273,7.34,4.187,8,4.184c0.659,0.003,1.323,0.089,1.943,0.261 c1.482-1.004,2.132-0.796,2.132-0.796c0.423,1.068,0.157,1.857,0.077,2.054c0.497,0.542,0.798,1.235,0.798,2.082 c0,2.981-1.814,3.637-3.543,3.829c0.279,0.24,0.527,0.713,0.527,1.437c0,1.037-0.01,1.874-0.01,2.129 c0,0.208,0.14,0.449,0.534,0.373c3.081-1.028,5.302-3.935,5.302-7.362C15.76,3.906,12.285,0.431,7.999,0.431z"/></svg>
+</span><span class="username">carlosschults</span></a>
+
+          </li>
+          
+
+          
+          <li>
+            <a href="https://twitter.com/carlosschults"><span class="icon icon--twitter"><svg viewBox="0 0 16 16"><path fill="#828282" d="M15.969,3.058c-0.586,0.26-1.217,0.436-1.878,0.515c0.675-0.405,1.194-1.045,1.438-1.809c-0.632,0.375-1.332,0.647-2.076,0.793c-0.596-0.636-1.446-1.033-2.387-1.033c-1.806,0-3.27,1.464-3.27,3.27 c0,0.256,0.029,0.506,0.085,0.745C5.163,5.404,2.753,4.102,1.14,2.124C0.859,2.607,0.698,3.168,0.698,3.767 c0,1.134,0.577,2.135,1.455,2.722C1.616,6.472,1.112,6.325,0.671,6.08c0,0.014,0,0.027,0,0.041c0,1.584,1.127,2.906,2.623,3.206 C3.02,9.402,2.731,9.442,2.433,9.442c-0.211,0-0.416-0.021-0.615-0.059c0.416,1.299,1.624,2.245,3.055,2.271 c-1.119,0.877-2.529,1.4-4.061,1.4c-0.264,0-0.524-0.015-0.78-0.046c1.447,0.928,3.166,1.469,5.013,1.469 c6.015,0,9.304-4.983,9.304-9.304c0-0.142-0.003-0.283-0.009-0.423C14.976,4.29,15.531,3.714,15.969,3.058z"/></svg>
+</span><span class="username">carlosschults</span></a>
+
+          </li>
+          
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-3">
+        <p>Articles on software development and technology.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+
+    <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-92788641-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+    <script src="/js/dark-mode.js"></script>
+  </body>
+
+</html>

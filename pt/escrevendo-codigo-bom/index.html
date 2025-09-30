@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Escrevendo código bom: como reduzir a carga cognitiva do seu código | carlos schults / blog</title>
+  <link rel="apple-touch-icon" sizes="57x57" href="/img/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/img/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/img/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/img/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/img/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/img/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/img/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/img/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"  href="/img/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/img/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon-16x16.png">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="description" content="NOTA: O artigo a seguir foi originalmente escrito por Christian Maioli M., que gentilmente me autorizou a fazer esta tradução. Caso seja do seu interesse, co...">
+  
+  <!-- Twitter card -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:creator" content="@carlosschults">
+  <meta name="twitter:site" content="@carlosschults">
+  <meta name="twitter:domain" content="carlosschults.net">
+  <meta name="twitter:title" content="Escrevendo código bom: como reduzir a carga cognitiva do seu código">
+  <meta name="twitter:description" content="NOTA: O artigo a seguir foi originalmente escrito por Christian Maioli M., que gentilmente me autorizou a fazer esta tradução. Caso seja do seu interesse, co...">
+
+   <!-- Facebook meta -->
+  
+  
+  <meta property="og:title" content="Escrevendo código bom: como reduzir a carga cognitiva do seu código">
+  <meta property="og:site_name" content="Carlos Schults / Blog" />
+  <meta property="og:locale" content="pt_BR">  
+  <meta property="og:type" content="article" />
+  <meta property="og:image" content="https://res.cloudinary.com/dz5ppacuo/image/upload/v1490471059/escrevendo-codigo-bom-1038x437_e4oy0i.jpg" />  
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:width" content="1038"> 
+  <meta property="og:image:height" content="437">  
+  
+  <meta property="og:article:published_time" content="2017-03-25T00:00:00+00:00" />  
+  <meta property="og:article:author" content="Carlos Schults" />
+  
+  <meta property="og:article:tag" content="traducoes" />
+  <meta property="og:article:tag" content="boas-praticas" />    
+  
+  <meta property="og:url" content="https://carlosschults.net/pt/escrevendo-codigo-bom/"/>
+  <meta property="og:description" content="NOTA: O artigo a seguir foi originalmente escrito por Christian Maioli M., que gentilmente me autorizou a fazer esta tradução. Caso seja do seu interesse, co...">
+  <link rel="stylesheet" href="/css/main.css">  
+  
+   <link rel="canonical" href="https://carlosschults.net/pt/escrevendo-codigo-bom/">
+   
+  
+  <link rel="alternate" hreflang="pt" href="/pt/escrevendo-codigo-bom/" />
+  
+  <link rel="alternate" type="application/rss+xml" title="carlos schults / blog" href="https://carlosschults.net/rss.xml">
+</head>
+
+  <body>
+    <header class="site-header">
+  <div class="wrapper">    
+    <a class="site-title" href="/pt/">carlos schults / blog</a>
+    
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg viewBox="0 0 18 15">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+
+      <div class="trigger">        
+          
+          <a class="page-link" href="/sobre/">Sobre</a>
+          <a class="page-link" href="/busca/">Busca</a>
+                  
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+<div class="wrapper" style="text-align: right; line-height: 2em">
+  
+   <a href="/pt/escrevendo-codigo-bom/" class="pt">pt</a> 
+
+  
+  
+</div>
+
+
+    <div class="page-content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">    
+    <h2 class="postTitle" itemprop="headline">Escrevendo código bom: como reduzir a carga cognitiva do seu código</h2>
+    <p class="post-meta">   
+    <time datetime="2017-03-25T00:00:00+00:00" itemprop="datePublished">25/03/2017
+    </time> • <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">Carlos Schults</span></span>
+  <span class="tags" itemprop="keywords"> • Tags: <a href="/tag_ptbr/traducoes">traducoes </a> <a href="/tag_ptbr/boas-praticas">boas-praticas </a> </span>
+  </p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <p><img src="https://res.cloudinary.com/dz5ppacuo/image/upload/v1490471059/escrevendo-codigo-bom-1038x437_e4oy0i.jpg" alt="" /></p>
+
+<p><strong>NOTA</strong>: O artigo a seguir foi originalmente escrito por <a href="https://chrismm.com/">Christian Maioli M.</a>, que gentilmente me autorizou a fazer esta tradução. Caso seja do seu interesse, <a href="https://chrismm.com/blog/writing-good-code-reduce-the-cognitive-load/">confira o artigo original</a>.</p>
+
+<!--more-->
+<hr />
+<p></p>
+
+<p>Baixo número de bugs, boa performance, facilidade de modificação. Código bem feito gera alto impacto, e talvez seja a maior razão por trás da existência do famoso desenvolvedor “10x”. E ainda assim, apesar de sua importância, código bom escapa a novos desenvolvedores. A literatura nessa área geralmente consistente de coleções de dicas desconexas. Como um novo desenvolvedor vai simplesmente memorizar isso tudo?  “<a href="https://www.amazon.com/Code-Complete-Practical-Handbook-Construction/dp/0735619670/ref=as_li_ss_tl?ie=UTF8&amp;linkCode=ll1&amp;tag=chrimaiospo06-20&amp;linkId=6aabd46b91da513d86257af2c05b6585">Code Complete</a>“, o maior expoente nesta matéria, é um livro de 960 páginas!</p>
+
+<p><strong>Eu acredito que é possível construir um framework mental simples que pode ser usado com qualquer linguagem ou biblioteca e que vai resultar em código de boa qualidade por padrão.</strong> Há cinco conceitos principais sobre os quais vou falar aqui. Basta mantê-los em mente e escrever código de boa qualidade será moleza.</p>
+
+<p>Update: Mia Li fez a gentileza de disponibilizar uma tradução deste artigo para o Chinês <a href="https://www.inside.com.tw/2016/07/05/writing-good-code-how-to-reduce-the-cognitive-load-of-your-code">aqui</a>.</p>
+
+<h2 id="mantenha-suas-peculiaridades-pessoais-de-fora">Mantenha suas peculiaridades pessoais de fora</h2>
+
+<p>Você lê um artigo que explode a sua mente com truques novos. Agora você vai escrever código “esperto” e todos os seus colegas ficarão impressionados.</p>
+
+<p>O problema é que as pessoas só querem corrigir seus bugs e ir em frente. Seu truquezinho esperto é, com frequência, pouco mais que uma distração. Como eu falei em “<a href="https://chrismm.com/blog/applying-neuroscience-to-software-development/">Applying neuroscience to software development</a>“, quando as pessoas têm que digerir  seu código, as “pilhas mentais” enchem depressa e se torna difícil fazer progresso.</p>
+
+<p><img src="https://res.cloudinary.com/dz5ppacuo/image/upload/v1490470570/image_0_fzqyo8.png" alt="" /></p>
+
+<figcaption>Não personalize seu trabalho em maneiras que irão precisar de explicações. 
+
+Tradução do comentário: Isso era útil na linguagem C para evitar escrever acidentalmente "variable = null". Atualmente, isso apenas confundiria a maioria das pessoas, com pouco benefício.</figcaption>
+<p>&nbsp;</p>
+
+<p>Não codifique “do seu jeito”. Apenas siga a padronização de código. Este tipo de coisa é um problema já resolvido. Torne seu código previsível e fácil de ler codificando da maneira que as pessoas esperam.</p>
+
+<h2 id="dividir-para-conquistar">Dividir para conquistar</h2>
+
+<p>Código complexo frequentemente pode ser clarificado por meio da modularização, e existem mais maneiras de se fazer isso do que apenas criando mais funções. Gravar o resultado de longas condicionais em uma variável ou duas é uma grande maneira de modularizar sem o overhead de chamar uma função. Isso irá inclusive lhe permitir compô-las em condicionais maiores, ou reutilizar o resultado em algum outro lugar.</p>
+
+<p><strong>A abordagem ao se dividir um problema deve ser tornar cada seção o mais focada possível, afetando apenas estado local, sem misturar com assuntos irrelevantes, e se possível sem nenhum efeito colateral.</strong> Linguagens de programação e bibliotecas muitas vezes têm seus próprios problemas, e abstraí-los pode ajudar a fazer com que seu código cuide apenas dos assuntos dele. O <a href="https://code.tutsplus.com/tutorials/solid-part-1-the-single-responsibility-principle--net-36074">Princípio da Responsabilidade Única</a> é outro exemplo de como código focado e localizado resulta em bom design.</p>
+
+<p><img src="https://res.cloudinary.com/dz5ppacuo/image/upload/v1490470570/image_1_rfmnyv.png" alt="" /></p>
+
+<figcaption>Eu gosto de utilizar variáveis para compartimentar lógica.
+Tradução do comentário: Isso pode ser uma boa maneira para modularizar sem o peso excessivo de chamadas de funções</figcaption>
+<p>&nbsp;</p>
+
+<p>TDD, além de trazer seus próprios benefícios quando feito corretamente, tem feitos com que as pessoas apliquem certos princípios que anteriormente não eram tão populares. Código sem estado era desprezado como lento e desnecessário (ver: maior parte de código antigo em C/C++), e agora todos estão falando sobre funções puras. Mesmo que você não use TDD, você deveria aprender seus princípios. Trabalhar sob novos paradigmas transformará você em um desenvolvedor resiliente.</p>
+
+<h2 id="torne-seu-código-discreto-e-processável">Torne seu código discreto e processável</h2>
+
+<p>Seu computador e suas ferramentas podem sofrer tanto quanto você para lidar com seu código, e existe alguma correlação entre o número de pré-processadores e mutações você precisa aplicar e o quão bagunçado o seu código é.</p>
+
+<p>Vamos deixar de lado os possíveis benefícios destas ferramentas de build adicional por um momento. A probabilidade é de que elas requerem que você use linguagens de domínio específica como templates customizados, ou estruturas de dados dinâmicas e complexas como hash tables. A sua IDE provavelmente não será boa em lidar com tais coisas, e a localização de trechos relevantes do código se tornará mais difícil.</p>
+
+<p>Evite usar extensões de linguagens e bibliotecas que não trabalham bem com sua IDE. O impacto que eles terão na sua produtividade bate de longe o pequeno benefício de uma configuração mais fácil ou a economia de algumas poucas teclas com uma sintaxe mais concisa.</p>
+
+<p><img src="https://res.cloudinary.com/dz5ppacuo/image/upload/v1490470570/image_2_pn1dp4.png" alt="" /></p>
+
+<figcaption>
+O uso de Service Locator é um exemplo de design que resulta em integração ruim com a maioria das IDEs.
+Tradução do comentário: Uso de string mágicas fará com que seja impossível para sua IDE acompanhar seu código.
+</figcaption>
+<p>&nbsp;</p>
+
+<p>Outra maneira de manter a parte “integrada” da sua IDE relevante é evitar código mágico. A maioria das linguagens disponibilizam maneiras para que você escreva código mais dinâmico. Abusar tais features utilizando strings mágicas, índices de arrays mágicos e funcionalidades de templates customizados irá resultar em uma base de código mais desconectada. Geralmente qualquer feature que apenas um humano sabe o significado vai levar você para essa caminho, e é uma estrada difícil de se escapar, porque se a sua IDE não entende o código, quaisquer funcionalidades de refatoração que possua serão inúteis quando você quiser mudar para uma arquitetura mais estática.</p>
+
+<h2 id="torne-seu-código-legível">Torne seu código legível</h2>
+
+<p>Trabalhe no sentido de ter uma arquitetura previsível. Seus colegas de time terão mais facilidade em localizar as coisas, e isso vai reduzir bastante o tempo necessário para concluir as tarefas. <strong>Assim que vocês estiverem de acordo sobre uma estrutura arquitetural geral para seu projeto, torne óbvia a localização dos principais elementos.</strong> Usa MVC? Coloque models, views e controllers em suas próprias pastas, não três níveis abaixo ou espalhados em vários lugares.</p>
+
+<p>Eu falei sobre modularização. Também é possível existir modularização em excesso, o que geralmente torna seu código mais difícil de localizar. Sua IDE pode oferecer alguma ajuda, mas às vezes você estará dividido entre fazer com que sua IDE ignore uma pasta de biblioteca ou outro terceiro devido a ela conter muito código irrelevante, ou mantê-la indexada e lidar com o problema manualmente. É um beco sem saída. Tente utilizar menos bibliotecas escolhendo aquelas que resolvem tantas necessidades quantas forem possível.</p>
+
+<p>Bibliotecas e ferramentas também podem ser uma barreira a novos desenvolvedores. Eu recentemente fiz um projeto usando EcmaScript 7 (babel), apenas para depois perceber que nosso desenvolvedor júnior estava tendo problemas para entender o que tudo aquilo significava.  Uma penalidade pesada para a produtividade do time. Eu subestimei o potencial daquilo de sobrecarregar uma pessoa que está só começando. Não use ferramentas que ainda são difíceis demais de aprender. Espere por uma época melhor.</p>
+
+<p><img src="https://res.cloudinary.com/dz5ppacuo/image/upload/v1490470570/image_3_vdvcrz.png" alt="" /></p>
+<figcaption>Código real de um makefile que escrevi. Desenvolvedores juniores não conseguem lidar com o uso excessivo de novas ferramentas.</figcaption>
+<p>&nbsp;</p>
+
+<h2 id="torne-seu-código-fácil-de-digerir">Torne seu código fácil de digerir</h2>
+
+<p>Se você chegou até aqui, eu tenho boas notícias: esta é provavelmente a parte mais importante. A escolha de bons nomes é sabidamente um dos maiores problemas no desenvolvimento de software. Ferramentas de build provavelmente não vão causar nenhuma melhora aqui, e a razão é que computadores não podem realmente saber o raciocínio que houve por trás de uma solução.</p>
+
+<p><strong>Você precisa documentar o porquê. Nomes de variáveis e funções relevantes e contextuais são uma ótima maneira de se fazer isso.</strong> Nomes que transmitem propósito podem até reduzir a necessidade de documentação.</p>
+
+<p>O uso de prefixos em nomes é uma boa maneira de adicionar sentido a eles. É uma prática que costumava ser popular, e eu penso que o mau uso foi o motivo dela não continuar a ser usada. Sistemas de prefixos como  <a href="https://www.joelonsoftware.com/articles/Wrong.html">notação húngara</a> inicialmente tinham a intenção de adicionar sentido, mas com o tempo eles acabaram sendo usado em maneiras menos contextuais, tais como para adicionar informação de tipo.</p>
+
+<p><img src="https://res.cloudinary.com/dz5ppacuo/image/upload/v1490470570/image_4_x8oly3.png" alt="" /></p>
+<figcaption>Interfaces fluentes tem sido abusadas frequentemente em tempos recentes.</figcaption>
+<p>Tradução do comentário: Use nomes que transmitam propósito, não tome vantagem da linguagem apenas para parecer inteligente</p>
+
+<p>Finalmente, sempre há algo a ser dito sobre manter a complexidade ciclomática baixa. Isso significa manter o número de ramificações condicionais tão baixo quanto for possível. Cada ramificação adicional não apenas adiciona mais indentação e prejudica a legibilidade, mas, mais importante que isso, aumenta o número de elementos aos quais você precisa estar atento.</p>
+
+<h2 id="conclusão-e-mais-leituras">Conclusão e mais leituras</h2>
+
+<p>Estes são cinco conceitos simples e abrangentes, e o meu objetivo aqui foi tornar seu aprendizado mais fácil ao lhe dar caixas nas quais colocar todas as suas ideias sobre organização de código.</p>
+
+<p><strong>Pratique focar nesses aspectos ao programar para solidifica-los.</strong> Se você ainda não leu, eu realmente recomendo Code Complete. Ele vem com um grande número de exemplos e disseca quase todas as situações que você pode vir a encontrar.</p>
+
+    
+    
+      
+    
+    
+        Encontrou algum erro no post? <a href="http://github.com/carlosschults/carlosschults.github.io/edit/master/_posts/2017-03-25-escrevendo-bom-codigo.md">Sugira uma edição</a>      
+    
+    
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+                    
+            <a rel="previous" class="previous" href="/pt/funcionalidades-csharp-7/">&larr; Funcionalidades do C# 7 que vale a pena conhecer - Parte 1 </a>
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+        	    
+            <a rel="next" class="next" href="/pt/basicos-do-git-usuarios-tfvc">Introdução ao Git para usuários de TFS/TFVC &rarr;</a>
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+      
+    <div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+        // Store these for reloads
+        window.disqus_identifier = window.location.pathname;
+        window.disqus_url = window.location.href;
+        
+        // Set initial theme - match it with the site's theme
+        const currentTheme = document.body.getAttribute('data-theme') || 'light';
+        this.page.theme = currentTheme === 'dark' ? 'dark' : 'light';
+    };
+    
+    (function() {
+        var d = document, s = d.createElement('script');
+        s.src = '//carlosschultsblog.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>    
+  </div>
+
+</article>
+
+      </div>
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">         
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-2">
+        <ul class="social-media-list">
+          
+          <li>
+            <a href="https://github.com/carlosschults"><span class="icon icon--github"><svg viewBox="0 0 16 16"><path fill="#828282" d="M7.999,0.431c-4.285,0-7.76,3.474-7.76,7.761 c0,3.428,2.223,6.337,5.307,7.363c0.388,0.071,0.53-0.168,0.53-0.374c0-0.184-0.007-0.672-0.01-1.32 c-2.159,0.469-2.614-1.04-2.614-1.04c-0.353-0.896-0.862-1.135-0.862-1.135c-0.705-0.481,0.053-0.472,0.053-0.472 c0.779,0.055,1.189,0.8,1.189,0.8c0.692,1.186,1.816,0.843,2.258,0.645c0.071-0.502,0.271-0.843,0.493-1.037 C4.86,11.425,3.049,10.76,3.049,7.786c0-0.847,0.302-1.54,0.799-2.082C3.768,5.507,3.501,4.718,3.924,3.65 c0,0,0.652-0.209,2.134,0.796C6.677,4.273,7.34,4.187,8,4.184c0.659,0.003,1.323,0.089,1.943,0.261 c1.482-1.004,2.132-0.796,2.132-0.796c0.423,1.068,0.157,1.857,0.077,2.054c0.497,0.542,0.798,1.235,0.798,2.082 c0,2.981-1.814,3.637-3.543,3.829c0.279,0.24,0.527,0.713,0.527,1.437c0,1.037-0.01,1.874-0.01,2.129 c0,0.208,0.14,0.449,0.534,0.373c3.081-1.028,5.302-3.935,5.302-7.362C15.76,3.906,12.285,0.431,7.999,0.431z"/></svg>
+</span><span class="username">carlosschults</span></a>
+
+          </li>
+          
+
+          
+          <li>
+            <a href="https://twitter.com/carlosschults"><span class="icon icon--twitter"><svg viewBox="0 0 16 16"><path fill="#828282" d="M15.969,3.058c-0.586,0.26-1.217,0.436-1.878,0.515c0.675-0.405,1.194-1.045,1.438-1.809c-0.632,0.375-1.332,0.647-2.076,0.793c-0.596-0.636-1.446-1.033-2.387-1.033c-1.806,0-3.27,1.464-3.27,3.27 c0,0.256,0.029,0.506,0.085,0.745C5.163,5.404,2.753,4.102,1.14,2.124C0.859,2.607,0.698,3.168,0.698,3.767 c0,1.134,0.577,2.135,1.455,2.722C1.616,6.472,1.112,6.325,0.671,6.08c0,0.014,0,0.027,0,0.041c0,1.584,1.127,2.906,2.623,3.206 C3.02,9.402,2.731,9.442,2.433,9.442c-0.211,0-0.416-0.021-0.615-0.059c0.416,1.299,1.624,2.245,3.055,2.271 c-1.119,0.877-2.529,1.4-4.061,1.4c-0.264,0-0.524-0.015-0.78-0.046c1.447,0.928,3.166,1.469,5.013,1.469 c6.015,0,9.304-4.983,9.304-9.304c0-0.142-0.003-0.283-0.009-0.423C14.976,4.29,15.531,3.714,15.969,3.058z"/></svg>
+</span><span class="username">carlosschults</span></a>
+
+          </li>
+          
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-3">
+        <p>Artigos sobre desenvolvimento de software e tecnologia.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+
+    <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-92788641-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+    <script src="/js/dark-mode.js"></script>
+  </body>
+
+</html>

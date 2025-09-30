@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Make Your Git History Look Beautiful Using Amend and Rebase | carlos schults / blog</title>
+  <link rel="apple-touch-icon" sizes="57x57" href="/img/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/img/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/img/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/img/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/img/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/img/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/img/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/img/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"  href="/img/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/img/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon-16x16.png">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="description" content="Photo by Yancy Min on UnsplashYou’re part of a small to medium-sized software team, and you’re envious of your co-worker’s Git history. They produce clean, w...">
+  
+  <!-- Twitter card -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:creator" content="@carlosschults">
+  <meta name="twitter:site" content="@carlosschults">
+  <meta name="twitter:domain" content="carlosschults.net">
+  <meta name="twitter:title" content="Make Your Git History Look Beautiful Using Amend and Rebase">
+  <meta name="twitter:description" content="Photo by Yancy Min on UnsplashYou’re part of a small to medium-sized software team, and you’re envious of your co-worker’s Git history. They produce clean, w...">
+
+   <!-- Facebook meta -->
+  
+  
+  <meta property="og:title" content="Make Your Git History Look Beautiful Using Amend and Rebase">
+  <meta property="og:site_name" content="Carlos Schults / Blog" />
+  <meta property="og:locale" content="en_US">  
+  <meta property="og:type" content="article" />
+  <meta property="og:image" content="https://res.cloudinary.com/dz5ppacuo/image/upload/v1673926044/git-beautiful-history/git-beautiful-history-cover.png" />  
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:width" content="1038"> 
+  <meta property="og:image:height" content="437">  
+  
+  <meta property="og:article:published_time" content="2023-01-17T00:00:00+00:00" />  
+  <meta property="og:article:author" content="Carlos Schults" />
+  
+  <meta property="og:article:tag" content="best-practices" />
+  <meta property="og:article:tag" content="git" />    
+  
+  <meta property="og:url" content="https://carlosschults.net/en/git-beautiful-history/"/>
+  <meta property="og:description" content="Photo by Yancy Min on UnsplashYou’re part of a small to medium-sized software team, and you’re envious of your co-worker’s Git history. They produce clean, w...">
+  <link rel="stylesheet" href="/css/main.css">  
+  
+   <link rel="canonical" href="https://carlosschults.net/en/git-beautiful-history/">
+   
+  
+  <link rel="alternate" hreflang="en" href="/en/git-beautiful-history/" />
+  <link rel="alternate" hreflang="pt" href="/pt/git-historico-bonito/" />
+  
+  <link rel="alternate" type="application/rss+xml" title="carlos schults / blog" href="https://carlosschults.net/feed.xml">
+</head>
+
+  <body>
+    <header class="site-header">
+  <div class="wrapper">    
+    <a class="site-title" href="/">carlos schults / blog</a>
+    
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg viewBox="0 0 18 15">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+
+      <div class="trigger">        
+          
+          <a class="page-link" href="/footprints/">Dev Footprints</a>
+          <a class="page-link" href="/readings/">Readings</a>
+          <a class="page-link" href="/about/">About</a>
+		      <a class="page-link" href="/search/">Search</a>
+                  
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+<div class="wrapper" style="text-align: right; line-height: 2em">
+  
+   <a href="/en/git-beautiful-history/" class="en">en</a>  <a href="/pt/git-historico-bonito/" class="pt">pt</a> 
+
+  
+  
+</div>
+
+
+    <div class="page-content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">    
+    <h2 class="postTitle" itemprop="headline">Make Your Git History Look Beautiful Using Amend and Rebase</h2>
+    <p class="post-meta">   
+    <time datetime="2023-01-17T00:00:00+00:00" itemprop="datePublished">Jan 17, 2023
+    </time> • <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">Carlos Schults</span></span>
+  <span class="tags" itemprop="keywords"> • Tags: <a href="/tag/best-practices">best-practices </a> <a href="/tag/git">git </a> </span>
+  </p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <p><img src="https://res.cloudinary.com/dz5ppacuo/image/upload/v1673926044/git-beautiful-history/git-beautiful-history-cover.png" alt="" /></p>
+
+<p><span>Photo by <a href="https://unsplash.com/@yancymin?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Yancy Min</a> on <a href="https://unsplash.com/photos/842ofHC6MaI?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span></p>
+
+<p>You’re part of a small to medium-sized software team, and you’re envious of your co-worker’s Git history. They produce clean, well-structured histories with beautifully crafted commit messages. Yours, by comparison, looks like a train-wreck, full of descriptions such as “fix typo”, “add forgotten file”, and so on. You wonder how they do it.</p>
+
+<p>The answer is simple: <em>they cheat.</em> You see, they probably make just as many mistakes as you do, but they use Git’s features to hide them. They then present a cleaner, nicer history to the world.</p>
+
+<p>What they do is to <strong>rewrite history.</strong> Some version control tools treat history like it’s this super sacred thing. Git isn’t like that. It gives you power to rewrite history to your heart’s desire. So much power that you can even shoot yourself in the foot with it if you’re not careful.</p>
+
+<p>In this post, I’ll show you how to use amend and interactive rebase to make your Git history look beautiful before publishing it. There won’t be much theory; I’ll walk you through some common scenarios, showing how I’d go about solving them.</p>
+
+<p>Before wrapping up, I’ll teach you how to not shoot yourself in the foot with these commands. As I’ll explain, amending and rebasing are destructive actions, and there are situations in which you should not perform them.</p>
+
+<h2 id="requirements">Requirements</h2>
+<p>To follow along with this post, I assume you:</p>
+
+<ul>
+  <li>Are comfortable working with the command line</li>
+  <li>have Git installed on your machine</li>
+  <li>know at least the basic Git commands</li>
+</ul>
+
+<p>As I write this post, I’m on Windows, using Git version <strong>2.38.1.windows.1</strong> and typing my commands on Git Bash. If you’re on Linux or OSX, I guess everything will work just as fine, but I haven’t tested it myself.</p>
+
+<h2 id="defining-vs-code-as-your-default-text-editor">Defining VS Code as Your Default Text Editor</h2>
+<p>Just a last digression before we really get started. Some of the commands you’ll be seeing throughout this post will require you to edit and save a text file. They do this by opening your default text editor as configured in your Git configuration file and waiting until you edit, save and close the file.</p>
+
+<p>If you’re on Windows like me, using Git Bash, you’re default editor will be Vim. Vim is a command-line text editor, and some people find it intimidating. Though learning Vim requires some work, it’s not that hard to get the hang of it, and I’d recommend you invest some time to learn at least the most basic commands—specially how to quit!</p>
+
+<p>However, Git allows you to pick other text editors as your default. If you have Visual Studio Code installed and want to use it, run the following command:</p>
+
+<p><code class="language-plaintext highlighter-rouge">git config --global core.editor "code --wait"</code></p>
+
+<h2 id="rewriting-history-n-common-scenarios">Rewriting History: N Common Scenarios</h2>
+<p>I’ll walk you through a few common scenarios you might find yourself in which rewriting history will save you.</p>
+
+<h3 id="my-git-commit-message-has-a-typo">My Git Commit Message Has a Typo</h3>
+<p>You’re in a hjurry to fix this high priority bug. After hours of grueling debugging, you find the offending code, fix it and commit the change.</p>
+
+<p>Only then you see you made a typo. How to fix that?</p>
+
+<p>Let’s start by creating a repository for you to practice:</p>
+
+<p><code class="language-plaintext highlighter-rouge">git init</code></p>
+
+<p>Now, let’s add a new file and commit:</p>
+
+<p><code class="language-plaintext highlighter-rouge">touch file.txt &amp;&amp; git add file.txt &amp;&amp; git commit -m "fix async request in getUsers() functino"</code></p>
+
+<p>Run <code class="language-plaintext highlighter-rouge">git log--oneline</code> to see your commit message. You’ll see something like this:</p>
+
+<p><img src="/img/git-beautiful-history/img1.png" alt="" /></p>
+
+<p>Pay attention to the commit identifier, and maybe even write it down; it will be important later on. (Yours will be different than mine.)</p>
+
+<p>Anyway, your message has a typo. How do you fix it?</p>
+
+<p>Just run <code class="language-plaintext highlighter-rouge">git commit --amend</code>, exactly like that. Git will open your text editor and wait for you to edit the commit’s message:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>fix async request in getUsers() functino
+
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+#
+# Date:      Tue Jan 10 19:14:17 2023 -0300
+#
+# On branch master
+#
+# Initial commit
+#
+# Changes to be committed:
+#   new file:   file.txt
+#
+</code></pre></div></div>
+
+<p>The first line is the actual commit message. The lines starting with the “#” are comments and will be ignored. Just fix the typo, save and close the text file, and you’ll have a brand new commit message. Run <code class="language-plaintext highlighter-rouge">git log --oneline</code> again to see it:</p>
+
+<p><img src="/img/git-beautiful-history/img2.png" alt="" /></p>
+
+<p>You’ll notice that the identifier (SHA-1) of the commit is now different than it was before—and also different than the one from the image above. I’ll get back to this later.</p>
+
+<p>For now, you’ve successfully amended your commit message. Congrats!</p>
+
+<h3 id="i-forgot-to-include-a-file">I Forgot to Include a File</h3>
+<p>Sometimes you have several changed files and want to commit some but not all of them. In your hurry, you leave one or more files behind. How to fix this?</p>
+
+<p>Amend to the rescue again.</p>
+
+<p>To simulate this situation, let’s create a new file and also add a new line to the existing one:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">touch </span>file2.txt
+<span class="nb">echo</span> <span class="s1">'New line'</span> <span class="o">&gt;&gt;</span> file.txt
+</code></pre></div></div>
+
+<p>A common mistake here is to run commit with the <code class="language-plaintext highlighter-rouge">-a</code> option, thinking it will include both files:</p>
+
+<p><code class="language-plaintext highlighter-rouge">git commit -am "update file and add file2"</code></p>
+
+<p>Run the command above. Then run <code class="language-plaintext highlighter-rouge">git status</code>. This is the result you’ll get:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>On branch master
+
+Untracked files:
+
+  (use "git add &lt;file&gt;..." to include in what will be committed)
+
+        file2.txt
+
+nothing added to commit but untracked files present (use "git add" to track)
+</code></pre></div></div>
+
+<p>Fixing the situation is easy. First, you track or stage the forgotten file:</p>
+
+<p><code class="language-plaintext highlighter-rouge">git add file2.txt</code></p>
+
+<p>Then, use <code class="language-plaintext highlighter-rouge">git commit –-amend</code> again. Your editor will open, but in this case, there’s nothing wrong with the message. Just close the editor and you’re done: you now have an amended commit that includes the previously forgotten file.</p>
+
+<p>But if you’re anything like me, you probably feel like a chump having opened your text editor for no reason at all.</p>
+
+<p>Fortunately, you don’t always have to do that. When you just want to add one or more missing files without changing the commit message, you can use the <code class="language-plaintext highlighter-rouge">--no-edit</code> option, like this:</p>
+
+<p><code class="language-plaintext highlighter-rouge">git commit –-amend –-no-edit</code></p>
+
+<p>This way, Git won’t open your text editor, keeping the original commit message.</p>
+
+<h3 id="i-want-to-merge-several-commits-into-one">I Want to Merge Several Commits into One</h3>
+<p>Merging several commits into one is an operation called “squashing.” But why would you want to do that?</p>
+
+<p>Well, it all boils down to your Git style. I like to make small commits, very often. Then, when I’m about to make them public (for instance, by opening a pull request) I squash them into a single commit, with a well-crafted message.</p>
+
+<p>This is also a common requirement from open-source project maintainers, so it’s a good skill to have. Let’s learn how to do it.</p>
+
+<p>First, let’s create three commits:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git commit <span class="nt">--allow-empty</span> <span class="nt">-m</span> <span class="s2">"empty commit"</span>
+git commit <span class="nt">--allow-empty</span> <span class="nt">-m</span> <span class="s2">"empty commit 2"</span>
+git commit <span class="nt">--allow-empty</span> <span class="nt">-m</span> <span class="s2">"empty commit 3"</span>
+</code></pre></div></div>
+
+<p>Creating text files for the sake of having commits gets old pretty quickly. That’s why I’m using the <code class="language-plaintext highlighter-rouge">--allow-empty</code> option, that enables me to create empty commits.</p>
+
+<p>Now, let’s say I need to squash the three commits above into one. To do that, I’ll need to interactively rebase them. By doing an interactive rebase, you can perform tasks like:</p>
+
+<ul>
+  <li>Reorder commits</li>
+  <li>Drop one or more commits</li>
+  <li>Change their messages</li>
+  <li>Merge one or more commits together</li>
+</ul>
+
+<p>Now comes the part that might be confusing, so please pay attention. Since we’re going to work with the three latest commits, we say <strong>we’re rebasing them on top of the fourth (from the top) commit.</strong></p>
+
+<p>So, use the command <code class="language-plaintext highlighter-rouge">git log --oneline -4</code> to display the last four commits and then copy the SHA1 from the fourth commit from the result:</p>
+
+<p><img src="/img/git-beautiful-history/img3.png" alt="" /></p>
+
+<p>Copy the identifier from that commit and pass it to the rebase command, like this:</p>
+
+<p><code class="language-plaintext highlighter-rouge">git rebase -i 45f90ca</code></p>
+
+<p>Of course, your actual SHA1 value will be different. But there’s an easier way:</p>
+
+<p><code class="language-plaintext highlighter-rouge">git rebase -i HEAD~3</code></p>
+
+<p>To put it simply, <code class="language-plaintext highlighter-rouge">HEAD</code> here means the latest commit, and “~3” means “three commits before this one.”</p>
+
+<p>After executing either of the two commands above, your editor will open, showing a text file that contains the messages from the three commits we want to rearrange, each preceded by the word “pick”. And after that, a set of instructions:</p>
+
+<p><img src="/img/git-beautiful-history/img4.png" alt="" /></p>
+
+<p>Notice that the commits here aren’t in the order you’re used to seeing them on Git. Instead of being in inverse chronological order, they’re in direct chronological order, and there’s a reason for that.</p>
+
+<p>Each line you see above is a command that Git will execute when you confirm the rebase operation. There are several commands available, and <code class="language-plaintext highlighter-rouge">pick</code> is the default one. It simply means the commit will be kept as is. You can use <code class="language-plaintext highlighter-rouge">drop</code> to remove a commit, <code class="language-plaintext highlighter-rouge">reword</code> to edit a commit’s message, and so on.</p>
+
+<p>The command we’re going to use is <code class="language-plaintext highlighter-rouge">squash</code>. Just replace the word <code class="language-plaintext highlighter-rouge">pick</code> with <code class="language-plaintext highlighter-rouge">squash</code> in the second and third commits, like this:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pick dd25df9 empty commit <span class="c"># empty</span>
+squash c68804f empty commit 2 <span class="c"># empty</span>
+squash a76fd60 empty commit 3 <span class="c"># empty</span>
+</code></pre></div></div>
+
+<p>The squash command merges a commit with the one before. So, the third will be merged into the second, which will be merged into the first one. And that’s why the first one needs to be <em>picked</em>.</p>
+
+<p>After editing the text like I told you, save and close the file. When you do that, your editor will be opened once again. This time, you’ll be prompted to write a commit message for the new commit that will emerge:</p>
+
+<p><img src="/img/git-beautiful-history/img5.png" alt="" /></p>
+
+<p>Replace the file’s content with “this is now a single commit.” Save and close the file.</p>
+
+<p>Finally, let’s see the result:</p>
+
+<p><code class="language-plaintext highlighter-rouge">git log --oneline</code></p>
+
+<p>This is what you should get:</p>
+
+<p><img src="/img/git-beautiful-history/img6.png" alt="" /></p>
+
+<p>As you can see, the three empty commits were replaced by a single commit. You’ve successfully performed your first squash. Congrats!</p>
+
+<h2 id="when-you-shouldnt-mess-with-history">When You Shouldn’t Mess with History</h2>
+<p>Before wrapping up, let’s understand when changing history is problematic.</p>
+
+<p>First, understand that both <code class="language-plaintext highlighter-rouge">amend</code> and <code class="language-plaintext highlighter-rouge">rebase</code> produce <strong>destructive changes</strong>. It’s like they’re destroying history and creating a new one.</p>
+
+<p>So, imagine that you squash three commits (there were already pushed to the remote) into one and then push that new commit into the remote repository (you’d have to force push for that to work, by the way.) But while you were working, your coworker had branched off from (what was then) the latest commit.</p>
+
+<p>That commit no longer exists (technically, that’s not quite true, but let’s pretend for a minute that it is), which means they won’t be able to simply push their changes. They’ll have to pull your new commits and then perform a potentially complex merge in order to get things sorted.</p>
+
+<p>So, the golden rule is <strong>never rewrite history that other people depend upon.</strong> What this means in specific will depend on whatever branching workflow you and your team use.</p>
+
+<p>If you use <a href="https://trunkbaseddevelopment.com/">trunk-based development,</a> never rewrite the master/main branch. The same is true if your work with <a href="https://docs.github.com/en/get-started/quickstart/github-flow">GitHub Flow</a>. If you use git-flow, that means never rewriting the “eternal” branches, i.e., master/main and develop.</p>
+
+<h2 id="ok-i-lied-heres-a-bit-of-theory">OK, I Lied: Here’s a Bit of Theory</h2>
+<p>Throughout this post, I’ve been using language like “change the commit’s message”, “merge multiple commits into one”, and so forth.</p>
+
+<p>Technically speaking, those were all lies. When you use commands like <code class="language-plaintext highlighter-rouge">git commit --amend</code>  or <code class="language-plaintext highlighter-rouge">git rebase -i</code>, you’re not changing anything. What Git is doing <strong>is creating new commits</strong>.</p>
+
+<p>Remember when you first used <code class="language-plaintext highlighter-rouge">amend</code> and I said that it was relevant that the commit now had a new identifier? As it turns out, that was an entire new commit, and the old one is still out there!</p>
+
+<p>The same goes for rebasing. When you “merge three commits into one”, that’s not what’s happening. Instead, Git creates a new commit and updates the branch reference, so it points to the new commit. The three old commits are still there (at least for a while) but since no branch points to them they’re unreachable—unless you can get ahold of their SHA1 values somehow.</p>
+
+<p>The following image represents what really happened after you squashed your commits:</p>
+
+<p><img src="/img/git-beautiful-history/img7.png" alt="" /></p>
+
+<p>Now, let’s see the scenario after the squash:</p>
+
+<p><img src="/img/git-beautiful-history/img8.png" alt="" /></p>
+
+<p>As you can see, there’s now a new commit, in orange, which is the result of “merging” the three original ones. However, the three old commits are still there. You can’t easily reach them, though, because now there’s no branch pointing to them.</p>
+
+<p>The astute reader will notice that even the images above are a simplification. “We should have more commits in the image!”, they say, with their accusatory index finger pointing at the scream. And guess what, they’re right.</p>
+
+<p>Remember we started this whole thing by amending two commits? Well, since amend doesn’t change commits but create new ones, we have two extra lost commits in our repository. I omitted them from the diagrams above <del>because I was feeling kind of lazy</del> for brevity’s sake. But as an exercise for the reader, you can add them yourself.</p>
+
+<h2 id="rewrite-the-past-to-look-and-be-smarter">Rewrite the Past to Look (And Be) Smarter</h2>
+<p>Rewriting history is a powerful capability of Git. With commands such as <code class="language-plaintext highlighter-rouge">git commit --amend</code> and <code class="language-plaintext highlighter-rouge">git rebase -i</code> you can “change” your past commits, hiding your mistakes and making it look like you got everything right from the start. I do this all the time and I reap the benefits: my coworkers think I’m way smarter than what I’m really—please don’t tell them my secret.</p>
+
+<p>Seriously now: these commands are fantastic tools for getting a more organized history. With them, you can lose the fear of committing frequently once and for all. Make commits small and frequent, and don’t pay too much attention to the message-for example, if you use <a href="/en/csharp-unit-testing-intro-tdd/">TDD</a>, you can commit every time the tests pass.</p>
+
+<p>Then, when it is time to publish your work, squash the commits and put a nice description on them. Adopt a commit messaging convention for you and your team, such as <a href="https://www.conventionalcommits.org/en/v1.0.0/">Conventional Commits</a>. Your colleagues (and your future self) will thank you.</p>
+
+    
+    
+      
+    
+    
+        Found a typo or mistake in the post? <a href="http://github.com/carlosschults/carlosschults.github.io/edit/master/_posts/2023-01-17-git-rebase-amend.md">Suggest edit</a>
+        
+    
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+                    
+            <a rel="previous" class="previous" href="/en/reduce-cyclomatic-complexity/">&larr; How To Reduce Cyclomatic Complexity: A Complete Guide </a>
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+        	    
+            <a rel="next" class="next" href="/en/fivel-levels-readable-code/">The 5 Levels of Readable Code &rarr;</a>
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+      
+    <div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+        // Store these for reloads
+        window.disqus_identifier = window.location.pathname;
+        window.disqus_url = window.location.href;
+        
+        // Set initial theme - match it with the site's theme
+        const currentTheme = document.body.getAttribute('data-theme') || 'light';
+        this.page.theme = currentTheme === 'dark' ? 'dark' : 'light';
+    };
+    
+    (function() {
+        var d = document, s = d.createElement('script');
+        s.src = '//carlosschultsblog.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>    
+  </div>
+
+</article>
+
+      </div>
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">         
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-2">
+        <ul class="social-media-list">
+          
+          <li>
+            <a href="https://github.com/carlosschults"><span class="icon icon--github"><svg viewBox="0 0 16 16"><path fill="#828282" d="M7.999,0.431c-4.285,0-7.76,3.474-7.76,7.761 c0,3.428,2.223,6.337,5.307,7.363c0.388,0.071,0.53-0.168,0.53-0.374c0-0.184-0.007-0.672-0.01-1.32 c-2.159,0.469-2.614-1.04-2.614-1.04c-0.353-0.896-0.862-1.135-0.862-1.135c-0.705-0.481,0.053-0.472,0.053-0.472 c0.779,0.055,1.189,0.8,1.189,0.8c0.692,1.186,1.816,0.843,2.258,0.645c0.071-0.502,0.271-0.843,0.493-1.037 C4.86,11.425,3.049,10.76,3.049,7.786c0-0.847,0.302-1.54,0.799-2.082C3.768,5.507,3.501,4.718,3.924,3.65 c0,0,0.652-0.209,2.134,0.796C6.677,4.273,7.34,4.187,8,4.184c0.659,0.003,1.323,0.089,1.943,0.261 c1.482-1.004,2.132-0.796,2.132-0.796c0.423,1.068,0.157,1.857,0.077,2.054c0.497,0.542,0.798,1.235,0.798,2.082 c0,2.981-1.814,3.637-3.543,3.829c0.279,0.24,0.527,0.713,0.527,1.437c0,1.037-0.01,1.874-0.01,2.129 c0,0.208,0.14,0.449,0.534,0.373c3.081-1.028,5.302-3.935,5.302-7.362C15.76,3.906,12.285,0.431,7.999,0.431z"/></svg>
+</span><span class="username">carlosschults</span></a>
+
+          </li>
+          
+
+          
+          <li>
+            <a href="https://twitter.com/carlosschults"><span class="icon icon--twitter"><svg viewBox="0 0 16 16"><path fill="#828282" d="M15.969,3.058c-0.586,0.26-1.217,0.436-1.878,0.515c0.675-0.405,1.194-1.045,1.438-1.809c-0.632,0.375-1.332,0.647-2.076,0.793c-0.596-0.636-1.446-1.033-2.387-1.033c-1.806,0-3.27,1.464-3.27,3.27 c0,0.256,0.029,0.506,0.085,0.745C5.163,5.404,2.753,4.102,1.14,2.124C0.859,2.607,0.698,3.168,0.698,3.767 c0,1.134,0.577,2.135,1.455,2.722C1.616,6.472,1.112,6.325,0.671,6.08c0,0.014,0,0.027,0,0.041c0,1.584,1.127,2.906,2.623,3.206 C3.02,9.402,2.731,9.442,2.433,9.442c-0.211,0-0.416-0.021-0.615-0.059c0.416,1.299,1.624,2.245,3.055,2.271 c-1.119,0.877-2.529,1.4-4.061,1.4c-0.264,0-0.524-0.015-0.78-0.046c1.447,0.928,3.166,1.469,5.013,1.469 c6.015,0,9.304-4.983,9.304-9.304c0-0.142-0.003-0.283-0.009-0.423C14.976,4.29,15.531,3.714,15.969,3.058z"/></svg>
+</span><span class="username">carlosschults</span></a>
+
+          </li>
+          
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-3">
+        <p>Articles on software development and technology.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+
+    <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-92788641-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+    <script src="/js/dark-mode.js"></script>
+  </body>
+
+</html>

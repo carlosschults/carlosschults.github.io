@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>C# 8.0 Features: A Glimpse of the Future | carlos schults / blog</title>
+  <link rel="apple-touch-icon" sizes="57x57" href="/img/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/img/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/img/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/img/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/img/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/img/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/img/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/img/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"  href="/img/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/img/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon-16x16.png">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="description" content="C# 8.0 is coming and will bring some great new features. Let’s check out what the future holds for us.">
+  
+  <!-- Twitter card -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:creator" content="@carlosschults">
+  <meta name="twitter:site" content="@carlosschults">
+  <meta name="twitter:domain" content="carlosschults.net">
+  <meta name="twitter:title" content="C# 8.0 Features: A Glimpse of the Future">
+  <meta name="twitter:description" content="C# 8.0 is coming and will bring some great new features. Let’s check out what the future holds for us.">
+
+   <!-- Facebook meta -->
+  
+  
+  <meta property="og:title" content="C# 8.0 Features: A Glimpse of the Future">
+  <meta property="og:site_name" content="Carlos Schults / Blog" />
+  <meta property="og:locale" content="en_US">  
+  <meta property="og:type" content="article" />
+  <meta property="og:image" content="https://res.cloudinary.com/dz5ppacuo/image/upload/v1513817072/csharp8-1037x438_skogpz.jpg" />  
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:width" content="1038"> 
+  <meta property="og:image:height" content="437">  
+  
+  <meta property="og:article:published_time" content="2017-12-20T00:00:00+00:00" />  
+  <meta property="og:article:author" content="Carlos Schults" />
+  
+  <meta property="og:article:tag" content="csharp" />    
+  
+  <meta property="og:url" content="https://carlosschults.net/en/csharp-8-features/"/>
+  <meta property="og:description" content="C# 8.0 is coming and will bring some great new features. Let’s check out what the future holds for us.">
+  <link rel="stylesheet" href="/css/main.css">  
+  
+  <link rel="canonical" href="https://blog.ndepend.com/c-8-0-features-glimpse-future/">
+   
+  
+  <link rel="alternate" hreflang="en" href="/en/csharp-8-features/" />
+  <link rel="alternate" hreflang="pt" href="/pt/funcionalidades-csharp8/" />
+  
+  <link rel="alternate" type="application/rss+xml" title="carlos schults / blog" href="https://carlosschults.net/feed.xml">
+</head>
+
+  <body>
+    <header class="site-header">
+  <div class="wrapper">    
+    <a class="site-title" href="/">carlos schults / blog</a>
+    
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg viewBox="0 0 18 15">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+
+      <div class="trigger">        
+          
+          <a class="page-link" href="/footprints/">Dev Footprints</a>
+          <a class="page-link" href="/readings/">Readings</a>
+          <a class="page-link" href="/about/">About</a>
+		      <a class="page-link" href="/search/">Search</a>
+                  
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+<div class="wrapper" style="text-align: right; line-height: 2em">
+  
+   <a href="/en/csharp-8-features/" class="en">en</a>  <a href="/pt/funcionalidades-csharp8/" class="pt">pt</a> 
+
+  
+  
+</div>
+
+
+    <div class="page-content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">    
+    <h2 class="postTitle" itemprop="headline">C# 8.0 Features: A Glimpse of the Future</h2>
+    <p class="post-meta">   
+    <time datetime="2017-12-20T00:00:00+00:00" itemprop="datePublished">Dec 20, 2017
+    </time> • <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">Carlos Schults</span></span>
+  <span class="tags" itemprop="keywords"> • Tags: <a href="/tag/csharp">csharp </a> </span>
+  </p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <p><img src="https://res.cloudinary.com/dz5ppacuo/image/upload/v1513817072/csharp8-1037x438_skogpz.jpg" alt="" /></p>
+
+<p>C# 8.0 is coming and will bring some great new features. Let’s check out what the future holds for us.
+<!--more--></p>
+
+<p><em>Editorial note: I originally wrote this post for the NDepend blog.  You can <a href="https://blog.ndepend.com/c-8-0-features-glimpse-future/">check out the original here, at their site</a>. While you’re there, download NDepend and give it a try.</em></p>
+
+<p>It’s been almost 20 years since Microsoft released the first version of the C# language. From its inception—when some unjustly deemed it a mere Java copycat—until now, C# has had a remarkable evolution.</p>
+
+<p>Nowadays, it’s frequently featured in both <a href="https://insights.stackoverflow.com/survey/2017#technology-programming-languages">most used</a> and <a href="https://insights.stackoverflow.com/survey/2017#most-loved-dreaded-and-wanted">most loved</a> programming languages lists. You can use it to develop desktop, web, and mobile apps, and you can write code that will run in all the major operating systems. Or you can jump right onto the IOT bandwagon and write code to “smarten” your house. We live in interesting times to be a C# developer indeed.</p>
+
+<p>If the present is already exciting, what about the future? Would it be possible for us to get a glimpse of what lies ahead for the language?</p>
+
+<p>Of course it is. Microsoft has developed C# “in the open” for quite a while now. You can just <a href="https://github.com/dotnet/csharplang">take a look at the GitHub repo</a> to read (and participate—why not?) in the discussions and proposals.</p>
+
+<p>Today, we’ve selected three feature proposals for C# 8.0 to talk about here: <strong>extension everything</strong>, <strong>default implementations on interfaces,</strong> and <strong>nullable reference types</strong>.</p>
+
+<h2 id="extension-everything">Extension Everything</h2>
+
+<p>Extension everything is probably the least controversial of these three feature proposals, and in a certain way, it’s the least fleshed out also. So I figured it’d make a good starting point.</p>
+
+<p>You’re probably familiar with extension methods, introduced in C# 3.0 in 2007. <a href="https://www.daedtech.com/why-i-dont-like-c-extension-methods/">And while it’s totally possible for them to be abused</a>, there’s no denying that extension methods, if used wisely, can be an awesome addition to the C# developer’s toolkit—not to mention they’re essential for LINQ.</p>
+
+<p>At some point you may have wondered, though: why only extension <em>methods</em>? And you wouldn’t be alone. Extension properties, for instance, have been a desire of C# developers for quite a long time, as evidenced by <a href="https://stackoverflow.com/questions/619033/does-c-sharp-have-extension-properties">this 2009 Stack Overflow question</a> or this <a href="https://channel9.msdn.com/forums/Coffeehouse/257556-C-Extension-Properties/">even older 2007(!) forum thread</a>.</p>
+
+<p>But now it seems the wait is finally coming to an end. According to Mads Torgersen, the program manager for the C# design team, <a href="https://channel9.msdn.com/Blogs/Seth-Juarez/A-Preview-of-C-8-with-Mads-Torgersen">a Microsoft intern proposed a new syntax for extension methods that will also allow “extension <em>other things</em>”</a>.</p>
+
+<h3 id="lets-see-the-code">Let’s See the Code</h3>
+
+<p>Well, if I were you, I’d be itching to see some code. Here’s an example of an extension method using current syntax:</p>
+
+<script src="https://gist.github.com/carlosschults/d6ec153b7274ac699634d5dadb2e9644.js"></script>
+
+<p>Nothing surprising here, right? In the original syntax, an extension method is just a static method in a static class, with the <em>this</em> keyword before the first parameter.</p>
+
+<p>The thing is this syntax only works with methods (and, really, how could it be otherwise, since what would be the first “parameter” of a property?)</p>
+
+<p>Here comes “extension everything.” This proposal suggests a new type declaration called an “extension”:</p>
+
+<script src="https://gist.github.com/carlosschults/5c1afca9c8fbc6837257cc5d289df2e9.js"></script>
+
+<p>The code above is an example; as of the date of this writing, the C# team is yet to settle on a syntax.</p>
+
+<p>Regardless, the example shows the creation of an extension class that extends “int.” We then declare a property as we normally do, and we’re done.</p>
+
+<p>Now the caller code would be able to use the property normally:</p>
+
+<script src="https://gist.github.com/carlosschults/d401d37e182647b253fa721425eec828.js"></script>
+
+<p>This new feature is meant to support methods, properties, operators, and static members, at least in the beginning; events and constructors may come later.</p>
+
+<p>You won’t be able to add additional state to the original instance, i.e., creating a private field in the extension class. According to Torgersen, this would add undesirable complexity in order to keep track of this new state.</p>
+
+<h3 id="current-status">Current Status</h3>
+
+<p>You can <a href="https://github.com/dotnet/csharplang/issues/192">follow the feature development on its GitHub issue.</a></p>
+
+<h2 id="default-implementation-on-interfaces">Default Implementation on Interfaces</h2>
+
+<p>I admit I was surprised—and not exactly happy—when I first heard about default implementation on interfaces <a href="https://channel9.msdn.com/Events/Build/2017/B8104">in a talk Mads Torgersen gave in May 2017, at the Build 2017 Conference.</a></p>
+
+<p>“What about record types?” I thought. “What about immutable objects? What we’re really getting is implementation on <em>interfaces</em>?”</p>
+
+<p>You can safely guess what this feature is by its name: we’ll be able to add method implementations on interfaces. For instance:</p>
+
+<script src="https://gist.github.com/carlosschults/efde91de1a54a1bc4f44c1a7a748d70c.js"></script>
+
+<p>In C# 8.0, the code above would be perfectly legal. A class implementing the interface wouldn’t need to implement the method. If some implementation of the interface decides that the default implementation doesn’t fit its needs, then it can provide its own implementation.</p>
+
+<p>Besides methods, you’ll also be allowed to add bodies for indexers, properties, and event accessors. Static members such as methods, properties, and indexers will be allowed as well.</p>
+
+<p>Instance state will not be allowed in interfaces, though. You’ll be able to use static fields but not instance fields. As a consequence of this, auto-implement properties won’t be allowed as well, since they automatically declare a hidden backing-field.</p>
+
+<h3 id="use-cases">Use Cases</h3>
+
+<p>As stated in the feature <a href="https://github.com/dotnet/csharplang/blob/master/proposals/default-interface-methods.md">proposal</a>, the primary use case for default interface methods is to enable the developer to safely evolve an interface. You could add new methods to it and, as long as you provided a default implementation, existing clients of the interface wouldn’t be forced to implement it.</p>
+
+<p>Currently, you could solve this problem with an extension method. This approach is limited, though: what if you wanted to provide a specialized version of the method for one of the implementations? Good luck with that.</p>
+
+<p>That’s when default implementation shines.</p>
+
+<p>Another important value proposition of default implementation on interfaces relates to Android and iOS. Since both Java and Swift offer this feature, it’s tricky to use C# to wrap Android/iOS APIs that make use of it. C# 8.0 will make it possible to wrap those APIs more faithfully.</p>
+
+<h3 id="will-interfaces-become-abstract-classes">Will Interfaces Become Abstract Classes?</h3>
+
+<p>Sort of, but not really. As you know, there’s no multiple inheritance in languages like C# and Java, which means you can’t inherit from more than one class. On the other hand, a class is (and will continue to be) able to implement several interfaces.</p>
+
+<h3 id="current-status-1">Current Status</h3>
+
+<p>This feature is currently being prototyped. <a href="https://github.com/dotnet/csharplang/blob/master/proposals/default-interface-methods.md">You can follow its development on the GitHub issue.</a></p>
+
+<h2 id="nullable-reference-types">Nullable Reference Types</h2>
+
+<p>“What?” you may be wondering. “Shouldn’t it be ‘<strong>non</strong>-nullable reference types’?” The name of this feature can be a bit confusing, indeed. I’ll get back to that soon, but first, let me address why this is even a thing.</p>
+
+<p>I bet you’re familiar with the phrase “the billion dollar mistake.” On the off-chance you’re not, the phrase refers to the null reference, and it <a href="https://en.wikipedia.org/wiki/Tony_Hoare#Apologies_and_retractions">was coined by none other than Sir Tony Hoare, the inventor of the null reference himself.</a></p>
+
+<h3 id="but-why-is-that-why-is-null-so-bad">But why is that? Why is null so bad?</h3>
+
+<p>You could make several arguments as to why, but the biggest problem is, of course, the risk of getting the infamous null-reference exception (aka null-pointer exception in Java-land). Since everything (“everything” in the context of C# meaning all <a href="https://carlosschults.net/en/value-reference-types-in-csharp/">reference types</a>) can be null, you always run the risk of getting an exception when you try to access some member of the object.</p>
+
+<p>One of the biggest issues here is that the language itself lacks a syntax that would allow the author to express their intent. It isn’t possible for you to say “This parameter can never be null” or “This property may be null sometimes, and that’s ok.”</p>
+
+<p>It’s common for functional languages to deal with this by having some type that represents the concept of a potential absent value, often called “Maybe” or “Option.”</p>
+
+<p>The C# team decided against something like this since, according to them, it’d be the same as adding a new kind of null to the language and it’d probably make things more complex.</p>
+
+<p>Let’s go back now to the naming issue. You may be thinking that I’ve got it backwards. It makes sense to talk about nullable value types since value types are non-nullable by default. But in the case of reference types, it shouldn’t, right? After all, they’ve been nullable from the beginning.</p>
+
+<p>Here’s the catch: the C# design team—in a move not free of controversy—intends to make non-nullability the new default for reference types. In that sense, the “new” thing would be the nullable types.</p>
+
+<p>To keep the language consistent, they propose to use the same syntax that already exists for nullable reference types—in other words, the question mark.</p>
+
+<h3 id="enough-talking-lets-see-some-code">Enough talking. Let’s see some code!</h3>
+
+<p>I suppose using the infamous “Person” class in an example is the software equivalent of playing “Stairway to Heaven” in a musical instruments store—it may be a little overdone. But using a more elaborate example would be both distracting and unnecessary, so please bear with me.</p>
+
+<p>Suppose we have a “Person” class with an “Age” property of type “int.” Then, we write the following method:</p>
+
+<script src="https://gist.github.com/carlosschults/9b09f0572e737569e6f97315e5028411.js"></script>
+
+<p>Even though the code above will gladly compile, it’s fragile since “p” could be null. You probably should add an “if” statement to account for that possibility, but no one will make you do that. You’re completely free to leave the code as it is.</p>
+
+<p>C# 8 promises to change that by making reference types non-nullable by default. In the example above, trying to access the “Age” property would be safe, since “p” would never be null.</p>
+
+<p>If you wanted “p” to be nullable, then you’d have to add a question mark to the type, as I’ve mentioned before:</p>
+
+<script src="https://gist.github.com/carlosschults/8554d8863882955b554b486797b83726.js"></script>
+
+<p>Now that “p” can be null, trying to access Age isn’t safe anymore: you’ll get a warning for doing that. Want to get rid of the warning?</p>
+
+<p>Just do what you (hopefully) already do today and perform a null check:</p>
+
+<script src="https://gist.github.com/carlosschults/edc992560bf6c005c6be821103e160a3.js"></script>
+
+<p>That way, a flow analysis will be performed; if the assignment line is reached, the compiler will know for a fact that “p” can’t possibly be null and will leave you alone.</p>
+
+<p>Here’s another possibility:</p>
+
+<script src="https://gist.github.com/carlosschults/518c1b35560cafe17fca829aa2aef27b.js"></script>
+
+<p>In short, you have several options. As soon as you convince the compiler that your code offers no risk of throwing a null reference exception, the warning goes away.</p>
+
+<h3 id="preventing-assignment-from-nullable-to-non-nullable">Preventing Assignment from Nullable to Non-Nullable</h3>
+
+<p>The new version of C# will also prevent assigning from a nullable variable to a non-nullable, so the code below will result in a warning as well:</p>
+
+<script src="https://gist.github.com/carlosschults/98f91bc50c924a8bd47897b874a7be89.js"></script>
+
+<p>This feature will come along with a new operator called the null-ignoring operator. You’ll basically use this operator to tell the compiler that “I, the developer, know best.” There will be situations when a variable can’t possibly be null, but the compiler won’t be able to infer that.</p>
+
+<p>One such example would be the use of the “string.IsNullOrEmpty()” method:</p>
+
+<script src="https://gist.github.com/carlosschults/7f0f2f7470f810d228f1d68559b1d6b7.js"></script>
+
+<p>The code above will generate a warning, despite it not being possible for “bar” to be null. That’s when this operator comes in handy:</p>
+
+<script src="https://gist.github.com/carlosschults/008709a0b9ff6a72abc8fc4882a467d3.js"></script>
+
+<p>Keep in my mind that, by using this operator, you’re basically telling the compiler: “Trust me! I know what I’m doing.” So you’d better really know what you’re doing!</p>
+
+<h3 id="what-about-backward-compatibility">What about backward compatibility?</h3>
+
+<p>I know what you’re probably thinking by now. “That sounds nice and all, but wouldn’t this change break a lot of existing code?”</p>
+
+<p>Well, of course it would. That’s why this will be an <strong>opt-in</strong> change, activated on a per-project basis</p>
+
+<h3 id="current-status-2">Current Status</h3>
+
+<p>This one is already prototyped. If you’re interested, <a href="https://github.com/dotnet/csharplang/wiki/Nullable-Reference-Types-Preview">you can download, install, and test a preview for nullable reference types right away.</a></p>
+
+<p>As with the previous features, you can stay tuned by <a href="https://github.com/dotnet/csharplang/blob/master/proposals/nullable-reference-types.md">following the relevant proposal in GitHub.</a></p>
+
+<h2 id="c-has-a-future-and-it-looks-awesome">C# Has a Future. And It Looks Awesome</h2>
+
+<p>So now you know a bit more about three of the features we’re probably getting with the next major version of the C# language.</p>
+
+<p>As you can see, evolving the language is hard work. The language has to remain compatible with the millions (billions?) of lines of code written with it in the last 17 years. At the same time, in order to continue being relevant, it must meet the needs of developers that are facing challenges that were unimaginable years ago. And it must do all of this without losing its essence: being an easy and approachable object-oriented C-like language.</p>
+
+    
+    
+      
+    
+    
+        Found a typo or mistake in the post? <a href="http://github.com/carlosschults/carlosschults.github.io/edit/master/_posts/2017-12-20-csharp-8-features.md">Suggest edit</a>
+        
+    
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+                    
+            <a rel="previous" class="previous" href="/en/unit-testing-for-beginners-part2/">&larr; Unit testing for beginners - Part 2 </a>
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+        	    
+            <a rel="next" class="next" href="/en/cargo-cult-programming/">Cargo Cult Programming Is The Art of Programming by Coincidence &rarr;</a>
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+      
+    <div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+        // Store these for reloads
+        window.disqus_identifier = window.location.pathname;
+        window.disqus_url = window.location.href;
+        
+        // Set initial theme - match it with the site's theme
+        const currentTheme = document.body.getAttribute('data-theme') || 'light';
+        this.page.theme = currentTheme === 'dark' ? 'dark' : 'light';
+    };
+    
+    (function() {
+        var d = document, s = d.createElement('script');
+        s.src = '//carlosschultsblog.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>    
+  </div>
+
+</article>
+
+      </div>
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">         
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-2">
+        <ul class="social-media-list">
+          
+          <li>
+            <a href="https://github.com/carlosschults"><span class="icon icon--github"><svg viewBox="0 0 16 16"><path fill="#828282" d="M7.999,0.431c-4.285,0-7.76,3.474-7.76,7.761 c0,3.428,2.223,6.337,5.307,7.363c0.388,0.071,0.53-0.168,0.53-0.374c0-0.184-0.007-0.672-0.01-1.32 c-2.159,0.469-2.614-1.04-2.614-1.04c-0.353-0.896-0.862-1.135-0.862-1.135c-0.705-0.481,0.053-0.472,0.053-0.472 c0.779,0.055,1.189,0.8,1.189,0.8c0.692,1.186,1.816,0.843,2.258,0.645c0.071-0.502,0.271-0.843,0.493-1.037 C4.86,11.425,3.049,10.76,3.049,7.786c0-0.847,0.302-1.54,0.799-2.082C3.768,5.507,3.501,4.718,3.924,3.65 c0,0,0.652-0.209,2.134,0.796C6.677,4.273,7.34,4.187,8,4.184c0.659,0.003,1.323,0.089,1.943,0.261 c1.482-1.004,2.132-0.796,2.132-0.796c0.423,1.068,0.157,1.857,0.077,2.054c0.497,0.542,0.798,1.235,0.798,2.082 c0,2.981-1.814,3.637-3.543,3.829c0.279,0.24,0.527,0.713,0.527,1.437c0,1.037-0.01,1.874-0.01,2.129 c0,0.208,0.14,0.449,0.534,0.373c3.081-1.028,5.302-3.935,5.302-7.362C15.76,3.906,12.285,0.431,7.999,0.431z"/></svg>
+</span><span class="username">carlosschults</span></a>
+
+          </li>
+          
+
+          
+          <li>
+            <a href="https://twitter.com/carlosschults"><span class="icon icon--twitter"><svg viewBox="0 0 16 16"><path fill="#828282" d="M15.969,3.058c-0.586,0.26-1.217,0.436-1.878,0.515c0.675-0.405,1.194-1.045,1.438-1.809c-0.632,0.375-1.332,0.647-2.076,0.793c-0.596-0.636-1.446-1.033-2.387-1.033c-1.806,0-3.27,1.464-3.27,3.27 c0,0.256,0.029,0.506,0.085,0.745C5.163,5.404,2.753,4.102,1.14,2.124C0.859,2.607,0.698,3.168,0.698,3.767 c0,1.134,0.577,2.135,1.455,2.722C1.616,6.472,1.112,6.325,0.671,6.08c0,0.014,0,0.027,0,0.041c0,1.584,1.127,2.906,2.623,3.206 C3.02,9.402,2.731,9.442,2.433,9.442c-0.211,0-0.416-0.021-0.615-0.059c0.416,1.299,1.624,2.245,3.055,2.271 c-1.119,0.877-2.529,1.4-4.061,1.4c-0.264,0-0.524-0.015-0.78-0.046c1.447,0.928,3.166,1.469,5.013,1.469 c6.015,0,9.304-4.983,9.304-9.304c0-0.142-0.003-0.283-0.009-0.423C14.976,4.29,15.531,3.714,15.969,3.058z"/></svg>
+</span><span class="username">carlosschults</span></a>
+
+          </li>
+          
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-3">
+        <p>Articles on software development and technology.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+
+    <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-92788641-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+    <script src="/js/dark-mode.js"></script>
+  </body>
+
+</html>

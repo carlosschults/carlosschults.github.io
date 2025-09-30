@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Git Detached Head: What This Means and How to Recover | carlos schults / blog</title>
+  <link rel="apple-touch-icon" sizes="57x57" href="/img/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/img/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/img/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/img/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/img/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/img/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/img/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/img/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"  href="/img/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/img/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon-16x16.png">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="description" content="      ℹ️    Info        Editorial note: I originally wrote this post for the Cloudbees blog.  You can check out the original here, at their site.  Table of C...">
+  
+  <!-- Twitter card -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:creator" content="@carlosschults">
+  <meta name="twitter:site" content="@carlosschults">
+  <meta name="twitter:domain" content="carlosschults.net">
+  <meta name="twitter:title" content="Git Detached Head: What This Means and How to Recover">
+  <meta name="twitter:description" content="      ℹ️    Info        Editorial note: I originally wrote this post for the Cloudbees blog.  You can check out the original here, at their site.  Table of C...">
+
+   <!-- Facebook meta -->
+  
+  
+  <meta property="og:title" content="Git Detached Head: What This Means and How to Recover">
+  <meta property="og:site_name" content="Carlos Schults / Blog" />
+  <meta property="og:locale" content="en_US">  
+  <meta property="og:type" content="article" />
+  <meta property="og:image" content="https://res.cloudinary.com/dz5ppacuo/image/upload/v1673926044/git-beautiful-history/git-beautiful-history-cover.png" />  
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:width" content="1038"> 
+  <meta property="og:image:height" content="437">  
+  
+  <meta property="og:article:published_time" content="2024-09-16T00:00:00+00:00" />  
+  <meta property="og:article:author" content="Carlos Schults" />
+  
+  <meta property="og:article:tag" content="git" />
+  <meta property="og:article:tag" content="tutorial" />    
+  
+  <meta property="og:url" content="https://carlosschults.net/en/git-detached-head"/>
+  <meta property="og:description" content="      ℹ️    Info        Editorial note: I originally wrote this post for the Cloudbees blog.  You can check out the original here, at their site.  Table of C...">
+  <link rel="stylesheet" href="/css/main.css">  
+  
+  <link rel="canonical" href="https://www.cloudbees.com/blog/git-detached-head">
+   
+  
+  <link rel="alternate" hreflang="en" href="/en/git-detached-head" />
+  <link rel="alternate" hreflang="pt" href="/pt/git-detached-head" />
+  
+  <link rel="alternate" type="application/rss+xml" title="carlos schults / blog" href="https://carlosschults.net/feed.xml">
+</head>
+
+  <body>
+    <header class="site-header">
+  <div class="wrapper">    
+    <a class="site-title" href="/">carlos schults / blog</a>
+    
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg viewBox="0 0 18 15">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+
+      <div class="trigger">        
+          
+          <a class="page-link" href="/footprints/">Dev Footprints</a>
+          <a class="page-link" href="/readings/">Readings</a>
+          <a class="page-link" href="/about/">About</a>
+		      <a class="page-link" href="/search/">Search</a>
+                  
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+<div class="wrapper" style="text-align: right; line-height: 2em">
+  
+   <a href="/en/git-detached-head" class="en">en</a>  <a href="/pt/git-detached-head" class="pt">pt</a> 
+
+  
+  
+</div>
+
+
+    <div class="page-content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">    
+    <h2 class="postTitle" itemprop="headline">Git Detached Head: What This Means and How to Recover</h2>
+    <p class="post-meta">   
+    <time datetime="2024-09-16T00:00:00+00:00" itemprop="datePublished">Sep 16, 2024
+    </time> • <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">Carlos Schults</span></span>
+  <span class="tags" itemprop="keywords"> • Tags: <a href="/tag/git">git </a> <a href="/tag/tutorial">tutorial </a> </span>
+  </p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <p><img src="https://res.cloudinary.com/dz5ppacuo/image/upload/v1673926044/git-beautiful-history/git-beautiful-history-cover.png" alt="" /></p>
+
+<div class="callout callout-info">
+  <div class="callout-title">
+    <span class="callout-icon">ℹ️</span>
+    Info
+  </div>
+  <div class="callout-content">
+    
+<p><em>Editorial note: I originally wrote this post for the Cloudbees blog.  You can <a href="https://www.cloudbees.com/blog/git-detached-head">check out the original here, at their site</a>.</em></p>
+
+  </div>
+</div>
+
+<h1 id="table-of-contents">Table of Contents</h1>
+
+<ol>
+  <li><a href="#introduction">Introduction</a></li>
+  <li><a href="#git-detached-head-reproducing-the-problem">Reproducing the “Problem”</a></li>
+  <li><a href="#what-is-a-head-in-git">What Is a HEAD in Git?</a>
+    <ul>
+      <li><a href="#are-you-in-detached-head-state">Are you in ‘detached HEAD’ state?</a></li>
+    </ul>
+  </li>
+  <li><a href="#benefits-of-a-git-detached-head">Benefits of a Git Detached HEAD</a></li>
+  <li><a href="#how-do-i-fix-a-detached-head-in-git">How Do I Fix a Detached HEAD in Git?</a>
+    <ul>
+      <li><a href="#scenario-1-im-here-by-accident">Scenario #1: I’m Here by Accident</a></li>
+      <li><a href="#scenario-2-ive-made-experimental-changes-and-i-want-to-discard-them">Scenario #2: I’ve Made Experimental Changes and I Want to Discard Them</a></li>
+      <li><a href="#scenario-3-ive-made-experimental-changes-and-i-want-to-keep-them">Scenario #3: I’ve Made Experimental Changes and I Want to Keep Them</a></li>
+    </ul>
+  </li>
+  <li><a href="#getting-rid-of-the-git-detached-head-message">Getting Rid of the “Git Detached HEAD” Message</a></li>
+  <li><a href="#git-detached-head-less-scary-than-it-sounds">Conclusion</a></li>
+</ol>
+
+<h2 id="introduction">Introduction</h2>
+
+<p>Newcomers to Git often get confused with some of the messages that the <a href="https://www.atlassian.com/git/tutorials/what-is-version-control">VCS tool</a> throws at them. The “You are in ‘detached HEAD’ state” one is certainly one of the weirdest. After coming across this message, most people start furiously Googling “git detached HEAD,” “git detached HEAD fix,” or similar terms, looking for anything that might be of help. If that’s your case, you’ve come to the right place.</p>
+
+<p>Here’s the first thing you should know: <em>you haven’t done anything wrong</em>. Your repo isn’t broken or anything like that. The expression “Detached HEAD” might sound somewhat bizarre, but it’s a perfectly valid repository state in Git. Sure, it’s not the <em>normal</em> state, which would be—you’ve guessed it!—when HEAD is attached. The second thing you need to know is that going back to normal is super easy. If you just want to do that and get on with your day, go to the <a href="#how-do-i-fix-a-detached-head-in-git">“How Do I Fix a Detached Head in Git?”</a> section of this post to see how it’s done.</p>
+
+<p>But if you want to know more—and I guess you do—stick around and we’ll help you. What does HEAD mean in Git? What does it mean for it to be attached or detached? These are the kind of questions we’ll answer in this post. By the end of it, you’ll have a better understanding of Git’s fundamentals, and detached HEADs will never trouble you again. Let’s dig in.</p>
+
+<h2 id="git-detached-head-reproducing-the-problem">Git Detached HEAD: Reproducing the “Problem”</h2>
+
+<p>Let’s start with a quick demo showing how to reach the detached HEAD state. We’ll create a repository and add some commits to it:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">mkdir </span>git-head-demo
+<span class="nb">cd </span>git-head-demo 
+git init
+<span class="nb">touch </span>file.txt
+git add <span class="nb">.</span>
+git commit <span class="nt">-m</span> <span class="s2">"Create file"</span>
+<span class="nb">echo</span> <span class="s2">"Hello World!"</span> <span class="o">&gt;</span> file.txt
+git commit <span class="nt">-a</span> <span class="nt">-m</span> <span class="s2">"Add line to the file"</span>
+<span class="nb">echo</span> <span class="s2">"Second file"</span> <span class="o">&gt;</span> file2.txt
+git add <span class="nb">.</span>
+git commit <span class="nt">-m</span> <span class="s2">"Create second file"</span>
+</code></pre></div></div>
+
+<p>With the commands above, we’ve created a new folder with a new repository inside it. Then we created a new empty file and committed that with the message “Create file.” Next, we added a line to that file and committed the change, with the message “Add a line to the file.” Finally, we’ve created another file with one line of text and committed that as well. If you use the <strong>git log –oneline</strong> command, you’ll see something like this:</p>
+
+<p><img src="/img/git-detached-head/image3.png" alt="" /></p>
+
+<p>Let’s say that, for testing purposes, we need to see how things were at the time of the second commit. How would we do that? As it turns out, we can check out a commit the same way we’d check out branches. Remember, branches are just names for commits. So, based on the example output above, we’d run <strong>git checkout 87ec91d</strong>. Keep in mind that if you’re following along by executing these commands on your own system, the hash for your commits will be different from those in the example. Use the log command to find it.</p>
+
+<p>After running the command, we get the “You are in ‘detached HEAD’ state[…]” message. Before we go on, make sure you keep this in mind: you get to the detached HEAD state by checking out a commit directly.</p>
+
+<h2 id="what-is-a-head-in-git">What Is a HEAD in Git?</h2>
+
+<p>What does HEAD mean in Git? To understand that, we have to take a step back and talk fundamentals.</p>
+
+<p>A Git repository is a collection of <strong>objects</strong> and <strong>references</strong>. Objects have relationships with each other, and references point to objects and to other references. The main objects in a Git repository are commits, but other objects include <a href="https://developer.github.com/v3/git/blobs/">blobs</a> and <a href="https://developer.github.com/v3/git/trees/">trees</a>. The most important references in Git are <a href="/en/git-create-branch">branches</a>, which you can think of as labels you put on a commit.</p>
+
+<p>HEAD is another important type of reference. The purpose of HEAD is to keep track of the current point in a Git repo. In other words, HEAD answers the question, “Where am I right now?”</p>
+
+<p>For instance, when you use the <strong>log</strong> command, how does Git know which commit it should start displaying results from? HEAD provides the answer. When you create a new commit, its parent is indicated by where HEAD currently points to.</p>
+
+<h3 id="are-you-in-detached-head-state">Are you in ‘detached HEAD’ state?</h3>
+
+<p>You’ve just seen that HEAD in Git is only the name of a reference that indicates the current point in a repository. So, what does it mean for it to be attached or detached?</p>
+
+<p>Most of the time, HEAD points to a branch name. When you add a new commit, your branch reference is updated to point to it, but HEAD remains the same. When you change branches, HEAD is updated to point to the branch you’ve switched to. All of that means that, in these scenarios, HEAD is synonymous with “the last commit in the current branch.” This is the <em>normal</em> state, in which HEAD is <em>attached</em> to a branch.</p>
+
+<p>A visual representation of our demo repository would look like this:
+<img src="/img/git-detached-head/image5.png" alt="" /></p>
+
+<p>As you can see, HEAD points to the master branch, which points to the last commit. Everything looks perfect. After running <strong>git checkout 87ec91d,</strong> the repo looks like this:
+<img src="/img/git-detached-head/image4.png" alt="" /></p>
+
+<p>This is the detached HEAD state; HEAD is pointing directly to a commit instead of a branch.</p>
+
+<h3 id="benefits-of-a-git-detached-head">Benefits of a Git Detached HEAD</h3>
+
+<p>Are there good reasons for you to be in the detached HEAD state? You bet there are!</p>
+
+<p>As you’ve seen, you detach the HEAD by checking out a commit. That’s already useful by itself since it allows you to go to a previous point in the project’s history. Let’s say you want to check if a given bug already existed last Tuesday. You can use the <strong>log</strong> command, filtering by date, to start the relevant commit hash. Then you can check out the commit and test the application, either by hand or by running your automated test suite.</p>
+
+<p>What if you could not only take a look at the past, but also change it? That’s what a detached HEAD allows you to do. Let’s review how the detached message starts:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>You are in 'detached HEAD' state. 
+You can look around, make experimental changes and commit them,
+and you can discard any commits you make in this state without
+impacting any branches by switching back to a branch.
+</code></pre></div></div>
+
+<p>In this state, you can make experimental changes, effectively creating an alternate history. So, let’s create some additional commits in the detached HEAD state and see how our repo looks afterward:</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nb">echo</span> <span class="s2">"Welcome to the alternate timeline, Morty!"</span> <span class="o">&gt;</span> new-file.txt
+git add <span class="nb">.</span>
+git commit <span class="nt">-m</span> <span class="s2">"Create new file"</span>
+<span class="nb">echo</span> <span class="s2">"Another line"</span> <span class="o">&gt;&gt;</span> new-file.txt
+git commit <span class="nt">-a</span> <span class="nt">-m</span> <span class="s2">"Add a new line to the file"</span></code></pre></figure>
+
+<p>We now have two additional commits that descend from our second commit. Let’s run <strong>git log –oneline</strong> and see the result:
+<img src="/img/git-detached-head/image7.png" alt="" /></p>
+
+<p>This is what the diagram looks like now:
+<img src="/img/git-detached-head/image6.png" alt="" /></p>
+
+<p>What should you do if you want to keep those changes? And what should you do if you want to discard them? That’s what we’ll see next.</p>
+
+<h2 id="how-do-i-fix-a-detached-head-in-git">How Do I Fix a Detached HEAD in Git?</h2>
+
+<p>You can’t fix what isn’t broken. As I’ve said before, a detached HEAD is a valid state in Git. It’s not a problem. But you may still want to know how to get back to normal, and that depends on why you’re in this situation in the first place.</p>
+
+<h3 id="scenario-1-im-here-by-accident">Scenario #1: I’m Here by Accident</h3>
+
+<p>If you’ve reached the detached HEAD state by accident—that is to say, you didn’t mean to check out a commit—going back is easy. Just check out the branch you were in before:</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">git checkout &lt;branch-name&gt;</code></pre></figure>
+
+<p>If you’re using Git 2.23.0 or newer, you can also use <strong>switch</strong> instead of <strong>checkout</strong>:</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">git switch &lt;branch-name&gt;</code></pre></figure>
+
+<h3 id="scenario-2-ive-made-experimental-changes-and-i-want-to-discard-them">Scenario #2: I’ve Made Experimental Changes and I Want to Discard Them</h3>
+
+<p>You’ve entered the detached HEAD state and made a few commits. The experiment went nowhere, and you’ll no longer work on it. What do you do? You just do the same as in the previous scenario: go back to your original branch. The changes you made while in the alternate timeline won’t have any impact on your current branch.</p>
+
+<h3 id="scenario-3-ive-made-experimental-changes-and-i-want-to-keep-them">Scenario #3: I’ve Made Experimental Changes and I Want to Keep Them</h3>
+
+<p>If you want to keep changes made with a detached HEAD, just <a href="https://www.cloudbees.com/blog/git-create-branch">create a new branch</a> and switch to it. You can create it right after arriving at a detached HEAD or after creating one or more commits. The result is the same. The only restriction is that you should do it before returning to your normal branch.</p>
+
+<p>Let’s do it in our demo repo:</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">git branch alt-history
+git checkout alt-history</code></pre></figure>
+
+<p>Notice how the result of <strong>git log –oneline</strong> is exactly the same as before (the only difference being the name of the branch indicated in the last commit):
+<img src="/img/git-detached-head/image2.png" alt="" /></p>
+
+<p>We could just run <strong>git branch alt-history</strong>, and we’d be all set. That’s the new—and final—version of our diagram:
+<img src="/img/git-detached-head/image1.png" alt="" /></p>
+
+<h2 id="getting-rid-of-the-git-detached-head-message">Getting Rid of the “Git Detached HEAD” Message</h2>
+
+<p>Before wrapping up, let’s share a final quick tip. Now that you understand everything about detached HEAD in Git and know that it’s not that big of a deal, seeing that message every time you check out a commit might become tiring. Fortunately, there’s a way to not see the warning anymore. Just run the following command:</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">git config advice.detached <span class="nb">head false</span></code></pre></figure>
+
+<p>Easy, right? You can also use the <strong>–global</strong> modifier if you want the change to apply to every repository and not only the current one.</p>
+
+<h2 id="git-detached-head-less-scary-than-it-sounds">Git Detached HEAD: Less Scary Than It Sounds</h2>
+
+<p>A message talking about heads not being attached doesn’t sound like your routine software error message, right? Well, it’s not an error message.</p>
+
+<p>As you’ve seen in this post, a detached HEAD doesn’t mean something is wrong with your repo. <strong>Detached HEAD</strong> is just a less usual state your repository can be in. Aside from not being an error, it can actually be quite useful, allowing you to run experiments that you can then choose to keep or discard.</p>
+
+<p>Would you like to learn more about Git? Check-out some of the following posts:</p>
+
+<ul>
+  <li><a href="/en/git-beautiful-history/">Make Your Git History Look Beautiful Using Amend and Rebase</a></li>
+  <li><a href="/git-bisect-intro/">Git Bisect: An Introduction To Beginners</a></li>
+  <li><a href="/en/git-create-branch">Git Create Branch: 4 Ways To Do It</a></li>
+</ul>
+
+<p>Thanks for reading!</p>
+
+    
+    
+      
+    
+    
+        Found a typo or mistake in the post? <a href="http://github.com/carlosschults/carlosschults.github.io/edit/master/_posts/2024-09-16-git-detached-head.md">Suggest edit</a>
+        
+    
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+                    
+            <a rel="previous" class="previous" href="/en/csharp-regex">&larr; C# Regex: How Regular Expressions Work in C#, With Examples </a>
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+        	    
+            <a rel="next" class="next" href="/en/learning-mistakes">Learning Mistakes to Avoid As a Software Developer &rarr;</a>
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+      
+    <div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+        // Store these for reloads
+        window.disqus_identifier = window.location.pathname;
+        window.disqus_url = window.location.href;
+        
+        // Set initial theme - match it with the site's theme
+        const currentTheme = document.body.getAttribute('data-theme') || 'light';
+        this.page.theme = currentTheme === 'dark' ? 'dark' : 'light';
+    };
+    
+    (function() {
+        var d = document, s = d.createElement('script');
+        s.src = '//carlosschultsblog.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>    
+  </div>
+
+</article>
+
+      </div>
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">         
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-2">
+        <ul class="social-media-list">
+          
+          <li>
+            <a href="https://github.com/carlosschults"><span class="icon icon--github"><svg viewBox="0 0 16 16"><path fill="#828282" d="M7.999,0.431c-4.285,0-7.76,3.474-7.76,7.761 c0,3.428,2.223,6.337,5.307,7.363c0.388,0.071,0.53-0.168,0.53-0.374c0-0.184-0.007-0.672-0.01-1.32 c-2.159,0.469-2.614-1.04-2.614-1.04c-0.353-0.896-0.862-1.135-0.862-1.135c-0.705-0.481,0.053-0.472,0.053-0.472 c0.779,0.055,1.189,0.8,1.189,0.8c0.692,1.186,1.816,0.843,2.258,0.645c0.071-0.502,0.271-0.843,0.493-1.037 C4.86,11.425,3.049,10.76,3.049,7.786c0-0.847,0.302-1.54,0.799-2.082C3.768,5.507,3.501,4.718,3.924,3.65 c0,0,0.652-0.209,2.134,0.796C6.677,4.273,7.34,4.187,8,4.184c0.659,0.003,1.323,0.089,1.943,0.261 c1.482-1.004,2.132-0.796,2.132-0.796c0.423,1.068,0.157,1.857,0.077,2.054c0.497,0.542,0.798,1.235,0.798,2.082 c0,2.981-1.814,3.637-3.543,3.829c0.279,0.24,0.527,0.713,0.527,1.437c0,1.037-0.01,1.874-0.01,2.129 c0,0.208,0.14,0.449,0.534,0.373c3.081-1.028,5.302-3.935,5.302-7.362C15.76,3.906,12.285,0.431,7.999,0.431z"/></svg>
+</span><span class="username">carlosschults</span></a>
+
+          </li>
+          
+
+          
+          <li>
+            <a href="https://twitter.com/carlosschults"><span class="icon icon--twitter"><svg viewBox="0 0 16 16"><path fill="#828282" d="M15.969,3.058c-0.586,0.26-1.217,0.436-1.878,0.515c0.675-0.405,1.194-1.045,1.438-1.809c-0.632,0.375-1.332,0.647-2.076,0.793c-0.596-0.636-1.446-1.033-2.387-1.033c-1.806,0-3.27,1.464-3.27,3.27 c0,0.256,0.029,0.506,0.085,0.745C5.163,5.404,2.753,4.102,1.14,2.124C0.859,2.607,0.698,3.168,0.698,3.767 c0,1.134,0.577,2.135,1.455,2.722C1.616,6.472,1.112,6.325,0.671,6.08c0,0.014,0,0.027,0,0.041c0,1.584,1.127,2.906,2.623,3.206 C3.02,9.402,2.731,9.442,2.433,9.442c-0.211,0-0.416-0.021-0.615-0.059c0.416,1.299,1.624,2.245,3.055,2.271 c-1.119,0.877-2.529,1.4-4.061,1.4c-0.264,0-0.524-0.015-0.78-0.046c1.447,0.928,3.166,1.469,5.013,1.469 c6.015,0,9.304-4.983,9.304-9.304c0-0.142-0.003-0.283-0.009-0.423C14.976,4.29,15.531,3.714,15.969,3.058z"/></svg>
+</span><span class="username">carlosschults</span></a>
+
+          </li>
+          
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-3">
+        <p>Articles on software development and technology.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+
+    <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-92788641-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+    <script src="/js/dark-mode.js"></script>
+  </body>
+
+</html>

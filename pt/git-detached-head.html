@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Erro &#39;Git Detached Head&#39;: O Que Significa e Como Resolver | carlos schults / blog</title>
+  <link rel="apple-touch-icon" sizes="57x57" href="/img/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/img/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/img/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/img/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/img/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/img/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/img/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/img/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"  href="/img/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/img/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon-16x16.png">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="description" content="      ℹ️    Info        Nota editorial: Eu originalmente escrevi este post para o blog da Cloudbees.  Você pode ler o original, em inglês, no site deles.  Ín...">
+  
+  <!-- Twitter card -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:creator" content="@carlosschults">
+  <meta name="twitter:site" content="@carlosschults">
+  <meta name="twitter:domain" content="carlosschults.net">
+  <meta name="twitter:title" content="Erro 'Git Detached Head': O Que Significa e Como Resolver">
+  <meta name="twitter:description" content="      ℹ️    Info        Nota editorial: Eu originalmente escrevi este post para o blog da Cloudbees.  Você pode ler o original, em inglês, no site deles.  Ín...">
+
+   <!-- Facebook meta -->
+  
+  
+  <meta property="og:title" content="Erro 'Git Detached Head': O Que Significa e Como Resolver">
+  <meta property="og:site_name" content="Carlos Schults / Blog" />
+  <meta property="og:locale" content="pt_BR">  
+  <meta property="og:type" content="article" />
+  <meta property="og:image" content="https://res.cloudinary.com/dz5ppacuo/image/upload/v1673926044/git-beautiful-history/git-beautiful-history-cover.png" />  
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:width" content="1038"> 
+  <meta property="og:image:height" content="437">  
+  
+  <meta property="og:article:published_time" content="2024-09-16T00:00:00+00:00" />  
+  <meta property="og:article:author" content="Carlos Schults" />
+  
+  <meta property="og:article:tag" content="git" />
+  <meta property="og:article:tag" content="tutorial" />    
+  
+  <meta property="og:url" content="https://carlosschults.net/pt/git-detached-head"/>
+  <meta property="og:description" content="      ℹ️    Info        Nota editorial: Eu originalmente escrevi este post para o blog da Cloudbees.  Você pode ler o original, em inglês, no site deles.  Ín...">
+  <link rel="stylesheet" href="/css/main.css">  
+  
+   <link rel="canonical" href="https://carlosschults.net/pt/git-detached-head">
+   
+  
+  <link rel="alternate" hreflang="en" href="/en/git-detached-head" />
+  <link rel="alternate" hreflang="pt" href="/pt/git-detached-head" />
+  
+  <link rel="alternate" type="application/rss+xml" title="carlos schults / blog" href="https://carlosschults.net/rss.xml">
+</head>
+
+  <body>
+    <header class="site-header">
+  <div class="wrapper">    
+    <a class="site-title" href="/pt/">carlos schults / blog</a>
+    
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg viewBox="0 0 18 15">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+
+      <div class="trigger">        
+          
+          <a class="page-link" href="/sobre/">Sobre</a>
+          <a class="page-link" href="/busca/">Busca</a>
+                  
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+<div class="wrapper" style="text-align: right; line-height: 2em">
+  
+   <a href="/en/git-detached-head" class="en">en</a>  <a href="/pt/git-detached-head" class="pt">pt</a> 
+
+  
+  
+</div>
+
+
+    <div class="page-content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">    
+    <h2 class="postTitle" itemprop="headline">Erro 'Git Detached Head': O Que Significa e Como Resolver</h2>
+    <p class="post-meta">   
+    <time datetime="2024-09-16T00:00:00+00:00" itemprop="datePublished">16/09/2024
+    </time> • <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">Carlos Schults</span></span>
+  <span class="tags" itemprop="keywords"> • Tags: <a href="/tag_ptbr/git">git </a> <a href="/tag_ptbr/tutorial">tutorial </a> </span>
+  </p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <p><img src="https://res.cloudinary.com/dz5ppacuo/image/upload/v1673926044/git-beautiful-history/git-beautiful-history-cover.png" alt="" /></p>
+
+<div class="callout callout-info">
+  <div class="callout-title">
+    <span class="callout-icon">ℹ️</span>
+    Info
+  </div>
+  <div class="callout-content">
+    
+<p><em>Nota editorial: Eu originalmente escrevi este post para o blog da Cloudbees.  Você pode <a href="https://www.cloudbees.com/blog/git-detached-head">ler o original, em inglês, no site deles</a>.</em></p>
+
+  </div>
+</div>
+
+<h1 id="índice">Índice</h1>
+
+<ol>
+  <li><a href="#introdução">Introdução</a></li>
+  <li><a href="#git-detached-head-reproduzindo-o-problema">Reproduzindo o “Problema”</a></li>
+  <li><a href="#o-que-é-um-head-no-git">O que é um HEAD no Git?</a>
+    <ul>
+      <li><a href="#você-está-no-estado-detached-head">Você está no estado ‘detached HEAD’?</a></li>
+    </ul>
+  </li>
+  <li><a href="#benefícios-de-um-head-desanexado">Benefícios de um HEAD Desanexado</a></li>
+  <li><a href="#como-corrigir-um-head-desanexado-no-git">Como Corrigir um HEAD Desanexado no Git?</a>
+    <ul>
+      <li><a href="#cenário-1-estou-aqui-por-acidente">Cenário #1: Estou Aqui por Acidente</a></li>
+      <li><a href="#cenário-2-fiz-mudanças-experimentais-e-quero-descartá-las">Cenário #2: Fiz Mudanças Experimentais e Quero Descartá-las</a></li>
+      <li><a href="#cenário-3-fiz-mudanças-experimentais-e-quero-mantê-las">Cenário #3: Fiz Mudanças Experimentais e Quero Mantê-las</a></li>
+    </ul>
+  </li>
+  <li><a href="#removendo-a-mensagem-git-detached-head">Removendo a Mensagem “Git Detached HEAD”</a></li>
+  <li><a href="#git-detached-head-menos-assustador-do-que-parece">Conclusão</a></li>
+</ol>
+
+<h2 id="introdução">Introdução</h2>
+
+<p>Iniciantes no Git frequentemente ficam confusos com algumas das mensagens que esta <a href="https://www.atlassian.com/git/tutorials/what-is-version-control">ferramenta de controle de versão</a> apresenta. A mensagem “You are in ‘detached HEAD’ state” (Você está no estado ‘HEAD desanexado’) é certamente uma das mais estranhas. Após se deparar com essa mensagem, a maioria das pessoas começa a pesquisar freneticamente no Google por termos como “git detached HEAD”, “git detached HEAD fix”, ou similares, buscando qualquer coisa que possa ajudar. Se esse é o seu caso, você veio ao lugar certo.</p>
+
+<p>Aqui está a primeira coisa que você deve saber: <em>você não fez nada de errado</em>. Seu repositório não está quebrado nem nada parecido. A expressão “Detached HEAD” pode soar um tanto bizarra, mas é um estado perfeitamente válido em um repositório Git. Claro, não é o estado <em>normal</em>, que seria - você adivinhou! - quando o HEAD está anexado. A segunda coisa que você precisa saber é que voltar ao normal é super fácil. Se você só quer fazer isso e seguir com o seu dia, vá para a seção <a href="#como-corrigir-um-head-desanexado-no-git">“Como corrigir um HEAD desanexado no Git?”</a> deste post para ver como é feito.</p>
+
+<p>Mas se você quer saber mais - e eu acho que quer - fique por aqui e nós vamos te ajudar. O que significa HEAD no Git? O que significa estar anexado ou desanexado? Essas são o tipo de perguntas que responderemos neste post. Ao final dele, você terá uma melhor compreensão dos fundamentos do Git, e HEADs desanexados nunca mais te incomodarão. Bora começar?</p>
+
+<h2 id="git-detached-head-reproduzindo-o-problema">Git Detached HEAD: Reproduzindo o “Problema”</h2>
+
+<p>Vamos começar com uma rápida demonstração de como chegar ao estado de HEAD desanexado. Criaremos um repositório e adicionaremos alguns commits a ele:</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nb">mkdir </span>git-head-demo
+<span class="nb">cd </span>git-head-demo 
+git init
+<span class="nb">touch </span>file.txt
+git add <span class="nb">.</span>
+git commit <span class="nt">-m</span> <span class="s2">"Create file"</span>
+<span class="nb">echo</span> <span class="s2">"Hello World!"</span> <span class="o">&gt;</span> file.txt
+git commit <span class="nt">-a</span> <span class="nt">-m</span> <span class="s2">"Add line to the file"</span>
+<span class="nb">echo</span> <span class="s2">"Second file"</span> <span class="o">&gt;</span> file2.txt
+git add <span class="nb">.</span>
+git commit <span class="nt">-m</span> <span class="s2">"Create second file"</span></code></pre></figure>
+
+<p>Com os comandos acima, criamos uma nova pasta com um novo repositório dentro dela. Em seguida, criamos um novo arquivo vazio e fizemos o commit com a mensagem “Criar arquivo”. Depois, adicionamos uma linha a esse arquivo e fizemos o commit da alteração, com a mensagem “Adicionar linha ao arquivo”. Por fim, criamos outro arquivo com uma linha de texto e também fizemos o commit. Se você usar o comando <strong>git log –oneline</strong>, verá algo como isto:</p>
+
+<p><img src="/img/git-detached-head/image3.png" alt="" /></p>
+
+<p>Digamos que, para fins de teste, precisamos ver como as coisas estavam no momento do segundo commit. Como faríamos isso? Na verdade, podemos fazer checkout de um commit da mesma forma que faríamos checkout de branches. Lembre-se, branches são apenas nomes para commits. Então, com base no exemplo de saída acima, executaríamos <strong>git checkout 87ec91d</strong>. Tenha em mente que, se você estiver seguindo junto e executando esses comandos em seu próprio sistema, o hash para seus commits será diferente dos exemplos. Use o comando log para encontrá-lo.</p>
+
+<p>Após executar o comando, recebemos a mensagem “You are in ‘detached HEAD’ state[…]”. Antes de continuarmos, certifique-se de manter isso em mente: você chega ao estado de HEAD desanexado fazendo checkout diretamente de um commit.</p>
+
+<h2 id="o-que-é-um-head-no-git">O que é um HEAD no Git?</h2>
+
+<p>O que significa HEAD no Git? Para entender isso, precisamos dar um passo atrás e falar sobre os fundamentos.</p>
+
+<p>Um repositório Git é uma coleção de <strong>objetos</strong> e <strong>referências</strong>. Os objetos têm relações entre si, e as referências apontam para objetos e para outras referências. Os principais objetos em um repositório Git são commits, mas outros objetos incluem <a href="https://developer.github.com/v3/git/blobs/">blobs</a> e <a href="https://developer.github.com/v3/git/trees/">trees</a>. As referências mais importantes no Git são as <a href="/pt/git-criar-branch">branches</a>, que você pode pensar como rótulos que você coloca em um commit.</p>
+
+<p>HEAD é outro tipo importante de referência. O propósito do HEAD é manter o controle do ponto atual em um repositório Git. Em outras palavras, HEAD responde à pergunta: “Onde eu estou agora?”</p>
+
+<p>Por exemplo, quando você usa o comando <strong>log</strong>, como o Git sabe de qual commit ele deve começar a exibir os resultados? HEAD fornece a resposta. Quando você cria um novo commit, seu pai é indicado pelo local para onde o HEAD está apontando atualmente.</p>
+
+<h3 id="você-está-no-estado-detached-head">Você está no estado ‘detached HEAD’?</h3>
+
+<p>Você acabou de ver que HEAD no Git é apenas o nome de uma referência que indica o ponto atual em um repositório. Então, o que significa estar anexado ou desanexado?</p>
+
+<p>Na maioria das vezes, HEAD aponta para um nome de branch. Quando você adiciona um novo commit, a referência do seu branch é atualizada para apontar para ele, mas o HEAD permanece o mesmo. Quando você muda de branch, o HEAD é atualizado para apontar para o branch para o qual você mudou. Tudo isso significa que, nesses cenários, HEAD é sinônimo de “o último commit no branch atual”. Este é o estado <em>normal</em>, no qual HEAD está <em>anexado</em> a um branch.</p>
+
+<p>Uma representação visual do nosso repositório de demonstração seria assim:
+<img src="/img/git-detached-head/image5.png" alt="" /></p>
+
+<p>Como você pode ver, HEAD aponta para o branch master, que aponta para o último commit. Tudo parece perfeito. Após executar <strong>git checkout 87ec91d</strong>, o repositório fica assim:
+<img src="/img/git-detached-head/image4.png" alt="" /></p>
+
+<p>Este é o estado de HEAD desanexado; HEAD está apontando diretamente para um commit em vez de um branch.</p>
+
+<h3 id="benefícios-de-um-head-desanexado">Benefícios de um HEAD Desanexado</h3>
+
+<p>Existem boas razões para você estar no estado de HEAD desanexado? Com certeza!</p>
+
+<p>Como você viu, você desanexa o HEAD fazendo checkout de um commit. Isso já é útil por si só, pois permite que você volte a um ponto anterior na história do projeto. Digamos que você queira verificar se um determinado bug já existia na terça-feira passada. Você pode usar o comando <strong>log</strong>, filtrando por data, para encontrar o hash do commit relevante. Em seguida, você pode fazer checkout do commit e testar a aplicação, seja manualmente ou executando sua suíte de testes automatizados.</p>
+
+<p>E se você pudesse não apenas olhar para o passado, mas também mudá-lo? É isso que um HEAD desanexado permite que você faça. Vamos revisar como a mensagem de desanexação começa:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Você está no estado 'detached HEAD'.
+Você pode olhar ao redor, fazer mudanças experimentais e fazer commits delas,
+e você pode descartar quaisquer commits que fizer neste estado sem
+impactar nenhum branch, simplesmente mudando de volta para um branch.
+</code></pre></div></div>
+
+<p>Neste estado, você pode fazer mudanças experimentais, efetivamente criando uma história alternativa. Então, vamos criar alguns commits adicionais no estado de HEAD desanexado e ver como nosso repositório fica depois:</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nb">echo</span> <span class="s2">"Welcome to the alternate timeline, Morty!"</span> <span class="o">&gt;</span> new-file.txt
+git add <span class="nb">.</span>
+git commit <span class="nt">-m</span> <span class="s2">"Create new file"</span>
+<span class="nb">echo</span> <span class="s2">"Another line"</span> <span class="o">&gt;&gt;</span> new-file.txt
+git commit <span class="nt">-a</span> <span class="nt">-m</span> <span class="s2">"Add a new line to the file"</span></code></pre></figure>
+
+<p>Agora temos dois commits adicionais que descendem do nosso segundo commit. Vamos executar <strong>git log –oneline</strong> e ver o resultado:
+<img src="/img/git-detached-head/image7.png" alt="" /></p>
+
+<p>Assim é como o diagrama fica agora:
+<img src="/img/git-detached-head/image6.png" alt="" /></p>
+
+<p>O que você deve fazer se quiser manter essas mudanças? E o que deve fazer se quiser descartá-las? É isso que veremos a seguir.</p>
+
+<h2 id="como-corrigir-um-head-desanexado-no-git">Como corrigir um HEAD desanexado no Git?</h2>
+
+<p>Você não pode corrigir o que não está quebrado. Como eu disse antes, um HEAD desanexado é um estado válido no Git. Não é um problema. Mas você ainda pode querer saber como voltar ao normal, e isso depende do motivo pelo qual você está nessa situação em primeiro lugar.</p>
+
+<h3 id="cenário-1-estou-aqui-por-acidente">Cenário #1: Estou aqui por acidente</h3>
+
+<p>Se você chegou ao estado de HEAD desanexado por acidente - ou seja, você não tinha a intenção de fazer checkout de um commit - voltar é fácil. Basta fazer checkout do branch em que você estava antes:</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">git checkout &lt;nome-do-branch&gt;</code></pre></figure>
+
+<p>Se você está usando o Git 2.23.0 ou mais recente, você também pode usar <strong>switch</strong> em vez de <strong>checkout</strong>:</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">git switch &lt;nome-do-branch&gt;</code></pre></figure>
+
+<h3 id="cenário-2-fiz-mudanças-experimentais-e-quero-descartá-las">Cenário #2: Fiz mudanças experimentais e quero descartá-las</h3>
+
+<p>Você entrou no estado de HEAD desanexado e fez alguns commits. O experimento não levou a lugar nenhum, e você não vai mais trabalhar nele. O que você faz? Você faz o mesmo que no cenário anterior: volta para o seu branch original. As mudanças que você fez enquanto estava na linha do tempo alternativa não terão nenhum impacto no seu branch atual.</p>
+
+<h3 id="cenário-3-fiz-mudanças-experimentais-e-quero-mantê-las">Cenário #3: Fiz mudanças experimentais e quero mantê-las</h3>
+
+<p>Se você quer manter as mudanças feitas com um HEAD desanexado, basta <a href="/pt/git-criar-branch/">criar um novo branch</a> e mudar para ele. Você pode criá-lo logo após chegar a um HEAD desanexado ou após criar um ou mais commits. O resultado é o mesmo. A única restrição é que você deve fazê-lo antes de retornar ao seu branch normal.</p>
+
+<p>Vamos fazer isso em nosso repositório de demonstração:</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">git branch alt-history
+git checkout alt-history</code></pre></figure>
+
+<p>Observe como o resultado de <strong>git log –oneline</strong> é exatamente o mesmo de antes (a única diferença sendo o nome do branch indicado no último commit):
+<img src="/img/git-detached-head/image2.png" alt="" /></p>
+
+<p>Poderíamos apenas executar <strong>git branch alt-history</strong>, e estaríamos prontos. Essa é a nova - e final - versão do nosso diagrama:
+<img src="/img/git-detached-head/image1.png" alt="" /></p>
+
+<h2 id="removendo-a-mensagem-git-detached-head">Removendo a mensagem “Git Detached HEAD”</h2>
+
+<p>Antes de concluir, vamos compartilhar uma última dica rápida. Agora que você entende tudo sobre HEAD desanexado no Git e sabe que não é tão grave assim, ver essa mensagem toda vez que fizer checkout de um commit pode se tornar cansativo. Felizmente, há uma maneira de não ver mais o aviso. Basta executar o seguinte comando:</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">git config advice.detached <span class="nb">head false</span></code></pre></figure>
+
+<p>Fácil, não é? Você também pode usar o modificador <strong>–global</strong> se quiser que a mudança se aplique a todos os repositórios e não apenas ao atual.</p>
+
+<h2 id="git-detached-head-menos-assustador-do-que-parece">Git Detached HEAD: Menos assustador do que parece</h2>
+
+<p>Uma mensagem falando sobre cabeças não estarem anexadas não soa como uma mensagem de erro de software rotineira, certo? Bem, não é uma mensagem de erro.</p>
+
+<p>Como você viu neste post, um HEAD desanexado não significa que algo está errado com seu repositório. <strong>Detached HEAD</strong> é apenas um estado menos usual em que seu repositório pode estar. Além de não ser um erro, pode ser bastante útil, permitindo que você execute experimentos que depois pode escolher manter ou descartar.</p>
+
+<p>Gostaria de aprender mais sobre Git? Confira alguns dos seguintes posts:</p>
+
+<ul>
+  <li><a href="/pt/git-historico-bonito/">Fazendo Seu Histórico Git Ficar Bonitão Com Amend e Rebase</a></li>
+  <li><a href="/pt/git-bisect-intro/">Git Bisect: Uma Introdução Para Iniciantes</a></li>
+  <li><a href="/pt/git-criar-branch">Git Criar Branch: 4 Maneiras Diferentes</a></li>
+</ul>
+
+<p>Obrigado por ler!</p>
+
+    
+    
+      
+    
+    
+        Encontrou algum erro no post? <a href="http://github.com/carlosschults/carlosschults.github.io/edit/master/_posts/2024-09-16-git-mensagem-detached-head.md">Sugira uma edição</a>      
+    
+    
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+                    
+            <a rel="previous" class="previous" href="/pt/configuracao-dotnet">&larr; [Tradução] Tudo o que você precisa saber sobre configuração e gerenciamento de segredos em .NET </a>
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+        	    
+            <a rel="next" class="next" href="/pt/erros-aprendizados">Erros de Aprendizado Para Se Evitar Como Desenvolvedor de Software &rarr;</a>
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+      
+    <div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+        // Store these for reloads
+        window.disqus_identifier = window.location.pathname;
+        window.disqus_url = window.location.href;
+        
+        // Set initial theme - match it with the site's theme
+        const currentTheme = document.body.getAttribute('data-theme') || 'light';
+        this.page.theme = currentTheme === 'dark' ? 'dark' : 'light';
+    };
+    
+    (function() {
+        var d = document, s = d.createElement('script');
+        s.src = '//carlosschultsblog.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>    
+  </div>
+
+</article>
+
+      </div>
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">         
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-2">
+        <ul class="social-media-list">
+          
+          <li>
+            <a href="https://github.com/carlosschults"><span class="icon icon--github"><svg viewBox="0 0 16 16"><path fill="#828282" d="M7.999,0.431c-4.285,0-7.76,3.474-7.76,7.761 c0,3.428,2.223,6.337,5.307,7.363c0.388,0.071,0.53-0.168,0.53-0.374c0-0.184-0.007-0.672-0.01-1.32 c-2.159,0.469-2.614-1.04-2.614-1.04c-0.353-0.896-0.862-1.135-0.862-1.135c-0.705-0.481,0.053-0.472,0.053-0.472 c0.779,0.055,1.189,0.8,1.189,0.8c0.692,1.186,1.816,0.843,2.258,0.645c0.071-0.502,0.271-0.843,0.493-1.037 C4.86,11.425,3.049,10.76,3.049,7.786c0-0.847,0.302-1.54,0.799-2.082C3.768,5.507,3.501,4.718,3.924,3.65 c0,0,0.652-0.209,2.134,0.796C6.677,4.273,7.34,4.187,8,4.184c0.659,0.003,1.323,0.089,1.943,0.261 c1.482-1.004,2.132-0.796,2.132-0.796c0.423,1.068,0.157,1.857,0.077,2.054c0.497,0.542,0.798,1.235,0.798,2.082 c0,2.981-1.814,3.637-3.543,3.829c0.279,0.24,0.527,0.713,0.527,1.437c0,1.037-0.01,1.874-0.01,2.129 c0,0.208,0.14,0.449,0.534,0.373c3.081-1.028,5.302-3.935,5.302-7.362C15.76,3.906,12.285,0.431,7.999,0.431z"/></svg>
+</span><span class="username">carlosschults</span></a>
+
+          </li>
+          
+
+          
+          <li>
+            <a href="https://twitter.com/carlosschults"><span class="icon icon--twitter"><svg viewBox="0 0 16 16"><path fill="#828282" d="M15.969,3.058c-0.586,0.26-1.217,0.436-1.878,0.515c0.675-0.405,1.194-1.045,1.438-1.809c-0.632,0.375-1.332,0.647-2.076,0.793c-0.596-0.636-1.446-1.033-2.387-1.033c-1.806,0-3.27,1.464-3.27,3.27 c0,0.256,0.029,0.506,0.085,0.745C5.163,5.404,2.753,4.102,1.14,2.124C0.859,2.607,0.698,3.168,0.698,3.767 c0,1.134,0.577,2.135,1.455,2.722C1.616,6.472,1.112,6.325,0.671,6.08c0,0.014,0,0.027,0,0.041c0,1.584,1.127,2.906,2.623,3.206 C3.02,9.402,2.731,9.442,2.433,9.442c-0.211,0-0.416-0.021-0.615-0.059c0.416,1.299,1.624,2.245,3.055,2.271 c-1.119,0.877-2.529,1.4-4.061,1.4c-0.264,0-0.524-0.015-0.78-0.046c1.447,0.928,3.166,1.469,5.013,1.469 c6.015,0,9.304-4.983,9.304-9.304c0-0.142-0.003-0.283-0.009-0.423C14.976,4.29,15.531,3.714,15.969,3.058z"/></svg>
+</span><span class="username">carlosschults</span></a>
+
+          </li>
+          
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-3">
+        <p>Artigos sobre desenvolvimento de software e tecnologia.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+
+    <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-92788641-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+    <script src="/js/dark-mode.js"></script>
+  </body>
+
+</html>

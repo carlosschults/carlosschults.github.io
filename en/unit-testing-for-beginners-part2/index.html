@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Unit testing for beginners - Part 2 | carlos schults / blog</title>
+  <link rel="apple-touch-icon" sizes="57x57" href="/img/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/img/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/img/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/img/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/img/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/img/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/img/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/img/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"  href="/img/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/img/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon-16x16.png">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="description" content="Better late than later! Time to continue our series on unit testing for beginners. Today you’re going to write your first unit test.">
+  
+  <!-- Twitter card -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:creator" content="@carlosschults">
+  <meta name="twitter:site" content="@carlosschults">
+  <meta name="twitter:domain" content="carlosschults.net">
+  <meta name="twitter:title" content="Unit testing for beginners - Part 2">
+  <meta name="twitter:description" content="Better late than later! Time to continue our series on unit testing for beginners. Today you’re going to write your first unit test.">
+
+   <!-- Facebook meta -->
+  
+  
+  <meta property="og:title" content="Unit testing for beginners - Part 2">
+  <meta property="og:site_name" content="Carlos Schults / Blog" />
+  <meta property="og:locale" content="en_US">  
+  <meta property="og:type" content="article" />
+  <meta property="og:image" content="https://res.cloudinary.com/dz5ppacuo/image/upload/v1459979937/testes-unitarios-iniciantes-min_povcse.png" />  
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:width" content="1038"> 
+  <meta property="og:image:height" content="437">  
+  
+  <meta property="og:article:published_time" content="2017-08-08T00:00:00+00:00" />  
+  <meta property="og:article:author" content="Carlos Schults" />
+  
+  <meta property="og:article:tag" content="software-testing" />
+  <meta property="og:article:tag" content="beginners" />
+  <meta property="og:article:tag" content="unit-testing" />
+  <meta property="og:article:tag" content="unit-testing-series" />
+  <meta property="og:article:tag" content="automated-tests" />
+  <meta property="og:article:tag" content="csharp" />
+  <meta property="og:article:tag" content="agile" />    
+  
+  <meta property="og:url" content="https://carlosschults.net/en/unit-testing-for-beginners-part2/"/>
+  <meta property="og:description" content="Better late than later! Time to continue our series on unit testing for beginners. Today you’re going to write your first unit test.">
+  <link rel="stylesheet" href="/css/main.css">  
+  
+   <link rel="canonical" href="https://carlosschults.net/en/unit-testing-for-beginners-part2/">
+   
+  
+  <link rel="alternate" hreflang="en" href="/en/unit-testing-for-beginners-part2/" />
+  <link rel="alternate" hreflang="pt" href="/pt/testes-unitarios-iniciantes-parte-2" />
+  
+  <link rel="alternate" type="application/rss+xml" title="carlos schults / blog" href="https://carlosschults.net/feed.xml">
+</head>
+
+  <body>
+    <header class="site-header">
+  <div class="wrapper">    
+    <a class="site-title" href="/">carlos schults / blog</a>
+    
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg viewBox="0 0 18 15">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+
+      <div class="trigger">        
+          
+          <a class="page-link" href="/footprints/">Dev Footprints</a>
+          <a class="page-link" href="/readings/">Readings</a>
+          <a class="page-link" href="/about/">About</a>
+		      <a class="page-link" href="/search/">Search</a>
+                  
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+<div class="wrapper" style="text-align: right; line-height: 2em">
+  
+   <a href="/en/unit-testing-for-beginners-part2/" class="en">en</a>  <a href="/pt/testes-unitarios-iniciantes-parte-2" class="pt">pt</a> 
+
+  
+  
+</div>
+
+
+    <div class="page-content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">    
+    <h2 class="postTitle" itemprop="headline">Unit testing for beginners - Part 2</h2>
+    <p class="post-meta">   
+    <time datetime="2017-08-08T00:00:00+00:00" itemprop="datePublished">Aug 8, 2017
+    </time> • <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">Carlos Schults</span></span>
+  <span class="tags" itemprop="keywords"> • Tags: <a href="/tag/software-testing">software-testing </a> <a href="/tag/beginners">beginners </a> <a href="/tag/unit-testing">unit-testing </a> <a href="/tag/unit-testing-series">unit-testing-series </a> <a href="/tag/automated-tests">automated-tests </a> <a href="/tag/csharp">csharp </a> <a href="/tag/agile">agile </a> </span>
+  </p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <p><img src="https://res.cloudinary.com/dz5ppacuo/image/upload/v1459979937/testes-unitarios-iniciantes-min_povcse.png" alt="" /></p>
+
+<p>Better late than later! Time to continue our series on unit testing for beginners. Today you’re going to write your first unit test.
+<!--more--></p>
+
+<h2 id="introduction">Introduction</h2>
+
+<p><em>This post is part of a series. <a href="http://carlosschults.net/tag/unit-testing-series/">See all the articles in the series.</a></em></p>
+
+<p>In the <a href="https://carlosschults.net/en/unit-testing-for-beginners-part1/">previous article</a> you learned what unit tests are and what are the motivations for writing them.</p>
+
+<p>Today you’re going to learn how to create unit tests. I’ll show you how to install and use the a unit test framework called <strong>NUnit</strong>. Together, we’re going to write some tests in order for you to know some of its features.</p>
+
+<h2 id="nunit-installation">NUnit Installation</h2>
+
+<p>If you recall my <a href="https://carlosschults.net/pt/testes-unitarios-iniciantes-parte1">previous article</a>, you’ll remember that, in order to write and run unit tests, you need a <strong>unit testing framework.</strong></p>
+
+<p>The framework we’re going to use is <strong>NUnit</strong>, based on <strong>JUnit</strong>, which is a test framework for the Java language. There are other testing frameworks available in the .Net world, such as MS Test, developed by Microsoft itself.
+Feel free to try other frameworks later on.</p>
+
+<p>Ok, let’s begin. For this project I’m going to use Visual Studio 2017. <a href="https://www.visualstudio.com/pt-br/downloads/">Download the Community version here</a>.</p>
+
+<p>Create a new solution of the <strong>Class Library</strong> type, with the name <strong>LearningUnitTesting</strong>.</p>
+
+<p>Whenever I create a new solution on Visual Studio I delete the <code class="language-plaintext highlighter-rouge">Class1</code> class that is created by default. You could rename it, of course, it makes no difference.</p>
+
+<p>Now, let’s rename the default project to <strong>Application</strong>. This project will store the <em>production code</em> in our solution.</p>
+
+<blockquote>
+  <p>In the context of unit testing, we use the term <strong>Production Code</strong> when we’re talking about the “real code” in our application, in contrast to the <strong>Test Code</strong> we also write.</p>
+</blockquote>
+
+<p>Next step! Now we <strong>create the test project</strong>. There are several different opinions regarding <em>where</em> should the test class be kept: along with production code, or in a different location. I usually create another project, which I name using the scheme <em>[ProductionProject]Test</em>.</p>
+
+<p>So, the new project will be called <strong>ApplicationTest</strong>, and it’ll be of type <strong>Class Library</strong> as well.
+After creating the project, I delete the default class, same as before.</p>
+
+<p>Your solution should look like this:</p>
+
+<p><img src="https://res.cloudinary.com/dz5ppacuo/image/upload/v1498503229/unit2-img1_ugbo3b.png" alt="" /></p>
+
+<p>Let’s install NUnit. Fortunately, NUnit is available as a Nuget package, which makes its installation a breeze.</p>
+
+<p>First, open the <strong>Package Manager Console</strong>. Go to: <strong>Tools</strong> &gt; <strong>Nuget Package Manager</strong> &gt; <strong>Package Manager Console</strong>.</p>
+
+<p>Then type or copy-paste the following command:</p>
+
+<blockquote>
+  <p>Install-Package NUnit</p>
+</blockquote>
+
+<p>Double-check that you’ve got the right project selected, like in the image:</p>
+
+<p><img src="https://res.cloudinary.com/dz5ppacuo/image/upload/v1498503359/unit2-img2_nzedn5.png" alt="" /></p>
+
+<p>And then press <em>ENTER</em>. The installation will be done in a few seconds.</p>
+
+<p>We are not done yet, though. We need to install another package, the <strong>NUnit Test Adapter</strong>, which we’ll let us run NUnit tests in Visual Studio. The process is the same, the only difference is the package’s name:</p>
+
+<blockquote>
+  <p>Install-Package NUnit3TestAdapter</p>
+</blockquote>
+
+<p>Don’t forget to check if the right project is selected before pressing <em>ENTER</em>. The installation will be done in a few seconds.</p>
+
+<p>This is it.</p>
+
+<h2 id="creating-and-running-the-first-test">Creating and running the first test</h2>
+
+<p>Let’s create some tests. First, let’s add a new class to our production project. The class’s name will be <code class="language-plaintext highlighter-rouge">Employee</code> and its code will look like this:</p>
+
+<script src="https://gist.github.com/carlosschults/3f42e324b10ceb42b360382686d314de.js"></script>
+
+<p>I think the class is simple enough to not require additional explanation. Now, it’s time to create our test class. Add a new class called <code class="language-plaintext highlighter-rouge">EmployeeTest</code> to the <strong>ApplicationTest</strong> project.</p>
+
+<blockquote>
+  <p>This is another naming convention I like to use: to name the test class after the production class, adding the word <em>Test</em> at the end.</p>
+</blockquote>
+
+<p>After the class is created, add the <em>NUnit.Framework</em> namespace to its using declarations. Then, create a new void returning public method called <strong>MyFirstTestMethod</strong> and add the <code class="language-plaintext highlighter-rouge">[Test]</code> attribute to it.</p>
+
+<p>By now, your code should look like this:</p>
+
+<script src="https://gist.github.com/carlosschults/406525bd23d3ee2ecba4f7592c0f8af3.js"></script>
+
+<p>The skeleton for the test is ready. It’s time for you to write your first <strong>assertion</strong>. In the context of unit testing, an assertion is an affirmation about how a unit of your system should behave. If the affirmation turns out to be true, we say the test has <em>passed</em>. In case it proves to be false, we say the test has <em>failed</em>.</p>
+
+<p>In NUnit we use the <code class="language-plaintext highlighter-rouge">Assert</code> class to write our assertions. This class has a large number of methods that allow us to express our expectations about the behavior of our units.</p>
+
+<p>Add the following line of code to the test method:</p>
+
+<blockquote>
+  <p>Assert.Pass();</p>
+</blockquote>
+
+<p>The <code class="language-plaintext highlighter-rouge">Pass</code> method, not surprisingly, just forces the test to pass. Now you’re going to run this test in order to see it passing. First of all, open the <strong>Test Explorer</strong>. Use the menu bar: <strong>Test</strong> &gt; <strong>Windows</strong> &gt; <strong>Test Explorer</strong>.</p>
+
+<p>When the window is show, click on <em>Run All</em>. If everything goes right, you’ll see this:</p>
+
+<p><img src="https://res.cloudinary.com/dz5ppacuo/image/upload/v1498507514/MyFirstTestPass_atkrjl.png" alt="" /></p>
+
+<p>When you click on the test’s name, some additional information is shown, such as the test file and elapsed time:</p>
+
+<p><img src="https://res.cloudinary.com/dz5ppacuo/image/upload/v1498508050/MyFirstTestPass2_ageqqm.png" alt="" /></p>
+
+<p>Notice the use of green to indicate the test’s success.</p>
+
+<p>Now let’s do the opposite: force the test to fail. Replace the previous line for the following one:</p>
+
+<blockquote>
+  <p>Assert.Fail();</p>
+</blockquote>
+
+<p>Run the test again and you’ll see the failure message, this time with the red bar:</p>
+
+<p><img src="https://res.cloudinary.com/dz5ppacuo/image/upload/v1498508371/myfirsttestfail_xwuo5u.png" alt="" /></p>
+
+<p>Now that you’re getting the hang of it, we’re start testing our <code class="language-plaintext highlighter-rouge">Employee</code> class. Don’t forget to switch the test method back to <code class="language-plaintext highlighter-rouge">Assert.Pass()</code>, otherwise it will continue to fail.</p>
+
+<p>Now add a new method called <code class="language-plaintext highlighter-rouge">IntroduceMethodShouldWorkCorrectly</code>. In this method we’ll create a new instance of <code class="language-plaintext highlighter-rouge">Employee</code> and verify that the <code class="language-plaintext highlighter-rouge">Introduce</code> method is working properly.</p>
+
+<p>Before we do that, though, we must add a reference from the production project to our test project. Otherwise, our test class won’t be able to see the classes it is supposed to test!</p>
+
+<p>To do that, right-click the <strong>ApplicationTest</strong> project, then go to <strong>Add</strong>, then <strong>Reference</strong>. In the opened window, choose the project, according to the following image:</p>
+
+<p><img src="https://res.cloudinary.com/dz5ppacuo/image/upload/v1498509304/Captura_de_tela_2017-06-26_17.34.04_hgianj.png" alt="" /></p>
+
+<p>Then, click on <strong>OK</strong>.</p>
+
+<p>Back to the test class. Edit the code so it looks like this:</p>
+
+<script src="https://gist.github.com/carlosschults/c840590dab95a023d4530962fca048db.js"></script>
+
+<p>You will notice that <code class="language-plaintext highlighter-rouge">Employee</code> is marked as an error. If you hover over it, you’ll see a message saying that the name <code class="language-plaintext highlighter-rouge">Employee</code> couldn’t be found and asking if there is some reference or <em>using</em> directive missing.</p>
+
+<p>Of course there is a using directive missing, related to the reference we’ve just added. To fix this problem, just add the line <code class="language-plaintext highlighter-rouge">using Application;</code> to the namespace declarations, right at the start of the file.</p>
+
+<p>Now that our code compiles, let’s go through this method, line by line.</p>
+
+<p>In the first line, we create a new instance of <code class="language-plaintext highlighter-rouge">Employee</code>, specifying name, profession and salary. In the following line, we assign to a variable the value we <strong>expect</strong> the method to return. Then we assign to another variable the obtained result from the method.</p>
+
+<p>Finally, we use the <code class="language-plaintext highlighter-rouge">AreEqual</code> method from the <code class="language-plaintext highlighter-rouge">Assert</code> class to verify the equality of the two values. This method is, probably, the one you’ll use the most during your tests.</p>
+
+<p>Now it’s time to run the test. Use the shortcut <strong>CTRL + R, A</strong> or click on <strong>Run All</strong> in the Test Explorer window. If everything goes smoothly, you should see the green bar and the message indicating that both tests have passed.</p>
+
+<p>Time to test our test! We’re going to deliberately ruin the <code class="language-plaintext highlighter-rouge">Introduce</code> method to see if the test fails as expected. Back to the production class, edit the method like this:</p>
+
+<script src="https://gist.github.com/carlosschults/02554ca9b8dd69f8c904dbbcc271c99e.js"></script>
+
+<p>As you’ve seen, we’ve just removed the square brackets before and after “JobTitle”. This way, the string interpolation won’t work, hard-coding the string instead of replacing it by the value of the variable.</p>
+
+<p>When we run the tests again, we got the following result:</p>
+
+<blockquote>
+  <p>Mensagem:   Expected string length 48 but was 46. Strings differ at index 37.
+Expected: “Hi! My name is Alice and I work as a Programmer.”
+But was:  “Hi! My name is Alice and I work as a JobTitle.”
+————————————————^</p>
+</blockquote>
+
+<p>As you can see, the message is very detailed. It not only lets us know that the strings differed, but it also tells us exactly where they differ. It also shows the expected string and what we really got. It is important to notice that the parameter’s orders in the <code class="language-plaintext highlighter-rouge">AreEqual</code> matters a lot, since it is used in the failure message.</p>
+
+<blockquote>
+  <p><strong>The parameters’ order in the <code class="language-plaintext highlighter-rouge">AreEqual</code> is very important. First specify the expected value, and then the actual result.</strong></p>
+</blockquote>
+
+<p>Great. Now you can switch the method back to the correct implementation and run the tests again, so the test can be green again.</p>
+
+<p>As you can see, a unit test consists in a well defined sequence of steps: we <strong>prepare</strong> the scenario, then <strong>execute</strong> the action and <strong>verify</strong> the results. This sequence of steps, or phases, is sometimes called AAA: <strong>Arrange-Act-Assert</strong>.</p>
+
+<blockquote>
+  <p>A typical unit test has the three phases: <strong>Arrange-Act-Assert</strong>.</p>
+</blockquote>
+
+<p>Even though there are another naming conventions for the phases of a unit test, we’ll adopt <strong>Arrange-Act-Assert</strong> , at least for now.</p>
+
+<p>You may be wondering why I gave the name “sut” to the variable at the start of the method. This is a naming convention that I learned while reading <a href="https://blog.ploeh.dk/">Mark Seeman’s blog</a>. <strong>SUT</strong> stands for <em>System Under Test</em>, i.e. the thing you’re testing.</p>
+
+<p>There is nothing preventing you from naming the variable whatever you want. I really like to follow this convention, though, since it makes really clear what is being tested.</p>
+
+<blockquote>
+  <p><strong>Tip: Try to use naming conventions that improve the readability of your code and make the author’s intention clear for anyone who reads the code.</strong></p>
+</blockquote>
+
+<p>Take a look at the same test method, but this time with comments delimiting each test phase:</p>
+
+<script src="https://gist.github.com/carlosschults/a91d41ff7ac732fc9c57e63c03a6be07.js"></script>
+
+<p>Even though it isn’t really need, I suggest you use comments like the ones above to indicate the test phases, at least in the beginning of your learning.</p>
+
+<h2 id="testing-the-giveraise-method">Testing the <code class="language-plaintext highlighter-rouge">GiveRaise</code> method</h2>
+
+<p>A salary raise is always welcome, wouldn’t you agree? Let’s test the <code class="language-plaintext highlighter-rouge">GiveRaise</code> method to see if it’s working properly. Add the following method to your test class:</p>
+
+<script src="https://gist.github.com/carlosschults/2ce153c1da6f83e80342fa7f83ea4786.js"></script>
+
+<p>Run the test and you should see the familiar green bar. Did it work? Great. Time to <strong>test the test</strong>: we’re going to sabotage the implementation of <code class="language-plaintext highlighter-rouge">GiveRaise</code> and hope our test catches the error.</p>
+
+<p>In the production class, edit the method this way:</p>
+
+<script src="https://gist.github.com/carlosschults/fba5901aaa2f542bcd8528de0e96afff.js"></script>
+
+<p>Now the method is obviously wrong; the test should fail. Let’s run it?</p>
+
+<blockquote>
+  <p>Mensagem:   Expected: 110
+   But was:  5m</p>
+</blockquote>
+
+<p>Ok, as we can see, the test did fail. Switch the method back to the correct implementation.</p>
+
+<h2 id="one-last-test">One last test</h2>
+
+<p>Let’s say the Product Owner just showed up with a new requirement: the <code class="language-plaintext highlighter-rouge">GiveRaise</code> method should ignore negative raise rates. First, let’s edit the <code class="language-plaintext highlighter-rouge">GiveRaise</code> method to deal with this scenario:</p>
+
+<script src="https://gist.github.com/carlosschults/3f09a8043a1e58753adf9bfdee37350a.js"></script>
+
+<p>We’ve just made a change in production code. Our top priority right now is <strong>to guarantee that we haven’t broken anything</strong>.
+Run the test to be sure that all of them are passing.</p>
+
+<p>Everything still green? Great, let’s go ahead. Now we need to create a new test to document the “negative raise attempt” scenario.</p>
+
+<blockquote>
+  <p>Unit tests are also a type of documentation.</p>
+</blockquote>
+
+<p>In the test class, add the following method:</p>
+
+<script src="https://gist.github.com/carlosschults/a474698655450da6547dbfa6b9dbcb8c.js"></script>
+
+<p>Nothing really surprising here, right? At this point I’m sure you’ve already got this. So, now it is up to you to <strong>test the test</strong>: ruin the production code in one or more ways to see if the test fails as expected.</p>
+
+<h2 id="a-quick-recap">A quick recap</h2>
+
+<p>Today’s article was more dense than the previous one. We’ve managed to cover several topics::</p>
+
+<ul>
+  <li>Installation of <strong>NUnit</strong> and <strong>NUnit Test Adapter</strong>;</li>
+  <li>Creation of a test;</li>
+  <li>Introduction to the <code class="language-plaintext highlighter-rouge">Assert</code> class;</li>
+  <li>Test execution, via <em>Test Explorer</em> and keyboard shortcuts;</li>
+  <li>Reading and interpretation of test results;</li>
+  <li>Phases of a unit test (<em>Arrange-Act-Assert</em>).</li>
+</ul>
+
+<p>Besides these topics, we’ve also enlarged our test related vocabulary with terms like <em>SUT</em>, <em>assertion</em> and <em>test code vs production code</em>.</p>
+
+<p>Some naming conventions were covered as well, for both classes and methods.</p>
+
+<p>Last but not least, you’ve learned about the importance of seeing the test fail, and how we can gain confidence in our tests by deliberately sabotaging the production code.</p>
+
+<h2 id="some-notes">Some notes</h2>
+
+<ul>
+  <li>You’ve probably noticed that my Visual Studio is not in English in the screen-captures. That is because I’m Brazilian and my Visual Studio is configured in Portuguese (and I first wrote this post in pt-br). I apologize for that.</li>
+  <li>All of the code for today’s post <a href="https://github.com/carlosschults/learning-unit-testing/">can be found on Github</a>.</li>
+  <li>Once again, I thank my friend Gunter Italiano Ribeiro for proof-reading this post.</li>
+</ul>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>This was my second article in the series about unit testing. As I already mentioned, it is deliberately longer and more practical than the previous one. Still, all we’ve covered today is just the tip of the iceberg. Whole books were written about unit testing; by the way I’m indicating some in the following articles, along with more references.</p>
+
+<p>For the tests we wrote today, we used the more intuitive - and probably more common - approach of creating the tests after the production code. However, many people and teams work differently: they write the tests <em>before</em> the production code.</p>
+
+<p>I know it may sound strange, at first, but working this way can bring many benefits to your project. This and other topics will be covered in the next article.</p>
+
+<p>Thanks for reading! See you soon.</p>
+
+    
+    
+      
+    
+    
+        Found a typo or mistake in the post? <a href="http://github.com/carlosschults/carlosschults.github.io/edit/master/_posts/2017-08-08-unit-testing-for-beginners-part2.md">Suggest edit</a>
+        
+    
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+                    
+            <a rel="previous" class="previous" href="/en/csharp-7-features-part-2/">&larr; C# 7 Features Worth Knowing - Part 2 </a>
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+        	    
+            <a rel="next" class="next" href="/en/csharp-8-features/">C# 8.0 Features: A Glimpse of the Future &rarr;</a>
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+      
+    <div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+        // Store these for reloads
+        window.disqus_identifier = window.location.pathname;
+        window.disqus_url = window.location.href;
+        
+        // Set initial theme - match it with the site's theme
+        const currentTheme = document.body.getAttribute('data-theme') || 'light';
+        this.page.theme = currentTheme === 'dark' ? 'dark' : 'light';
+    };
+    
+    (function() {
+        var d = document, s = d.createElement('script');
+        s.src = '//carlosschultsblog.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>    
+  </div>
+
+</article>
+
+      </div>
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">         
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-2">
+        <ul class="social-media-list">
+          
+          <li>
+            <a href="https://github.com/carlosschults"><span class="icon icon--github"><svg viewBox="0 0 16 16"><path fill="#828282" d="M7.999,0.431c-4.285,0-7.76,3.474-7.76,7.761 c0,3.428,2.223,6.337,5.307,7.363c0.388,0.071,0.53-0.168,0.53-0.374c0-0.184-0.007-0.672-0.01-1.32 c-2.159,0.469-2.614-1.04-2.614-1.04c-0.353-0.896-0.862-1.135-0.862-1.135c-0.705-0.481,0.053-0.472,0.053-0.472 c0.779,0.055,1.189,0.8,1.189,0.8c0.692,1.186,1.816,0.843,2.258,0.645c0.071-0.502,0.271-0.843,0.493-1.037 C4.86,11.425,3.049,10.76,3.049,7.786c0-0.847,0.302-1.54,0.799-2.082C3.768,5.507,3.501,4.718,3.924,3.65 c0,0,0.652-0.209,2.134,0.796C6.677,4.273,7.34,4.187,8,4.184c0.659,0.003,1.323,0.089,1.943,0.261 c1.482-1.004,2.132-0.796,2.132-0.796c0.423,1.068,0.157,1.857,0.077,2.054c0.497,0.542,0.798,1.235,0.798,2.082 c0,2.981-1.814,3.637-3.543,3.829c0.279,0.24,0.527,0.713,0.527,1.437c0,1.037-0.01,1.874-0.01,2.129 c0,0.208,0.14,0.449,0.534,0.373c3.081-1.028,5.302-3.935,5.302-7.362C15.76,3.906,12.285,0.431,7.999,0.431z"/></svg>
+</span><span class="username">carlosschults</span></a>
+
+          </li>
+          
+
+          
+          <li>
+            <a href="https://twitter.com/carlosschults"><span class="icon icon--twitter"><svg viewBox="0 0 16 16"><path fill="#828282" d="M15.969,3.058c-0.586,0.26-1.217,0.436-1.878,0.515c0.675-0.405,1.194-1.045,1.438-1.809c-0.632,0.375-1.332,0.647-2.076,0.793c-0.596-0.636-1.446-1.033-2.387-1.033c-1.806,0-3.27,1.464-3.27,3.27 c0,0.256,0.029,0.506,0.085,0.745C5.163,5.404,2.753,4.102,1.14,2.124C0.859,2.607,0.698,3.168,0.698,3.767 c0,1.134,0.577,2.135,1.455,2.722C1.616,6.472,1.112,6.325,0.671,6.08c0,0.014,0,0.027,0,0.041c0,1.584,1.127,2.906,2.623,3.206 C3.02,9.402,2.731,9.442,2.433,9.442c-0.211,0-0.416-0.021-0.615-0.059c0.416,1.299,1.624,2.245,3.055,2.271 c-1.119,0.877-2.529,1.4-4.061,1.4c-0.264,0-0.524-0.015-0.78-0.046c1.447,0.928,3.166,1.469,5.013,1.469 c6.015,0,9.304-4.983,9.304-9.304c0-0.142-0.003-0.283-0.009-0.423C14.976,4.29,15.531,3.714,15.969,3.058z"/></svg>
+</span><span class="username">carlosschults</span></a>
+
+          </li>
+          
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-3">
+        <p>Articles on software development and technology.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+
+    <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-92788641-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+    <script src="/js/dark-mode.js"></script>
+  </body>
+
+</html>

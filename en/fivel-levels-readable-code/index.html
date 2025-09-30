@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>The 5 Levels of Readable Code | carlos schults / blog</title>
+  <link rel="apple-touch-icon" sizes="57x57" href="/img/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/img/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/img/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/img/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/img/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/img/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/img/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/img/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"  href="/img/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/img/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon-16x16.png">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="description" content="Photo by Greyson Joralemon on UnsplashRecently I’ve been thinking a lot about code readability. What does it mean for a piece of code to be readable? Is it p...">
+  
+  <!-- Twitter card -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:creator" content="@carlosschults">
+  <meta name="twitter:site" content="@carlosschults">
+  <meta name="twitter:domain" content="carlosschults.net">
+  <meta name="twitter:title" content="The 5 Levels of Readable Code">
+  <meta name="twitter:description" content="Photo by Greyson Joralemon on UnsplashRecently I’ve been thinking a lot about code readability. What does it mean for a piece of code to be readable? Is it p...">
+
+   <!-- Facebook meta -->
+  
+  
+  <meta property="og:title" content="The 5 Levels of Readable Code">
+  <meta property="og:site_name" content="Carlos Schults / Blog" />
+  <meta property="og:locale" content="en_US">  
+  <meta property="og:type" content="article" />
+  <meta property="og:image" content="/img/levels.jpg" />  
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:width" content="1038"> 
+  <meta property="og:image:height" content="437">  
+  
+  <meta property="og:article:published_time" content="2023-10-18T00:00:00+00:00" />  
+  <meta property="og:article:author" content="Carlos Schults" />
+  
+  <meta property="og:article:tag" content="best-practices" />
+  <meta property="og:article:tag" content="readability" />    
+  
+  <meta property="og:url" content="https://carlosschults.net/en/fivel-levels-readable-code/"/>
+  <meta property="og:description" content="Photo by Greyson Joralemon on UnsplashRecently I’ve been thinking a lot about code readability. What does it mean for a piece of code to be readable? Is it p...">
+  <link rel="stylesheet" href="/css/main.css">  
+  
+   <link rel="canonical" href="https://carlosschults.net/en/fivel-levels-readable-code/">
+   
+  
+  <link rel="alternate" hreflang="en" href="/en/fivel-levels-readable-code/" />
+  <link rel="alternate" hreflang="pt" href="/pt/cinco-niveis-codigo-legivel" />
+  
+  <link rel="alternate" type="application/rss+xml" title="carlos schults / blog" href="https://carlosschults.net/feed.xml">
+</head>
+
+  <body>
+    <header class="site-header">
+  <div class="wrapper">    
+    <a class="site-title" href="/">carlos schults / blog</a>
+    
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg viewBox="0 0 18 15">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+
+      <div class="trigger">        
+          
+          <a class="page-link" href="/footprints/">Dev Footprints</a>
+          <a class="page-link" href="/readings/">Readings</a>
+          <a class="page-link" href="/about/">About</a>
+		      <a class="page-link" href="/search/">Search</a>
+                  
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+<div class="wrapper" style="text-align: right; line-height: 2em">
+  
+   <a href="/en/fivel-levels-readable-code/" class="en">en</a>  <a href="/pt/cinco-niveis-codigo-legivel" class="pt">pt</a> 
+
+  
+  
+</div>
+
+
+    <div class="page-content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">    
+    <h2 class="postTitle" itemprop="headline">The 5 Levels of Readable Code</h2>
+    <p class="post-meta">   
+    <time datetime="2023-10-18T00:00:00+00:00" itemprop="datePublished">Oct 18, 2023
+    </time> • <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">Carlos Schults</span></span>
+  <span class="tags" itemprop="keywords"> • Tags: <a href="/tag/best-practices">best-practices </a> <a href="/tag/readability">readability </a> </span>
+  </p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <p><img src="/img/levels.jpg" alt="" /></p>
+
+<p><span>Photo by <a href="https://unsplash.com/@greysonjoralemon?utm_content=creditCopyText&amp;utm_medium=referral&amp;utm_source=unsplash">Greyson Joralemon</a> on <a href="https://unsplash.com/photos/w000nNe9Xq8?utm_content=creditCopyText&amp;utm_medium=referral&amp;utm_source=unsplash">Unsplash</a></span></p>
+
+<p>Recently I’ve been thinking a lot about code readability. What does it mean for a piece of code to be readable? Is it possible to define readability objectively? Should we attempt to do it?</p>
+
+<p>These are some of the questions I’ve been thinking about, and in this post, I present my answers in an attempt to start a conversation around readability.</p>
+
+<p>Here’s the TL;DR version: yes, I believe objectively defining code readability is both possible and desirable, and in this article, I suggest a model for evaluating readability.</p>
+
+<h2 id="the-importance-of-a-code-readability-definition">The Importance of a Code Readability Definition</h2>
+
+<p>Readability will always be somewhat subjective and, to some degree, that subjectivity is harmless. However, it <em>can</em> cause problems in some scenarios.</p>
+
+<p>If we’re working within a team, it’s important to come up with at least some objective guidelines regarding code readability, and that’s because of code reviews. If the team can’t agree on what constitutes readable code, then code review feedback will feel like arbitrary whims.</p>
+
+<p>In short: teams need conventions. A team should have a vision when it comes to what constitutes good, readable code.</p>
+
+<h2 id="a-framework-for-thinking-about-code-readability-levels">A Framework For Thinking About Code Readability: Levels</h2>
+
+<p>Not long ago I started thinking about code readability in terms of levels. The levels represent specific concerns regarding readability, and they’re ordered in terms of priority.</p>
+
+<p>So, level 1 represents the most basic stuff you’ve got to take care of first, before progressing towards higher levels. Tidy up the basics, then go for the advanced stuff. Something like <a href="https://en.wikipedia.org/wiki/Maslow%27s_hierarchy_of_needs">Maslow’s hierarchy of needs</a>, but for code.</p>
+
+<p>There will be some code examples, and I’ll be using C# for those. However, what I’ll show here applies to any language, unless I explicitly say otherwise.</p>
+
+<p>Without further ado, here are the five levels of readable code.</p>
+
+<h2 id="level-1-your-code-does-the-bare-minimum">Level 1: Your Code Does The Bare Minimum</h2>
+
+<p>(Yes, level one. Please spare me that “programmers start counting at zero” nonsense.)</p>
+
+<p>Level 1 of readable code refers to code that does the bare minimum. Think of simple readability guidelines such as:</p>
+
+<ul>
+  <li>Picking <a href="https://carlosschults.net/en/how-to-choose-good-names/">descriptive names </a>for variables, functions, classes, and so on.</li>
+  <li>Avoiding too many indentation levels.</li>
+  <li>Keeping <a href="https://carlosschults.net/en/reduce-cyclomatic-complexity/">cyclomatic complexity low.</a></li>
+  <li>Avoiding <a href="https://carlosschults.net/en/types-of-comments-to-avoid/">comments that don’t bring any value</a>.</li>
+  <li>Keeping <a href="https://blog.ploeh.dk/2019/11/04/the-80-24-rule/">functions and other blocks of code small.</a></li>
+  <li>Avoiding <a href="https://en.wikipedia.org/wiki/Magic_number_(programming)">magic numbers</a>.</li>
+</ul>
+
+<p>It’s not hard to learn these kinds of best practices. You can pick up most of these through sheer experience, by listening to the feedback of more experienced engineers during code reviews, or by reading books and even blog posts like the ones listed above.</p>
+
+<h2 id="level-2-your-code-is-idiomatic">Level 2: Your Code Is Idiomatic</h2>
+
+<p>Consider the following C# class:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">public</span> <span class="k">class</span> <span class="nc">Person</span>
+<span class="p">{</span>
+    <span class="k">private</span> <span class="kt">string</span> <span class="n">_name</span><span class="p">;</span>
+    <span class="k">private</span> <span class="kt">int</span> <span class="n">_age</span><span class="p">;</span>
+
+    <span class="k">public</span> <span class="nf">Person</span><span class="p">(</span><span class="kt">string</span> <span class="n">name</span><span class="p">,</span> <span class="kt">int</span> <span class="n">age</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">_name</span> <span class="p">=</span> <span class="n">name</span><span class="p">;</span>
+        <span class="n">_age</span> <span class="p">=</span> <span class="n">age</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="k">void</span> <span class="nf">SetName</span><span class="p">(</span><span class="kt">string</span> <span class="n">name</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">_name</span> <span class="p">=</span> <span class="n">name</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="kt">string</span> <span class="nf">GetName</span><span class="p">()</span> <span class="p">=&gt;</span> <span class="n">_name</span><span class="p">;</span>
+
+    <span class="k">public</span> <span class="k">void</span> <span class="nf">SetAge</span><span class="p">(</span><span class="kt">int</span> <span class="n">age</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">_age</span> <span class="p">=</span> <span class="n">age</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="kt">int</span> <span class="n">GetAge</span> <span class="p">=&gt;</span> <span class="n">_age</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>There’s nothing wrong with the above class, at least not technically. The compiler happily compiles it, and the class works as it should.</p>
+
+<p>However, if you’re at least somewhat experienced with C#, you noticed something weird when you saw the code: the getter and setter methods. The C# development team made the concepts of getters and setters a first-class citizen of the language early on, via the concept of properties. If there’s no additional logic involved in the setting and getting of values, the programmer can make usage of <a href="https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/auto-implemented-properties">auto-implemented properties</a> with a concise result (even the backing private fields no longer need to be explicitly declared):</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">public</span> <span class="k">class</span> <span class="nc">Person</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="nf">Person</span><span class="p">(</span><span class="kt">string</span> <span class="n">name</span><span class="p">,</span> <span class="kt">int</span> <span class="n">age</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">Name</span> <span class="p">=</span> <span class="n">name</span><span class="p">;</span>
+        <span class="n">Age</span> <span class="p">=</span> <span class="n">age</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="kt">string</span> <span class="n">Name</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="k">public</span> <span class="kt">int</span> <span class="n">Age</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>All of this is to say: that to be readable, a given piece of code needs to be idiomatic to the language it’s written into. If you’re writing C#, follow the coding standards and conventions of the language. The same applies to Java, JavaScript, and any other language.</p>
+
+<p>The Python community has a wonderful concept to describe Python code that adheres to the standards and philosophies of the language: “pythonic”. A piece of Python code might work, but if it’s not Pythonic, experienced Python engineers will find the code awkward to work with.</p>
+
+<p>Why does writing idiomatic code matter for readability? When you look at code—in whatever language—that doesn’t look like what it should look, according to the mental model you have of that language, it becomes harder to follow the code.</p>
+
+<p>Non-idiomatic code increases the <a href="https://linearb.io/blog/cognitive-complexity-in-software">cognitive complexity </a>of a code base. It makes it harder to onboard developers who are familiar with the language standards and idioms. If you have an open-source project, too many idiosyncrasies in the code might push away potential contributors.</p>
+
+<p>Of course, the opposite of all of this is true.</p>
+
+<h2 id="level-3-your-code-reveals-intent-via-tactical-use-of-typing">Level 3: Your Code Reveals Intent Via Tactical Use of Typing</h2>
+
+<p>As the title suggests, this item, unlike the previous two, only applies to statically typed languages—or, perhaps, dynamically typed ones that feature some kind of optional type annotation.</p>
+
+<p>Let’s start with a simple example. Look at the following lines:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Canvas</span><span class="p">.</span><span class="nf">DrawLine</span><span class="p">(</span><span class="m">5</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>Disregard the magic number, which is itself already a problem. Consider that you know that the <code class="language-plaintext highlighter-rouge">DrawLine</code> method has a single parameter, <code class="language-plaintext highlighter-rouge">length</code>. The line could’ve been made slightly more readable through the usage of a <a href="https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/named-and-optional-arguments">named argument,</a> but even that wouldn’t solve the biggest issue: what the heck is the unit of measurement?</p>
+
+<p>Besides harming readability, this problem opens up the possibility of bugs, due to a mismatch of units—a portion of the code “thinks” the unit is centimeters, while others might believe it’s inches.</p>
+
+<p>What am I advocating instead? Well, use typing to your favor. Here, a good solution would be to create a <a href="https://carlosschults.net/en/value-objects-tool/">value object </a>called, let’s say, <code class="language-plaintext highlighter-rouge">Length</code>. This type would have several static factory methods named after specific units of measurement, and its constructor would be private. Then, you’d be able to rewrite the previous example to something like this:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Canvas</span><span class="p">.</span><span class="nf">DrawLine</span><span class="p">(</span><span class="n">Length</span><span class="p">.</span><span class="nf">FromCentimeters</span><span class="p">(</span><span class="m">5</span><span class="p">));</span>
+</code></pre></div></div>
+
+<p>Another example would be the usage of the <code class="language-plaintext highlighter-rouge">TimeSpan</code> type to express durations, instead of using primitive values or employing the <a href="https://learn.microsoft.com/en-us/dotnet/api/system.uri?view=net-7.0">Uri class </a>instead of just strings.</p>
+
+<p>Maybe you’re thinking all of this is simply a convoluted way of saying “avoid primitive obsession.” There’s more to it than that, though.</p>
+
+<p>To illustrate my point, I’ll share another—maybe a bit contrived, I admit—example. Let’s say you’re solving a problem that calls for the usage of a <a href="https://en.wikipedia.org/wiki/Stack_(abstract_data_type)">stack</a>. In this case, nothing is stopping you from using the <code class="language-plaintext highlighter-rouge">List&lt;T&gt;</code> class as a stack, right?</p>
+
+<ul>
+  <li>The <code class="language-plaintext highlighter-rouge">Add</code> method would be your replacement for the <code class="language-plaintext highlighter-rouge">push</code> functionality</li>
+  <li>For the <code class="language-plaintext highlighter-rouge">pop</code> functionality, you’d use a combination of getting the last element from the list via its indexer and then using the <code class="language-plaintext highlighter-rouge">RemoveAt</code> method to delete the item.</li>
+</ul>
+
+<p>The above solution, despite being somewhat convoluted, would work. But I’d vehemently encourage you to just go and use the regular <code class="language-plaintext highlighter-rouge">Stack&lt;T&gt;</code> class. Using the more specific type would make the code immediately more readable to anyone who knows what a stack is. It would make the code reveal its intent.</p>
+
+<p>In short: unless you have a justifiable reason to not do so, always prefer the type that more closely represents the concept or functionality you need. It’ll not only make your code more robust but also more intention-revealing.</p>
+
+<h2 id="level-4-your-code-doesnt-mix-levels-of-abstraction">Level 4: Your Code Doesn’t Mix Levels of Abstraction</h2>
+
+<p>Your code shouldn’t mix more than one level of abstraction. Code that lives in the “Business Rules” portion of your codebase shouldn’t mess with code that lives in the “IO concerns” neighborhood, to give you an example.</p>
+
+<p>Why is this a problem? See the following function:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">public</span> <span class="k">static</span> <span class="kt">double</span> <span class="nf">CalculateAverageTemperature</span><span class="p">(</span><span class="kt">string</span> <span class="n">filePath</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">List</span><span class="p">&lt;</span><span class="n">ClimaticReading</span><span class="p">&gt;</span> <span class="n">readings</span> <span class="p">=</span> <span class="k">new</span><span class="p">();</span>
+
+    <span class="k">try</span>
+    <span class="p">{</span>
+        <span class="k">using</span> <span class="nn">var</span> <span class="n">reader</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">StreamReader</span><span class="p">(</span><span class="n">filePath</span><span class="p">);</span>
+        <span class="k">while</span> <span class="p">(!</span><span class="n">reader</span><span class="p">.</span><span class="n">EndOfStream</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="kt">var</span> <span class="n">line</span> <span class="p">=</span> <span class="n">reader</span><span class="p">.</span><span class="nf">ReadLine</span><span class="p">();</span>
+            <span class="kt">var</span> <span class="n">values</span> <span class="p">=</span> <span class="n">line</span><span class="p">?.</span><span class="nf">Split</span><span class="p">(</span><span class="sc">','</span><span class="p">)</span> <span class="p">??</span> <span class="n">Array</span><span class="p">.</span><span class="n">Empty</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">&gt;();</span>
+
+            <span class="k">if</span> <span class="p">(</span><span class="n">values</span><span class="p">.</span><span class="n">Length</span> <span class="p">&lt;</span> <span class="m">2</span><span class="p">)</span>
+                <span class="k">continue</span><span class="p">;</span>
+            
+            <span class="k">if</span> <span class="p">(</span><span class="n">DateTime</span><span class="p">.</span><span class="nf">TryParse</span><span class="p">(</span><span class="n">values</span><span class="p">[</span><span class="m">0</span><span class="p">],</span> <span class="k">out</span> <span class="n">DateTime</span> <span class="n">date</span><span class="p">)</span> <span class="p">&amp;&amp;</span>
+                <span class="kt">double</span><span class="p">.</span><span class="nf">TryParse</span><span class="p">(</span>
+                    <span class="n">values</span><span class="p">[</span><span class="m">1</span><span class="p">],</span>
+                    <span class="n">NumberStyles</span><span class="p">.</span><span class="n">Float</span><span class="p">,</span>
+                    <span class="n">CultureInfo</span><span class="p">.</span><span class="n">InvariantCulture</span><span class="p">,</span>
+                    <span class="k">out</span> <span class="kt">double</span> <span class="n">temperature</span><span class="p">))</span>
+            <span class="p">{</span>
+                <span class="kt">var</span> <span class="n">reading</span> <span class="p">=</span> <span class="k">new</span> <span class="n">ClimaticReading</span>
+                <span class="p">{</span>
+                    <span class="n">Date</span> <span class="p">=</span> <span class="n">date</span><span class="p">,</span>
+                    <span class="n">Temperature</span> <span class="p">=</span> <span class="n">temperature</span>
+                <span class="p">};</span>
+                <span class="n">readings</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="n">reading</span><span class="p">);</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">catch</span> <span class="p">(</span><span class="n">Exception</span> <span class="n">ex</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">throw</span> <span class="k">new</span> <span class="nf">InvalidOperationException</span><span class="p">(</span><span class="s">$"Error reading the CSV file: </span><span class="p">{</span><span class="n">ex</span><span class="p">.</span><span class="n">Message</span><span class="p">}</span><span class="s">"</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">readings</span><span class="p">.</span><span class="n">Count</span> <span class="p">&lt;</span> <span class="m">3</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">throw</span> <span class="k">new</span> <span class="nf">InvalidOperationException</span><span class="p">(</span><span class="s">"There must be at least 3 readings to calculate the average."</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="n">readings</span> <span class="p">=</span> <span class="n">readings</span><span class="p">.</span><span class="nf">OrderBy</span><span class="p">(</span><span class="n">reading</span> <span class="p">=&gt;</span> <span class="n">reading</span><span class="p">.</span><span class="n">Temperature</span><span class="p">).</span><span class="nf">ToList</span><span class="p">();</span>
+
+    <span class="n">readings</span><span class="p">.</span><span class="nf">RemoveAt</span><span class="p">(</span><span class="m">0</span><span class="p">);</span>
+    <span class="n">readings</span><span class="p">.</span><span class="nf">RemoveAt</span><span class="p">(</span><span class="n">readings</span><span class="p">.</span><span class="n">Count</span> <span class="p">-</span> <span class="m">1</span><span class="p">);</span>
+
+    <span class="kt">double</span> <span class="n">sum</span> <span class="p">=</span> <span class="n">readings</span><span class="p">.</span><span class="nf">Sum</span><span class="p">(</span><span class="n">reading</span> <span class="p">=&gt;</span> <span class="n">reading</span><span class="p">.</span><span class="n">Temperature</span><span class="p">);</span>
+    <span class="kt">double</span> <span class="n">average</span> <span class="p">=</span> <span class="n">sum</span> <span class="p">/</span> <span class="n">readings</span><span class="p">.</span><span class="n">Count</span><span class="p">;</span>
+
+    <span class="k">return</span> <span class="n">average</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>The function reads and parses a .CSV file containing climatic readings. Lines that don’t have the expected two values (date and temperature) are dismissed. Then it sorts the readings, removes the highest and lowest values, and, finally, calculates and returns the average of the remaining values.</p>
+
+<p>This function mixes at least two abstraction levels:</p>
+
+<ul>
+  <li>The “domain logic” level—i.e. the part that makes the calculation</li>
+  <li>The low level: reading and parsing the .CSV file.</li>
+</ul>
+
+<p>You could even make the argument that there are three levels, since the low level could be split into two: file system manipulation and parsing.</p>
+
+<p>This example function isn’t the hardest thing in the world to read, but it’s certainly harder than it has to be. It mixes domain logic with IO error handling and even parsing. A better solution would be to have a method that gets a collection of <code class="language-plaintext highlighter-rouge">ClimaticReading</code> and calculates and returns the average.</p>
+
+<p>In other words, a better and more elegant solution would be to have a <strong>pure function</strong>. This new method, besides being more readable, would be more robust, less error-prone, and also deterministic—i.e. always returns the same results for the same input—making it intrinsically <a href="https://carlosschults.net/en/csharp-unit-testing-intro-tdd/">unit testable.</a></p>
+
+<h2 id="level-5-your-code-speaks-the-language-of-the-business">Level 5: Your Code Speaks The Language of The Business</h2>
+
+<p>You’ve reached level 5 when you write code that speaks the language of the business. When you use terms that are the same ones that domain experts use.</p>
+
+<p>In other words: yeah, I’m pretty much advocating for the same thing that the pragmatic programmers call “program closer to the domain”, or that Eric Evans famously dubbed ubiquitous language in his classical—but definitely not a page-turner—tome, “Domain-Driven Design: Tackling Complexity in the Heart of Software.”</p>
+
+<p>If your code uses unorthodox terms instead of industry terms, it makes onboarding harder when you bring in new people that are familiar with the business but new to the codebase. If the code uses different jargon than that of stakeholders, communication becomes more taxing, since it requires you to perform a constant mapping between concepts just to stay afloat.</p>
+
+<p>Level 5 is somewhat of a logical consequence of level 4. If you carefully segregate the concerns of your app, making sure that high level code doesn’t mix with low level code, the tendency is for the high level code to become closer and closer to the domain in terms of naming.</p>
+
+<h2 id="level-up-the-readability-of-your-code">Level Up The Readability of Your Code</h2>
+
+<p>Most programmers would agree that code readability is vital. But what about agreeing on what “readable code” looks like? That’s a horse of a different color.</p>
+
+<p>As I said earlier, I think a level of subjectivity when it comes to readability is both inevitable and harmless. However, in the context of a team, there has to be at least some consensus of what readable code is. Otherwise, code reviews become exercises of futility, and team morale sinks.</p>
+
+<p>I believe that our industry would benefit from a more objective way to reason about readability. In this post, I gave my small contribution,  in the form of a readability “checklist”, in prioritized order.</p>
+
+<p>But again: the idea of this post isn’t to give a definitive answer, <strong>but to start a conversation</strong>. Do you think the “levels” models make no sense? Or maybe you’d like to share your own levels?  I invite you to share your opinion via a comment, or shoot me an e-mail (you can find my address on the about page).</p>
+
+<p><em>Special thanks to <a href="https://blog.ploeh.dk/">Mark Seemann</a>, <a href="https://www.linkedin.com/in/pgpbarbosa/">Pedro Barbosa</a> and <a href="https://www.linkedin.com/in/petermorlion/">Peter Morlion</a> for giving feedback on earlier drafts of this post.</em></p>
+
+    
+    
+      
+    
+    
+        Found a typo or mistake in the post? <a href="http://github.com/carlosschults/carlosschults.github.io/edit/master/_posts/2023-10-18-five-levels-readable-code.md">Suggest edit</a>
+        
+    
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+                    
+            <a rel="previous" class="previous" href="/en/git-beautiful-history/">&larr; Make Your Git History Look Beautiful Using Amend and Rebase </a>
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+        	    
+            <a rel="next" class="next" href="/git-bisect-intro/">Git Bisect: An Introduction To Beginners &rarr;</a>
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+      
+    <div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+        // Store these for reloads
+        window.disqus_identifier = window.location.pathname;
+        window.disqus_url = window.location.href;
+        
+        // Set initial theme - match it with the site's theme
+        const currentTheme = document.body.getAttribute('data-theme') || 'light';
+        this.page.theme = currentTheme === 'dark' ? 'dark' : 'light';
+    };
+    
+    (function() {
+        var d = document, s = d.createElement('script');
+        s.src = '//carlosschultsblog.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>    
+  </div>
+
+</article>
+
+      </div>
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">         
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-2">
+        <ul class="social-media-list">
+          
+          <li>
+            <a href="https://github.com/carlosschults"><span class="icon icon--github"><svg viewBox="0 0 16 16"><path fill="#828282" d="M7.999,0.431c-4.285,0-7.76,3.474-7.76,7.761 c0,3.428,2.223,6.337,5.307,7.363c0.388,0.071,0.53-0.168,0.53-0.374c0-0.184-0.007-0.672-0.01-1.32 c-2.159,0.469-2.614-1.04-2.614-1.04c-0.353-0.896-0.862-1.135-0.862-1.135c-0.705-0.481,0.053-0.472,0.053-0.472 c0.779,0.055,1.189,0.8,1.189,0.8c0.692,1.186,1.816,0.843,2.258,0.645c0.071-0.502,0.271-0.843,0.493-1.037 C4.86,11.425,3.049,10.76,3.049,7.786c0-0.847,0.302-1.54,0.799-2.082C3.768,5.507,3.501,4.718,3.924,3.65 c0,0,0.652-0.209,2.134,0.796C6.677,4.273,7.34,4.187,8,4.184c0.659,0.003,1.323,0.089,1.943,0.261 c1.482-1.004,2.132-0.796,2.132-0.796c0.423,1.068,0.157,1.857,0.077,2.054c0.497,0.542,0.798,1.235,0.798,2.082 c0,2.981-1.814,3.637-3.543,3.829c0.279,0.24,0.527,0.713,0.527,1.437c0,1.037-0.01,1.874-0.01,2.129 c0,0.208,0.14,0.449,0.534,0.373c3.081-1.028,5.302-3.935,5.302-7.362C15.76,3.906,12.285,0.431,7.999,0.431z"/></svg>
+</span><span class="username">carlosschults</span></a>
+
+          </li>
+          
+
+          
+          <li>
+            <a href="https://twitter.com/carlosschults"><span class="icon icon--twitter"><svg viewBox="0 0 16 16"><path fill="#828282" d="M15.969,3.058c-0.586,0.26-1.217,0.436-1.878,0.515c0.675-0.405,1.194-1.045,1.438-1.809c-0.632,0.375-1.332,0.647-2.076,0.793c-0.596-0.636-1.446-1.033-2.387-1.033c-1.806,0-3.27,1.464-3.27,3.27 c0,0.256,0.029,0.506,0.085,0.745C5.163,5.404,2.753,4.102,1.14,2.124C0.859,2.607,0.698,3.168,0.698,3.767 c0,1.134,0.577,2.135,1.455,2.722C1.616,6.472,1.112,6.325,0.671,6.08c0,0.014,0,0.027,0,0.041c0,1.584,1.127,2.906,2.623,3.206 C3.02,9.402,2.731,9.442,2.433,9.442c-0.211,0-0.416-0.021-0.615-0.059c0.416,1.299,1.624,2.245,3.055,2.271 c-1.119,0.877-2.529,1.4-4.061,1.4c-0.264,0-0.524-0.015-0.78-0.046c1.447,0.928,3.166,1.469,5.013,1.469 c6.015,0,9.304-4.983,9.304-9.304c0-0.142-0.003-0.283-0.009-0.423C14.976,4.29,15.531,3.714,15.969,3.058z"/></svg>
+</span><span class="username">carlosschults</span></a>
+
+          </li>
+          
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-3">
+        <p>Articles on software development and technology.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+
+    <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-92788641-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+    <script src="/js/dark-mode.js"></script>
+  </body>
+
+</html>

@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Are private methods a code smell? | carlos schults / blog</title>
+  <link rel="apple-touch-icon" sizes="57x57" href="/img/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/img/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/img/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/img/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/img/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/img/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/img/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/img/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"  href="/img/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/img/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon-16x16.png">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="description" content="Some people believe private methods should be avoided. Are they right?">
+  
+  <!-- Twitter card -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:creator" content="@carlosschults">
+  <meta name="twitter:site" content="@carlosschults">
+  <meta name="twitter:domain" content="carlosschults.net">
+  <meta name="twitter:title" content="Are private methods a code smell?">
+  <meta name="twitter:description" content="Some people believe private methods should be avoided. Are they right?">
+
+   <!-- Facebook meta -->
+  
+  
+  <meta property="og:title" content="Are private methods a code smell?">
+  <meta property="og:site_name" content="Carlos Schults / Blog" />
+  <meta property="og:locale" content="en_US">  
+  <meta property="og:type" content="article" />
+  <meta property="og:image" content="https://res.cloudinary.com/dz5ppacuo/image/upload/v1485700794/capa-min_no1cci.jpg" />  
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:width" content="1038"> 
+  <meta property="og:image:height" content="437">  
+  
+  <meta property="og:article:published_time" content="2017-01-29T00:00:00+00:00" />  
+  <meta property="og:article:author" content="Carlos Schults" />
+  
+  <meta property="og:article:tag" content="code smell" />
+  <meta property="og:article:tag" content="best practices" />
+  <meta property="og:article:tag" content="oop" />    
+  
+  <meta property="og:url" content="https://carlosschults.net/en/are-private-methods-a-code-smell/"/>
+  <meta property="og:description" content="Some people believe private methods should be avoided. Are they right?">
+  <link rel="stylesheet" href="/css/main.css">  
+  
+   <link rel="canonical" href="https://carlosschults.net/en/are-private-methods-a-code-smell/">
+   
+  
+  <link rel="alternate" hreflang="en" href="/en/are-private-methods-a-code-smell/" />
+  <link rel="alternate" hreflang="pt" href="/pt/metodos-privados-code-smell/" />
+  
+  <link rel="alternate" type="application/rss+xml" title="carlos schults / blog" href="https://carlosschults.net/feed.xml">
+</head>
+
+  <body>
+    <header class="site-header">
+  <div class="wrapper">    
+    <a class="site-title" href="/">carlos schults / blog</a>
+    
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg viewBox="0 0 18 15">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+
+      <div class="trigger">        
+          
+          <a class="page-link" href="/footprints/">Dev Footprints</a>
+          <a class="page-link" href="/readings/">Readings</a>
+          <a class="page-link" href="/about/">About</a>
+		      <a class="page-link" href="/search/">Search</a>
+                  
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+<div class="wrapper" style="text-align: right; line-height: 2em">
+  
+   <a href="/en/are-private-methods-a-code-smell/" class="en">en</a>  <a href="/pt/metodos-privados-code-smell/" class="pt">pt</a> 
+
+  
+  
+</div>
+
+
+    <div class="page-content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">    
+    <h2 class="postTitle" itemprop="headline">Are private methods a code smell?</h2>
+    <p class="post-meta">   
+    <time datetime="2017-01-29T00:00:00+00:00" itemprop="datePublished">Jan 29, 2017
+    </time> • <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">Carlos Schults</span></span>
+  <span class="tags" itemprop="keywords"> • Tags: <a href="/tag/code smell">code smell </a> <a href="/tag/best practices">best practices </a> <a href="/tag/oop">oop </a> </span>
+  </p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <p><img src="https://res.cloudinary.com/dz5ppacuo/image/upload/v1485700794/capa-min_no1cci.jpg" alt="" /></p>
+
+<p>Some people believe private methods should be avoided. Are they right?
+<!--more--></p>
+
+<p>A couple of months ago, <a href="https://twitter.com/mdbs99">Marcos Douglas</a> published a post about <a href="https://gist.github.com/carlosschults/5f4ba7cfb2453977c8d11424b2926686">how the use of rules and constraints can help you keep your code clean and maintainable</a>*. This <a href="https://medium.com/@cscalfani/why-programmers-need-limits-3d96e1a0a6db#.rptqu89ec">premise</a> keeps showing up <a href="https://blog.ploeh.dk/2015/04/13/less-is-more-language-features/">again</a> and <a href="https://robots.thoughtbot.com/sandi-metz-rules-for-developers">again</a> around the web, and I totally agree with it.</p>
+
+<p>Marcos lays out several useful guidelines such as the ideal number of arguments in a method, the ideal numbers of methods in a class, and so on. The post is very good, and I think you should all <a href="https://gist.github.com/carlosschults/5f4ba7cfb2453977c8d11424b2926686">check it out</a>, but it is not the focus of today’s post.</p>
+
+<p>Instead, I want to talk about a subject that showed up in the comment’s thread: private methods as a <a href="https://martinfowler.com/bliki/CodeSmell.html">code smell</a>.</p>
+
+<p>Since I’d never heard something along those lines, I was naturally surprised and decided to do some research.</p>
+
+<h2 id="whats-the-matter-with-private-methods">What’s the matter with private methods?</h2>
+
+<p>First, let’s try to understand why would private methods be a problem.</p>
+
+<p>One common argument is that private methods violate the Single Responsibility Principle. The SRP states that each class should do only one thing. If you’re tempted to create private methods, the argument follows, that’s a sign that your class is doing too much.</p>
+
+<blockquote>
+  <p>Private helper methods indicate classes are doing too many things. Moving private helper methods to different classes, including creating new classes if necessary, splits the original responsibilities across multiple classes leading to simpler, better designs.</p>
+
+  <p>Kent R Spillner, in <a href="https://kent.spillner.org/blog/work/2009/11/12/private-methods-stink.html">Private Methods are a Code Smell</a></p>
+</blockquote>
+
+<p>Here is another similar view:</p>
+
+<blockquote>
+  <p>Private methods are not inherently bad, but they are a sign that you might be missing out on an opportunity to make a useful abstraction. If you have a private method that calls another private method, then there is almost certainly an area of responsibility that remains unidentified.</p>
+
+  <p>John McDowall, in <a href="https://blog.stormid.com/2015/03/method-access-modifiers-as-code-smells/">Break. It. Up! – Private Method Access Modifiers as Code Smells</a></p>
+</blockquote>
+
+<p>Another argument is that private methods make unit testing difficult:</p>
+
+<blockquote>
+  <p>Make it public!</p>
+
+  <p>[…]This is probably the simplest way to overcome the problem of untestability.[…] There’s a reason for that:  testability is a perfectly good reason to make something public.  And you should test most of your code.</p>
+</blockquote>
+
+<blockquote>
+  <p>Jason M Baker, in <a href="https://jasonmbaker.wordpress.com/2009/01/08/enemies-of-test-driven-development-part-i-encapsulation/">Enemies of Test Driven Development part I: encapsulation</a></p>
+</blockquote>
+
+<p>Finally, people also argue that private methods play an important role in messing with internal states in objects, which can get you in real trouble.</p>
+
+<blockquote>
+  <p>Functional programming teaches that state (in the form of member variables) is evil, because it makes your code more complex and harder to test.</p>
+
+  <p>Ryan Ginstrom, in <a href="https://ginstrom.com/scribbles/2007/11/12/three-reasons-to-avoid-private-class-members/">Three reasons to avoid private class members</a></p>
+</blockquote>
+
+<p>I’ve just outlined some of the common arguments against the creation of private methods, so now it’s time to show my opinions on this.</p>
+
+<h2 id="private-methods-are-not-necessarily-srp-violations">Private methods are <em>not</em> necessarily SRP violations</h2>
+
+<p>The first argument presented states that private methods violate the Single Responsibility Principle.</p>
+
+<blockquote>
+  <p><em>Private helper methods indicate classes are doing too many things.</em></p>
+</blockquote>
+
+<p>I don’t think that’s the case. At least, not always. It depends on what the private method is doing.</p>
+
+<p>You probably shouldn’t add a method called <code class="language-plaintext highlighter-rouge">ValidateEmailAddress</code> to your <code class="language-plaintext highlighter-rouge">Customer</code> class, whether private or not. After all, a customer is not the only entity that can have an email address. Instead, create an <code class="language-plaintext highlighter-rouge">Email</code> class and put all the pertinent validations in it.</p>
+
+<p>On the other hand, let’s say you’re creating a <code class="language-plaintext highlighter-rouge">Sort</code> method for a custom data structure. In this case, it’d make a lot of sense to keep the <code class="language-plaintext highlighter-rouge">Sort</code> method public, and have some auxiliary private methods, such as <code class="language-plaintext highlighter-rouge">CompareItems</code> and <code class="language-plaintext highlighter-rouge">Swap</code>.</p>
+
+<blockquote>
+  <p><em>Moving private helper methods to different classes, including creating new classes if necessary, splits the original responsibilities across multiple classes leading to simpler, better designs.</em></p>
+</blockquote>
+
+<p>My main issue with this argument is not that small classes are generally better than large ones, which I agree.</p>
+
+<p>My problem is that I don’t agree that creating new classes and public methods <strong>just for the sake of avoiding private methods</strong> will <strong>automatically</strong> lead to “simpler, better designs”. It sure <em>can</em>; but it can lead you to worse designs as well. Each situation is unique.</p>
+
+<h2 id="i-dont-buy-testability-for-testabilitys-sake">I don’t buy testability for testability’s sake</h2>
+
+<p>I really like unit tests (and automated tests in general). I helped evangelize unit testing in my workplace, and I’m currently supervising the team that is adding unit and integration tests to our codebase.</p>
+
+<p>And one of the first questions that people ask when you’re teaching unit testing to them is: How do I unit test private methods?</p>
+
+<p><img src="https://res.cloudinary.com/dz5ppacuo/image/upload/v1485701114/unicorn_dies-min_epffty.jpg" alt="" /></p>
+
+<p>My answer usually is: <strong>you shouldn’t</strong>. IMHO, it’s just not that productive to put a lot of effort into testing private methods: since they are called by the public ones, they’re going to be exercised by your tests anyway.</p>
+
+<p>The goal of a unit test should be to test and document a “unit” (a class) by using its public API. Which leads us to the next point.</p>
+
+<h2 id="your-public-api-should-be-stable">Your public API should be stable!</h2>
+
+<p>API stands for “Application Programming Interface”. This term can mean a bunch of things, but in this context, think of the API as the set of all public classes and methods that your application exposes to consumers.</p>
+
+<p>The API acts as a kind of contract between you and your consumers. It’s a deal. If you alter the deal, the other party won’t be happy.</p>
+
+<p><img src="https://res.cloudinary.com/dz5ppacuo/image/upload/v1485701325/deal-min_th2zxm.jpg" alt="" /></p>
+
+<p>Your public API should be as stable as possible. This is specially true when you’re writing a web service, a library, or any kind of tool that other parties depend on.</p>
+
+<p>By the way, this third party doesn’t have to be geographically distant from you. It’s common for a medium to large company to have several teams that depend on code provided by each other. What would happen if each team constantly made drastic changes in their APIs? Chaos.</p>
+
+<p>When you expose a method publicly, from that moment on you’re “forced” to keep that method working and honoring its contract; otherwise, your consumers will suffer with breaking changes in their code!</p>
+
+<p>A good usage of private methods can help ensure proper encapsulation in your design.</p>
+
+<p>Here’s yet another quote from Kent R Spillner:</p>
+
+<blockquote>
+  <p>Sometimes, private methods are created just to give pieces of functionality more descriptive names. Although descriptive names are desirable, creating private methods to provide descriptive names for things is still a smell. Moving these methods to collaborators and making them public creates opportunities for future reuse without reducing the clarity of the original code.</p>
+</blockquote>
+
+<p>This is one of the points I most vehemently disagree with. I often create private methods for the exact reason Kent R Spillner criticizes here, i.e. giving descriptive names for chunks of code, a habit I developed after reading Robert C. Martin’s book <em>Clean Code</em>.</p>
+
+<p>Mr. Spillner defends that the proper way to deal with this should be to move these methods to other classes and make them public.</p>
+
+<p>But in doing that, I’ve just added a new public method to the public API of my system! Now it’s one more method to document, test and support, even though it was never <em>meant</em> to be part of the public API.</p>
+
+<p>Here we have a definition for access modifiers that I think is spot on:</p>
+
+<blockquote>
+  <p>public - this method is part of the published API and will not change within major versions of the class</p>
+
+  <p>[…]</p>
+
+  <p>private - this method was refactored out of a well tested public or protected method for reasons of clarity or internal re-use. This method may absolutely change, even in patch releases, and should not be relied upon to even exist.</p>
+</blockquote>
+
+<p>I subscribe to this definition. Thus, in my opinion:</p>
+
+<ul>
+  <li>Private methods are not necessarily a bad thing to be avoided at all costs.</li>
+  <li>Making private methods public don’t automatically lead to better design; it can also lead to an unnecessary inflated API, weak encapsulation, and increased maintenance overhead.</li>
+  <li>Testability is a noble goal, but should be pursued pragmatically. Well tested and documented public methods should be enough, for most cases.</li>
+</ul>
+
+<h2 id="private-methods-can-be-good-or-bad-learn-to-tell-them-apart">Private methods can be good or bad; learn to tell them apart</h2>
+
+<p>All being said, I do think there are cases in which private methods are used in a wrong way. Like any other tool, they can be abused. You should probably watch out for some red flags.</p>
+
+<p>If a private method is at a <strong>different level of abstraction</strong> than the public ones in a class, it’s a sign that it belongs in another class. Reading/writing to a file is at a lower level than calculating an employee’s  monthly payment, for instance.</p>
+
+<p>When a private method is so complex that you really, really wished you could unit test it…then it probably should be made public. (Before you point out my apparent contradiction, I’m not saying that <strong>every</strong> private method should be made public in order to become testable…just the ones who cross some threshold of complexity).</p>
+
+<blockquote class="twitter-tweet" data-lang="pt"><p lang="en" dir="ltr"><a href="https://twitter.com/pablogl">@pablogl</a> i only test public methods. if a private method is complex enough to need testing, it generally needs its own object.</p>&mdash; Kent Beck (@KentBeck) <a href="https://twitter.com/KentBeck/status/3579860805">27 de agosto de 2009</a></blockquote>
+<script async="" src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<p>What about a private method that contains duplicated code, as in, copied and pasted from another class…? Get rid of the duplication immediately!</p>
+
+<p>So, here is the thing: two out of the three signs I’ve just outlined are somewhat subjective. At some point, you have to make some choices. How complex is complex enough for a private method to need unit testing? How to properly tell about different levels of abstractions?</p>
+
+<p>The best tip I can offer is: <strong>Use an extra pair of eyes</strong>. Always have another person look and examine your code before you check it in. Pair-programming and/or code review are great techniques, not only for improving design and catching bugs, but also for spreading knowledge across a team. Not only technical knowledge, but domain knowledge as well, and that can make the difference when the time comes to make those tough decisions.</p>
+
+<h2 id="in-conclusion">In conclusion</h2>
+
+<p>Although private methods can be used in bad ways, I think it’s premature to automatically label them as a bad thing and something to be avoided.</p>
+
+<p>It seems to me that some of the people that claim to be arguing against private methods <strong>are in fact arguing against issues that are orthogonal to private methods</strong>; you can violate SRP with and without private methods; you can mess with internal mutable state with and without private methods, and so on.</p>
+
+<p>Software development is an art, full of trade-offs and uncertainty. And while rules-of-thumbs can be useful, they should not be followed blindly.</p>
+
+<p>This post turned out way longer than I intended. Thanks if you’ve made this far. See you next time!</p>
+
+<h2 id="references">References</h2>
+
+<ul>
+  <li><a href="https://stackoverflow.com/questions/2620699/why-private-methods-in-the-object-oriented">https://stackoverflow.com/questions/2620699/why-private-methods-in-the-object-oriented</a></li>
+  <li><a href="https://kent.spillner.org/blog/work/2009/11/12/private-methods-stink.html">https://kent.spillner.org/blog/work/2009/11/12/private-methods-stink.html</a></li>
+  <li><a href="https://blog.stormid.com/2015/03/method-access-modifiers-as-code-smells/">https://blog.stormid.com/2015/03/method-access-modifiers-as-code-smells/</a></li>
+  <li><a href="https://jasonmbaker.wordpress.com/2009/01/08/enemies-of-test-driven-development-part-i-encapsulation/">https://jasonmbaker.wordpress.com/2009/01/08/enemies-of-test-driven-development-part-i-encapsulation/</a></li>
+  <li><a href="https://medium.com/i-m-h-o/private-methods-smelly-ish-435e93ff8c39#.cl06rkgct">https://medium.com/i-m-h-o/private-methods-smelly-ish-435e93ff8c39#.cl06rkgct</a></li>
+  <li><a href="https://ginstrom.com/scribbles/2007/11/12/three-reasons-to-avoid-private-class-members/">https://ginstrom.com/scribbles/2007/11/12/three-reasons-to-avoid-private-class-members/</a></li>
+  <li><a href="https://rc3.org/2010/01/26/the-argument-against-private-methods/">https://rc3.org/2010/01/26/the-argument-against-private-methods/</a></li>
+  <li><a href="https://naildrivin5.com/blog/2010/05/26/is-private-a-code-smell.html">https://naildrivin5.com/blog/2010/05/26/is-private-a-code-smell.html</a></li>
+</ul>
+
+<p>* The author has given me permission to translate the article to English. <a href="https://objectpascalprogramming.com/posts/menos-e-mais/">Here is the original version, in Portuguese</a>.</p>
+
+
+    
+    
+      
+    
+    
+        Found a typo or mistake in the post? <a href="http://github.com/carlosschults/carlosschults.github.io/edit/master/_posts/2017-01-29-are-private-methods-a-code-smell.md">Suggest edit</a>
+        
+    
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+                    
+            <a rel="previous" class="previous" href="/en/value-reference-types-in-csharp-part-2/">&larr; Value and reference types in C#, Part 2 - Why can't a DateTime be null? </a>
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+        	    
+            <a rel="next" class="next" href="/en/types-of-comments-to-avoid/">Learn which types of comments should be avoided &rarr;</a>
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+      
+    <div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+        // Store these for reloads
+        window.disqus_identifier = window.location.pathname;
+        window.disqus_url = window.location.href;
+        
+        // Set initial theme - match it with the site's theme
+        const currentTheme = document.body.getAttribute('data-theme') || 'light';
+        this.page.theme = currentTheme === 'dark' ? 'dark' : 'light';
+    };
+    
+    (function() {
+        var d = document, s = d.createElement('script');
+        s.src = '//carlosschultsblog.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>    
+  </div>
+
+</article>
+
+      </div>
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">         
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-2">
+        <ul class="social-media-list">
+          
+          <li>
+            <a href="https://github.com/carlosschults"><span class="icon icon--github"><svg viewBox="0 0 16 16"><path fill="#828282" d="M7.999,0.431c-4.285,0-7.76,3.474-7.76,7.761 c0,3.428,2.223,6.337,5.307,7.363c0.388,0.071,0.53-0.168,0.53-0.374c0-0.184-0.007-0.672-0.01-1.32 c-2.159,0.469-2.614-1.04-2.614-1.04c-0.353-0.896-0.862-1.135-0.862-1.135c-0.705-0.481,0.053-0.472,0.053-0.472 c0.779,0.055,1.189,0.8,1.189,0.8c0.692,1.186,1.816,0.843,2.258,0.645c0.071-0.502,0.271-0.843,0.493-1.037 C4.86,11.425,3.049,10.76,3.049,7.786c0-0.847,0.302-1.54,0.799-2.082C3.768,5.507,3.501,4.718,3.924,3.65 c0,0,0.652-0.209,2.134,0.796C6.677,4.273,7.34,4.187,8,4.184c0.659,0.003,1.323,0.089,1.943,0.261 c1.482-1.004,2.132-0.796,2.132-0.796c0.423,1.068,0.157,1.857,0.077,2.054c0.497,0.542,0.798,1.235,0.798,2.082 c0,2.981-1.814,3.637-3.543,3.829c0.279,0.24,0.527,0.713,0.527,1.437c0,1.037-0.01,1.874-0.01,2.129 c0,0.208,0.14,0.449,0.534,0.373c3.081-1.028,5.302-3.935,5.302-7.362C15.76,3.906,12.285,0.431,7.999,0.431z"/></svg>
+</span><span class="username">carlosschults</span></a>
+
+          </li>
+          
+
+          
+          <li>
+            <a href="https://twitter.com/carlosschults"><span class="icon icon--twitter"><svg viewBox="0 0 16 16"><path fill="#828282" d="M15.969,3.058c-0.586,0.26-1.217,0.436-1.878,0.515c0.675-0.405,1.194-1.045,1.438-1.809c-0.632,0.375-1.332,0.647-2.076,0.793c-0.596-0.636-1.446-1.033-2.387-1.033c-1.806,0-3.27,1.464-3.27,3.27 c0,0.256,0.029,0.506,0.085,0.745C5.163,5.404,2.753,4.102,1.14,2.124C0.859,2.607,0.698,3.168,0.698,3.767 c0,1.134,0.577,2.135,1.455,2.722C1.616,6.472,1.112,6.325,0.671,6.08c0,0.014,0,0.027,0,0.041c0,1.584,1.127,2.906,2.623,3.206 C3.02,9.402,2.731,9.442,2.433,9.442c-0.211,0-0.416-0.021-0.615-0.059c0.416,1.299,1.624,2.245,3.055,2.271 c-1.119,0.877-2.529,1.4-4.061,1.4c-0.264,0-0.524-0.015-0.78-0.046c1.447,0.928,3.166,1.469,5.013,1.469 c6.015,0,9.304-4.983,9.304-9.304c0-0.142-0.003-0.283-0.009-0.423C14.976,4.29,15.531,3.714,15.969,3.058z"/></svg>
+</span><span class="username">carlosschults</span></a>
+
+          </li>
+          
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-3">
+        <p>Articles on software development and technology.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+
+    <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-92788641-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+    <script src="/js/dark-mode.js"></script>
+  </body>
+
+</html>

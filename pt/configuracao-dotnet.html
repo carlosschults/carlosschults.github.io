@@ -1,0 +1,1396 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>[Tradução] Tudo o que você precisa saber sobre configuração e gerenciamento de segredos em .NET | carlos schults / blog</title>
+  <link rel="apple-touch-icon" sizes="57x57" href="/img/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/img/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/img/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/img/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/img/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/img/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/img/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/img/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"  href="/img/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/img/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon-16x16.png">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="description" content="      ℹ️    NOTA        Este post é uma tradução, cuja publicação foi autorizada pelo autor. Caso tenha interesse, leia o artigo original, em inglês..Eu deci...">
+  
+  <!-- Twitter card -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:creator" content="@carlosschults">
+  <meta name="twitter:site" content="@carlosschults">
+  <meta name="twitter:domain" content="carlosschults.net">
+  <meta name="twitter:title" content="[Tradução] Tudo o que você precisa saber sobre configuração e gerenciamento de segredos em .NET">
+  <meta name="twitter:description" content="      ℹ️    NOTA        Este post é uma tradução, cuja publicação foi autorizada pelo autor. Caso tenha interesse, leia o artigo original, em inglês..Eu deci...">
+
+   <!-- Facebook meta -->
+  
+  
+  <meta property="og:title" content="[Tradução] Tudo o que você precisa saber sobre configuração e gerenciamento de segredos em .NET">
+  <meta property="og:site_name" content="Carlos Schults / Blog" />
+  <meta property="og:locale" content="pt_BR">  
+  <meta property="og:type" content="article" />
+  <meta property="og:image" content="https://res.cloudinary.com/dz5ppacuo/image/upload/v1513817072/csharp8-1037x438_skogpz.jpg" />  
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:width" content="1038"> 
+  <meta property="og:image:height" content="437">  
+  
+  <meta property="og:article:published_time" content="2024-07-23T00:00:00+00:00" />  
+  <meta property="og:article:author" content="Sander ten Brinke, Carlos Schults (tradução)" />
+  
+  <meta property="og:article:tag" content="csharp" />
+  <meta property="og:article:tag" content="dotnet" />
+  <meta property="og:article:tag" content="configuracao" />
+  <meta property="og:article:tag" content="traducoes" />
+  <meta property="og:article:tag" content="tutorial" />    
+  
+  <meta property="og:url" content="https://carlosschults.net/pt/configuracao-dotnet"/>
+  <meta property="og:description" content="      ℹ️    NOTA        Este post é uma tradução, cuja publicação foi autorizada pelo autor. Caso tenha interesse, leia o artigo original, em inglês..Eu deci...">
+  <link rel="stylesheet" href="/css/main.css">  
+  
+   <link rel="canonical" href="https://carlosschults.net/pt/configuracao-dotnet">
+   
+  
+  <link rel="alternate" hreflang="pt" href="/pt/configuracao-dotnet" />
+  
+  <link rel="alternate" type="application/rss+xml" title="carlos schults / blog" href="https://carlosschults.net/rss.xml">
+</head>
+
+  <body>
+    <header class="site-header">
+  <div class="wrapper">    
+    <a class="site-title" href="/pt/">carlos schults / blog</a>
+    
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg viewBox="0 0 18 15">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+
+      <div class="trigger">        
+          
+          <a class="page-link" href="/sobre/">Sobre</a>
+          <a class="page-link" href="/busca/">Busca</a>
+                  
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+<div class="wrapper" style="text-align: right; line-height: 2em">
+  
+   <a href="/pt/configuracao-dotnet" class="pt">pt</a> 
+
+  
+  
+</div>
+
+
+    <div class="page-content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">    
+    <h2 class="postTitle" itemprop="headline">[Tradução] Tudo o que você precisa saber sobre configuração e gerenciamento de segredos em .NET</h2>
+    <p class="post-meta">   
+    <time datetime="2024-07-23T00:00:00+00:00" itemprop="datePublished">23/07/2024
+    </time> • <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">Sander ten Brinke, Carlos Schults (tradução)</span></span>
+  <span class="tags" itemprop="keywords"> • Tags: <a href="/tag_ptbr/csharp">csharp </a> <a href="/tag_ptbr/dotnet">dotnet </a> <a href="/tag_ptbr/configuracao">configuracao </a> <a href="/tag_ptbr/traducoes">traducoes </a> <a href="/tag_ptbr/tutorial">tutorial </a> </span>
+  </p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <p><img src="https://res.cloudinary.com/dz5ppacuo/image/upload/v1513817072/csharp8-1037x438_skogpz.jpg" alt="" /></p>
+
+<div class="callout callout-info">
+  <div class="callout-title">
+    <span class="callout-icon">ℹ️</span>
+    NOTA
+  </div>
+  <div class="callout-content">
+    
+<p>Este post é uma tradução, cuja publicação foi autorizada pelo autor. Caso tenha interesse, <a href="https://stenbrinke.nl/blog/configuration-and-secret-management-in-dotnet/">leia o artigo original, em inglês.</a>.</p>
+
+<p>Eu decidi não traduzir as imagens, pois achei que seria muito trabalhoso. Portanto, as figuras que você verá são as mesmas do artigo original, com as informações nelas em inglês.</p>
+
+<p>Em respeito ao autor, procurei deixar o artigo o mais próximo possível do original: mantive <em>call to actions</em> que o autor faz para suas palestras e conteúdos, e também mantive um pedido de contribução financeira ao final do artigo.</p>
+
+<p>A partir do índice, inicia-se o artigo de autoria de Sander ten Brinke. Após a conclusão do artigo, eu volto com algumas palavras antes de finalizar. Boa leitura!</p>
+
+
+  </div>
+</div>
+
+<h2 id="índice">Índice</h2>
+
+<ul>
+  <li><a href="#introdução">Introdução</a></li>
+  <li><a href="#configuração-no-net">Configuração no .NET</a>
+    <ul>
+      <li><a href="#o-básico">O básico</a></li>
+      <li><a href="#acesso-a-dados-estruturados">Acesso a dados estruturados</a></li>
+      <li><a href="#como-tudo-isso-funciona">Como tudo isso funciona</a></li>
+      <li><a href="#tratando-a-configuração-como-código">Tratando a configuração como código</a></li>
+    </ul>
+  </li>
+  <li><a href="#options-pattern">options pattern</a>
+    <ul>
+      <li><a href="#injeção-de-dependência">Injeção de dependência</a></li>
+      <li><a href="#validação">Validação</a></li>
+      <li><a href="#tempos-de-vida-da-configuração">Tempos de vida da configuração</a></li>
+    </ul>
+  </li>
+  <li><a href="#gerenciamento-de-segredos-durante-o-desenvolvimento">Gerenciamento de segredos durante o desenvolvimento</a>
+    <ul>
+      <li><a href="#o-provedor-de-configuração-de-user-secrets">O provedor de configuração de user secrets</a></li>
+      <li><a href="#usando-user-secrets">Usando user secrets</a></li>
+      <li><a href="#configurando-um-projeto-que-usa-user-secrets">Configurando um projeto que usa user-secrets</a></li>
+    </ul>
+  </li>
+  <li><a href="#meu-modelo-para-gerenciamento-de-configuração">Meu modelo para gerenciamento de configuração</a>
+    <ul>
+      <li><a href="#appsettingsjson">appsettings.json</a></li>
+      <li><a href="#appsettingsdevelopmentjson">appsettings.Development.json</a></li>
+      <li><a href="#user-secrets">User Secrets</a></li>
+    </ul>
+  </li>
+  <li><a href="#usando-o-azure-para-armazenar-a-configuração">Usando o Azure para armazenar a configuração</a>
+    <ul>
+      <li><a href="#armazenamento-de-segredos-no-azure-key-vault">Armazenamento de segredos no Azure Key Vault</a></li>
+      <li><a href="#conectando-se-ao-azure-com-identidades-gerenciadas">Conectando-se ao Azure com identidades gerenciadas</a></li>
+      <li><a href="#armazenamento-da-configuração-na-configuração-de-aplicativo-do-azure">Armazenamento da configuração na Configuração de Aplicativo do Azure</a></li>
+    </ul>
+  </li>
+  <li><a href="#finalizando">Finalizando</a>
+    <ul>
+      <li><a href="#links-para-a-demo">Links para a demo</a></li>
+      <li><a href="#links-para-a-documentação-oficial">Links para a documentação oficial</a></li>
+    </ul>
+  </li>
+  <li><a href="#carlos-de-volta">Carlos de volta</a></li>
+</ul>
+
+<div class="callout callout-info">
+  <div class="callout-title">
+    <span class="callout-icon">ℹ️</span>
+    Info
+  </div>
+  <div class="callout-content">
+    
+<p>Este post é um complemento da minha palestra <a href="https://sessionize.com/s/sander-ten-brinke/keep-it-secret-keep-it-safe-with-.net/48314">Keep it secret, keep it safe with .NET</a>! Se você não puder assistir a uma sessão dessa palestra, poderá ler este post em vez disso! Dessa forma, o maior número possível de pessoas poderá aprender sobre o sistema de configuração do .NET e como manter os segredos em segurança!</p>
+
+<p>Minha palestra oferece algumas informações mais detalhadas, portanto, se quiser saber mais, dê uma olhada na minha página <a href="https://stenbrinke.nl/speaking">Speaking</a> para ver quando e onde darei essa palestra novamente! Você também pode <a href="https://stenbrinke.nl/about/#contact-details">entrar em contato</a> se quiser que eu dê essa palestra em seu evento!</p>
+
+  </div>
+</div>
+
+<h2 id="introdução">Introdução</h2>
+
+<p>Se você já escreve código há algum tempo, provavelmente já usou configuração de alguma forma. Pense em feature flags, configurações de log, configurações de autenticação etc. Talvez você tenha usado um arquivo de configuração com algumas configurações para o seu aplicativo ou talvez tenha usado variáveis de ambiente. Talvez você tenha usado ambos!</p>
+
+<p>Também é provável que você tenha interagido com segredos, que também considero parte de um sistema de configuração. Pense em strings de conexão e chaves de API. Elas devem ser sempre seguras!</p>
+
+<p>A configuração no .NET mudou radicalmente desde a introdução do .NET Core. Já se foi o tempo em que se usavam vários arquivos <code class="language-plaintext highlighter-rouge">Web.config</code> e agora temos um sistema muito mais flexível. No entanto, um sistema flexível também pode ser um sistema complexo. É por isso que eu quis criar uma palestra e uma publicação no blog em que você aprenderá como funciona o sistema de configuração do .NET e como usá-lo de forma otimizada. Você também aprenderá a manter seus segredos seguros, tanto localmente quanto em produção, usando o poder da nuvem do Azure!</p>
+
+<div class="callout callout-info">
+  <div class="callout-title">
+    <span class="callout-icon">ℹ️</span>
+    Info
+  </div>
+  <div class="callout-content">
+    
+<p>Este post contém <strong>tudo</strong> que você precisa saber sobre configuração e gerenciamento de segredos no .NET. Ela não aborda todos os detalhes, mas abrange tudo o que acredito que um desenvolvedor .NET tem que saber. Considere-o um guia de bolso útil que você pode usar ou enviar a outras pessoas quando elas tiverem dúvidas sobre configuração e gerenciamento de segredos no .NET.</p>
+
+<p>Acho que esta post é muito útil porque são necessárias <strong>múltiplas horas</strong> para <em>encontrar</em> e ler completamente a documentação da Microsoft sobre esses tópicos. Se quiser saber mais, você encontrará links para a documentação oficial no final do post.</p>
+
+  </div>
+</div>
+
+<p>Vamos começar!</p>
+
+<h2 id="configuração-no-net">Configuração no .NET</h2>
+
+<p>O sistema de configuração do .NET é muito flexível! Você pode usar vários provedores de configuração, sendo que cada um deles pode ter um formato de configuração diferente:</p>
+
+<p><img src="/img/configuracao-dotnet/configuration-overview.webp" alt="Uma imagem que mostra uma visão geral do sistema de configuração do .NET com a interface IConfiguration e vários provedores" /></p>
+
+<p>Uma visão geral do sistema de configuração do .NET.<br />
+<a href="https://learn.microsoft.com/dotnet/core/extensions/configuration?WT.mc_id=DT-MVP-5005050#concepts-and-abstractions">Extraído da documentação oficial</a></p>
+
+<p>Outras fontes podem ser arquivos como <code class="language-plaintext highlighter-rouge">.xml</code>, <code class="language-plaintext highlighter-rouge">.ini</code> e muito mais. Você pode até mesmo conectar seu sistema de configuração à nuvem, o que faremos mais adiante!</p>
+
+<h3 id="o-básico">O Básico</h3>
+
+<p>Como você pode ver, toda a sua configuração pode ser acessada usando a interface <code class="language-plaintext highlighter-rouge">IConfiguration</code>. Com isso, você pode recuperar seus valores de uma maneira fortemente tipada. Um exemplo:</p>
+
+<figure class="highlight"><pre><code class="language-c#" data-lang="c#"><span class="k">public</span> <span class="n">IConfiguration</span> <span class="n">Configuration</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+
+<span class="k">public</span> <span class="kt">string</span> <span class="nf">GetApiKey</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="c1">// GetValue&lt;&gt; permite que você passe o tipo de retorno</span>
+    <span class="kt">string</span> <span class="n">method1</span> <span class="p">=</span> <span class="n">Configuration</span><span class="p">.</span><span class="n">GetValue</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">&gt;(</span><span class="err">“</span><span class="n">ApiKey</span><span class="err">”</span><span class="p">);</span> 
+
+    <span class="c1">// A variante do indexador sempre retorna uma string</span>
+    <span class="kt">string</span> <span class="n">method2</span> <span class="p">=</span> <span class="n">Configuration</span><span class="p">[</span><span class="err">“</span><span class="n">ApiKey</span><span class="err">”</span><span class="p">];</span> 
+
+    <span class="k">return</span> <span class="n">method1</span><span class="p">;</span>
+<span class="p">}</span></code></pre></figure>
+
+<p>Você perceberá que não estamos especificando qual provedor deve ser usado para recuperar a <code class="language-plaintext highlighter-rouge">ApiKey</code>. Isso ocorre porque isso não deveria importar; a <code class="language-plaintext highlighter-rouge">IConfiguration</code> esconde toda essa complexidade de nós e, portanto, cria flexibilidade. O sistema de configuração decide qual provedor usar com base na ordem dos provedores. Falaremos mais sobre isso mais tarde!</p>
+
+<h3 id="acesso-a-dados-estruturados">Acesso a dados estruturados</h3>
+
+<p>Um recurso muito avançado do sistema de configuração do .NET é o fato de ele oferecer suporte a dados estruturados. Isso é muito útil porque permite que você agrupe valores de configuração relacionados. Todos os provedores oferecem suporte a dados estruturados, mas se você já trabalhou com um projeto ASP.NET Core, provavelmente reconhecerá o mais comum, que é <code class="language-plaintext highlighter-rouge">appsettings.json</code>. O JSON a seguir é um exemplo de um arquivo desse tipo:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
+  “Logging": {
+    “LogLevel": {
+      “Default” (Padrão): “Informações”,
+      “Microsoft.AspNetCore": “Warning”
+    }
+  },
+  “AllowedHosts": “*”,
+
+  “ConnectionStrings": {
+    “Banco de dados": “CONNECTIONSTRING_HERE”
+  },
+
+  “Features” (Recursos): {
+    “EnableNewUI": false
+  }
+}
+</code></pre></div></div>
+
+<p>Você pode imaginar o objeto raiz e as seções <code class="language-plaintext highlighter-rouge">Logging</code>, <code class="language-plaintext highlighter-rouge">ConnectionStrings</code> e <code class="language-plaintext highlighter-rouge">Features</code> como “dados estruturados”.</p>
+
+<p>Para interagir com essas seções no .NET, você pode usar o código a seguir.</p>
+
+<div class="callout callout-warning">
+  <div class="callout-title">
+    <span class="callout-icon">⚠️</span>
+    Aviso
+  </div>
+  <div class="callout-content">
+    
+<p>O código a seguir não é a melhor maneira de interagir com dados estruturados! Falaremos sobre maneiras melhores (usando o padrão Options) <a href="#options-pattern">mais adiante</a>.</p>
+
+  </div>
+</div>
+
+<figure class="highlight"><pre><code class="language-c#" data-lang="c#"><span class="k">public</span> <span class="n">IConfiguration</span> <span class="n">Configuration</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+
+<span class="c1">// ...</span>
+
+<span class="k">public</span> <span class="n">IConfigurationSection</span> <span class="nf">GetFeaturesSection</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="c1">// GetSection retorna nulo quando a seção não pode ser encontrada</span>
+    <span class="kt">var</span> <span class="n">method1</span> <span class="p">=</span> <span class="n">Configuration</span><span class="p">.</span><span class="nf">GetSection</span><span class="p">(</span><span class="err">“</span><span class="n">Features</span><span class="err">”</span><span class="p">);</span>
+
+    <span class="c1">// GetRequiredSection dispara uma exceção quando a seção não pode ser encontrada.</span>
+    <span class="c1">// SEMPRE prefira esse método ao GetSection para evitar bugs desagradáveis!</span>
+    <span class="kt">var</span> <span class="n">method2</span> <span class="p">=</span> <span class="n">Configuration</span><span class="p">.</span><span class="nf">GetRequiredSection</span><span class="p">(</span><span class="err">“</span><span class="n">Features</span><span class="err">”</span><span class="p">);</span>
+
+    <span class="k">return</span> <span class="n">method2</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">public</span> <span class="kt">bool</span> <span class="nf">GetEnableNewUI</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="k">return</span> <span class="n">Configuration</span><span class="p">.</span><span class="n">GetValue</span><span class="p">&lt;</span><span class="kt">bool</span><span class="p">&gt;(</span><span class="err">“</span><span class="n">Features</span><span class="p">:</span><span class="n">EnableNewUI</span><span class="err">”</span><span class="p">);</span>
+<span class="p">}</span></code></pre></figure>
+
+<p>A <code class="language-plaintext highlighter-rouge">IConfigurationSection</code> fornece a mesma API que a <code class="language-plaintext highlighter-rouge">IConfiguration</code>, portanto, você pode chamar <code class="language-plaintext highlighter-rouge">featuresSection.GetValue&lt;bool&gt;(“EnableNewUI”)</code> para obter o valor dessa seção. Também é possível acessar diretamente um valor de configuração que existe dentro de uma seção usando um <code class="language-plaintext highlighter-rouge">:</code>, que pode ser visto em uso no método <code class="language-plaintext highlighter-rouge">GetEnableNewUI</code>.</p>
+
+<div class="callout callout-info">
+  <div class="callout-title">
+    <span class="callout-icon">ℹ️</span>
+    Info
+  </div>
+  <div class="callout-content">
+    
+<p>Os dados estruturados não se limitam aos arquivos JSON. Todos os provedores são compatíveis com eles, embora a sintaxe para especificar uma seção possa ser diferente. Por exemplo, para fornecer um valor para <code class="language-plaintext highlighter-rouge">EnableNewUI</code> usando uma variável de ambiente, você terá que criar uma chamada <code class="language-plaintext highlighter-rouge">Features__EnableNewUI</code>.</p>
+
+  </div>
+</div>
+
+<h3 id="como-tudo-isso-funciona">Como tudo isso funciona?</h3>
+
+<p>Estamos usando <code class="language-plaintext highlighter-rouge">IConfiguration</code> em alguns exemplos. Você deve estar se perguntando como tudo isso funciona nos bastidores; como criar uma instância de <code class="language-plaintext highlighter-rouge">IConfiguration</code> e como configurá-la? Vamos dar uma olhada!</p>
+
+<p>Para criar uma instância de <code class="language-plaintext highlighter-rouge">IConfiguration</code>, você precisará usar a classe <code class="language-plaintext highlighter-rouge">ConfigurationBuilder</code> (ou outra classe que implemente <code class="language-plaintext highlighter-rouge">IConfigurationBuilder</code>). Essa classe usa o padrão Builder para que você possa adicionar vários provedores. No final, você chama <code class="language-plaintext highlighter-rouge">Build()</code> e acaba com um <code class="language-plaintext highlighter-rouge">IConfigurationRoot</code>. É a mesma coisa que <code class="language-plaintext highlighter-rouge">IConfiguration</code>, mas também tem uma lista de todos os provedores que você adicionou. Você nunca deve usar o <code class="language-plaintext highlighter-rouge">IConfigurationRoot</code> diretamente, pois não deve acessar os provedores por baixo do pano. Um exemplo:</p>
+
+<figure class="highlight"><pre><code class="language-c#" data-lang="c#"><span class="kt">var</span> <span class="n">builder</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">ConfigurationBuilder</span><span class="p">();</span>
+
+<span class="n">builder</span><span class="p">.</span><span class="nf">AddJsonFile</span><span class="p">(</span><span class="err">“</span><span class="n">sharedsettings</span><span class="p">.</span><span class="n">json</span><span class="err">”</span><span class="p">);</span>
+<span class="n">builder</span><span class="p">.</span><span class="nf">AddJsonFile</span><span class="p">(</span><span class="err">“</span><span class="n">appsettings</span><span class="p">.</span><span class="n">json</span><span class="err">”</span><span class="p">);</span>
+<span class="n">builder</span><span class="p">.</span><span class="nf">AddEnvironmentVariables</span><span class="p">();</span>
+<span class="c1">// E assim por diante...</span>
+
+<span class="n">IConfigurationRoot</span> <span class="n">configuration</span> <span class="p">=</span> <span class="n">builder</span><span class="p">.</span><span class="nf">Build</span><span class="p">();</span></code></pre></figure>
+
+<p>A ordem desses provedores é muito importante porque se trata de um sistema em camadas. Dê uma olhada na imagem a seguir:</p>
+
+<p><img src="/img/configuracao-dotnet/configuration-providers-layers.webp" alt="Uma imagem que mostra a importância da ordem dos provedores de configuração" /></p>
+
+<p>Uma visão geral da importância da ordem dos provedores de configuração.<br />
+<a href="https://www.manning.com/books/asp-net-core-in-action-second-edition">ASP.NET Core in Action, Second Edition (Permissão concedida pelo autor Andrew Lock)</a></p>
+
+<p>Imagine que <code class="language-plaintext highlighter-rouge">sharedsettings.json</code> tenha um valor para todos os valores de configuração usados pelo aplicativo. O <code class="language-plaintext highlighter-rouge">appsettings.json</code> e as <code class="language-plaintext highlighter-rouge">Variáveis de ambiente</code> contêm um subconjunto desses valores. Como o provedor para as variáveis de ambiente foi adicionado por último, ele tem a prioridade mais alta. Portanto, se você quiser recuperar um valor de configuração chamado <code class="language-plaintext highlighter-rouge">ApiKey</code>, o sistema examinará primeiro as variáveis de ambiente. Se ele existir, será retornado, mesmo que outros provedores também contenham um valor para <code class="language-plaintext highlighter-rouge">ApiKey</code>. No entanto, se as variáveis de ambiente não contiverem um valor para <code class="language-plaintext highlighter-rouge">ApiKey</code>, ele passará para o provedor que foi adicionado antes dele e pesquisará lá, e assim por diante.</p>
+
+<h4 id="os-valores-default">Os valores default</h4>
+
+<p>Talvez você esteja um pouco confuso neste ponto. Eu certamente estava quando aprendi sobre o <code class="language-plaintext highlighter-rouge">IConfigurationBuilder</code> e a importância dessas camadas. Por quê? Bem, percebi que estava usando o <code class="language-plaintext highlighter-rouge">IConfiguration</code> em muitos projetos, mas nunca tinha ouvido falar do <code class="language-plaintext highlighter-rouge">IConfigurationBuilder</code> antes. Então, como eu poderia estar usando o <code class="language-plaintext highlighter-rouge">IConfiguration</code>?</p>
+
+<p>Isso funciona porque, se você trabalhar em um aplicativo .NET que <a href="https://learn.microsoft.com/dotnet/core/extensions/generic-host?WT.mc_id=DT-MVP-5005050">usa um Host</a>, ele definirá todo um sistema de configuração para você por padrão! Por exemplo, <a href="https://learn.microsoft.com/aspnet/core/fundamentals/host/generic-host?WT.mc_id=DT-MVP-5005050">projetos ASP.NET Core</a> e <a href="https://learn.microsoft.com/dotnet/core/extensions/workers?WT.mc_id=DT-MVP-5005050#worker-service-template">workers services</a> usam um <code class="language-plaintext highlighter-rouge">Host</code>, portanto, na maioria dos projetos, isso será feito para você! Agora vamos dar uma olhada em como isso funciona.</p>
+
+<p>Em um aplicativo ASP.NET Core padrão, o seguinte é configurado para você.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Provedor</th>
+      <th>Exemplo</th>
+      <th>Notas</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>appsettings.json</td>
+      <td>{ “Key”: “default value” }</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>appsettings.{ENVIRONMENT}.json</td>
+      <td>{ “Key”: “development value” }</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>user secrets (desenvolvimento)</td>
+      <td>dotnet user-secrets set “key” “development value”</td>
+      <td>Também pode ser definido em IDEs. Mais sobre isso posteriormente.</td>
+    </tr>
+    <tr>
+      <td>Variáveis de ambiente</td>
+      <td>Powershell: setx key “valor do ambiente” <br /> Bash: export key=‘valor do ambiente’</td>
+      <td>Também pode ser definido em IDEs. Muito popular em implantações do Docker/Kubernetes.</td>
+    </tr>
+    <tr>
+      <td>Argumentos da linha de comando</td>
+      <td>dotnet run –key “important value”</td>
+      <td>Também pode ser definido nos IDEs.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>O item no topo tem a prioridade mais baixa. Portanto, se você chamar <code class="language-plaintext highlighter-rouge">Configuration[“key”]</code>, obterá como resultado <code class="language-plaintext highlighter-rouge">important value</code>, mesmo que o User Secrets também forneça um valor.</p>
+
+<div class="callout callout-info">
+  <div class="callout-title">
+    <span class="callout-icon">ℹ️</span>
+    Info
+  </div>
+  <div class="callout-content">
+    
+<p>O provedor User secrets só é adicionado quando o <em>Environment</em> é definido como <em>Development</em>. Os ambientes serão tratados a seguir. Os user secrets são tratados em profundidade <a href="#user-secrets">mais adiante</a>.</p>
+
+  </div>
+</div>
+
+<p>O Visual Studio (e outros IDEs, como o JetBrains Rider) oferecem suporte à configuração de variáveis de ambiente/argumentos de linha de comando em seu IDE quando você acessa as propriedades do projeto. No entanto, aconselho <strong>contra</strong> o uso disso durante o desenvolvimento. Eu nunca uso variáveis de ambiente ou argumentos de linha de comando durante o desenvolvimento porque é mais difícil editá-los do que simplesmente abrir um arquivo. Armazená-los em <code class="language-plaintext highlighter-rouge">appsettings.Development.json</code> (que será abordado a seguir) é mais conveniente para você e seus colegas.</p>
+
+<h4 id="configuração-e-ambientes">Configuração e Ambientes</h4>
+
+<p>O provedor <em>appsettings.{<strong>ENVIRONMENT</strong>}.json</em> é um pouco diferente dos outros provedores. Isso ocorre porque ele depende do <a href="https://learn.microsoft.com/aspnet/core/fundamentals/environments?WT.mc_id=DT-MVP-5005050">ambiente do aplicativo</a>. O ambiente atual do aplicativo é lido a partir do valor da variável de ambiente <code class="language-plaintext highlighter-rouge">DOTNET_ENVIRONMENT</code> ou <code class="language-plaintext highlighter-rouge">ASPNETCORE_ENVIRONMENT</code>. Se o seu projeto não for um projeto ASP.NET Core, o aplicativo verificará apenas <code class="language-plaintext highlighter-rouge">DOTNET_ENVIRONMENT</code>. Os projetos ASP.NET Core retornam para <code class="language-plaintext highlighter-rouge">DOTNET_ENVIRONMENT</code> quando <code class="language-plaintext highlighter-rouge">ASPNETCORE_ENVIRONMENT</code> não existe.</p>
+
+<p>O ambiente será considerado como <code class="language-plaintext highlighter-rouge">Production</code> quando essas variáveis de ambiente não existirem.</p>
+
+<p>Quando você cria um projeto ASP.NET Core, um arquivo chamado <code class="language-plaintext highlighter-rouge">launchSettings.json</code> será criado na pasta <code class="language-plaintext highlighter-rouge">Properties</code>. Aqui, você pode ver que a variável de ambiente <code class="language-plaintext highlighter-rouge">ASPNETCORE_ENVIRONMENT</code> está definida como <code class="language-plaintext highlighter-rouge">Development</code>:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
+  // Muitos outros detalhes foram removidos desse arquivo para fins de brevidade
+  “$schema": “https://json.schemastore.org/launchsettings.json”,
+  “profiles": {
+    “MY_PROJECT": {
+      “commandName": “MY_PROJECT”,
+      “applicationUrl": “https://localhost:7237;http://localhost:5292”,
+      “environmentVariables": {
+        “ASPNETCORE_ENVIRONMENT": “Development”
+      }
+    }
+  }
+}
+
+</code></pre></div></div>
+
+<p>O resultado do sistema de configuração trabalhando em conjunto com o ambiente do aplicativo resulta em um recurso muito poderoso, pois permite que você crie arquivos de configuração diferentes para cada ambiente.</p>
+
+<p>Você pode armazenar valores padrão em <code class="language-plaintext highlighter-rouge">appsettings.json</code> e substituí-los em <code class="language-plaintext highlighter-rouge">appsettings.Development.json</code>, <code class="language-plaintext highlighter-rouge">appsettings.Test.json</code>, <code class="language-plaintext highlighter-rouge">appsettings.Staging.json</code> e <code class="language-plaintext highlighter-rouge">appsettings.Production.json</code>.</p>
+
+<p>Por exemplo, digamos que você tenha terminado o novo design de uma página de checkout de uma loja virtual. Ele ainda precisa ser testado e revisado por outras pessoas em um ambiente de teste, mas ainda não deve entrar em produção. Esse parece ser um caso de uso perfeito para feature flags! Você poderia criar um feature flag chamado <code class="language-plaintext highlighter-rouge">EnableNewCheckoutUI</code> e defini-lo como <code class="language-plaintext highlighter-rouge">false</code> em <code class="language-plaintext highlighter-rouge">appsettings.json</code> como o valor padrão. Em seguida, você pode substituir esses valores em <code class="language-plaintext highlighter-rouge">appsettings.Development.json</code> e <code class="language-plaintext highlighter-rouge">appsettings.Test.json</code> para que eles sejam ativados somente lá:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>// appsettings.json
+{
+  “FeatureFlags": {
+    “EnableNewCheckoutUI": false
+  }
+}
+
+// appsettings.Development.json e appsettings.Test.json
+{
+  “FeatureFlags": {
+    “EnableNewCheckoutUI": true
+  }
+}
+
+</code></pre></div></div>
+
+<p>Você não está limitado aos nomes de ambiente mencionados acima; eles são apenas os padrões que o .NET usa. Se quiser usar um nome diferente, configure a variável de ambiente <code class="language-plaintext highlighter-rouge">ASPNETCORE_ENVIRONMENT</code> com o nome de sua escolha e crie um arquivo <code class="language-plaintext highlighter-rouge">appsettings.ENV_NAME.json</code> correspondente. A única outra coisa que você precisa fazer é garantir que o ambiente em que você executa seu aplicativo tenha <code class="language-plaintext highlighter-rouge">ASPNETCORE_ENVIRONMENT</code> ou <code class="language-plaintext highlighter-rouge">DOTNET_ENVIRONMENT</code> definido com o valor correto.</p>
+
+<h3 id="tratando-a-configuração-como-código">Tratando a Configuração Como Código</h3>
+
+<p>Anteriormente, elogiei o sistema de configuração do .NET e o <code class="language-plaintext highlighter-rouge">IConfiguration</code> por serem flexíveis e ricos em recursos. Falei sobre seu suporte a dados estruturados e sobre a recuperação de valores de uma hierarquia de configuração mais profunda. Mas você sabia que pode fazer muito mais com dados estruturados?</p>
+
+<p>Digamos que nosso aplicativo se comunique com uma API externa usando HTTP. Para isso, precisamos de um <code class="language-plaintext highlighter-rouge">ApiUrl</code>, <code class="language-plaintext highlighter-rouge">ApiKey</code> e talvez queiramos configurar um <code class="language-plaintext highlighter-rouge">TimeoutInMilliseconds</code>. Do ponto de vista do código, talvez queiramos armazenar esses valores em uma classe (ou <code class="language-plaintext highlighter-rouge">record</code>) porque eles pertencem um ao outro:</p>
+
+<figure class="highlight"><pre><code class="language-c#" data-lang="c#"><span class="k">public</span> <span class="k">class</span> <span class="nc">ExternalApiSettings</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="kt">string</span> <span class="n">ApiUrl</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="k">public</span> <span class="kt">string</span> <span class="n">ApiKey</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="k">public</span> <span class="kt">int</span> <span class="n">TimeoutInMilliseconds</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+<span class="p">}</span></code></pre></figure>
+
+<p>Em seguida, teríamos uma classe <code class="language-plaintext highlighter-rouge">ExternalApiClient</code> que usa a configuração e a classe que acabamos de criar:</p>
+
+<figure class="highlight"><pre><code class="language-c#" data-lang="c#"><span class="k">public</span> <span class="k">class</span> <span class="nc">ExternalApiClient</span>
+<span class="p">{</span>
+    <span class="k">private</span> <span class="k">readonly</span> <span class="n">IConfiguration</span> <span class="n">_configuration</span><span class="p">;</span>
+
+    <span class="k">public</span> <span class="nf">Foo</span><span class="p">(</span><span class="n">IConfiguration</span> <span class="n">configuration</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">_configuration</span> <span class="p">=</span> <span class="n">configuration</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="k">void</span> <span class="nf">CallExternalApi</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="n">IConfigurationSection</span> <span class="n">externalApiSettingsSection</span> <span class="p">=</span> <span class="n">_configuration</span><span class="p">.</span><span class="nf">GetRequiredSection</span><span class="p">(</span><span class="err">“</span><span class="n">ExternalApiSettings</span><span class="err">”</span><span class="p">);</span>
+        
+        <span class="c1">// Método 1 (Get&lt;TType&gt;() obtém os valores dessa seção e os mapeia em uma nova instância da classe fornecida)</span>
+        <span class="n">ExternalApiSettings</span> <span class="n">settings1</span> <span class="p">=</span> <span class="n">externalApiSettingsSection</span><span class="p">.</span><span class="n">Get</span><span class="p">&lt;</span><span class="n">ExternalApiSettings</span><span class="p">&gt;();</span> 
+
+        <span class="c1">// Método 2 (Bind() espera uma instância existente de um tipo e mapeará os valores para essa instância existente)</span>
+        <span class="n">ExternalApiSettings</span> <span class="n">settings2</span> <span class="p">=</span> <span class="k">new</span><span class="p">();</span>
+        <span class="n">_configuration</span><span class="p">.</span><span class="nf">GetRequiredSection</span><span class="p">(</span><span class="err">“</span><span class="n">ExternalApiSettings</span><span class="err">”</span><span class="p">).</span><span class="nf">Bind</span><span class="p">(</span><span class="n">settings2</span><span class="p">);</span>
+
+        <span class="c1">// Faça algo com essas configurações aqui...</span>
+    <span class="p">}</span>
+<span class="p">}</span></code></pre></figure>
+
+<p>Isso parece bem legal, certo? Em vez de realizar 3 chamadas para obter cada propriedade de configuração relacionada à API individualmente, podemos mapeá-las em um objeto fortemente tipado. Agora podemos tratar nossa configuração como código! Poderíamos até criar métodos em nossa classe <code class="language-plaintext highlighter-rouge">ExternalApiSettings</code> para torná-la ainda mais poderosa!</p>
+
+<p>No entanto, há algumas desvantagens importantes nessa abordagem.</p>
+
+<h4 id="desvantagens">Desvantagens</h4>
+
+<ul>
+  <li>A primeira desvantagem é que o nosso <code class="language-plaintext highlighter-rouge">ExternalApiClient</code> requer uma instância de <code class="language-plaintext highlighter-rouge">IConfiguration</code> para funcionar. Essa é uma dependência muito grande e um grande desperdício, considerando que ele usa apenas 3 valores de configuração! Além disso, essa classe agora pode acessar outros valores de configuração, como uma string de conexão a um banco de dados, configurações de registro, feature flags etc., mesmo que não precise dessas informações.</li>
+  <li>A segunda desvantagem é que essa classe está violando o princípio da responsabilidade única. Ela não é responsável apenas por chamar a API externa, mas também por interagir com o sistema de configuração para poder chamar essa API externa.</li>
+  <li>Como essa classe interage diretamente com o sistema de configuração, ela depende de sua estrutura e, portanto, está fortemente acoplada. Qualquer alteração na seção de configuração <code class="language-plaintext highlighter-rouge">ExternalApiSettings</code> (como o nome ou os nomes de seus filhos) causaria problemas em tempo de execução.</li>
+</ul>
+
+<p>Então, o que podemos fazer em relação a isso? Reescrevê-la em Rust 🦀? Não, podemos usar o options pattern!</p>
+
+<h2 id="options-pattern">Options Pattern</h2>
+
+<p>O <em>options pattern</em> (“padrão de opções”) permite que você faça um uso ainda melhor do sistema de configuração do .NET 🚀! Ele permite a você desacoplar seu aplicativo do sistema de configuração e adiciona muitos recursos poderosos a esse sistema, como:</p>
+
+<ul>
+  <li>Injeção de dependência</li>
+  <li>Validação</li>
+  <li>Diferentes tempos de vida de configuração</li>
+  <li>E muito mais!</li>
+</ul>
+
+<p>Para começar a usar o options pattern de forma eficaz, é necessário criar classes/records das suas seções de configuração. Já fizemos isso no exemplo anterior, portanto, vamos continuar com ele:</p>
+
+<figure class="highlight"><pre><code class="language-c#" data-lang="c#"><span class="k">public</span> <span class="k">class</span> <span class="nc">ExternalApiSettings</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="kt">string</span> <span class="n">ApiUrl</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="k">public</span> <span class="kt">string</span> <span class="n">ApiKey</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="k">public</span> <span class="kt">int</span> <span class="n">TimeoutInMilliseconds</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+<span class="p">}</span></code></pre></figure>
+
+<h3 id="injeção-de-dependência">Injeção de dependência</h3>
+
+<p>O options pattern funciona muito bem com a injeção de dependência! Para isso, basta registrar sua classe/record de opções na coleção de serviços. Dependendo do seu projeto, o ponto de entrada para isso pode ser o método <code class="language-plaintext highlighter-rouge">Startup.cs -&gt; ConfigureServices(IServiceCollection services)</code> ou em algum lugar em seu <code class="language-plaintext highlighter-rouge">Program.cs</code>.</p>
+
+<figure class="highlight"><pre><code class="language-c#" data-lang="c#"><span class="n">services</span><span class="p">.</span><span class="n">Configure</span><span class="p">&lt;</span><span class="n">ExternalApiSettings</span><span class="p">&gt;(</span><span class="n">configuration</span><span class="p">);</span> <span class="c1">// Passe em uma instância existente de IConfiguration</span></code></pre></figure>
+
+<p>Isso adicionará uma instância de <code class="language-plaintext highlighter-rouge">IOptions&lt;ExternalApiSettings&gt;</code> ao seu contêiner de injeção de dependência. Para ver os benefícios dessa abordagem, vamos dar uma olhada em como poderíamos melhorar nosso <code class="language-plaintext highlighter-rouge">ExternalApiClient</code> de antes:</p>
+
+<figure class="highlight"><pre><code class="language-c#" data-lang="c#"><span class="k">public</span> <span class="k">class</span> <span class="nc">ExternalApiClient</span>
+<span class="p">{</span>
+    <span class="k">private</span> <span class="k">readonly</span> <span class="n">ExternalApiSettings</span> <span class="n">_externalApiSettings</span><span class="p">;</span>
+
+    <span class="k">public</span> <span class="nf">ExternalApiClient</span><span class="p">(</span><span class="n">IOptions</span><span class="p">&lt;</span><span class="n">ExternalApiSettings</span><span class="p">&gt;</span> <span class="n">options</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="c1">// Importante: o padrão Options é “preguiçoso”. Isso significa que as opções são mapeadas somente quando você as solicita chamando .Value!</span>
+        <span class="c1">// Isso é feito apenas uma vez, portanto, você não precisa se preocupar com o desempenho.</span>
+        <span class="n">_externalApiSettings</span> <span class="p">=</span> <span class="n">options</span><span class="p">.</span><span class="n">Value</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="k">void</span> <span class="nf">CallExternalApi</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="c1">// Faz algo com essas configurações aqui...</span>
+    <span class="p">}</span>
+<span class="p">}</span></code></pre></figure>
+
+<p>Isso eliminou todas as desvantagens de antes! Nosso <code class="language-plaintext highlighter-rouge">ExternalApiClient</code> não tem mais uma dependência do <code class="language-plaintext highlighter-rouge">IConfiguration</code> e não está mais acoplado ao sistema de configuração. Ele também não precisa mais se preocupar com a estrutura do sistema de configuração.</p>
+
+<p>Você pode argumentar que temos uma dependência indireta do sistema de configuração por causa da chamada <code class="language-plaintext highlighter-rouge">.Configure&lt;&gt;(configuration)</code> de antes, mas você não é obrigado a usar esse método para configurar suas opções. Você pode criar uma instância de <code class="language-plaintext highlighter-rouge">IOptions&lt;T&gt;</code> usando <code class="language-plaintext highlighter-rouge">Microsoft.Extensions.Options.Options.Create()</code> se precisar criar uma instância manualmente, e pode passar quaisquer dados que desejar. Você pode até mesmo criar opções com base em outras dependências usando o método <code class="language-plaintext highlighter-rouge">Configure&lt;TDep1,...&gt;()</code> do <code class="language-plaintext highlighter-rouge">OptionsBuilder</code>, que será discutido a seguir.</p>
+
+<div class="callout callout-info">
+  <div class="callout-title">
+    <span class="callout-icon">ℹ️</span>
+    Info
+  </div>
+  <div class="callout-content">
+    
+<p>Talvez você se pergunte por que precisamos envolver nossa classe de configurações com uma interface <code class="language-plaintext highlighter-rouge">IOptions&lt;&gt;</code>. Isso ocorre porque ela permite que você use alguns recursos mais avançados sobre os quais falaremos a seguir.</p>
+
+  </div>
+</div>
+
+<h3 id="validação">Validação</h3>
+
+<p>Meu recurso favorito do sistema de configuração do .NET é a facilidade com que é possível validar sua configuração! Acredito que essa seja uma das partes mais importantes de qualquer aplicativo, e não vejo que ela seja usada com frequência. O motivo pelo qual acredito que a configuração é uma das partes mais importantes de qualquer aplicativo é porque ela abriga definições muito importantes do seu aplicativo.</p>
+
+<p>Um aplicativo configurado incorretamente pode ter resultados desastrosos. Na pior das hipóteses, imagine que o seu ambiente de teste esteja se conectando acidentalmente aos recursos do ambiente de produção. Agora imagine que você testaria uma função de exclusão em massa e acidentalmente excluiria todos os seus dados de produção. Isso seria um desastre!</p>
+
+<p>É por isso que queremos validar nossa configuração. Se o nosso aplicativo for iniciado com um sistema de configuração incorreto, queremos sair imediatamente.</p>
+
+<p>Então, como configuramos isso? É mais fácil do que você imagina. Eu gosto de usar <a href="https://www.infoworld.com/article/3543302/how-to-use-data-annotations-in-c-sharp.html">Data Annotations</a> para minhas validações de opções quando não preciso de regras de validação complexas, portanto, vamos modificar nosso <code class="language-plaintext highlighter-rouge">ExternalApiSettings</code> desta forma:</p>
+
+<figure class="highlight"><pre><code class="language-c#" data-lang="c#"><span class="k">public</span> <span class="k">class</span> <span class="nc">ExternalApiSettings</span>
+<span class="p">{</span>
+    <span class="p">[</span><span class="n">Required</span><span class="p">]</span> <span class="c1">// Se o ApiUrl não estiver definido, a configuração é inválida</span>
+    <span class="k">public</span> <span class="kt">string</span> <span class="n">ApiUrl</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+
+    <span class="p">[</span><span class="n">Required</span><span class="p">]</span> <span class="c1">// Se a ApiKey não for definida, a configuração será inválida</span>
+    <span class="k">public</span> <span class="kt">string</span> <span class="n">ApiKey</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+
+    <span class="p">[</span><span class="nf">Range</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">1</span><span class="n">_000_00</span><span class="p">)]</span> <span class="c1">// Se o TimeoutInMilliseconds não for definido (o padrão é 0) ou for maior que 100000, a configuração será inválida</span>
+    <span class="k">public</span> <span class="kt">int</span> <span class="n">TimeoutInMilliseconds</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+<span class="p">}</span></code></pre></figure>
+
+<p>Agora, vamos alterar a forma como registramos essas opções no contêiner de injeção de dependência:</p>
+
+<figure class="highlight"><pre><code class="language-c#" data-lang="c#"><span class="n">services</span>
+    <span class="p">.</span><span class="n">AddOptions</span><span class="p">&lt;</span><span class="n">ExternalApiSettings</span><span class="p">&gt;()</span>
+    <span class="p">.</span><span class="nf">BindConfiguration</span><span class="p">(</span><span class="err">“</span><span class="n">ExternalApiSettings</span><span class="err">”</span><span class="p">)</span>
+    <span class="p">.</span><span class="nf">ValidateDataAnnotations</span><span class="p">()</span> <span class="c1">// Lança uma OptionsValidationException se a configuração for inválida</span>
+    <span class="p">.</span><span class="nf">ValidateOnStart</span><span class="p">();</span> <span class="c1">// Altamente recomendado!</span></code></pre></figure>
+
+<p>Em vez de usar <code class="language-plaintext highlighter-rouge">Configure&lt;TType&gt;(configuration)</code>, agora usamos <code class="language-plaintext highlighter-rouge">AddOptions&lt;TType&gt;()</code>. Isso retorna um <code class="language-plaintext highlighter-rouge">OptionsBuilder</code> e nos permite usar alguns métodos poderosos.</p>
+
+<ol>
+  <li>O primeiro que usamos é o <code class="language-plaintext highlighter-rouge">BindConfiguration()</code>. Esse método recupera o <code class="language-plaintext highlighter-rouge">IConfiguration</code> do contêiner de injeção de dependência e vincula a seção que passamos. Isso é útil porque não precisamos mais passar manualmente nossa configuração.</li>
+  <li>Em seguida, chamamos <code class="language-plaintext highlighter-rouge">ValidateDataAnnotations()</code>. Isso validará nossa seção de configuração com base nos atributos que definimos nas propriedades.
+    <ol>
+      <li>Observação: você precisa instalar o pacote nuget <a href="https://www.nuget.org/packages/Microsoft.Extensions.Options.DataAnnotations">Microsoft.Extensions.Options.DataAnnotations</a> se não tiver esse método disponível.</li>
+    </ol>
+  </li>
+  <li>Por fim, chamamos <code class="language-plaintext highlighter-rouge">ValidateOnStart()</code>. Essa etapa é <strong>muito</strong> importante! Por padrão, suas opções só serão validadas quando você chamar <code class="language-plaintext highlighter-rouge">.Value</code> nelas em algum lugar, como em uma classe onde elas são injetadas. Isso significa que seu aplicativo NÃO lançaria um erro e sairia na inicialização quando sua configuração fosse inválida! O <code class="language-plaintext highlighter-rouge">ValidateOnStart()</code> validará sua configuração depois que o aplicativo terminar de se inicializar.</li>
+</ol>
+
+<p>Você também pode validar seu código de muitas outras maneiras. Você pode usar a interface <code class="language-plaintext highlighter-rouge">IValidatableOptions&lt;&gt;</code> para implementar uma lógica de validação complexa ou pode chamar <code class="language-plaintext highlighter-rouge">Validate(Func&lt;TOptions, bool&gt; validation)</code> para escrever uma lógica de validação personalizada como parte do construtor de opções. Você pode até mesmo <a href="https://andrewlock.net/adding-validation-to-strongly-typed-configuration-objects-using-flentvalidation/">integrá-lo ao FluentValidation</a>!</p>
+
+<h3 id="tempos-de-vida-da-configuração">Tempos de vida da configuração</h3>
+
+<p>Por fim, gostaria de falar sobre o tempo de vida do padrão Options. O <code class="language-plaintext highlighter-rouge">IOptions&lt;T&gt;</code> é um singleton. Isso significa que, se um de seus <a href="https://learn.microsoft.com/dotnet/core/extensions/configuration-providers?WT.mc_id=DT-MVP-5005050#json-configuration-provider">provedores de configuração for atualizado em tempo de execução</a>, as opções não serão atualizadas. Isso ocorre porque as opções são mapeadas apenas uma vez quando você chama <code class="language-plaintext highlighter-rouge">.Value</code> sobre elas.</p>
+
+<p>Isso pode ser considerado positivo, pois significa que seu aplicativo não mudará repentinamente de comportamento quando a configuração for alterada. No entanto, você também pode dizer que isso é ruim porque talvez não queira ter que fazer deploy ou reiniciar o aplicativo quando alterar a configuração. Nesse caso, é melhor usar <code class="language-plaintext highlighter-rouge">IOptionsSnapshot&lt;T&gt;</code> ou <code class="language-plaintext highlighter-rouge">IOptionsMonitor&lt;T&gt;</code>.</p>
+
+<p><img src="/img/configuracao-dotnet/options-lifetimes.webp" alt="Visão geral dos recursos de IOptions, IOptionsSnapshot e IOptionsMonitor" /></p>
+
+<p>Visão geral dos recursos de IOptions, IOptionsSnapshot e IOptionsMonitor</p>
+
+<h4 id="ioptionssnapshot">IOptionsSnapshot</h4>
+
+<p>Em vez de injetar <code class="language-plaintext highlighter-rouge">IOptions&lt;T&gt;</code> em uma de suas classes, você pode injetar <code class="language-plaintext highlighter-rouge">IOptionsSnapshot&lt;T&gt;</code>. Isso recarregará esse tipo específico de opções a cada <a href="https://learn.microsoft.com/dotnet/core/extensions/dependency-injection?WT.mc_id=DT-MVP-5005050#scoped">scope</a>. Um escopo no .NET é um termo abstrato. Um escopo pode ser uma solicitação HTTP, por exemplo. Portanto, para cada solicitação HTTP, ele recarregaria as opções e elas permaneceriam consistentes para toda a solicitação. Isso significa que, se você alterar sua configuração, ela só será atualizada em uma nova solicitação.</p>
+
+<div class="callout callout-warning">
+  <div class="callout-title">
+    <span class="callout-icon">⚠️</span>
+    Aviso
+  </div>
+  <div class="callout-content">
+    
+<p>Usar <code class="language-plaintext highlighter-rouge">IOptionsSnapshot&lt;T&gt;</code> pode causar <a href="https://github.com/dotnet/runtime/issues/53793">desempenho ruim.</a></p>
+
+  </div>
+</div>
+
+<h4 id="ioptionsmonitor">IOptionsMonitor</h4>
+
+<p>O <code class="language-plaintext highlighter-rouge">IOptionsMonitor&lt;T&gt;</code> não funciona com escopos. Em vez disso, você precisa chamar <code class="language-plaintext highlighter-rouge">.CurrentValue</code> (em vez de <code class="language-plaintext highlighter-rouge">.Value</code>) para recuperar a versão atual. No entanto, é preciso ter cuidado com a forma como você acessa a sua configuração! Imagine um cenário em que sua configuração é alterada no meio de uma solicitação HTTP. Chamar <code class="language-plaintext highlighter-rouge">.CurrentValue</code> no início e no final de uma solicitação resultaria em valores diferentes, o que cria um risco de sincronização. Você pode registrar uma chamada de retorno usando <code class="language-plaintext highlighter-rouge">OnChange()</code> para ser notificado sobre esses eventos.</p>
+
+<p>Essa interface é mais útil em um cenário de trabalho em segundo plano que é instanciado apenas uma vez, mas que se beneficiaria da capacidade de lidar com alterações de configuração.</p>
+
+<h2 id="gerenciamento-de-segredos-durante-o-desenvolvimento">Gerenciamento de segredos durante o desenvolvimento</h2>
+
+<p>Se você vai tirar alguma conclusão dEste post, que seja a seguinte:</p>
+
+<div class="callout callout-error">
+  <div class="callout-title">
+    <span class="callout-icon">❌</span>
+    Importante
+  </div>
+  <div class="callout-content">
+    
+<p>Nunca armazene segredos em seu repositório git! Considere o uso de uma ferramenta de verificação de código como <a href="https://docs.github.com/en/enterprise-cloud@latest/get-started/learning-about-github/about-github-advanced-security">GitHub Advanced Security</a>, <a href="https://azure.microsoft.com/products/devops/github-advanced-security?WT.mc_id=DT-MVP-5005050">GitHub Advanced Security for Azure DevOps</a> ou <a href="https://www.gitguardian.com/">GitGuardian</a> para evitar que segredos sejam vazados.</p>
+
+  </div>
+</div>
+
+<p>Se você armazenar segredos em seu repositório git e o repositório for comprometido, seus segredos também serão comprometidos. Acho que não preciso explicar por que isso é ruim. Então, como podemos evitar que isso aconteça com o .NET?</p>
+
+<p>Usando o provedor de configuração de user secrets (segredos de usuário).</p>
+
+<h3 id="o-provedor-de-configuração-de-user-secrets">O provedor de configuração de user secrets</h3>
+
+<p>Mencionei o provedor de configuração de user secrets <a href="#os-valores-default">anteriormente</a>. Esse provedor de configuração foi criado para desenvolvimento local <em>somente</em>. Ele permite que você armazene segredos em seu computador local sem precisar se preocupar com o risco de eles serem versionados no repositório git, pois são armazenados em um local diferente:</p>
+
+<ul>
+  <li>Windows: <code class="language-plaintext highlighter-rouge">%APPDATA%\Microsoft\UserSecrets\&lt;user_secrets_id&gt;\secrets.json</code></li>
+  <li>Mac e Linux: <code class="language-plaintext highlighter-rouge">~/.microsoft/usersecrets/&lt;user_secrets_id&gt;/secrets.json</code></li>
+</ul>
+
+<p>Esse arquivo é muito semelhante ao provedor <code class="language-plaintext highlighter-rouge">appsettings.json</code>. Basta inserir JSON nele e você poderá acessá-lo com o sistema de configuração do .NET. Quando seu aplicativo for iniciado e sua variável de ambiente <code class="language-plaintext highlighter-rouge">ASPNETCORE_ENVIRONMENT</code> ou <code class="language-plaintext highlighter-rouge">DOTNET_ENVIRONMENT</code> estiver definida como <code class="language-plaintext highlighter-rouge">Development</code>, ele carregará automaticamente o provedor de configuração de user secrets <em>desde que seu projeto esteja configurado para usar esse provedor</em>.</p>
+
+<div class="callout callout-warning">
+  <div class="callout-title">
+    <span class="callout-icon">⚠️</span>
+    Aviso
+  </div>
+  <div class="callout-content">
+    
+<p>Mesmo que esse provedor tenha o nome “secret”, esteja avisado! O conteúdo do arquivo <code class="language-plaintext highlighter-rouge">secrets.json</code> não é criptografado. Se você trabalha em um ambiente em que armazenar segredos na própria máquina é arriscado, considere usar <a href="#using-the-key-vault-during-local-development">um armazenamento de segredos externo como o Azure KeyVault durante o desenvolvimento</a>.</p>
+
+  </div>
+</div>
+
+<p>Esse provedor de configuração pode ser acessado usando a CLI ou seu IDE favorito. Talvez seja necessário instalar o pacote <a href="https://www.nuget.org/packages/Microsoft.Extensions.Configuration.UserSecrets">Microsoft.Extensions.Configuration.UserSecrets</a> caso você não use um <code class="language-plaintext highlighter-rouge">Host</code> ou tenha uma configuração personalizada.</p>
+
+<h3 id="usando-user-secrets">Usando User Secrets</h3>
+
+<h4 id="cli">CLI</h4>
+
+<p>Você pode usar o <code class="language-plaintext highlighter-rouge">dotnet</code> cli para interagir com user-secrets abrindo um terminal no diretório em que reside o <code class="language-plaintext highlighter-rouge">*.csproj</code> do seu projeto.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># Necessário apenas quando as user-secrets ainda não foram inicializadas
+dotnet user-secrets init
+
+# Você pode usar dados estruturados usando dois pontos (:) para separar as chaves
+dotnet user-secrets set “ConnectionStrings:Database” “Data Source=...”
+dotnet user-secrets set “AdminPassword” “hunter2”
+# Outros comandos como “list”, “remove” e “clear” também estão disponíveis
+
+</code></pre></div></div>
+
+<h4 id="visual-studio">Visual Studio</h4>
+
+<p>Clique com o botão direito do mouse em um projeto no Solution Explorer e selecione <code class="language-plaintext highlighter-rouge">Manage User Secrets</code>. Um arquivo <code class="language-plaintext highlighter-rouge">secrets.json</code> será aberto, no qual você poderá inserir seus segredos.</p>
+
+<h4 id="visual-studio-code">Visual Studio Code</h4>
+
+<p>Instale a extensão <a href="https://marketplace.visualstudio.com/items?itemName=adrianwilczynski.user-secrets">.NET Core User Secrets Visual Studio Code</a>. Em seguida, você pode clicar com o botão direito do mouse em um arquivo <code class="language-plaintext highlighter-rouge">*.csproj</code> e selecionar <code class="language-plaintext highlighter-rouge">Manage User Secrets</code>. Um arquivo <code class="language-plaintext highlighter-rouge">secrets.json</code> será aberto, no qual você poderá inserir seus segredos.</p>
+
+<h4 id="jetbrains-rider">JetBrains Rider</h4>
+
+<p>Clique com o botão direito do mouse em um projeto no Solution Explorer e selecione <code class="language-plaintext highlighter-rouge">Tools</code> &gt; <code class="language-plaintext highlighter-rouge">Manage User Secrets</code>. Um arquivo <code class="language-plaintext highlighter-rouge">secrets.json</code> será aberto, no qual você poderá inserir seus segredos.</p>
+
+<h3 id="configurando-um-projeto-que-usa-user-secrets">Configurando um projeto que usa user-secrets</h3>
+
+<p>Uma desvantagem de usar segredos de usuário durante o desenvolvimento é que, se o seu projeto exigir alguns segredos para ser executado, será necessário executar algumas etapas de configuração após a clonagem do projeto. Tenho duas recomendações para lidar com isso:</p>
+
+<ul>
+  <li>Você pode criar um script que recupere os segredos do seu local de armazenamento de segredos e, em seguida, armazene-os em user-secrets, canalizando esses valores para <code class="language-plaintext highlighter-rouge">dotnet user-secrets set</code>. Agora você só precisa executar esse script uma vez após clonar o projeto e pronto!</li>
+  <li>Como alternativa, recomendo atualizar seu <code class="language-plaintext highlighter-rouge">README.MD</code> incluindo instruções de configuração que informem ao usuário quais user-secrets devem ser definidos e de onde obter esses valores. Sinta-se à vontade para criar um link para Este post se quiser explicar o que são user-secrets 😉.</li>
+</ul>
+
+<h2 id="meu-modelo-para-gerenciamento-de-configuração">Meu modelo para gerenciamento de configuração</h2>
+
+<p>Agora que abordamos os conceitos básicos e o uso avançado do sistema de configuração do .NET e como incorporar o gerenciamento de segredos locais, gostaria de mostrar minha “configuração” para o gerenciamento de configuração em um projeto .NET. Quando crio um novo projeto .NET, uso a seguinte configuração:</p>
+
+<h3 id="appsettingsjson">appsettings.json</h3>
+
+<p>O sistema de configuração do .NET permite que você seja muito flexível com todos os diferentes provedores. Isso é ótimo, mas também pode causar confusão quando seu aplicativo estiver usando valores de configuração que você não esperava ou quando não conseguir descobrir de onde vem um valor de configuração específico.</p>
+
+<div class="callout callout-tip">
+  <div class="callout-title">
+    <span class="callout-icon">💡</span>
+    Dica
+  </div>
+  <div class="callout-content">
+    
+<p>Use o método <code class="language-plaintext highlighter-rouge">IConfigurationRoot.GetDebugView()</code> quando estiver tendo problemas com os valores de configuração. Para fazer isso, obtenha uma instância <code class="language-plaintext highlighter-rouge">IConfiguration</code>, converta-a em <code class="language-plaintext highlighter-rouge">IConfigurationRoot</code> e inspecione o resultado de <code class="language-plaintext highlighter-rouge">GetDebugView()</code>.</p>
+
+<p>Para obter mais informações, consulte o <a href="https://andrewlock.net/debugging-configuration-values-in-aspnetcore/#exposing-the-debug-view-in-your-application">fantástico post de Andrew Lock</a> sobre isso.</p>
+
+  </div>
+</div>
+
+<p>Eu uso <code class="language-plaintext highlighter-rouge">appsettings.json</code> para armazenar um modelo de todos os valores de configuração que meu projeto usa e de onde os valores são recuperados. Esse arquivo também pode conter valores reais quando o arquivo <code class="language-plaintext highlighter-rouge">appsettings.json</code> é o único provedor para esse valor de configuração. Gosto muito dessa configuração porque ela me permite ver todos os valores de configuração que meu projeto usa em um só lugar.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
+  “Logging": {
+    “LogLevel": {
+      “Default” (Padrão): “Informações”,
+      “Microsoft.AspNetCore": “Warning”
+    }
+  },
+
+  “ConnectionStrings": {
+    “Database”: “&lt;from-azure-keyvault&gt;” // O Azure Key Vault será discutido na próxima seção
+  },
+
+  “ExternalApiSettings": {
+    “ApiUrl": “&lt;from-environment-variables&gt;”,
+    “ApiKey": “&lt;from-azure-keyvault&gt;”,
+    “TimeoutInMilliseconds": 5000
+  }
+}
+
+</code></pre></div></div>
+
+<h3 id="appsettingsdevelopmentjson">appsettings.Development.json</h3>
+
+<p>A seguir, temos o arquivo <code class="language-plaintext highlighter-rouge">appsettings.Development.json</code>. Esse arquivo pode conter valores de configuração que substituem os valores do <code class="language-plaintext highlighter-rouge">appsettings.json</code>, como configurações de registro. Além disso, esse arquivo <strong>nunca</strong> deve conter segredos! Em vez disso, ele faz referência ao provedor de configuração de user secrets. Isso torna menos provável que as pessoas insiram segredos nesse arquivo, pois elas são levadas a usar o provedor de configuração de user secrets.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
+  “Logging": {
+    “LogLevel": {
+      “Default”: “Debug”, // As configurações de log são 100% de preferência pessoal, fique à vontade para usar o que quiser
+      “Microsoft.AspNetCore": “Warning”
+    }
+  },
+
+  “ConnectionStrings": {
+    “Database”: “&lt;from-user-secrets&gt;” // Cada desenvolvedor pode usar sua própria string de conexão de banco de dados local
+  },
+
+  “ExternalApiSettings": {
+    “ApiUrl": “dev.externalapi.example.com”,
+    “ApiKey": “&lt;from-user-secrets&gt;”
+    // Não forneço um valor para TimeoutInMilliseconds porque não tenho problemas com o valor de appsettings.json
+  }
+}
+
+</code></pre></div></div>
+
+<h3 id="user-secrets">User Secrets</h3>
+
+<p>Por fim, uso o provedor de configuração user secrets para armazenar segredos locais <em>e</em> substituir a configuração não secreta que não quero enviar para o repositório git, como alterar as configurações de log no caso de precisar me aprofundar em um bug. Se eu alterasse esses valores de configuração no arquivo <code class="language-plaintext highlighter-rouge">appsettings.Development.json</code>, teria que me lembrar de reverter essas alterações antes de fazer o commit do meu código. Ao usar o provedor de configuração de user secrets, não preciso me preocupar com isso.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
+  “Logging": {
+    “LogLevel": {
+      “Microsoft.AspNetCore": “Information”
+    }
+  },
+
+  “ConnectionStrings": {
+    “Database”: “Data Source=...”
+  },
+
+  “ExternalApiSettings": {
+    “ApiKey": “abc123def456ghi7”
+  }
+}
+
+</code></pre></div></div>
+
+<div class="callout callout-question">
+  <div class="callout-title">
+    <span class="callout-icon">❓</span>
+    Pergunta
+  </div>
+  <div class="callout-content">
+    
+<p>Como é a sua configuração? O que você acha da minha? Deixe sua opinião nos comentários abaixo!</p>
+
+  </div>
+</div>
+
+<h2 id="usando-o-azure-para-armazenar-a-configuração">Usando o Azure para armazenar a configuração</h2>
+
+<p>Agora que sabemos como armazenar a configuração e os segredos localmente, é hora de falar sobre a execução de seus aplicativos em ambientes reais. Há muitas maneiras diferentes de configurar a configuração e o gerenciamento de segredos para ambientes não locais, portanto, tudo se resume a conhecer as vantagens e desvantagens dessas abordagens e escolher o que funciona melhor para você. Neste post, você aprenderá a usar o Azure para armazenar sua configuração e seus segredos com segurança.</p>
+
+<div class="callout callout-info">
+  <div class="callout-title">
+    <span class="callout-icon">ℹ️</span>
+    Info
+  </div>
+  <div class="callout-content">
+    
+<p>Embora esta seção seja sobre o Azure, os conceitos também se aplicam a outros provedores de nuvem. O equivalente do Azure App Configuration no AWS é chamado de <a href="https://docs.aws.amazon.com/systems-manager/latest/userguide/systems-manager-parameter-store.html">AWS Systems Manager Parameter Store</a>. O Azure Key Vault tem um equivalente no AWS chamado <a href="https://aws.amazon.com/secrets-manager/">AWS Secrets Manager</a> e o equivalente do Google é chamado <a href="https://cloud.google.com/secret-manager">Google Secret Manager</a>.</p>
+
+<p>Se quiser hospedar seu gerenciamento de segredos por conta própria, dê uma olhada em <a href="https://www.vaultproject.io/">Hashicorp Vault</a>.</p>
+
+
+  </div>
+</div>
+
+<h3 id="armazenamento-de-segredos-no-azure-key-vault">Armazenamento de segredos no Azure Key Vault</h3>
+
+<p>Como dissemos anteriormente, não é possível usar o provedor de configuração User Secrets em ambientes não locais. Portanto, temos que encontrar uma maneira diferente de armazenar nossos segredos quando estivermos implantando nossos aplicativos. O <a href="https://azure.microsoft.com/services/key-vault/?WT.mc_id=DT-MVP-5005050">Azure Key Vault</a> é um ótimo serviço para armazenar segredos, chaves e certificados de forma barata, fácil e segura.</p>
+
+<p>No início deste post, mencionei que é possível conectar o sistema de configuração do .NET à nuvem, o que <a href="https://learn.microsoft.com/aspnet/core/security/key-vault-configuration?WT.mc_id=DT-MVP-5005050">é possível com o Key Vault</a>. Essa é uma ótima abordagem para o gerenciamento de segredos porque você pode simplesmente tratar o Key Vault como um provedor de configuração e não precisa mais fazer coisas complicadas no pipeline de lançamento.</p>
+
+<p>Para adicioná-lo como um provedor de configuração, instale os pacotes <a href="https://www.nuget.org/packages/Azure.Extensions.AspNetCore.Configuration.Secrets">Azure.Extensions.AspNetCore.Configuration.Secrets</a> e <a href="https://www.nuget.org/packages/Azure.Identity">Azure.Identity</a>. Em seguida, você só precisará adicionar algumas linhas de código ao seu <code class="language-plaintext highlighter-rouge">Program.cs</code> quando criar uma API mínima, por exemplo:</p>
+
+<figure class="highlight"><pre><code class="language-c#" data-lang="c#"><span class="k">using</span> <span class="nn">Azure.Identity</span><span class="p">;</span>
+
+<span class="kt">var</span> <span class="n">builder</span> <span class="p">=</span> <span class="n">WebApplication</span><span class="p">.</span><span class="nf">CreateBuilder</span><span class="p">(</span><span class="n">args</span><span class="p">);</span>
+
+<span class="n">builder</span><span class="p">.</span><span class="n">Host</span><span class="p">.</span><span class="nf">ConfigureAppConfiguration</span><span class="p">((</span><span class="n">context</span><span class="p">,</span> <span class="n">config</span><span class="p">)</span> <span class="p">=&gt;</span>
+<span class="p">{</span>
+    <span class="k">if</span> <span class="p">(!</span><span class="n">context</span><span class="p">.</span><span class="n">HostingEnvironment</span><span class="p">.</span><span class="nf">IsDevelopment</span><span class="p">())</span>
+    <span class="p">{</span>
+        <span class="kt">var</span> <span class="n">keyVaultUrl</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">Uri</span><span class="p">(</span><span class="n">context</span><span class="p">.</span><span class="n">Configuration</span><span class="p">.</span><span class="n">GetValue</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">&gt;(</span><span class="err">“</span><span class="n">KeyVaultUrl</span><span class="err">”</span><span class="p">));</span>
+        <span class="n">config</span><span class="p">.</span><span class="nf">AddAzureKeyVault</span><span class="p">(</span><span class="n">keyVaultUrl</span><span class="p">,</span> <span class="k">new</span> <span class="nf">ManagedIdentityCredential</span><span class="p">());</span> <span class="c1">// Há outras opções de credenciais disponíveis. As Managed Identities serão abordadas em breve!</span>
+    <span class="p">}</span>
+<span class="p">});</span></code></pre></figure>
+
+<p>O Key Vault agora é adicionado como o provedor final e, portanto, tem <a href="#os-valores-default">a prioridade mais alta</a>. Portanto, mesmo que outros provedores tenham um valor configurado para um segredo, o Key Vault será usado em seu lugar!</p>
+
+<div class="callout callout-info">
+  <div class="callout-title">
+    <span class="callout-icon">ℹ️</span>
+    Info
+  </div>
+  <div class="callout-content">
+    
+<p>Os segredos estruturados devem ser armazenados no Key Vault com 2 traços (<code class="language-plaintext highlighter-rouge">--</code>) em vez de 2 sublinhados ou dois pontos devido a limitações de nomenclatura. Por exemplo, <code class="language-plaintext highlighter-rouge">ExternalApiSettings--ApiKey</code> em vez de <code class="language-plaintext highlighter-rouge">ExternalApiSettings:ApiKey</code> ou <code class="language-plaintext highlighter-rouge">ExternalApiSettings__ApiKey</code>.</p>
+
+  </div>
+</div>
+
+<h4 id="usando-o-key-vault-durante-o-desenvolvimento-local">Usando o Key Vault durante o desenvolvimento local</h4>
+
+<p>Anteriormente neste post, mencionei brevemente que você pode estar em um cenário em que não é possível armazenar segredos em seu computador por motivos de segurança, por exemplo. Nesse caso, usar o Key Vault durante o desenvolvimento local resolveria esse problema. Você pode pegar o exemplo de código da seção anterior e modificá-lo da seguinte forma:</p>
+
+<figure class="highlight"><pre><code class="language-c#" data-lang="c#"><span class="k">using</span> <span class="nn">Azure.Identity</span><span class="p">;</span>
+
+<span class="kt">var</span> <span class="n">builder</span> <span class="p">=</span> <span class="n">WebApplication</span><span class="p">.</span><span class="nf">CreateBuilder</span><span class="p">(</span><span class="n">args</span><span class="p">);</span>
+
+<span class="n">builder</span><span class="p">.</span><span class="n">Host</span><span class="p">.</span><span class="nf">ConfigureAppConfiguration</span><span class="p">((</span><span class="n">context</span><span class="p">,</span> <span class="n">config</span><span class="p">)</span> <span class="p">=&gt;</span>
+<span class="p">{</span>
+    <span class="kt">var</span> <span class="n">keyVaultUrl</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">Uri</span><span class="p">(</span><span class="n">context</span><span class="p">.</span><span class="n">Configuration</span><span class="p">.</span><span class="n">GetValue</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">&gt;(</span><span class="err">“</span><span class="n">KeyVaultUrl</span><span class="err">”</span><span class="p">));</span>
+    <span class="n">config</span><span class="p">.</span><span class="nf">AddAzureKeyVault</span><span class="p">(</span><span class="n">keyVaultUrl</span><span class="p">,</span> <span class="k">new</span> <span class="nf">DefaultAzureCredential</span><span class="p">());</span> <span class="c1">// Esses tipos de credenciais serão abordados a seguir!</span>
+<span class="p">});</span></code></pre></figure>
+
+<p>Agora, seu aplicativo sempre se conectará ao Key Vault, mesmo durante o desenvolvimento. O resultado é que você não precisa mais armazenar segredos em seu computador, pois eles são sempre recuperados do Key Vault. Uma desvantagem dessa abordagem é que você sempre precisa de uma conexão com a Internet para se conectar à nuvem!</p>
+
+<div class="callout callout-info">
+  <div class="callout-title">
+    <span class="callout-icon">ℹ️</span>
+    Info
+  </div>
+  <div class="callout-content">
+    
+<p>Devido aos benefícios que essa solução traz, considere o uso dessa abordagem mesmo em cenários em que o armazenamento de segredos localmente seria aceitável. Um grande benefício dessa abordagem é que você pode simplesmente clonar um projeto e, desde que tenha as permissões corretas, pode executá-lo sem precisar configurar nenhum segredo em sua máquina, pois eles são simplesmente recuperados da nuvem!</p>
+
+  </div>
+</div>
+
+<h3 id="conectando-se-ao-azure-com-identidades-gerenciadas">Conectando-se ao Azure com identidades gerenciadas</h3>
+
+<p>Nos exemplos de código anteriores, você viu alguns tipos estranhos de credenciais: <code class="language-plaintext highlighter-rouge">ManagedIdentityCredential</code> e <code class="language-plaintext highlighter-rouge">DefaultAzureCredential</code>. Antes de discutirmos isso, considere o seguinte:</p>
+
+<p>Queremos nos conectar a um provedor de armazenamento seguro de segredos para obter segredos com os quais executar nosso aplicativo. Para nos conectarmos a esse provedor, precisaremos passar algumas credenciais para que o provedor possa autorizar nossa solicitação. <strong>Mas essas credenciais também são segredos, então onde as armazenamos</strong>? Poderíamos armazená-las em outro provedor de configuração, mas isso não anula todo o propósito de ter um provedor secreto? Se essas credenciais vazassem, alguém poderia acessar nossos segredos de qualquer forma! <strong>Para resumir, estamos lidando com um problema de galinha e ovo</strong>.</p>
+
+<p>Felizmente, algumas pessoas inteligentes da Microsoft descobriram isso! Para o desenvolvimento local, você pode usar o <code class="language-plaintext highlighter-rouge">DefaultAzureCredential</code> para se comunicar com os serviços do Azure. Esse tipo de credencial tentará se autenticar <a href="https://learn.microsoft.com/dotnet/api/overview/azure/identity-readme?WT.mc_id=DT-MVP-5005050#defaultazurecredential">usando vários métodos</a>, como a conta da Microsoft com a qual você está conectado ao seu IDE, suas credenciais da CLI do Azure (<code class="language-plaintext highlighter-rouge">az</code>) e muito mais.</p>
+
+<p><img src="/img/configuracao-dotnet/azure-identity.webp" alt="Uma visão geral de como a Identidade do Azure funciona" /></p>
+
+<p>A Identidade do Azure usa vários métodos para autenticar a conta do Azure de um desenvolvedor.</p>
+
+<p>Para ambientes de produção, a Microsoft recomenda <a href="https://docs.microsoft.com/azure/active-directory/managed-identities-azure-resources/overview">Managed Identities</a> para <a href="https://learn.microsoft.com/dotnet/azure/sdk/authentication/?WT.mc_id=DT-MVP-5005050">autenticar com recursos do Azure</a>. As identidades gerenciadas são um recurso do Microsoft Entra (anteriormente conhecido como Azure Active Directory) que permite criar uma identidade para seu aplicativo no Microsoft Entra. Essa identidade pode ser usada para autenticação em outros serviços do Azure, como o Key Vault. A vantagem dessa abordagem é que você não precisa mais armazenar nenhuma credencial no aplicativo, pois a identidade é gerenciada pelo Azure AD.</p>
+
+<p><img src="/img/configuracao-dotnet/azure-managed-identities.webp" alt="Um diagrama de como as Identidades Gerenciadas funcionam.&lt;/br&gt;" /></p>
+
+<div class="callout callout-info">
+  <div class="callout-title">
+    <span class="callout-icon">ℹ️</span>
+    Info
+  </div>
+  <div class="callout-content">
+    
+<p>As Managed Identities podem ser bastante difíceis de entender em um primeiro momento. Dê uma olhada na parte inferior do post para ver alguns links com mais informações sobre Managed Identities.</p>
+
+  </div>
+</div>
+
+<h3 id="armazenamento-da-configuração-na-configuração-de-aplicativo-do-azure">Armazenamento da configuração na Configuração de Aplicativo do Azure</h3>
+
+<p>Por último, mas não menos importante, quero falar sobre a oferta de nuvem do Azure para gerenciamento de <em>configuração</em>. Enquanto o Azure Key Vault abrange o gerenciamento de segredos, o <a href="https://azure.microsoft.com/products/app-configuration/?WT.mc_id=DT-MVP-5005050">Azure App configuration</a> é uma oferta de SaaS que o ajudará a gerenciar sua configuração. Esses dois serviços funcionam muito bem juntos quando você vincula o Azure App Configuration ao Azure Key Vault. Se optar por usar esse serviço, você só precisará adicionar o <a href="https://learn.microsoft.com/azure/azure-app-configuration/quickstart-aspnet-core-app?WT.mc_id=DT-MVP-5005050">Azure App Configuration como um provedor de configuração</a> e, em seguida, poderá usar o sistema de configuração do .NET para acessar todas as suas configurações E segredos da nuvem!</p>
+
+<p>Ele também tem muitos outros recursos, portanto, vale a pena dar uma olhada!</p>
+
+<div class="callout callout-info">
+  <div class="callout-title">
+    <span class="callout-icon">ℹ️</span>
+    Info
+  </div>
+  <div class="callout-content">
+    
+<p>Considere a possibilidade de usar <a href="https://learn.microsoft.com/pt-br/azure/azure-app-configuration/howto-integrate-azure-managed-service-identity?WT.mc_id=DT-MVP-5005050&amp;pivots=framework-dotnet">identidades gerenciadas para acessar a Configuração de Aplicativos</a> para aumentar a segurança!</p>
+
+
+  </div>
+</div>
+
+<h2 id="finalizando">Finalizando</h2>
+
+<p>Você chegou até o fim! Este post levou muito tempo para ser escrito, e estou feliz por finalmente ter sido concluído! Abaixo, você encontrará mais informações se quiser saber mais sobre os conceitos que abordei neste post. Se você tiver alguma dúvida, fique à vontade para deixar um comentário abaixo. Se quiser saber quando e onde darei a versão de palestra deste post, confira minha página <a href="https://stenbrinke.nl/speaking">Speaking</a>.</p>
+
+<h3 id="links-para-a-demo">Links para a demo</h3>
+
+<p>Mencionei que o post é um complemento de uma de minhas sessões. Essa sessão contém várias demonstrações que mostram os conceitos discutidos nEste post. Você pode encontrar as demonstrações <a href="https://github.com/sander1095/secure-secret-storage-with-asp-net-core/">aqui</a>.</p>
+
+<h3 id="links-para-a-documentação-oficial">Links para a documentação oficial</h3>
+
+<ul>
+  <li><a href="https://learn.microsoft.com/dotnet/core/extensions/configuration?WT.mc_id=DT-MVP-5005050">Configuração</a></li>
+  <li><a href="https://learn.microsoft.com/aspnet/core/fundamentals/configuration?WT.mc_id=DT-MVP-5005050">Configuração (especificações do ASP.NET Core)</a></li>
+  <li><a href="https://learn.microsoft.com/aspnet/core/fundamentals/configuration/options?WT.mc_id=DT-MVP-5005050">options pattern</a></li>
+  <li><a href="https://docs.microsoft.com/aspnet/core/security/app-secrets">user secrets</a></li>
+  <li><a href="https://azure.microsoft.com/en-us/products/key-vault/?WT.mc_id=DT-MVP-5005050">Azure KeyVault</a></li>
+  <li><a href="https://devblogs.microsoft.com/devops/demystifying-service-principals-managed-identities/?WT.mc_id=DT-MVP-5005050">Mais informações sobre Managed Identities</a></li>
+</ul>
+
+<hr />
+
+<p>Você gostou deste post? <a href="https://ko-fi.com/stenbrinke"><img src="https://stenbrinke.nl/images/kofi_button_blue.webp" alt="Faça uma doção para o autor original em https://ko-fi.com/stenbrinke.nl" /></a></p>
+
+<h2 id="carlos-de-volta">Carlos de volta</h2>
+
+<p>Carlos Schults de volta aqui. Espero que tenham gostado bastante do post, e sugiro que o coloquem nos favoritos para ser um recurso útil de consulta toda vez que surgir alguma dúvida referente ao gerenciamento de secrets e configuração.</p>
+
+<p>Agradeço a Sander ten Brinke, autor do artigo original, que gentilmente me autorizou a traduzí-lo. O <a href="https://stenbrinke.nl/">blog dele</a> é fantástico, tem muitos artigos extremamente bem escritos sobre diversos tópicos relacionados a .NET. Para quem sabe inglês, recomendo fortemente a visita.</p>
+
+<p>Gostaria de agradecer também a <a href="https://andrewlock.net/about/">Andrew Lock</a>, o autor do livro <a href="https://www.manning.com/books/asp-net-core-in-action-third-edition">ASP.NET Core in Action</a>, por ter concedido autorização para reproduzir uma imagem de seu livro.</p>
+
+<p>A você que leu o artigo - todo ou apenas uma parte — deixo também um agradecimento e um pedido: me dê seu feedback. É extremamente importante saber se as pessoas gostam desse tipo de conteúdo, pois me motiva a continuar produzindo.</p>
+
+<p>Até a próxima!</p>
+
+    
+    
+      
+    
+    
+        Encontrou algum erro no post? <a href="http://github.com/carlosschults/carlosschults.github.io/edit/master/_posts/2024-07-23-configuracao-dotnet.md">Sugira uma edição</a>      
+    
+    
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+                    
+            <a rel="previous" class="previous" href="/pt/csharp-expressoes-regulares">&larr; C# Regex: Como Expressões Regulares Funcionam em C#, Com Exemplos </a>
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+        	    
+            <a rel="next" class="next" href="/pt/git-detached-head">Erro 'Git Detached Head': O Que Significa e Como Resolver &rarr;</a>
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+      
+    <div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+        // Store these for reloads
+        window.disqus_identifier = window.location.pathname;
+        window.disqus_url = window.location.href;
+        
+        // Set initial theme - match it with the site's theme
+        const currentTheme = document.body.getAttribute('data-theme') || 'light';
+        this.page.theme = currentTheme === 'dark' ? 'dark' : 'light';
+    };
+    
+    (function() {
+        var d = document, s = d.createElement('script');
+        s.src = '//carlosschultsblog.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>    
+  </div>
+
+</article>
+
+      </div>
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">         
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-2">
+        <ul class="social-media-list">
+          
+          <li>
+            <a href="https://github.com/carlosschults"><span class="icon icon--github"><svg viewBox="0 0 16 16"><path fill="#828282" d="M7.999,0.431c-4.285,0-7.76,3.474-7.76,7.761 c0,3.428,2.223,6.337,5.307,7.363c0.388,0.071,0.53-0.168,0.53-0.374c0-0.184-0.007-0.672-0.01-1.32 c-2.159,0.469-2.614-1.04-2.614-1.04c-0.353-0.896-0.862-1.135-0.862-1.135c-0.705-0.481,0.053-0.472,0.053-0.472 c0.779,0.055,1.189,0.8,1.189,0.8c0.692,1.186,1.816,0.843,2.258,0.645c0.071-0.502,0.271-0.843,0.493-1.037 C4.86,11.425,3.049,10.76,3.049,7.786c0-0.847,0.302-1.54,0.799-2.082C3.768,5.507,3.501,4.718,3.924,3.65 c0,0,0.652-0.209,2.134,0.796C6.677,4.273,7.34,4.187,8,4.184c0.659,0.003,1.323,0.089,1.943,0.261 c1.482-1.004,2.132-0.796,2.132-0.796c0.423,1.068,0.157,1.857,0.077,2.054c0.497,0.542,0.798,1.235,0.798,2.082 c0,2.981-1.814,3.637-3.543,3.829c0.279,0.24,0.527,0.713,0.527,1.437c0,1.037-0.01,1.874-0.01,2.129 c0,0.208,0.14,0.449,0.534,0.373c3.081-1.028,5.302-3.935,5.302-7.362C15.76,3.906,12.285,0.431,7.999,0.431z"/></svg>
+</span><span class="username">carlosschults</span></a>
+
+          </li>
+          
+
+          
+          <li>
+            <a href="https://twitter.com/carlosschults"><span class="icon icon--twitter"><svg viewBox="0 0 16 16"><path fill="#828282" d="M15.969,3.058c-0.586,0.26-1.217,0.436-1.878,0.515c0.675-0.405,1.194-1.045,1.438-1.809c-0.632,0.375-1.332,0.647-2.076,0.793c-0.596-0.636-1.446-1.033-2.387-1.033c-1.806,0-3.27,1.464-3.27,3.27 c0,0.256,0.029,0.506,0.085,0.745C5.163,5.404,2.753,4.102,1.14,2.124C0.859,2.607,0.698,3.168,0.698,3.767 c0,1.134,0.577,2.135,1.455,2.722C1.616,6.472,1.112,6.325,0.671,6.08c0,0.014,0,0.027,0,0.041c0,1.584,1.127,2.906,2.623,3.206 C3.02,9.402,2.731,9.442,2.433,9.442c-0.211,0-0.416-0.021-0.615-0.059c0.416,1.299,1.624,2.245,3.055,2.271 c-1.119,0.877-2.529,1.4-4.061,1.4c-0.264,0-0.524-0.015-0.78-0.046c1.447,0.928,3.166,1.469,5.013,1.469 c6.015,0,9.304-4.983,9.304-9.304c0-0.142-0.003-0.283-0.009-0.423C14.976,4.29,15.531,3.714,15.969,3.058z"/></svg>
+</span><span class="username">carlosschults</span></a>
+
+          </li>
+          
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-3">
+        <p>Artigos sobre desenvolvimento de software e tecnologia.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+
+    <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-92788641-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+    <script src="/js/dark-mode.js"></script>
+  </body>
+
+</html>

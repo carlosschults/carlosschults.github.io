@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Métodos privados são um &#39;Code Smell&#39;? | carlos schults / blog</title>
+  <link rel="apple-touch-icon" sizes="57x57" href="/img/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/img/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/img/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/img/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/img/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/img/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/img/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/img/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"  href="/img/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/img/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon-16x16.png">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="description" content="Algumas pessoas acham que métodos privados devem ser evitados. Será que elas estão certas?">
+  
+  <!-- Twitter card -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:creator" content="@carlosschults">
+  <meta name="twitter:site" content="@carlosschults">
+  <meta name="twitter:domain" content="carlosschults.net">
+  <meta name="twitter:title" content="Métodos privados são um 'Code Smell'?">
+  <meta name="twitter:description" content="Algumas pessoas acham que métodos privados devem ser evitados. Será que elas estão certas?">
+
+   <!-- Facebook meta -->
+  
+  
+  <meta property="og:title" content="Métodos privados são um 'Code Smell'?">
+  <meta property="og:site_name" content="Carlos Schults / Blog" />
+  <meta property="og:locale" content="pt_BR">  
+  <meta property="og:type" content="article" />
+  <meta property="og:image" content="https://res.cloudinary.com/dz5ppacuo/image/upload/v1485700794/capa-min_no1cci.jpg" />  
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:width" content="1038"> 
+  <meta property="og:image:height" content="437">  
+  
+  <meta property="og:article:published_time" content="2017-01-29T00:00:00+00:00" />  
+  <meta property="og:article:author" content="Carlos Schults" />
+  
+  <meta property="og:article:tag" content="code smell" />
+  <meta property="og:article:tag" content="boas práticas" />
+  <meta property="og:article:tag" content="orientacao-a-objetos" />    
+  
+  <meta property="og:url" content="https://carlosschults.net/pt/metodos-privados-code-smell/"/>
+  <meta property="og:description" content="Algumas pessoas acham que métodos privados devem ser evitados. Será que elas estão certas?">
+  <link rel="stylesheet" href="/css/main.css">  
+  
+   <link rel="canonical" href="https://carlosschults.net/pt/metodos-privados-code-smell/">
+   
+  
+  <link rel="alternate" hreflang="en" href="/en/are-private-methods-a-code-smell/" />
+  <link rel="alternate" hreflang="pt" href="/pt/metodos-privados-code-smell/" />
+  
+  <link rel="alternate" type="application/rss+xml" title="carlos schults / blog" href="https://carlosschults.net/rss.xml">
+</head>
+
+  <body>
+    <header class="site-header">
+  <div class="wrapper">    
+    <a class="site-title" href="/pt/">carlos schults / blog</a>
+    
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg viewBox="0 0 18 15">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+
+      <div class="trigger">        
+          
+          <a class="page-link" href="/sobre/">Sobre</a>
+          <a class="page-link" href="/busca/">Busca</a>
+                  
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+<div class="wrapper" style="text-align: right; line-height: 2em">
+  
+   <a href="/en/are-private-methods-a-code-smell/" class="en">en</a>  <a href="/pt/metodos-privados-code-smell/" class="pt">pt</a> 
+
+  
+  
+</div>
+
+
+    <div class="page-content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">    
+    <h2 class="postTitle" itemprop="headline">Métodos privados são um 'Code Smell'?</h2>
+    <p class="post-meta">   
+    <time datetime="2017-01-29T00:00:00+00:00" itemprop="datePublished">29/01/2017
+    </time> • <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">Carlos Schults</span></span>
+  <span class="tags" itemprop="keywords"> • Tags: <a href="/tag_ptbr/code smell">code smell </a> <a href="/tag_ptbr/boas práticas">boas práticas </a> <a href="/tag_ptbr/orientacao-a-objetos">orientacao-a-objetos </a> </span>
+  </p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <p><img src="https://res.cloudinary.com/dz5ppacuo/image/upload/v1485700794/capa-min_no1cci.jpg" alt="" /></p>
+
+<p>Algumas pessoas acham que métodos privados devem ser evitados. Será que elas estão certas?
+<!--more--></p>
+
+<p>Há uns dois meses, <a href="https://twitter.com/mdbs99">Marcos Douglas</a> publicou um post <a href="https://objectpascalprogramming.com/posts/menos-e-mais/">sobre como o uso de regras e restrições pode melhorar seu código</a>. Essa <a href="https://medium.com/@cscalfani/why-programmers-need-limits-3d96e1a0a6db#.rptqu89ec">premissa</a> costuma aparecer <a href="https://blog.ploeh.dk/2015/04/13/less-is-more-language-features/">de novo</a> e <a href="https://robots.thoughtbot.com/sandi-metz-rules-for-developers">de novo</a> pela web, e eu concordo totalmente com ela.</p>
+
+<p>Marcos mostra várias orientações úteis, tais como o número ideal de argumentos em um método, o número ideal de métodos, em uma classe, e assim por diante. O artigo é muito bom, e eu recomendo a todos vocês que o <a href="https://gist.github.com/carlosschults/5f4ba7cfb2453977c8d11424b2926686">leiam </a>, mas ele não é o foco do meu post hoje.</p>
+
+<p>Hoje, o que eu realmente quero falar é de um assunto que surgiu na área de comentários do artigo do Marcos: que diversas pessoas consideram métodos privados como um <a href="https://www.pedromendes.com.br/2013/11/04/code-smells/"><em>Code Smell</em> (algo como “mau-cheiro de código”)</a>.</p>
+
+<p>Como eu nunca tinha ouvido ou lido nada nesse sentido antes, fiquei bastante surpreso e decidi pesquisar mais.</p>
+
+<h2 id="qual-seria-o-problema-de-métodos-privados">Qual seria o problema de métodos privados?</h2>
+
+<p>Para começar, vamos tentar entender por qual razão métodos privados seriam um problema.</p>
+
+<p>One common argument is that private methods violate the Single Responsibility Principle. The SRP states that each class should do only one thing. If you’re tempted to create private methods, the argument follows, that’s a sign that your class is doing too much.</p>
+
+<p>Um argumento comum é que métodos privados violam o <em>Princípio da Responsabilidade Única</em> (ou SRP, do inglês <em>Single Responsibility Principle</em>).</p>
+
+<blockquote>
+  <p>Private helper methods indicate classes are doing too many things. Moving private helper methods to different classes, including creating new classes if necessary, splits the original responsibilities across multiple classes leading to simpler, better designs.</p>
+
+  <p>Kent R Spillner, em <a href="https://kent.spillner.org/blog/work/2009/11/12/private-methods-stink.html">Private Methods are a Code Smell</a></p>
+</blockquote>
+
+<p>Em tradução livre:</p>
+
+<blockquote>
+  <p>Métodos auxiliares privados indicam que as classes estão fazendo coisas demais. Mover métodos auxiliares privados para classes diferentes, incluindo criar novas classes se necessário, divide as responsabilidades originais em múltiplas classes, levando à projetos mais simples e melhores.</p>
+</blockquote>
+
+<p>Aqui temos uma opinião bem parecida:</p>
+
+<blockquote>
+  <p>Private methods are not inherently bad, but they are a sign that you might be missing out on an opportunity to make a useful abstraction. If you have a private method that calls another private method, then there is almost certainly an area of responsibility that remains unidentified.</p>
+
+  <p>John McDowall, em <a href="https://blog.stormid.com/2015/03/method-access-modifiers-as-code-smells/">Break. It. Up! – Private Method Access Modifiers as Code Smells</a></p>
+</blockquote>
+
+<p>Em tradução livre:</p>
+
+<blockquote>
+  <p>Métodos privados não são inerentemente ruins, mas eles são um sinal de que você talvez esteja perdendo uma oportunidade de criar uma abstração útil. Se você tem um método privado que chama outro método privado, então é quase certeza que há uma outra área de responsabilidade que permanece não identificada.</p>
+</blockquote>
+
+<p>Outro argumento é que métodos privados dificultam o uso de testes unitários:</p>
+
+<blockquote>
+  <p>Make it public!</p>
+
+  <p>[…]This is probably the simplest way to overcome the problem of untestability.[…] There’s a reason for that:  testability is a perfectly good reason to make something public.  And you should test most of your code.</p>
+</blockquote>
+
+<blockquote>
+  <p>Jason M Baker, em <a href="https://jasonmbaker.wordpress.com/2009/01/08/enemies-of-test-driven-development-part-i-encapsulation/">Enemies of Test Driven Development part I: encapsulation</a></p>
+</blockquote>
+
+<p>Em tradução livre:</p>
+
+<blockquote>
+  <p>Torne [o método privado] público!</p>
+</blockquote>
+
+<blockquote>
+  <p>[…]Essa é provavelmente a maneira mais simples de resolver o problema da não-testabilidade[…] Existe uma razão para isso: testabilidade é uma razão perfeitamente boa para tornar algo público. E você deveria testar a maior parte do seu código.</p>
+</blockquote>
+
+<p>Finalmente, pessoas também argumentam que métodos privados desempenham um papel importante no problema de “bagunçar” o estado interno dos objetos, o que pode lhe causar grandes problemas.</p>
+
+<blockquote>
+  <p>Functional programming teaches that state (in the form of member variables) is evil, because it makes your code more complex and harder to test.</p>
+
+  <p>Ryan Ginstrom, em <a href="https://ginstrom.com/scribbles/2007/11/12/three-reasons-to-avoid-private-class-members/">Three reasons to avoid private class members</a></p>
+</blockquote>
+
+<p>Em tradução livre:</p>
+
+<blockquote>
+  <p>Programação funcional ensina que estado (na forma de variáveis de instância) é maligno, porque ele torna seu código mais complexo e mais difícil de ser testado.</p>
+</blockquote>
+
+<p>Eu acabei de mostrar alguns dos argumentos comuns contra a criação de métodos privados, então agora é hora de mostrar a opinião nesse assunto.</p>
+
+<h2 id="métodos-privados-não-são-necessariamente-violações-do-srp">Métodos privados <em>não</em> são necessariamente violações do SRP</h2>
+
+<p>O primeiro argumento apresentando afirma que métodos privados violam o Princípio da Responsabilidade Única.</p>
+
+<blockquote>
+  <p><em>Private helper methods indicate classes are doing too many things.</em></p>
+</blockquote>
+
+<p>Eu não penso que esse seja o caso. Pelo menos, não sempre. Isso depende do que exatamente o método privado faz.</p>
+
+<p>Você provavelmente não deveria adicionar um método chamado <code class="language-plaintext highlighter-rouge">ValidarEnderecoDeEmail</code> à sua classe <code class="language-plaintext highlighter-rouge">Cliente</code>, sendo o método privado ou não. Afinal de contas, um cliente não é a única entidade que pode ter um endereço de e-mail. Ao invés disso, crie uma classe <code class="language-plaintext highlighter-rouge">Email</code> e coloque todas as validações pertinentes nela.</p>
+
+<p>Por outro lado, digamos que você esteja criando um método <code class="language-plaintext highlighter-rouge">Ordenar</code> em uma estrutura de dados customizada. Nesse caso, faria todo o sentido manter o método <code class="language-plaintext highlighter-rouge">Ordenar</code> público, e ter alguns métodos privados auxiliares, como <code class="language-plaintext highlighter-rouge">CompararItens</code> e <code class="language-plaintext highlighter-rouge">Trocar</code>.</p>
+
+<blockquote>
+  <p><em>Moving private helper methods to different classes, including creating new classes if necessary, splits the original responsibilities across multiple classes leading to simpler, better designs.</em></p>
+</blockquote>
+
+<p>Meu principal problema com esse argumento não é que classes pequenas são geralmente melhores que as grandes, o que eu concordo.</p>
+
+<p>Meu problema é que eu não concordo que criar novas classes e métodos públicos <strong>apenas para evitar métodos privados</strong> vai <strong>automaticamente</strong> gerar “designs mais simples e melhores”. É claro que <em>pode</em> gerar; mas pode gerar projetos priores também. Cada situação é única.</p>
+
+<h2 id="eu-não-compro-testabilidade-como-um-fim-em-si-mesmo">Eu não compro testabilidade como um fim em si mesmo</h2>
+
+<p>Eu gosto muito de testes unitários (e testes automatizados de uma maneira geral). Eu ajudei evangelizar testes unitários no meu trabalho, e atualmente eu supervisiono o time que está adicionando testes unitários e de integração em nosso <em>codebase</em>.</p>
+
+<p>E uma das primeiras perguntas que as pessoas fazem quando estão aprendendo sobre testes unitários é: <em>Como eu faço para testar métodos privados?</em></p>
+
+<p><img src="unicorn_dies.jpg" alt="" /></p>
+
+<p>Minha resposta geralmente é: <strong>você não deveria precisar</strong>. Na minha opinião, não é muito produtivo colocar um esforço excessivo em testar métodos privados: como eles são chamados pelos públicos, eles vão ser exercitados pela sua suíte de testes de qualquer forma.</p>
+
+<p>O objetivo de um teste unitário deveria ser testar e documentar uma “unidade” (uma classe) por meio de usar sua API pública. O que nos leva ao próximo ponto.</p>
+
+<h1 id="sua-api-pública-deve-ser-estável-ou-encapsulamento-importa">Sua API pública deve ser estável (ou “Encapsulamento importa”)</h1>
+
+<p>API significa <em>Application Programming Interface</em>, ou Interface de Programação de Aplicações, em tradução livre. 
+Esse termo pode significar várias coisas, mas no nosso contexto aqui, pense no conjunto das classes e métodos públicos que você expõe aos consumidores.</p>
+
+<p>A API age como um tipo de contrato entre você e os consumidores do seu código. É um acordo. Se você alterar o acordo, a outra parte não vai ficar muito feliz.</p>
+
+<p><img src="deal.jpg" alt="" /></p>
+
+<p>Sua API pública deveria ter o máximo de estabilidade possível. Isso é particularmente importante quando você está criando um <em>web service</em>, uma biblioteca, ou qualquer tipo de ferramenta na qual terceiros dependem.</p>
+
+<p>A propósito, esses “terceiros” não necessariamente precisar estar distante geograficamente de você. É bem comum em empresas, médias para cima, que vários times dependam de código disponibilizado por outros. O que aconteceria se cada equipe fizesse alterações drásticas em suas APIs constantemente? Caos.</p>
+
+<p>A partir do momento que você expõe um método publicamente, você tem a responsabilidade de mantê-lo funcionando e honrando seu contrato; do contrário, você corre o risco de causar quebra de retrocompatibilidade nos seus clientes!</p>
+
+<p>Um bom uso de métodos privados pode ajudar a manter um encapsulamento correto no seu design.</p>
+
+<p>Aqui temos mais uma citação de Kent R Spillner:</p>
+
+<blockquote>
+  <p>Sometimes, private methods are created just to give pieces of functionality more descriptive names. Although descriptive names are desirable, creating private methods to provide descriptive names for things is still a smell. Moving these methods to collaborators and making them public creates opportunities for future reuse without reducing the clarity of the original code.</p>
+</blockquote>
+
+<p>Em tradução livre:</p>
+
+<blockquote>
+  <p>Às vezes, métodos privados são criados apenas para dar nomes mais descritivos a pequenos trechos de funcionalidade. Embora nomes descritivos são desejáveis, criar métodos privados para dar nomes descritivos a coisas ainda é um <em>smell</em>. Mover esses métodos para colaboradores e torná-los públicos cria oportunidades para reuso futuro sem reduzir a claridade do código original.</p>
+</blockquote>
+
+<p>Esse é um dos pontos com os quais eu discordo mais veementemente. Eu frequentemente crio métodos privados pela exata razão que Kent critica aqui, ou seja, dar nomes descritivos a certos trechos de código, um hábito eu adquiri após ler o livro <em>Código Limpo</em>, de Robert C. Martin.</p>
+
+<p>Kent defende que o jeito correto de lidar com isso seria mover esses métodos para novas classes e torná-los públicos.</p>
+
+<p>Mas se eu fizer isso, eu adiciono um novo método à API público da minha aplicação! Agora eu tenho um método a mais para documentar, testar e manter, mesmo que jamais tenha intencionado que esse método fizesse parte da API.</p>
+
+<p>Aqui temos uma definição para modificadores de acesso que na minha opinião acerta em cheio:</p>
+
+<blockquote>
+  <p>public - this method is part of the published API and will not change within major versions of the class</p>
+
+  <p>[…]</p>
+
+  <p>private - this method was refactored out of a well tested public or protected method for reasons of clarity or internal re-use. This method may absolutely change, even in patch releases, and should not be relied upon to even exist.</p>
+</blockquote>
+
+<p>Em tradução livre:</p>
+
+<blockquote>
+  <p>público - este método é parte da API publicada e não vai mudar dentro de versões principais da classe.</p>
+</blockquote>
+
+<blockquote>
+  <p>[…]</p>
+</blockquote>
+
+<blockquote>
+  <p>privado - este método foi criado na refatoração de um método público ou protegido bem testado, por razões de claridade ou reuso interno. Este método com certeza pode ser alterado, mesmo em releases de correção, e ninguém deveria depender da existência dele.</p>
+</blockquote>
+
+<p>Eu concordo com essa definição. Portanto, em minha visão.</p>
+
+<ul>
+  <li>Métodos privados não são necessariamente uma coisa ruim a ser evitada a todo custo.</li>
+  <li>A prática de tornar métodos privados em públicos não leva automaticamente a um design melhor; ela pode também gerar uma API desnecessariamente inflada, encapsulamento enfraquecido, e maior trabalho para manutenção.</li>
+  <li>Testabilidade é um objetivo nobre, mas precisa ser buscado de maneira pragmática. Métodos públicos bem testados e bem documentados deveriam ser suficientes, na maioria dos casos.</li>
+</ul>
+
+<h2 id="métodos-privados-podem-ser-bons-ou-ruins-aprenda-a-separ-o-joio-do-trigo">Métodos privados podem ser bons ou ruins; aprenda a separ o joio do trigo</h2>
+
+<p>Tudo isso dito, eu também acho que existem casos nos quais métodos privados são usados de uma maneira errada. Toda ferramenta pode ser abusada. Existem alguns sinais para os quais você precisa ficar alerta:</p>
+
+<p>Se um método privado está em um <strong>nível de abstração diferente</strong> que os públicos em uma classe, é um sinal de que ele pertence em outra classe. Leitura e escrita em arquivo está um nível de abstração bem mais baixo que o cálculo do pagamento mensal de um empregado, por exemplo.</p>
+
+<p>Quando um método privado é tão complexo que você realmente queria poder testá-lo…é sinal de que ele provavelmente deveria ser público. (Antes que você corra para os comentários para apontar minha aparente contradição, eu não estou dizendo que <strong>todos</strong> os métodos privados deveriam virar públicos para serem testáveis…apenas aqueles que ultrapassam um determinado limiar de complexidade).</p>
+
+<blockquote class="twitter-tweet" data-lang="pt"><p lang="en" dir="ltr"><a href="https://twitter.com/pablogl">@pablogl</a> i only test public methods. if a private method is complex enough to need testing, it generally needs its own object.</p>&mdash; Kent Beck (@KentBeck) <a href="https://twitter.com/KentBeck/status/3579860805">27 de agosto de 2009</a></blockquote>
+<script async="" src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<p>E quando um método privado contém código duplicado, do tipo, copiado e colado de outra classe? Livre-se da duplicação na hora!</p>
+
+<p>Então, esse é o ponto: duas das três dicas que acabo de mostrar são meio subjetivas. Em algum ponto, você tem que fazer algumas escolhas. Quão complexo é complexo o suficiente para um método privado precisar de testes unitários? Como distinguir níveis de abstrações diferentes?</p>
+
+<p>A melhor dica que eu posso oferecer é: <strong>Duas cabeças pensam melhor que uma</strong>. Sempre faça com que outra pessoa olhe e examine seu código antes de ser commitado. Programação em par e/ou revisão de código são ótimas técnicas, não apenas para melhorar o projeto e encontrar bugs, mas principalmente para espalhar conhecimento por uma equipe. Não só conhecimento técnico, mas conhecimento do domínio também, e isso pode fazer toda a diferença na hora de tomar as decisões difíceis.</p>
+
+<h2 id="conclusão">Conclusão</h2>
+
+<p>Embora métodos privados podem ser usados em maneiras ruins, eu penso que seria prematuro automaticamente rotulá-los como uma coisa ruim a ser evitada.</p>
+
+<p>Me parece que algumas das pessoas que afirmam estar argumentando contra métodos privados <strong>estão na verdade argumento contra problemas que são ortogonais a métodos privados</strong>; você pode violar a SRP com ou sem métodos privados; você pode causar problemas com estado interno mutável com ou sem métodos privados, e assim por diante.</p>
+
+<p>Desenvolver software é uma arte, cheia de <em>trade-offs</em> e incerteza. E ainda que “regras de ouro” possam ser úteis, elas não devem ser seguidas cegamente.</p>
+
+<p>Este post ficou muito mais longo do que eu planejei. Agradeço caso tenha chegado até aqui. Até a próxima!</p>
+
+<h2 id="veja-também">Veja também</h2>
+
+<ul>
+  <li><a href="https://stackoverflow.com/questions/2620699/why-private-methods-in-the-object-oriented">https://stackoverflow.com/questions/2620699/why-private-methods-in-the-object-oriented</a></li>
+  <li><a href="https://kent.spillner.org/blog/work/2009/11/12/private-methods-stink.html">https://kent.spillner.org/blog/work/2009/11/12/private-methods-stink.html</a></li>
+  <li><a href="https://blog.stormid.com/2015/03/method-access-modifiers-as-code-smells/">https://blog.stormid.com/2015/03/method-access-modifiers-as-code-smells/</a></li>
+  <li><a href="https://jasonmbaker.wordpress.com/2009/01/08/enemies-of-test-driven-development-part-i-encapsulation/">https://jasonmbaker.wordpress.com/2009/01/08/enemies-of-test-driven-development-part-i-encapsulation/</a></li>
+  <li><a href="https://medium.com/i-m-h-o/private-methods-smelly-ish-435e93ff8c39#.cl06rkgct">https://medium.com/i-m-h-o/private-methods-smelly-ish-435e93ff8c39#.cl06rkgct</a></li>
+  <li><a href="https://ginstrom.com/scribbles/2007/11/12/three-reasons-to-avoid-private-class-members/">https://ginstrom.com/scribbles/2007/11/12/three-reasons-to-avoid-private-class-members/</a></li>
+  <li><a href="https://rc3.org/2010/01/26/the-argument-against-private-methods/">https://rc3.org/2010/01/26/the-argument-against-private-methods/</a></li>
+  <li><a href="https://naildrivin5.com/blog/2010/05/26/is-private-a-code-smell.html">https://naildrivin5.com/blog/2010/05/26/is-private-a-code-smell.html</a></li>
+</ul>
+
+    
+    
+      
+    
+    
+        Encontrou algum erro no post? <a href="http://github.com/carlosschults/carlosschults.github.io/edit/master/_posts/2017-01-29-metodos-privados-sao-code-smell.md">Sugira uma edição</a>      
+    
+    
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+                    
+            <a rel="previous" class="previous" href="/pt/tipos-valor-referencia-em-csharp-parte-2/">&larr; Tipos de valor e referência em C#, Parte 2 - Por que DateTime não pode ser nulo? </a>
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+        	    
+            <a rel="next" class="next" href="/pt/blogs-desenvolvimento-portugues/">Blogs em português sobre desenvolvimento de software que você deveria seguir! &rarr;</a>
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+      
+    <div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+        // Store these for reloads
+        window.disqus_identifier = window.location.pathname;
+        window.disqus_url = window.location.href;
+        
+        // Set initial theme - match it with the site's theme
+        const currentTheme = document.body.getAttribute('data-theme') || 'light';
+        this.page.theme = currentTheme === 'dark' ? 'dark' : 'light';
+    };
+    
+    (function() {
+        var d = document, s = d.createElement('script');
+        s.src = '//carlosschultsblog.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>    
+  </div>
+
+</article>
+
+      </div>
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">         
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-2">
+        <ul class="social-media-list">
+          
+          <li>
+            <a href="https://github.com/carlosschults"><span class="icon icon--github"><svg viewBox="0 0 16 16"><path fill="#828282" d="M7.999,0.431c-4.285,0-7.76,3.474-7.76,7.761 c0,3.428,2.223,6.337,5.307,7.363c0.388,0.071,0.53-0.168,0.53-0.374c0-0.184-0.007-0.672-0.01-1.32 c-2.159,0.469-2.614-1.04-2.614-1.04c-0.353-0.896-0.862-1.135-0.862-1.135c-0.705-0.481,0.053-0.472,0.053-0.472 c0.779,0.055,1.189,0.8,1.189,0.8c0.692,1.186,1.816,0.843,2.258,0.645c0.071-0.502,0.271-0.843,0.493-1.037 C4.86,11.425,3.049,10.76,3.049,7.786c0-0.847,0.302-1.54,0.799-2.082C3.768,5.507,3.501,4.718,3.924,3.65 c0,0,0.652-0.209,2.134,0.796C6.677,4.273,7.34,4.187,8,4.184c0.659,0.003,1.323,0.089,1.943,0.261 c1.482-1.004,2.132-0.796,2.132-0.796c0.423,1.068,0.157,1.857,0.077,2.054c0.497,0.542,0.798,1.235,0.798,2.082 c0,2.981-1.814,3.637-3.543,3.829c0.279,0.24,0.527,0.713,0.527,1.437c0,1.037-0.01,1.874-0.01,2.129 c0,0.208,0.14,0.449,0.534,0.373c3.081-1.028,5.302-3.935,5.302-7.362C15.76,3.906,12.285,0.431,7.999,0.431z"/></svg>
+</span><span class="username">carlosschults</span></a>
+
+          </li>
+          
+
+          
+          <li>
+            <a href="https://twitter.com/carlosschults"><span class="icon icon--twitter"><svg viewBox="0 0 16 16"><path fill="#828282" d="M15.969,3.058c-0.586,0.26-1.217,0.436-1.878,0.515c0.675-0.405,1.194-1.045,1.438-1.809c-0.632,0.375-1.332,0.647-2.076,0.793c-0.596-0.636-1.446-1.033-2.387-1.033c-1.806,0-3.27,1.464-3.27,3.27 c0,0.256,0.029,0.506,0.085,0.745C5.163,5.404,2.753,4.102,1.14,2.124C0.859,2.607,0.698,3.168,0.698,3.767 c0,1.134,0.577,2.135,1.455,2.722C1.616,6.472,1.112,6.325,0.671,6.08c0,0.014,0,0.027,0,0.041c0,1.584,1.127,2.906,2.623,3.206 C3.02,9.402,2.731,9.442,2.433,9.442c-0.211,0-0.416-0.021-0.615-0.059c0.416,1.299,1.624,2.245,3.055,2.271 c-1.119,0.877-2.529,1.4-4.061,1.4c-0.264,0-0.524-0.015-0.78-0.046c1.447,0.928,3.166,1.469,5.013,1.469 c6.015,0,9.304-4.983,9.304-9.304c0-0.142-0.003-0.283-0.009-0.423C14.976,4.29,15.531,3.714,15.969,3.058z"/></svg>
+</span><span class="username">carlosschults</span></a>
+
+          </li>
+          
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-3">
+        <p>Artigos sobre desenvolvimento de software e tecnologia.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+
+    <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-92788641-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+    <script src="/js/dark-mode.js"></script>
+  </body>
+
+</html>

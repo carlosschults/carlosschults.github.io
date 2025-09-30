@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Value and reference types in C#, Part 2 - Why can&#39;t a DateTime be null? | carlos schults / blog</title>
+  <link rel="apple-touch-icon" sizes="57x57" href="/img/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/img/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/img/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/img/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/img/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/img/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/img/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/img/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"  href="/img/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/img/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon-16x16.png">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="description" content="“Why is not allowed to assign null to a DateTime?” Again and again, this question keeps showing up on StackOverflow and similar sites. Different phrasing, ma...">
+  
+  <!-- Twitter card -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:creator" content="@carlosschults">
+  <meta name="twitter:site" content="@carlosschults">
+  <meta name="twitter:domain" content="carlosschults.net">
+  <meta name="twitter:title" content="Value and reference types in C#, Part 2 - Why can't a DateTime be null?">
+  <meta name="twitter:description" content="“Why is not allowed to assign null to a DateTime?” Again and again, this question keeps showing up on StackOverflow and similar sites. Different phrasing, ma...">
+
+   <!-- Facebook meta -->
+  
+  
+  <meta property="og:title" content="Value and reference types in C#, Part 2 - Why can't a DateTime be null?">
+  <meta property="og:site_name" content="Carlos Schults / Blog" />
+  <meta property="og:locale" content="en_US">  
+  <meta property="og:type" content="article" />
+  <meta property="og:image" content="https://res.cloudinary.com/dz5ppacuo/image/upload/v1466341001/csharp-min_buiizq.png" />  
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:width" content="1038"> 
+  <meta property="og:image:height" content="437">  
+  
+  <meta property="og:article:published_time" content="2016-06-19T00:00:00+00:00" />  
+  <meta property="og:article:author" content="Carlos Schults" />
+  
+  <meta property="og:article:tag" content="csharp" />
+  <meta property="og:article:tag" content="beginners" />
+  <meta property="og:article:tag" content="oop" />
+  <meta property="og:article:tag" content="type system" />    
+  
+  <meta property="og:url" content="https://carlosschults.net/en/value-reference-types-in-csharp-part-2/"/>
+  <meta property="og:description" content="“Why is not allowed to assign null to a DateTime?” Again and again, this question keeps showing up on StackOverflow and similar sites. Different phrasing, ma...">
+  <link rel="stylesheet" href="/css/main.css">  
+  
+   <link rel="canonical" href="https://carlosschults.net/en/value-reference-types-in-csharp-part-2/">
+   
+  
+  <link rel="alternate" hreflang="en" href="/en/value-reference-types-in-csharp-part-2/" />
+  <link rel="alternate" hreflang="pt" href="/pt/tipos-valor-referencia-em-csharp-parte-2/" />
+  
+  <link rel="alternate" type="application/rss+xml" title="carlos schults / blog" href="https://carlosschults.net/feed.xml">
+</head>
+
+  <body>
+    <header class="site-header">
+  <div class="wrapper">    
+    <a class="site-title" href="/">carlos schults / blog</a>
+    
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg viewBox="0 0 18 15">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+
+      <div class="trigger">        
+          
+          <a class="page-link" href="/footprints/">Dev Footprints</a>
+          <a class="page-link" href="/readings/">Readings</a>
+          <a class="page-link" href="/about/">About</a>
+		      <a class="page-link" href="/search/">Search</a>
+                  
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+<div class="wrapper" style="text-align: right; line-height: 2em">
+  
+   <a href="/en/value-reference-types-in-csharp-part-2/" class="en">en</a>  <a href="/pt/tipos-valor-referencia-em-csharp-parte-2/" class="pt">pt</a> 
+
+  
+  
+</div>
+
+
+    <div class="page-content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">    
+    <h2 class="postTitle" itemprop="headline">Value and reference types in C#, Part 2 - Why can't a DateTime be null?</h2>
+    <p class="post-meta">   
+    <time datetime="2016-06-19T00:00:00+00:00" itemprop="datePublished">Jun 19, 2016
+    </time> • <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">Carlos Schults</span></span>
+  <span class="tags" itemprop="keywords"> • Tags: <a href="/tag/csharp">csharp </a> <a href="/tag/beginners">beginners </a> <a href="/tag/oop">oop </a> <a href="/tag/type system">type system </a> </span>
+  </p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <p><img src="https://res.cloudinary.com/dz5ppacuo/image/upload/v1466341001/csharp-min_buiizq.png" alt="" /></p>
+
+<p>“Why is not allowed to assign <code class="language-plaintext highlighter-rouge">null</code> to a DateTime?” Again and again, this question keeps showing up on StackOverflow and similar sites. Different phrasing, maybe a different type <a href="https://stackoverflow.com/questions/6191339/why-type-int-is-never-equal-to-null">(“Why type “int” is never equal to ‘null’?”)</a>, but the same question, in essence. Which is only natural, considering that probably thousands of developers join the field every year.
+<!--more--></p>
+
+<p>The short answer is: because DateTime/int/float/whatever is a <strong>value type</strong>, and value types can never be <code class="language-plaintext highlighter-rouge">null</code>. Only reference types can be <code class="language-plaintext highlighter-rouge">null</code>.</p>
+
+<p>That’s great but…why???</p>
+
+<p>I mean, at some point, the C# designers had to make that call. They deliberately decided that <code class="language-plaintext highlighter-rouge">null</code> can’t be assigned to a value type. Is there something intrinsic to value types that prevent them from being <code class="language-plaintext highlighter-rouge">null</code>? Maybe it has something to do with the stack and the heap?</p>
+
+<p>Well, I think before we try to answer those questions, it’d be helpful to get a step back and think about other question.</p>
+
+<h2 id="what-exactly-is-null">What exactly is ‘null’?</h2>
+
+<p>You probably think of <code class="language-plaintext highlighter-rouge">null</code> as a way to represent a missing piece of information. Something that is unknown, absent or irrelevant. Maybe a piece of information that isn’t where it’s supposed to be <em>yet</em>, but it might be in the future.</p>
+
+<p><a href="https://carlosschults.net/en/value-reference-types-in-csharp/">In the previous post about reference and value types</a>, we learned that a variable of a reference type <strong>contains a reference that points to an instance of that type</strong>. But when <code class="language-plaintext highlighter-rouge">null</code> is assigned to the variable, what does the variable contain? Nothing?</p>
+
+<p>Not exactly. Even though <code class="language-plaintext highlighter-rouge">null</code> basically means nothing, this “nothing” has to be represented in some way in the machine’s memory.</p>
+
+<p>In C#, the <code class="language-plaintext highlighter-rouge">null</code> keyword represents a <strong>null reference</strong>, which is a reference that doesn’t point to any object. 
+In practice, the <code class="language-plaintext highlighter-rouge">null</code> value is represented as all zero bits.</p>
+
+<p>Of course, this is just an implementation detail. It could be implemented in different ways, so this isn’t really relevant for us. What you need to understand is, you need something to represent nothing. You need some kind of special value that means “this value is missing” or “this value is unknown”.</p>
+
+<p>Once you understand this, it becomes easier to see what the problem is with value types.</p>
+
+<h2 id="how-would-you-represent-null-for-a-value-type">How would you represent null for a value type?</h2>
+
+<p>To understand why would be complicated to represent <code class="language-plaintext highlighter-rouge">null</code> using a value type, you must bear in mind that value types usually have a range of possible values that they’re able to represent.</p>
+
+<p>It’s easier to get this with an example. So, consider the <a href="https://msdn.microsoft.com/pt-br/library/system.byte%28v=vs.110%29.aspx">byte</a> value type.</p>
+
+<p>This type can represent one byte of possible values. Since 2^8 = 256, it can represent 256 values. It is also unsigned, meaning it can only represent values greater than or equals to zero. Thus, the range of possible values that the byte type can represent is <strong>0 to 255.</strong></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>00000000 =&gt; 0
+00000001 =&gt; 1
+00000010 =&gt; 2
+    .        .
+    .        .
+    .        .
+11111111 =&gt; 255
+</code></pre></div></div>
+
+<p>Now comes the tricky part. If the C# language designers wanted the byte type to be nullable, they’d have to pick a value from the range and elect it as the <code class="language-plaintext highlighter-rouge">null</code> value. Let’s imagine they picked zero as the <code class="language-plaintext highlighter-rouge">null</code> value for <code class="language-plaintext highlighter-rouge">byte</code>. If that was the case, <strong>we wouldn’t be able to use zero as a valid value never again!</strong></p>
+
+<p>That’s the whole point: for value types to be nullable, it is necessary to sacrifice one of the possible values of the range to represent the <code class="language-plaintext highlighter-rouge">null</code> value.</p>
+
+<p>Jon Skeet, author of C# In Depth, puts it better than me:</p>
+
+<blockquote>
+  <p>You’ve got to be able to store the values 0-255 in that variable; otherwise it’s useless for reading arbitrary binary data. With the 256 normal values
+and one <code class="language-plaintext highlighter-rouge">null</code> value, you’d have to cope with a total of 257 values, and there’s no way of squeezing that many values into a single byte.</p>
+
+  <p>The designers could’ve decided that every value type would have an extra flag bit somewhere determining whether a value was <code class="language-plaintext highlighter-rouge">null</code> or contained real data, but the memory usage implications 
+are horrible, not to mention the fact that you’d have to check the flag every time you wanted the use the value.</p>
+</blockquote>
+
+<p>So, there is nothing <strong>in principle</strong> that prevents value types from being <code class="language-plaintext highlighter-rouge">null</code>. It’d just be so complicated that  the C# designers considered that the benefits of doing so don’t outweigh the costs.</p>
+
+<h2 id="but-i-really-wantneed-a-nullable-value-type-what-can-i-do">But I really want/need a nullable value type. What can I do?</h2>
+
+<p>You now hopefully understand the complications involved in representing <code class="language-plaintext highlighter-rouge">null</code> for a value type, and why the C# developers decided against it. But, what if you really need to do this? One common scenario is when you’re fetching data from a relational database. What should you do?</p>
+
+<p>Well, thankfully, there’s an easy solution. Even though “normal” value types can’t be <code class="language-plaintext highlighter-rouge">null</code>, C# 2 introduced the Nullable<T> structure, which allows you to assign `null` to pretty much anything.</T></p>
+
+<p>I’ll talk about nullable types in the next article. As a bonus, you’ll learn a bit about another nice feature called <em>generics</em>.</p>
+
+<p>Stay tuned!</p>
+
+    
+    
+      
+    
+    
+        Found a typo or mistake in the post? <a href="http://github.com/carlosschults/carlosschults.github.io/edit/master/_posts/2016-06-19-value-reference-types-part-2.md">Suggest edit</a>
+        
+    
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+                    
+            <a rel="previous" class="previous" href="/en/how-to-choose-good-names/">&larr; Ten tips to help you choose good names </a>
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+        	    
+            <a rel="next" class="next" href="/en/are-private-methods-a-code-smell/">Are private methods a code smell? &rarr;</a>
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+      
+    <div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+        // Store these for reloads
+        window.disqus_identifier = window.location.pathname;
+        window.disqus_url = window.location.href;
+        
+        // Set initial theme - match it with the site's theme
+        const currentTheme = document.body.getAttribute('data-theme') || 'light';
+        this.page.theme = currentTheme === 'dark' ? 'dark' : 'light';
+    };
+    
+    (function() {
+        var d = document, s = d.createElement('script');
+        s.src = '//carlosschultsblog.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>    
+  </div>
+
+</article>
+
+      </div>
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">         
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-2">
+        <ul class="social-media-list">
+          
+          <li>
+            <a href="https://github.com/carlosschults"><span class="icon icon--github"><svg viewBox="0 0 16 16"><path fill="#828282" d="M7.999,0.431c-4.285,0-7.76,3.474-7.76,7.761 c0,3.428,2.223,6.337,5.307,7.363c0.388,0.071,0.53-0.168,0.53-0.374c0-0.184-0.007-0.672-0.01-1.32 c-2.159,0.469-2.614-1.04-2.614-1.04c-0.353-0.896-0.862-1.135-0.862-1.135c-0.705-0.481,0.053-0.472,0.053-0.472 c0.779,0.055,1.189,0.8,1.189,0.8c0.692,1.186,1.816,0.843,2.258,0.645c0.071-0.502,0.271-0.843,0.493-1.037 C4.86,11.425,3.049,10.76,3.049,7.786c0-0.847,0.302-1.54,0.799-2.082C3.768,5.507,3.501,4.718,3.924,3.65 c0,0,0.652-0.209,2.134,0.796C6.677,4.273,7.34,4.187,8,4.184c0.659,0.003,1.323,0.089,1.943,0.261 c1.482-1.004,2.132-0.796,2.132-0.796c0.423,1.068,0.157,1.857,0.077,2.054c0.497,0.542,0.798,1.235,0.798,2.082 c0,2.981-1.814,3.637-3.543,3.829c0.279,0.24,0.527,0.713,0.527,1.437c0,1.037-0.01,1.874-0.01,2.129 c0,0.208,0.14,0.449,0.534,0.373c3.081-1.028,5.302-3.935,5.302-7.362C15.76,3.906,12.285,0.431,7.999,0.431z"/></svg>
+</span><span class="username">carlosschults</span></a>
+
+          </li>
+          
+
+          
+          <li>
+            <a href="https://twitter.com/carlosschults"><span class="icon icon--twitter"><svg viewBox="0 0 16 16"><path fill="#828282" d="M15.969,3.058c-0.586,0.26-1.217,0.436-1.878,0.515c0.675-0.405,1.194-1.045,1.438-1.809c-0.632,0.375-1.332,0.647-2.076,0.793c-0.596-0.636-1.446-1.033-2.387-1.033c-1.806,0-3.27,1.464-3.27,3.27 c0,0.256,0.029,0.506,0.085,0.745C5.163,5.404,2.753,4.102,1.14,2.124C0.859,2.607,0.698,3.168,0.698,3.767 c0,1.134,0.577,2.135,1.455,2.722C1.616,6.472,1.112,6.325,0.671,6.08c0,0.014,0,0.027,0,0.041c0,1.584,1.127,2.906,2.623,3.206 C3.02,9.402,2.731,9.442,2.433,9.442c-0.211,0-0.416-0.021-0.615-0.059c0.416,1.299,1.624,2.245,3.055,2.271 c-1.119,0.877-2.529,1.4-4.061,1.4c-0.264,0-0.524-0.015-0.78-0.046c1.447,0.928,3.166,1.469,5.013,1.469 c6.015,0,9.304-4.983,9.304-9.304c0-0.142-0.003-0.283-0.009-0.423C14.976,4.29,15.531,3.714,15.969,3.058z"/></svg>
+</span><span class="username">carlosschults</span></a>
+
+          </li>
+          
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-3">
+        <p>Articles on software development and technology.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+
+    <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-92788641-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+    <script src="/js/dark-mode.js"></script>
+  </body>
+
+</html>

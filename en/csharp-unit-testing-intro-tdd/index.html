@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>C# Unit Testing: Getting Started With TDD | carlos schults / blog</title>
+  <link rel="apple-touch-icon" sizes="57x57" href="/img/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/img/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/img/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/img/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/img/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/img/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/img/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/img/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"  href="/img/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/img/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon-16x16.png">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="description" content="This post is part of a series. See all the articles in the series.Today I bring you another post to help you get started with C# unit testing. I’ve already c...">
+  
+  <!-- Twitter card -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:creator" content="@carlosschults">
+  <meta name="twitter:site" content="@carlosschults">
+  <meta name="twitter:domain" content="carlosschults.net">
+  <meta name="twitter:title" content="C# Unit Testing: Getting Started With TDD">
+  <meta name="twitter:description" content="This post is part of a series. See all the articles in the series.Today I bring you another post to help you get started with C# unit testing. I’ve already c...">
+
+   <!-- Facebook meta -->
+  
+  
+  <meta property="og:title" content="C# Unit Testing: Getting Started With TDD">
+  <meta property="og:site_name" content="Carlos Schults / Blog" />
+  <meta property="og:locale" content="en_US">  
+  <meta property="og:type" content="article" />
+  <meta property="og:image" content="https://res.cloudinary.com/dz5ppacuo/image/upload/v1459979937/testes-unitarios-iniciantes-min_povcse.png" />  
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:width" content="1038"> 
+  <meta property="og:image:height" content="437">  
+  
+  <meta property="og:article:published_time" content="2020-07-08T00:00:00+00:00" />  
+  <meta property="og:article:author" content="Carlos Schults" />
+  
+  <meta property="og:article:tag" content="software-testing" />
+  <meta property="og:article:tag" content="beginners" />
+  <meta property="og:article:tag" content="unit-testing" />
+  <meta property="og:article:tag" content="unit-testing-series" />
+  <meta property="og:article:tag" content="automated-tests" />
+  <meta property="og:article:tag" content="csharp" />
+  <meta property="og:article:tag" content="agile" />    
+  
+  <meta property="og:url" content="https://carlosschults.net/en/csharp-unit-testing-intro-tdd/"/>
+  <meta property="og:description" content="This post is part of a series. See all the articles in the series.Today I bring you another post to help you get started with C# unit testing. I’ve already c...">
+  <link rel="stylesheet" href="/css/main.css">  
+  
+   <link rel="canonical" href="https://carlosschults.net/en/csharp-unit-testing-intro-tdd/">
+   
+  
+  <link rel="alternate" hreflang="en" href="/en/csharp-unit-testing-intro-tdd/" />
+  <link rel="alternate" hreflang="pt" href="/pt/testes-unitarios-csharp-intro-tdd/" />
+  
+  <link rel="alternate" type="application/rss+xml" title="carlos schults / blog" href="https://carlosschults.net/feed.xml">
+</head>
+
+  <body>
+    <header class="site-header">
+  <div class="wrapper">    
+    <a class="site-title" href="/">carlos schults / blog</a>
+    
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg viewBox="0 0 18 15">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+
+      <div class="trigger">        
+          
+          <a class="page-link" href="/footprints/">Dev Footprints</a>
+          <a class="page-link" href="/readings/">Readings</a>
+          <a class="page-link" href="/about/">About</a>
+		      <a class="page-link" href="/search/">Search</a>
+                  
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+<div class="wrapper" style="text-align: right; line-height: 2em">
+  
+   <a href="/en/csharp-unit-testing-intro-tdd/" class="en">en</a>  <a href="/pt/testes-unitarios-csharp-intro-tdd/" class="pt">pt</a> 
+
+  
+  
+</div>
+
+
+    <div class="page-content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">    
+    <h2 class="postTitle" itemprop="headline">C# Unit Testing: Getting Started With TDD</h2>
+    <p class="post-meta">   
+    <time datetime="2020-07-08T00:00:00+00:00" itemprop="datePublished">Jul 8, 2020
+    </time> • <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">Carlos Schults</span></span>
+  <span class="tags" itemprop="keywords"> • Tags: <a href="/tag/software-testing">software-testing </a> <a href="/tag/beginners">beginners </a> <a href="/tag/unit-testing">unit-testing </a> <a href="/tag/unit-testing-series">unit-testing-series </a> <a href="/tag/automated-tests">automated-tests </a> <a href="/tag/csharp">csharp </a> <a href="/tag/agile">agile </a> </span>
+  </p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <p><img src="https://res.cloudinary.com/dz5ppacuo/image/upload/v1459979937/testes-unitarios-iniciantes-min_povcse.png" alt="" /></p>
+
+<p><em>This post is part of a series. <a href="http://carlosschults.net/tag/unit-testing-series/">See all the articles in the series.</a></em></p>
+
+<p>Today I bring you another post to help you get started with C# unit testing. I’ve already covered the <a href="https://carlosschults.net/en/unit-testing-for-beginners-part1/">basics of unit tests</a>, explaining what they are and why they’re so important. After that, I showed you <a href="https://carlosschults.net/en/unit-testing-for-beginners-part2/">how to get started with unit testing</a> with a practical example. Today, we go one step further, exploring the TDD methodology.</p>
+
+<p>You’ve probably have heard of TDD, but you might be confused as to what it is. This isn’t your fault, by the way. There’s quite a lot of misconception surrounding this acronym. Some people even use it interchangeably with unit testing. In this post, you’re going to learn why they’re wrong, and more.</p>
+
+<p>We start the post with a brief definition of TDD. You’ll learn not only that TDD stands for Test-Driven Development, but also that it’s not a testing technique, despite the name. After that, I explain what TDD is and what its benefits are.</p>
+
+<p>After the “what” and “why” are both out of our way, we’ll be ready to have some fun. I’m going to show you, in practice, how to get started with TDD, developing a solution for a famous programming exercise. Sounds good? Then, let’s dig in.</p>
+
+<h2 id="c-unit-testing--tdd-basics">C# Unit Testing &amp; TDD Basics</h2>
+
+<p>I’ve mentioned earlier that TDD is not a testing technique. What is it, though? And how it’s related to C# unit testing (or unit testing in general, for that matter?)</p>
+
+<h3 id="defining-tdd">Defining TDD</h3>
+
+<p>As you’ve seen, TDD stands for Test-Driven Development. It is a technique or methodology of software development that uses unit tests to drive the development of the application.</p>
+
+<p>Instead of doing the more intuitive thing, which would be writing unit tests after the production code, the TDD methodology states that you should start by writing a failing unit test. Then you write the production code, but only what’s necessary to make the test pass.</p>
+
+<p>I guess you’re now wondering at least two things:</p>
+
+<ul>
+  <li>How does that work in practice?</li>
+  <li>Why write code in such a weird way?</li>
+</ul>
+
+<p>That’s what we’re going to see next.</p>
+
+<h3 id="the-tdd-phases">The TDD Phases</h3>
+
+<p>Test-driven development relies on the repetition of an incredibly short cycle. This cycle is composed of three phases:</p>
+
+<ol>
+  <li>First, you write a test that represents a specific requirement of the functionality you’re trying to implement.</li>
+  <li>You then make the test pass, writing the minimum amount of production code you can get away with.</li>
+  <li>If necessary, you refactor the code to eliminate duplication or other problems.</li>
+</ol>
+
+<p>Since the functionality doesn’t exist yet, the test you write in step #1 will fail. That is, in languages such as Python or Ruby. In the case of statically typed languages such as Java or C#, the code won’t even compile. For our purposes, code not compiling counts as a test failure.</p>
+
+<p>In step #2, you have to make the test pass, but nothing beyond that. What I mean is that your goal here isn’t to solve the problem, at least not yet. Instead, your only job is to make the test pass, writing the least possible amount of code. Cheating—for instance, returning a hard-coded value—is not only OK but encouraged, as you’ll soon see.</p>
+
+<p>Finally, the third phase is the only one that allows you to write production code without having to create a failing test first. But you can’t create new classes or functions; you can only refactor the code you wrote in the previous step, to make it more readable, to eliminate duplication, or to solve another problem. And, of course, the test should still pass.</p>
+
+<p>People often use refer to the TDD as “red-green-refactor” because most unit testing tools use red to denote failing tests and green for passing tests.</p>
+
+<h3 id="why-use-tdd">Why Use TDD?</h3>
+
+<p>The hard thing to understand when getting started with TDD isn’t the how. The “how” is trivial: write a test, make it pass, maybe refactor, rinse, repeat. The troubling part is the “why.” Why develop software in such a non-intuitive way?</p>
+
+<p>I’ll talk more of the TDD philosophy in future articles. In a nutshell, applying TDD ensures you’ll have testable code from the beginning. It will encourage you to design your code in a simple and modular way.</p>
+
+<p>But perhaps, the main advantage of TDD is increasing the developer’s confidence on their code. By developing one tiny step at a time, you’ll never be able to get a lot wrong, since you’re doing too little. Knowing that you’re only one failing test away from having working code is reassuring.</p>
+
+<h2 id="c-unit-testing--tdd-the-hands-on-guide-to-get-started">C# Unit Testing &amp; TDD: The Hands-On Guide To Get Started</h2>
+
+<p>I’ve covered how to get started with C# unit testing in the past. I’ve also covered the required tools and how to get started. However, I won’t assume you’ve read those articles. Instead, I’ll cover everything from scratch. So, you’ll be able to follow the tutorial even if you have zero experience with unit testing.</p>
+
+<h3 id="our-problem-the-string-calculator-kata">Our Problem: The String Calculator Kata</h3>
+
+<p>For our tutorial, we’ll write a solution for Roy Osherov’s <a href="https://osherove.com/tdd-kata-1">String Calculator kata</a>. A coding kata is a programming exercise, meant to allow developers to practice fundamental agile software-engineering practices, such as refactoring, and—you’ve guessed it—TDD.</p>
+
+<p>For simplicity’s sake, I’ll ignore some of the kata’s requirements. What follows are the requirements we’re going to use:</p>
+
+<ol>
+  <li>We’re going to create a class called StringCalculator, with a single static method with the signature static int Add(string numbers);</li>
+  <li>The method takes a string representing numbers separated by a comma, and return their sum.</li>
+  <li>If we pass an empty string, the method should return zero.</li>
+  <li>Passing a single number should result in the number itself.</li>
+  <li>If we pass negative numbers, the method should throw an ArgumentException, with the message “Negative numbers not allowed:” followed by the negatives that were specified.</li>
+  <li>The method should ignore numbers greater than 1000 should. So, “1,2,1000” should result in 1003, but “1,2,1001” should result in 3.</li>
+</ol>
+
+<h3 id="creating-the-production-project">Creating The Production Project</h3>
+
+<p>For this tutorial, I’ll be using the community edition of Visual Studio 2019. If you don’t already have it, you can download it and install it from free.</p>
+
+<p>Open VS and click on “Create a new project,” like in the following image:</p>
+
+<p><img src="https://res.cloudinary.com/dz5ppacuo/image/upload/v1594235427/unit3/img1.png" alt="" /></p>
+
+<p>In the opened window, choose Class Library (.NET Core) as the template for the new project. Then, click on “Next”:</p>
+
+<p><img src="https://res.cloudinary.com/dz5ppacuo/image/upload/v1594235427/unit3/img2.png" alt="" /></p>
+
+<p>The next screen simply asks you for a name for the project and the solution. I chose” StringCalculatorKata” for both the project and the solution. You’ll also have to provide a location for saving the project files. When you’re done, just click “Create.”</p>
+
+<p>If everything went well, you should see the default class open for you in Visual Studio. Go to Solution Explorer and delete that class; we’re not going to need it.</p>
+
+<h3 id="creating-the-test-project">Creating The Test Project</h3>
+
+<p>Now, it’s time to create the test project. We could this in two ways: creating a regular “Class Library” project and then adding the necessary dependencies to it, or creating a unit test project right away. We’ll go with the latter since it makes the whole thing easier.</p>
+
+<p>You know the drill: right-click the solution, go to “Add,” then “New Project…”. Then, choose the template “NUnit Test Project (.NET Core).”</p>
+
+<p>Then, you’ll be required to provide a name and a location for the project. I like to follow the naming convention of naming the test project after the production project, with a “.Test” added. So, I pick “StringCalculatorKata.Test.” Finish the creation of the project.</p>
+
+<p>If everything went right, you should now see a new class that looks like this:</p>
+
+<figure class="highlight"><pre><code class="language-csharp" data-lang="csharp"><span class="k">public</span> <span class="k">class</span> <span class="nc">Tests</span>
+<span class="p">{</span>
+    <span class="p">[</span><span class="n">SetUp</span><span class="p">]</span>
+    <span class="k">public</span> <span class="k">void</span> <span class="nf">Setup</span><span class="p">()</span>
+    <span class="p">{</span>
+    <span class="p">}</span>
+
+    <span class="p">[</span><span class="n">Test</span><span class="p">]</span>
+    <span class="k">public</span> <span class="k">void</span> <span class="nf">Test1</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="n">Assert</span><span class="p">.</span><span class="nf">Pass</span><span class="p">();</span>
+    <span class="p">}</span>
+<span class="p">}</span></code></pre></figure>
+
+<p>Let’s do a few things. First, get rid of the <code class="language-plaintext highlighter-rouge">Setup()</code> method. We won’t need it. Then, add a new method with the code below:</p>
+
+<figure class="highlight"><pre><code class="language-csharp" data-lang="csharp"><span class="p">[</span><span class="n">Test</span><span class="p">]</span>
+<span class="k">public</span> <span class="k">void</span> <span class="nf">Test2</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">Assert</span><span class="p">.</span><span class="nf">Fail</span><span class="p">();</span>
+<span class="p">}</span></code></pre></figure>
+
+<p>So, we now have two tests, one that should pass and another that should fail. Let’s run them to see if they’re working correctly. Go to the “Run” menu and click on “Run All Tests.”</p>
+
+<p>Now, open the Test Explorer window (View -&gt; Test Explorer). It should look like this:</p>
+
+<p><img src="https://res.cloudinary.com/dz5ppacuo/image/upload/v1594235427/unit3/tests-running.png" alt="" /></p>
+
+<p>It looks like everything is working fine! But before we start doing our coding kata exercise, there are two final steps we need to take. First, let’s rename the test class. Go to the solution explorer, expand the unit test project, and delete its default test class. Then, right-click the test project, go to “Add,” then “New class…” and add a new class called “StringCalculatorKata.” Alternatively, you can rename the existing class.</p>
+
+<p>The second thing we have to do is to ensure our test project can see our production project. To solve that, we’re adding a reference.</p>
+
+<p>Go to the solution explorer again, right-click the test project, then go to “Add” and click on “Reference…”.</p>
+
+<p>In the new window, select “Projects” on the left panel, and then select the StringCalculatorKata project, which should be the only one available:</p>
+
+<p><img src="https://res.cloudinary.com/dz5ppacuo/image/upload/v1594235427/unit3/add-reference.png" alt="" /></p>
+
+<p>Then, you just have to click on “OK,” and now you’re ready to go.</p>
+
+<h2 id="starting-our-coding-kata">Starting Our Coding Kata</h2>
+
+<p>Now, we’re ready to write our first failing test. So, open the StringCalculatorTest class and add the following method to it:</p>
+
+<figure class="highlight"><pre><code class="language-csharp" data-lang="csharp"><span class="p">[</span><span class="n">Test</span><span class="p">]</span>
+<span class="k">public</span> <span class="k">void</span> <span class="nf">Add_EmptyStringAsParam_ReturnsZero</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">Assert</span><span class="p">.</span><span class="nf">AreEqual</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="n">StringCalculator</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="kt">string</span><span class="p">.</span><span class="n">Empty</span><span class="p">));</span>
+<span class="p">}</span></code></pre></figure>
+
+<p>In our first test case, we test the simplest possible scenario. That is, we call the Add method passing an empty string, which, according to the requirements you saw before, should result in 0. Of course, neither the Add method nor the StringCalculator class exists, so our code doesn’t even compile. Well, congratulations! You’ve successfully performed the first step in the red-green-refactor cycle by writing a failing test! Remember: in statically-typed languages such as C#, failure to compile counts as a failed test.</p>
+
+<p>So, our first step is to get rid of the compilation error. If you hover over “StringCalculator,” you should see a little pop-up explaining the error and offering possible fixes:</p>
+
+<p><img src="https://res.cloudinary.com/dz5ppacuo/image/upload/v1594238110/unit3/hover-tip.png" alt="" /></p>
+
+<p>Click on “Show potential fixes” and then on “Generate new type…”. You should then see a window prompting you for the details and location of the new type. Change the “access” to “public” and the location to the production project, which is “StringCalculatorKata.” The window should look like this:</p>
+
+<p><img src="https://res.cloudinary.com/dz5ppacuo/image/upload/v1594238213/unit3/create-production-class.png" alt="" /></p>
+
+<p>Click on “OK.” Now, if you open solution explorer and expand the StringCalculatorKata project, you should see the StringCalculator.cs class lurking around there. Cool.</p>
+
+<p>However, our code still doesn’t compile. And that’s because, despite creating the production class, we didn’t add the Add method to it. So, let’s do it in the same way we did with the class.</p>
+
+<p>Hover over the “Add” word until the help pop-up shows up with the message “’ StringCalculator’ does not contain a definition for ‘Add.’” Click on Show potential fixes, and then click on “Generate method ‘StringCalculator.Add’.”</p>
+
+<p>You’ll see that the production class now contains a method called Add, with double as a return type. We want the method to return int, so let’s change that. Let’s also change the parameter name to “numbers” to match the coding kata’s requirements. At this point, your complete StringCalculator class should look like this:</p>
+
+<figure class="highlight"><pre><code class="language-csharp" data-lang="csharp"><span class="k">public</span> <span class="k">class</span> <span class="nc">StringCalculator</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">static</span> <span class="kt">int</span> <span class="nf">Add</span><span class="p">(</span><span class="kt">string</span> <span class="n">numbers</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">throw</span> <span class="k">new</span> <span class="nf">NotImplementedException</span><span class="p">();</span>
+    <span class="p">}</span>
+<span class="p">}</span></code></pre></figure>
+
+<p>Now your code should compile. Run the test again, and you’ll see that it fails, with a message like this:</p>
+
+<pre>
+Add_EmptyStringAsParam_ReturnsZero
+   Source: StringCalculatorTest.cs line 8
+   Duration: 43 ms
+
+  Message: 
+    System.NotImplementedException : The method or operation is not implemented.
+  Stack Trace: 
+    StringCalculator.Add(String numbers) line 9
+    StringCalculatorTest.Add_EmptyStringAsParam_ReturnsZero() line 10
+
+</pre>
+
+<p>We have a truly failing test. Are we ready to write production code? Not so fast. Sure, our test fails, but it fails in the wrong way. Since our test contains an assertion, we expected a failed assertion. Instead, what we’ve got is a failure due to the method under test throwing an exception.</p>
+
+<p>The fix here is simple. Let’s just change the Add method, so it returns any number different from zero:</p>
+
+<figure class="highlight"><pre><code class="language-csharp" data-lang="csharp"><span class="k">public</span> <span class="k">static</span> <span class="kt">int</span> <span class="nf">Add</span><span class="p">(</span><span class="kt">string</span> <span class="n">numbers</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">return</span> <span class="p">-</span><span class="m">1</span><span class="p">;</span>
+<span class="p">}</span></code></pre></figure>
+
+<p>Now, run the test again, and you’ll see the error message is now this:</p>
+
+<pre>
+Add_EmptyStringAsParam_ReturnsZero
+   Source: StringCalculatorTest.cs line 8
+   Duration: 76 ms
+
+  Message: 
+      Expected: 0
+      But was:  -1
+</pre>
+
+<h3 id="making-the-test-pass">Making The Test Pass</h3>
+
+<p>We’re now finally ready to make the test pass. As I’ve said earlier, to make a test pass, you’re not only allowed but encouraged to cheat. In our case, we can simply make the Add method return zero:</p>
+
+<figure class="highlight"><pre><code class="language-csharp" data-lang="csharp"><span class="k">public</span> <span class="k">static</span> <span class="kt">int</span> <span class="nf">Add</span><span class="p">(</span><span class="kt">string</span> <span class="n">numbers</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">return</span> <span class="m">0</span><span class="p">;</span>
+<span class="p">}</span></code></pre></figure>
+
+<h3 id="writing-the-second-test-a-single-number">Writing The Second Test: A Single Number</h3>
+
+<p>The requirements say that passing a single number should return the number itself. That’s sound like a useful thing to test:</p>
+
+<figure class="highlight"><pre><code class="language-csharp" data-lang="csharp"><span class="p">[</span><span class="n">Test</span><span class="p">]</span>
+<span class="k">public</span> <span class="k">void</span> <span class="nf">Add_StringContainingSingleNumber_ReturnsTheNumberItself</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">Assert</span><span class="p">.</span><span class="nf">AreEqual</span><span class="p">(</span><span class="m">5</span><span class="p">,</span> <span class="n">StringCalculator</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="s">"5"</span><span class="p">));</span>
+<span class="p">}</span></code></pre></figure>
+
+<p>The test fails with the following message:</p>
+
+<pre>
+Add_StringContainingSingleNumber_ReturnsTheNumberItself
+   Source: StringCalculatorTest.cs line 14
+   Duration: 56 ms
+
+  Message: 
+      Expected: 5
+      But was:  0
+
+</pre>
+
+<p>How can we make the test above pass in the laziest possible way? How about this:</p>
+
+<figure class="highlight"><pre><code class="language-csharp" data-lang="csharp"><span class="k">public</span> <span class="k">static</span> <span class="kt">int</span> <span class="nf">Add</span><span class="p">(</span><span class="kt">string</span> <span class="n">numbers</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">numbers</span> <span class="p">==</span> <span class="kt">string</span><span class="p">.</span><span class="n">Empty</span><span class="p">)</span>
+        <span class="k">return</span> <span class="m">0</span><span class="p">;</span>
+
+    <span class="k">return</span> <span class="m">5</span><span class="p">;</span>
+<span class="p">}</span></code></pre></figure>
+
+<h3 id="testing-two-numbers">Testing Two Numbers</h3>
+
+<p>Since we’ve already tested the Add method by passing zero numbers (an empty string) and a single number, it feels like the next natural step for us now would be to write a test for the scenario of adding two numbers. So, let’s do just that.</p>
+
+<figure class="highlight"><pre><code class="language-csharp" data-lang="csharp"><span class="p">[</span><span class="n">Test</span><span class="p">]</span>
+<span class="k">public</span> <span class="k">void</span> <span class="nf">Add_TwoNumbersSeparatedByComma_ReturnsTheirSum</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="kt">var</span> <span class="n">numbers</span> <span class="p">=</span> <span class="s">"7,8"</span><span class="p">;</span>
+    <span class="kt">var</span> <span class="n">expectedResult</span> <span class="p">=</span> <span class="m">15</span><span class="p">;</span>
+    <span class="n">Assert</span><span class="p">.</span><span class="nf">AreEqual</span><span class="p">(</span><span class="n">expectedResult</span><span class="p">,</span> <span class="n">StringCalculator</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="n">numbers</span><span class="p">));</span>
+<span class="p">}</span></code></pre></figure>
+
+<p>The test above naturally fails since our method currently returns 0 when it gets an empty string and five otherwise. How can we change it, so this new test passes, the older tests continue to pass, in a way that doesn’t solve the problem generally?</p>
+
+<p>This is an idea:</p>
+
+<figure class="highlight"><pre><code class="language-csharp" data-lang="csharp"><span class="k">public</span> <span class="k">static</span> <span class="kt">int</span> <span class="nf">Add</span><span class="p">(</span><span class="kt">string</span> <span class="n">numbers</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">numbers</span> <span class="p">==</span> <span class="kt">string</span><span class="p">.</span><span class="n">Empty</span><span class="p">)</span>
+        <span class="k">return</span> <span class="m">0</span><span class="p">;</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">numbers</span><span class="p">.</span><span class="nf">Contains</span><span class="p">(</span><span class="sc">','</span><span class="p">))</span>
+        <span class="k">return</span> <span class="m">15</span><span class="p">;</span>
+
+    <span class="k">return</span> <span class="m">5</span><span class="p">;</span>
+<span class="p">}</span></code></pre></figure>
+
+<h3 id="testing-three-numbers">Testing Three Numbers</h3>
+
+<p>Have you noticed that, up until now, we haven’t done any refactoring? Well, we’re getting closer to the point when our tests drive us to include some nasty duplication to our code. Then, we’ll use refactoring to change the code in a way that gets closer to a general solution.</p>
+
+<p>Let’s see if we can do that by testing the scenario with three numbers:</p>
+
+<figure class="highlight"><pre><code class="language-csharp" data-lang="csharp"><span class="p">[</span><span class="n">Test</span><span class="p">]</span>
+<span class="k">public</span> <span class="k">void</span> <span class="nf">Add_ThreeNumbersSeparatedByComma_ReturnsTheirSum</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="kt">var</span> <span class="n">numbers</span> <span class="p">=</span> <span class="s">"1, 2, 3"</span><span class="p">;</span>
+    <span class="kt">var</span> <span class="n">expected</span> <span class="p">=</span> <span class="m">6</span><span class="p">;</span>
+    <span class="n">Assert</span><span class="p">.</span><span class="nf">AreEqual</span><span class="p">(</span><span class="n">expected</span><span class="p">,</span> <span class="n">StringCalculator</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="n">numbers</span><span class="p">));</span>
+<span class="p">}</span></code></pre></figure>
+
+<p>The test will naturally fail. Since the provided string contains commas, we fall into the conditional branch that returns 15. Our challenge now is to change the production method in a way that makes this test pass. Can we do it without going to the general solution to the problem?Let’s see.</p>
+
+<figure class="highlight"><pre><code class="language-csharp" data-lang="csharp"><span class="k">public</span> <span class="k">static</span> <span class="kt">int</span> <span class="nf">Add</span><span class="p">(</span><span class="kt">string</span> <span class="n">numbers</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">numbers</span> <span class="p">==</span> <span class="kt">string</span><span class="p">.</span><span class="n">Empty</span><span class="p">)</span>
+        <span class="k">return</span> <span class="m">0</span><span class="p">;</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">numbers</span> <span class="p">==</span> <span class="s">"1, 2, 3"</span><span class="p">)</span>
+        <span class="k">return</span> <span class="m">6</span><span class="p">;</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">numbers</span><span class="p">.</span><span class="nf">Contains</span><span class="p">(</span><span class="sc">','</span><span class="p">))</span>
+        <span class="k">return</span> <span class="m">15</span><span class="p">;</span>
+
+    <span class="k">return</span> <span class="m">5</span><span class="p">;</span>
+<span class="p">}</span></code></pre></figure>
+
+<p>By comparing the specified param with the exact input used in the test, we can make the test pass while avoiding going for the general solution. However, now we have managed to create code duplication. Can you see it? We’re making two comparisons against the value of numbers, one right after the other. Let’s see if we can get rid of that duplication.</p>
+
+<figure class="highlight"><pre><code class="language-csharp" data-lang="csharp"><span class="k">public</span> <span class="k">static</span> <span class="kt">int</span> <span class="nf">Add</span><span class="p">(</span><span class="kt">string</span> <span class="n">numbers</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">numbers</span> <span class="p">==</span> <span class="s">"1, 2, 3"</span><span class="p">)</span>
+        <span class="k">return</span> <span class="m">6</span><span class="p">;</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">numbers</span><span class="p">.</span><span class="nf">Contains</span><span class="p">(</span><span class="sc">','</span><span class="p">))</span>
+        <span class="k">return</span> <span class="m">15</span><span class="p">;</span>
+
+    <span class="kt">int</span><span class="p">.</span><span class="nf">TryParse</span><span class="p">(</span><span class="n">numbers</span><span class="p">,</span> <span class="k">out</span> <span class="kt">int</span> <span class="n">result</span><span class="p">);</span>
+    <span class="k">return</span> <span class="n">result</span><span class="p">;</span>
+<span class="p">}</span></code></pre></figure>
+
+<p>By leveraging the <code class="language-plaintext highlighter-rouge">TryParse</code> method from the <code class="language-plaintext highlighter-rouge">System.Int32</code> type, I’ve managed to get rid of the first if instruction. We’ve also used a feature introduced in <a href="https://carlosschults.net/en/csharp-7-features/">C# 7</a> called “out variables.” This feature allows us to use out parameters without having to declare them beforehand.</p>
+
+<p>All tests still pass, so I can’t write more production code. What should the next test be?</p>
+
+<h3 id="testing-more-than-three-numbers">Testing More Than Three Numbers</h3>
+
+<p>The requirements don’t say we should only be able to handle three numbers. So, let’s create another test case to cover the scenarios with 4, 5, or more numbers. While we’re at it, we can also include the requirement of ignoring numbers greater than 1000.</p>
+
+<p>To do this without having to create a lot of test methods, we’re going to leverage NUnit’s <a href="https://docs.nunit.org/articles/nunit/writing-tests/attributes/testcase.html">parametrized tests</a> feature, adding a single method with several test cases:</p>
+
+<figure class="highlight"><pre><code class="language-csharp" data-lang="csharp"><span class="p">[</span><span class="nf">TestCase</span><span class="p">(</span><span class="s">"1,2,3,4"</span><span class="p">,</span> <span class="m">10</span><span class="p">)]</span>
+<span class="p">[</span><span class="nf">TestCase</span><span class="p">(</span><span class="s">"8,7,20"</span><span class="p">,</span> <span class="m">35</span><span class="p">)]</span>
+<span class="p">[</span><span class="nf">TestCase</span><span class="p">(</span><span class="s">"5,0,4,1001"</span><span class="p">,</span> <span class="m">9</span><span class="p">)]</span>
+<span class="p">[</span><span class="nf">TestCase</span><span class="p">(</span><span class="s">"5,0,4,1000"</span><span class="p">,</span> <span class="m">1009</span><span class="p">)]</span>
+<span class="p">[</span><span class="nf">TestCase</span><span class="p">(</span><span class="s">"26,6,90"</span><span class="p">,</span> <span class="m">122</span><span class="p">)]</span>
+<span class="k">public</span> <span class="k">void</span> <span class="nf">Add_MoreThanThreeNumbersSeparatedByComma_ReturnsTheirSum</span><span class="p">(</span>
+    <span class="kt">string</span> <span class="n">input</span><span class="p">,</span> <span class="kt">int</span> <span class="n">result</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">Assert</span><span class="p">.</span><span class="nf">AreEqual</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">StringCalculator</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="n">input</span><span class="p">));</span>
+<span class="p">}</span></code></pre></figure>
+
+<p>Notice that the third test case exemplifies the requirement that says we should ignore numbers greater than 1000. The next test case, however, shows that 1000 should not be ignored. If you run the tests, you’ll see that test explorer shows each test case as a distinct test.</p>
+
+<p>How can we make this test pass? Honestly, by this post, it’s way easier to go for the correct implementation than it is to cheat. So, let’s do just that:</p>
+
+<figure class="highlight"><pre><code class="language-csharp" data-lang="csharp"><span class="k">public</span> <span class="k">static</span> <span class="kt">int</span> <span class="nf">Add</span><span class="p">(</span><span class="kt">string</span> <span class="n">numbers</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="kt">var</span> <span class="n">parts</span> <span class="p">=</span> <span class="n">numbers</span><span class="p">.</span><span class="nf">Split</span><span class="p">(</span><span class="sc">','</span><span class="p">);</span>
+    <span class="kt">var</span> <span class="n">result</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span>
+
+    <span class="k">foreach</span> <span class="p">(</span><span class="kt">var</span> <span class="n">part</span> <span class="k">in</span> <span class="n">parts</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="kt">int</span><span class="p">.</span><span class="nf">TryParse</span><span class="p">(</span><span class="n">part</span><span class="p">,</span> <span class="n">outint</span> <span class="n">number</span><span class="p">);</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="n">number</span> <span class="p">&lt;=</span> <span class="m">1000</span><span class="p">)</span>
+            <span class="n">result</span> <span class="p">+=</span> <span class="n">number</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="n">result</span><span class="p">;</span>
+<span class="p">}</span></code></pre></figure>
+
+<p>The code above should be easy to understand. We just split the string into parts using the comma as the delimiter. Then, for each part, we parse it to an integer, verify whether it’s equal or less than a thousand, and, if so, we add it to the result variable. Finally, we return the result.</p>
+
+<h2 id="were-not-done-yet">We’re Not Done Yet</h2>
+
+<p>The requirements say that negative numbers shouldn’t be allowed. Let’s add a test for that! For brevity’s sake, we’ll add a single test method with several test cases, so we’re forced to go for the correct implementation right away:</p>
+
+<figure class="highlight"><pre><code class="language-csharp" data-lang="csharp"><span class="p">[</span><span class="nf">TestCase</span><span class="p">(</span><span class="s">"1,2,3,4,5,-5"</span><span class="p">)]</span>
+<span class="p">[</span><span class="nf">TestCase</span><span class="p">(</span><span class="s">"-1,1,2,9"</span><span class="p">)]</span>
+<span class="p">[</span><span class="nf">TestCase</span><span class="p">(</span><span class="s">"5,6,8,-5"</span><span class="p">)]</span>
+<span class="k">public</span> <span class="k">void</span> <span class="nf">Add_StringContainingNegativeNumbers_Throws</span><span class="p">(</span><span class="kt">string</span> <span class="n">numbers</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">Assert</span><span class="p">.</span><span class="n">Throws</span><span class="p">&lt;</span><span class="n">ArgumentException</span><span class="p">&gt;(()</span> <span class="p">=&gt;</span> <span class="n">StringCalculator</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="n">numbers</span><span class="p">));</span>
+<span class="p">}</span></code></pre></figure>
+
+<p>For this test, we’re asserting not against a return value. Rather, we’re checking whether the method under test throws an exception.</p>
+
+<p>Remember that the requirements say we should throw an exception with a message saying that negatives are not allowed. We should also include a list of the negatives that were passed. This will require some changes in our method:</p>
+
+<figure class="highlight"><pre><code class="language-csharp" data-lang="csharp"><span class="k">public</span> <span class="k">static</span> <span class="kt">int</span> <span class="nf">Add</span><span class="p">(</span><span class="kt">string</span> <span class="n">numbers</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="kt">var</span> <span class="n">parts</span> <span class="p">=</span> <span class="n">numbers</span><span class="p">.</span><span class="nf">Split</span><span class="p">(</span><span class="sc">','</span><span class="p">);</span>
+    <span class="kt">var</span> <span class="n">result</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span> 
+    <span class="kt">var</span> <span class="n">negatives</span> <span class="p">=</span> <span class="k">new</span> <span class="n">List</span><span class="p">&lt;</span><span class="kt">int</span><span class="p">&gt;();</span>
+
+    <span class="k">foreach</span> <span class="p">(</span><span class="kt">var</span> <span class="n">part</span> <span class="k">in</span> <span class="n">parts</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="kt">int</span><span class="p">.</span><span class="nf">TryParse</span><span class="p">(</span><span class="n">part</span><span class="p">,</span> <span class="n">outint</span> <span class="n">number</span><span class="p">);</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="n">number</span> <span class="p">&lt;</span> <span class="m">0</span><span class="p">)</span>
+            <span class="n">negatives</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="n">number</span><span class="p">);</span>
+        <span class="nf">elseif</span> <span class="p">(</span><span class="n">number</span> <span class="p">&lt;=</span> <span class="m">1000</span><span class="p">)</span>
+            <span class="n">result</span> <span class="p">+=</span> <span class="n">number</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">negatives</span><span class="p">.</span><span class="n">Count</span> <span class="p">&gt;</span> <span class="m">0</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="kt">var</span> <span class="n">negativesList</span> <span class="p">=</span> <span class="kt">string</span><span class="p">.</span><span class="nf">Join</span><span class="p">(</span><span class="sc">','</span><span class="p">,</span> <span class="n">negatives</span><span class="p">);</span>
+        <span class="kt">var</span> <span class="n">exceptionMessage</span> <span class="p">=</span> <span class="s">$"Negative numbers not allowed: </span><span class="p">{</span><span class="n">negativesList</span><span class="p">}</span><span class="s">."</span><span class="p">;</span>
+        <span class="k">throw</span> <span class="k">new</span> <span class="nf">ArgumentException</span><span class="p">(</span><span class="n">exceptionMessage</span><span class="p">);</span>
+    <span class="p">}</span>
+    
+    <span class="k">return</span> <span class="n">result</span><span class="p">;</span>
+<span class="p">}</span></code></pre></figure>
+
+<p>As you can see, right at the beginning, we define a <code class="language-plaintext highlighter-rouge">List&lt;int&gt;</code> to store the negatives we find while iterating over all the numbers. Inside the loop, we verify whether the current number is negative. If it is, we add it to the list. If it isn’t, we verify whether it’s less than or equals to 1000, in which we case we add it to the result variable.</p>
+
+<p>After the loop, we verify whether the negatives list has any elements. If it has, we create an exception message that includes the specified negatives and then throw a new ArgumentException. Otherwise, we return the result.</p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>This post was a practical guide on how to get started with TDD in C#. So, where do you go from here?</p>
+
+<p>Well, most things in life you learn by doing. Programming is certainly one of those things. So, if you want the concepts you’ve seen today to really sink in, you’ve got to practice.</p>
+
+<p>The code I’ve written during this post is available as <a href="https://github.com/carlosschults/string-calculator-kata">a public repository on GitHub.</a> Go there, clone it using <a href="https://carlosschults.net/en/git-basics-for-tfs-users">Git,</a>, and start playing with it.</p>
+
+<p>You’ll see that I created one commit for each step in the TDD cycle. That way, it becomes easier for future readers to visualize all the steps in the process by going through the project’s history, one commit at a time.</p>
+
+<p>There are improvements that can be made to the code I shared today. For instance, the final <code class="language-plaintext highlighter-rouge">Add</code> method could be written in a shorter, clearer, more efficient way, using <a href="https://carlosschults.net/en/functional-programming-csharp/">LINQ</a>. You could add more test cases. Also, the kata requirements ask for a specific exception message in the case of negative numbers. Even though we’ve implemented the message as specified, we didn’t write a test for it. We could do that as part of your practice.</p>
+
+<p>Finally, stay tuned to this blog. This post is part of a series, to which I intend to add more parts.</p>
+
+<p>Thanks for reading, and until the next time!</p>
+
+    
+    
+      
+    
+    
+        Found a typo or mistake in the post? <a href="http://github.com/carlosschults/carlosschults.github.io/edit/master/_posts/2020-07-08-unit-testing-for-beginners-part3.md">Suggest edit</a>
+        
+    
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+                    
+            <a rel="previous" class="previous" href="/en/null-is-evil">&larr; Null Is Evil. What's The Best Alternative? Null. </a>
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+        	    
+            <a rel="next" class="next" href="/en/mutation-testing/">Mutation Testing: What It Is and How It Makes Code Coverage Matter &rarr;</a>
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+      
+    <div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+        // Store these for reloads
+        window.disqus_identifier = window.location.pathname;
+        window.disqus_url = window.location.href;
+        
+        // Set initial theme - match it with the site's theme
+        const currentTheme = document.body.getAttribute('data-theme') || 'light';
+        this.page.theme = currentTheme === 'dark' ? 'dark' : 'light';
+    };
+    
+    (function() {
+        var d = document, s = d.createElement('script');
+        s.src = '//carlosschultsblog.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>    
+  </div>
+
+</article>
+
+      </div>
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">         
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-2">
+        <ul class="social-media-list">
+          
+          <li>
+            <a href="https://github.com/carlosschults"><span class="icon icon--github"><svg viewBox="0 0 16 16"><path fill="#828282" d="M7.999,0.431c-4.285,0-7.76,3.474-7.76,7.761 c0,3.428,2.223,6.337,5.307,7.363c0.388,0.071,0.53-0.168,0.53-0.374c0-0.184-0.007-0.672-0.01-1.32 c-2.159,0.469-2.614-1.04-2.614-1.04c-0.353-0.896-0.862-1.135-0.862-1.135c-0.705-0.481,0.053-0.472,0.053-0.472 c0.779,0.055,1.189,0.8,1.189,0.8c0.692,1.186,1.816,0.843,2.258,0.645c0.071-0.502,0.271-0.843,0.493-1.037 C4.86,11.425,3.049,10.76,3.049,7.786c0-0.847,0.302-1.54,0.799-2.082C3.768,5.507,3.501,4.718,3.924,3.65 c0,0,0.652-0.209,2.134,0.796C6.677,4.273,7.34,4.187,8,4.184c0.659,0.003,1.323,0.089,1.943,0.261 c1.482-1.004,2.132-0.796,2.132-0.796c0.423,1.068,0.157,1.857,0.077,2.054c0.497,0.542,0.798,1.235,0.798,2.082 c0,2.981-1.814,3.637-3.543,3.829c0.279,0.24,0.527,0.713,0.527,1.437c0,1.037-0.01,1.874-0.01,2.129 c0,0.208,0.14,0.449,0.534,0.373c3.081-1.028,5.302-3.935,5.302-7.362C15.76,3.906,12.285,0.431,7.999,0.431z"/></svg>
+</span><span class="username">carlosschults</span></a>
+
+          </li>
+          
+
+          
+          <li>
+            <a href="https://twitter.com/carlosschults"><span class="icon icon--twitter"><svg viewBox="0 0 16 16"><path fill="#828282" d="M15.969,3.058c-0.586,0.26-1.217,0.436-1.878,0.515c0.675-0.405,1.194-1.045,1.438-1.809c-0.632,0.375-1.332,0.647-2.076,0.793c-0.596-0.636-1.446-1.033-2.387-1.033c-1.806,0-3.27,1.464-3.27,3.27 c0,0.256,0.029,0.506,0.085,0.745C5.163,5.404,2.753,4.102,1.14,2.124C0.859,2.607,0.698,3.168,0.698,3.767 c0,1.134,0.577,2.135,1.455,2.722C1.616,6.472,1.112,6.325,0.671,6.08c0,0.014,0,0.027,0,0.041c0,1.584,1.127,2.906,2.623,3.206 C3.02,9.402,2.731,9.442,2.433,9.442c-0.211,0-0.416-0.021-0.615-0.059c0.416,1.299,1.624,2.245,3.055,2.271 c-1.119,0.877-2.529,1.4-4.061,1.4c-0.264,0-0.524-0.015-0.78-0.046c1.447,0.928,3.166,1.469,5.013,1.469 c6.015,0,9.304-4.983,9.304-9.304c0-0.142-0.003-0.283-0.009-0.423C14.976,4.29,15.531,3.714,15.969,3.058z"/></svg>
+</span><span class="username">carlosschults</span></a>
+
+          </li>
+          
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-3">
+        <p>Articles on software development and technology.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+
+    <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-92788641-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+    <script src="/js/dark-mode.js"></script>
+  </body>
+
+</html>

@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Programar em português ou inglês? That&#39;s the question! | carlos schults / blog</title>
+  <link rel="apple-touch-icon" sizes="57x57" href="/img/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/img/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/img/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/img/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/img/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/img/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/img/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/img/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"  href="/img/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/img/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon-16x16.png">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="description" content="No contexto de boas práticas de desenvolvimento, um ponto que gera controvérsia é a escolha do idioma no qual codificar. Uma rápida busca no Google por “prog...">
+  
+  <!-- Twitter card -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:creator" content="@carlosschults">
+  <meta name="twitter:site" content="@carlosschults">
+  <meta name="twitter:domain" content="carlosschults.net">
+  <meta name="twitter:title" content="Programar em português ou inglês? That's the question!">
+  <meta name="twitter:description" content="No contexto de boas práticas de desenvolvimento, um ponto que gera controvérsia é a escolha do idioma no qual codificar. Uma rápida busca no Google por “prog...">
+
+   <!-- Facebook meta -->
+  
+  
+  <meta property="og:title" content="Programar em português ou inglês? That's the question!">
+  <meta property="og:site_name" content="Carlos Schults / Blog" />
+  <meta property="og:locale" content="pt_BR">  
+  <meta property="og:type" content="article" />
+  <meta property="og:image" content="https://res.cloudinary.com/dz5ppacuo/image/upload/v1458429920/portugues-ou-ingles-1038x437_izhi3i.png" />  
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:width" content="1038"> 
+  <meta property="og:image:height" content="437">  
+  
+  <meta property="og:article:published_time" content="2016-03-29T00:00:00+00:00" />  
+  <meta property="og:article:author" content="Carlos Schults" />
+  
+  <meta property="og:article:tag" content="boas-praticas" />
+  <meta property="og:article:tag" content="ingles" />    
+  
+  <meta property="og:url" content="https://carlosschults.net/pt/programar-portugues-ou-ingles/"/>
+  <meta property="og:description" content="No contexto de boas práticas de desenvolvimento, um ponto que gera controvérsia é a escolha do idioma no qual codificar. Uma rápida busca no Google por “prog...">
+  <link rel="stylesheet" href="/css/main.css">  
+  
+   <link rel="canonical" href="https://carlosschults.net/pt/programar-portugues-ou-ingles/">
+   
+  
+  <link rel="alternate" hreflang="pt" href="/pt/programar-portugues-ou-ingles/" />
+  
+  <link rel="alternate" type="application/rss+xml" title="carlos schults / blog" href="https://carlosschults.net/rss.xml">
+</head>
+
+  <body>
+    <header class="site-header">
+  <div class="wrapper">    
+    <a class="site-title" href="/pt/">carlos schults / blog</a>
+    
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg viewBox="0 0 18 15">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+
+      <div class="trigger">        
+          
+          <a class="page-link" href="/sobre/">Sobre</a>
+          <a class="page-link" href="/busca/">Busca</a>
+                  
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+<div class="wrapper" style="text-align: right; line-height: 2em">
+  
+   <a href="/pt/programar-portugues-ou-ingles/" class="pt">pt</a> 
+
+  
+  
+</div>
+
+
+    <div class="page-content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">    
+    <h2 class="postTitle" itemprop="headline">Programar em português ou inglês? That's the question!</h2>
+    <p class="post-meta">   
+    <time datetime="2016-03-29T00:00:00+00:00" itemprop="datePublished">29/03/2016
+    </time> • <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">Carlos Schults</span></span>
+  <span class="tags" itemprop="keywords"> • Tags: <a href="/tag_ptbr/boas-praticas">boas-praticas </a> <a href="/tag_ptbr/ingles">ingles </a> </span>
+  </p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <p><img src="https://res.cloudinary.com/dz5ppacuo/image/upload/v1458429920/portugues-ou-ingles-1038x437_izhi3i.png" alt="" /></p>
+
+<p>No contexto de boas práticas de desenvolvimento, um ponto que gera controvérsia é a escolha do idioma no qual codificar. Uma rápida busca no Google por “programar em português ou inglês” retorna 535 mil resultados, o que mostra que o tema realmente causa bastante discussão.</p>
+
+<p>Recentemente conversei com um colega de trabalho e também com meu chefe a respeito desse assunto. Esse post é consequência dessas conversas e das pesquisas que fiz depois.</p>
+
+<p>Parece ser uma visão bastante comum na nossa área que programar em inglês é a melhor opção. Fabio Akita, grande referência na comunidade Ruby On Rails do Brasil, <a href="https://www.akitaonrails.com/2013/03/24/quais-sao-algumas-das-piores-praticas-para-aplicacoes-ruby-on-rails--2">inclui codificar em português - ou melhor dizendo, qualquer idioma que não o inglês - na sua lista de piores práticas de desenvolvimento</a>:</p>
+
+<blockquote>
+  <p>Escreva nomes em inglês dentro do seu código. Não me importo se você é brasileiro, italiano, francês ou o que   for. Nomes de classes, de variáveis, de métodos, tudo deve ser em inglês. Estamos num mundo globalizado, não é pensar muito longe que amanhã um americano vai mexer no seu código todo em português. Além do problema de consistência: a sintaxe da linguagem, todas as bibliotecas padrão, é tudo em inglês. É uma enorme dissonância cognitiva ter nomes em português no meio. É como você estar lendo uma revista em português com diversos parágrafos em inglês no meio. Não faz nenhum sentido.</p>
+</blockquote>
+
+<p>Carlos Brando, outro nome conhecido no mundo Rails, <a href="https://nomedojogo.com/2009/02/13/rails-way-3-nomes-de-metodos-e-variaveis-devem-ser-obvios/">deu opinião semelhante em um post de 2009</a>:</p>
+
+<blockquote>
+  <p>Embora não exista uma regra escrita para isto, também sou contra nomear variáveis, métodos ou classe em português. Acho que como todo o código já está em inglês, graças as palavras chaves do Ruby, devemos manter absolutamente tudo em inglês também. Isto não é tão difícil assim, já que você pode fazer uso de tradutores e dicionários (online) para encontrar a melhor descrição para eles.</p>
+</blockquote>
+
+<p>Um exemplo de como esse tema é inflamável: <a href="https://blog.stackoverflow.com/2014/01/ola-mundo-announcing-stack-overflow-in-portuguese/">há cerca de dois anos foi lançada a versão em português do Stack Overflow</a>, famoso site de perguntas e respostas pra programadores. Pare aqui e vá lá dar uma olhada no post. Viu a quantidade de comentários criticando a iniciativa? A controvérsia foi tanta que duas semanas depois a equipe do Stack Overflow publicou um novo post, dessa vez em inglês, justificando a decisão.</p>
+
+<p>Eu acredito que a discussão é necessária e saudável e que existem bons argumentos nos dois lados. Assim, vou  examinar opiniões a favor do uso de cada idioma, e ao final do post, expressar minha conclusão.</p>
+
+<h2 id="argumentos-a-favor-do-inglês">Argumentos a favor do inglês</h2>
+
+<p>Um dos argumentos mais comuns usados a favor do inglês é que seria estranho ou feio misturar dois idiomas na codificação. Como as palavras reservadas das linguagens de programação/frameworks/SGBD’s já são em inglês, utilizar a língua portuguesa para nomear variáveis e outras coisas acaba gerando híbridos como <em>getNome</em>, <em>ProdutosController</em>, <em>clientes.ForEach</em>, <em>CodigoNaoEncontradoException</em> e assim por diante. No trecho citado logo ali acima, Fabio Akita afirma que a mistura dos idiomas causa uma dissonância cognitiva, seria como ler uma página escrita em um idioma e de repente se deparar com parágrafos escrito em outro.</p>
+
+<p>Outro argumento comum, também utilizado pelo Akita no trecho citado, é a possibilidade de um programador não-brasileiro vir a trabalhar no projeto. Imagine um projeto que conte com desenvolvedores da França, Alemanha, Brasil, Estados Unidos. Se cada um resolve programar no seu idioma, a comunicação se tornará impossível, a menos que todos os membros da equipe sejam proficientes nos idiomas de todos os outros membros, o que seria bastante improvável.</p>
+
+<p>Um ponto bem parecido com o anterior é que a utilização do português prejudicaria uma eventual venda do produto para uma empresa de outro país, o que é de fato inegável.</p>
+
+<p>O fato de que o inglês é a língua franca da tecnologia também figura constantemente entre os argumentos dos defensores do uso dessa língua na codificação. Segundo eles, qualquer desenvolvedor que se preze <strong>precisa</strong> ter um domínio avançado da língua inglesa. Sendo assim, o uso da inglês na verdade facilitaria o desenvolvimento, e não o contrário.</p>
+
+<p>Outro ponto interessante a favor do inglês é que os identificadores nesse idioma tendem a ser menores, o que incentiva a um código mais limpo e conciso. Por exemplo, compare <em>setName</em> com <em>atribuirNome</em>.</p>
+
+<p>Uma consequência do ponto anterior é que o uso de um único idioma ajuda a consolidar um vocabulário compartilhado entre todos os programadores. <em>Get</em> e <em>Set</em>, por exemplo, são palavras-chaves familiares para a maioria dos desenvolvedores, por serem extremamente comuns em API’s e bibliotecas diversas. Digamos que um programador recém-chegado à sua empresa recebe a tarefa de dar manutenção em uma biblioteca que vocês desenvolveram para trabalhar com XML. Ele provavelmente teria mais facilidade em encontrar um método chamado <em>GetChildren()</em> do que se fosse chamado ObterFilhos().</p>
+
+<p>Outra vantagem da utilização do inglês seria…que ela melhora o seu conhecimento de inglês. Já que programadores precisam dominar esse idioma de qualquer forma, toda e qualquer oportunidade de praticá-lo é válida.</p>
+
+<h2 id="argumentos-a-favor-do-português">Argumentos a favor do português</h2>
+
+<p>Um argumento a favor do uso do português é a baixa proficiência em inglês apresentada pelos desenvolvedores brasileiros em geral, e como isso pode prejudicar a comunicação não apenas entre os desenvolvedores, mais também entre os desenvolvedores e as pessoas de negócio:</p>
+
+<blockquote>
+  <p>Da mesma forma, uma regra de negócio traduzida para o inglês pode ser mal traduzida por quem não domina o idioma. Falsos cognatos existem e podem ser utilizados nessa tradução cotidiana. Imagine que, ao invés de criar classes chamadas Funcionario e Empregador você crie classes chamadas Employee e Employer. Isso seria tão confuso para um desenvolvedor que não domina o inglês, quanto para um desenvolvedor que domina o inglês. Na hora de programar, os termos podem misturar-se.
+<a href="https://www.ventron.com.br/programar-em-portugues-ou-ingles/">Gustavo Gondim</a></p>
+</blockquote>
+
+<blockquote>
+  <p>Eu já vi tantas atrocidades na transliteração de português para inglês usando Google Translator… Na falta da compreensão, pega-se a primeira palavra que aparece. Ou cria-se expressões com termos em inglês usando a sintaxe do português. Confunde-se a forma de usar substantivos, verbos e adjetivos. A língua resultante pode ser inglês de índio, mas não é inglês. O ponto é que em uma equipe que não fala inglês nativamente, usar os termos de negócio em inglês pode complicar até o entendimento entre os programadores.[…]
+<a href="https://blogdofernandocorreia.wordpress.com/2011/09/21/que-lingua-usar-para-nomes-do-dominio-de-negocio/">Fernando Correia</a></p>
+</blockquote>
+
+<p>Resumindo: uma equipe que tem domínio superficial do inglês necessariamente produz inglês de baixa qualidade, por não estar ciente das “pegadinhas” que o idioma pode apresentar (por exemplo: falsos cognatos). Mas ainda tem mais: é de conhecimento geral que programadores passam mais tempo lendo código do que escrevendo. E qualquer programador com alguma experiência vai concordar que ler código é bem mais difícil do que escrever. Ao forçar uma equipe sem desenvoltura na língua inglesa a trabalhar com uma base de código escrita nessa língua, estaríamos aumentando a barreira necessária para a compreensão do código, dificultando a manutenção e aumentando a chance de criação de bugs.</p>
+
+<p>O <a href="https://programandosemcafeina.blogspot.com.br/2009/03/nomes-de-metodos-e-variaveis-devem-ser.html">Tiago Albineli Motta, do blog “Programando Sem Cafeína”</a>, traz um argumento bem interessante: de que o uso de idiomas diferentes prejudica a comunicação entre cliente e a equipe de desenvolvimento, principalmente quando o domínio do negócio é bastante específico. Para justificar, ele cita o exemplo de quando trabalhava em uma empresa que estava desenvolvimento um sistema para um laboratório geológico. Como os funcionários do laboratório usavam termos em português e a equipe de desenvolvimento em inglês, havia ruídos na comunicação.</p>
+
+<p>Destaco um trecho interessante abaixo (destaque meu):</p>
+
+<blockquote>
+  <p>Eis então a pergunta: Será que um código que mistura termos em inglês e português causa mais problemas que os ruídos na comunicação com o cliente? Pode-se alegar que o código nem será mostrado ao usuário, <strong>mas na hora em que o desenvolvedor precisa se comunicar com o cliente, na mente dele ele não está trabalhando com amostras, ele está trabalhando com samples.</strong></p>
+</blockquote>
+
+<p>Ainda no tema do domínio, poderíamos imaginar o desenvolvimento de uma aplicação que se integra com a famigerada Nota Fiscal Eletrônica. Como o xml da nota já vem com os campos todos em português, utilizar nomes de variáveis em inglês poderia adicionar um esforço cognitivo desnecessário.</p>
+
+<h2 id="e-a-minha-opinião">E a minha opinião?</h2>
+
+<p>Acredito ter sido capaz de demonstrar que existem boas opiniões nos dois lados desse debate. Mas e aí? Vocês devem estar se perguntando qual a minha opinião, não é? Ok, não vou ficar em cima do muro. Mas antes, acho necessário fazer algumas considerações importantes.</p>
+
+<h3 id="o-inglês-é-a-língua-franca-da-tecnologia">O inglês é a língua franca da tecnologia</h3>
+
+<p>O inglês é a língua franca da tecnologia. E da ciência, das finanças, e de muitas outras coisas. Todo mundo tem o direito de gostar ou não do idioma que quiser, mas é simplesmente contra produtivo querer brigar com um fato da vida que não vai mudar tão cedo. Eu particularmente acho que deveríamos ser gratos que o “idioma obrigatório” é o inglês, e não o russo, árabe, ou mandarim, por exemplo.</p>
+
+<p>Então, independente do seu posicionamento no debate, aprender inglês é um investimento que vale muito a pena. O que nos leva ao próximo ponto.</p>
+
+<h3 id="e-não-é-tão-difícil-de-se-aprender-quanto-parece">E não é tão difícil de se aprender quanto parece</h3>
+
+<p>Estou convencido de que uma enorme inteligência não é requisito para aprender inglês. Muito menos pagar cursos caros em escolas renomadas, ou fazer intercâmbio. Então por que há tantas pessoas que querem aprender inglês e <a href="https://exame.abril.com.br/brasil/noticias/fluencia-do-brasileiro-no-ingles-so-piora-veja-ranking">tão poucas conseguem</a>?</p>
+
+<p>Em minha opinião, o primeiro motivo é que a maioria dessas pessoas não <em>querem</em> realmente. E o segundo…é simplesmente que elas estudam errado, colocando o foco, tempo e energia no lugar onde não deviam.</p>
+
+<p>Em breve vou fazer um post totalmente dedicado ao tema do aprendizado de inglês, onde vou expandir e explicar melhor o parágrafo anterior.</p>
+
+<h3 id="seu-projeto-tem-características-únicas-que-não-devem-ser-ignoradas">Seu projeto tem características únicas que não devem ser ignoradas</h3>
+
+<p>Seu projeto atual provavelmente tem características únicas, que nem eu, nem o Fabio Akita, nem o Tiago Motta, ou qualquer outra pessoa de fora sabe. Não conhecemos o nível de fluência no inglês da sua equipe, nem o domínio da sua aplicação.</p>
+
+<p>Também desconhecemos o escopo do seu projeto, se todos os colaboradores são brasileiros ou se há pessoas de outros países,os prospectos de venda da empresa para uma companhia multinacional, etc.</p>
+
+<p>Ou seja: há uma série de fatores que podem e devem ser levadas em conta no momento de se adotar essa ou aquela prática, essa ou aquela metodologia. Nessas horas, você tem que exercitar o senso crítico: mantenha a mente aberta na hora de ler, pesquisar e conhecer opiniões contrárias, mas use seu bom senso e experiência para filtrar o e decidir o que encaixa com a cultura da sua empresa, equipe e projeto.</p>
+
+<h3 id="tentar-prever-o-futuro-é-anti-ágil">Tentar prever o futuro é anti-ágil.</h3>
+
+<p>Eu costumo chamar isso de síndrome do “vai que um dia”, pois a conversa geralmente começa assim:</p>
+
+<p>“Vai que um dia o cliente precisa de [insira aqui funcionalidade que o cliente não precisa agora e provavelmente nunca vai precisar]? Vamos fazer!”</p>
+
+<p>E aí já viu: tabelas inúteis são criadas no banco de dados, classes e mais classes e formulários e telas e muito mais lixo entupindo seu projeto.</p>
+
+<p>Tentar prever toda e qualquer alteração no projeto é anti-ágil. Equipes ágeis dão pequenos passos, implementando as histórias priorizadas pelo cliente e nada mais. Quando os requisitos mudarem (e vão mudar) nós mudamos junto com eles.</p>
+
+<p>Entendeu onde eu quero chegar? “Vai que um dia uma empresa internacional resolve comprar nosso sistema? Vamos fazer todo o código e as tabelas em inglês!”</p>
+
+<h3 id="em-resumo-bom-senso-é-a-chave">Em resumo: bom-senso é a chave</h3>
+
+<p>Com base em tudo isso aí que você leu, minha opinião atualmente está assim: tentar utilizar o inglês sempre, <strong>exceto quando há ótimas razões para não utilizá-lo.</strong></p>
+
+<p>Projetos open-source? Tudo em inglês, <em>exceto em casos onde há benefícios claros em usar o português</em>.</p>
+
+<p>Em projetos particulares: se a equipe é fraca no inglês <strong>E/OU</strong> o domínio é muito específico e tem termos e jargões de difícil tradução <strong>E/OU</strong> há riscos claros de prejuízo na comunicação com o cliente, o português provavelmente é a melhor escolha.</p>
+
+<p>Se a situação é o contrário do descrito acima, inglês sem dúvida.</p>
+
+<p>Se desde o começo do projeto existe a certeza que a aplicação será disponibilizada para vários países, vocês vão precisar trabalhar em internacionalização, de tudo: especificações, ajuda, interface gráfica. Nesse caso, também não há motivo para não codificar em inglês.</p>
+
+<h2 id="e-você-o-que-acha">E você, o que acha?</h2>
+
+<p>Concorda, discorda, prefere não opinar? Deixe um comentário aí em baixo e vamos continuando a conversa!</p>
+
+<h2 id="referências">Referências</h2>
+<ul>
+  <li><a href="https://pt.stackoverflow.com/questions/301/devo-escrever-meu-programa-em-ingl%C3%AAs-ou-portugu%C3%AAs">https://pt.stackoverflow.com/questions/301/devo-escrever-meu-programa-em-ingl%C3%AAs-ou-portugu%C3%AAs</a></li>
+  <li><a href="https://programandosemcafeina.blogspot.com.br/2009/03/nomes-de-metodos-e-variaveis-devem-ser.html">https://programandosemcafeina.blogspot.com.br/2009/03/nomes-de-metodos-e-variaveis-devem-ser.html</a></li>
+  <li><a href="https://nsigustavo.blogspot.com.br/2009/09/que-idioma-devemos-utilizar-em-nosso.html">https://nsigustavo.blogspot.com.br/2009/09/que-idioma-devemos-utilizar-em-nosso.html</a></li>
+  <li><a href="https://blogdofernandocorreia.wordpress.com/2011/09/21/que-lingua-usar-para-nomes-do-dominio-de-negocio/">https://blogdofernandocorreia.wordpress.com/2011/09/21/que-lingua-usar-para-nomes-do-dominio-de-negocio/</a></li>
+  <li><a href="https://www.dev.mayogax.com/2014/02/a-polemica-questao-do-stack-overflow-em-portugues/">https://www.dev.mayogax.com/2014/02/a-polemica-questao-do-stack-overflow-em-portugues/</a></li>
+  <li><a href="https://nomedojogo.com/2009/02/13/rails-way-3-nomes-de-metodos-e-variaveis-devem-ser-obvios/">https://nomedojogo.com/2009/02/13/rails-way-3-nomes-de-metodos-e-variaveis-devem-ser-obvios/</a></li>
+  <li><a href="https://www.ventron.com.br/programar-em-portugues-ou-ingles/">https://www.ventron.com.br/programar-em-portugues-ou-ingles/</a></li>
+</ul>
+
+    
+    
+      
+    
+    
+        Encontrou algum erro no post? <a href="http://github.com/carlosschults/carlosschults.github.io/edit/master/_posts/2016-03-29-programar-portugues-ou-ingles.md">Sugira uma edição</a>      
+    
+    
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+                    
+            <a rel="previous" class="previous" href="/pt/resenha-livro-programador-pragmatico/">&larr; Resenha de Livro: O Programador Pragmático </a>
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+        	    
+            <a rel="next" class="next" href="/pt/testes-unitarios-iniciantes-parte1">Testes unitários para iniciantes - Parte 1 &rarr;</a>
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+      
+    <div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+        // Store these for reloads
+        window.disqus_identifier = window.location.pathname;
+        window.disqus_url = window.location.href;
+        
+        // Set initial theme - match it with the site's theme
+        const currentTheme = document.body.getAttribute('data-theme') || 'light';
+        this.page.theme = currentTheme === 'dark' ? 'dark' : 'light';
+    };
+    
+    (function() {
+        var d = document, s = d.createElement('script');
+        s.src = '//carlosschultsblog.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>    
+  </div>
+
+</article>
+
+      </div>
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">         
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-2">
+        <ul class="social-media-list">
+          
+          <li>
+            <a href="https://github.com/carlosschults"><span class="icon icon--github"><svg viewBox="0 0 16 16"><path fill="#828282" d="M7.999,0.431c-4.285,0-7.76,3.474-7.76,7.761 c0,3.428,2.223,6.337,5.307,7.363c0.388,0.071,0.53-0.168,0.53-0.374c0-0.184-0.007-0.672-0.01-1.32 c-2.159,0.469-2.614-1.04-2.614-1.04c-0.353-0.896-0.862-1.135-0.862-1.135c-0.705-0.481,0.053-0.472,0.053-0.472 c0.779,0.055,1.189,0.8,1.189,0.8c0.692,1.186,1.816,0.843,2.258,0.645c0.071-0.502,0.271-0.843,0.493-1.037 C4.86,11.425,3.049,10.76,3.049,7.786c0-0.847,0.302-1.54,0.799-2.082C3.768,5.507,3.501,4.718,3.924,3.65 c0,0,0.652-0.209,2.134,0.796C6.677,4.273,7.34,4.187,8,4.184c0.659,0.003,1.323,0.089,1.943,0.261 c1.482-1.004,2.132-0.796,2.132-0.796c0.423,1.068,0.157,1.857,0.077,2.054c0.497,0.542,0.798,1.235,0.798,2.082 c0,2.981-1.814,3.637-3.543,3.829c0.279,0.24,0.527,0.713,0.527,1.437c0,1.037-0.01,1.874-0.01,2.129 c0,0.208,0.14,0.449,0.534,0.373c3.081-1.028,5.302-3.935,5.302-7.362C15.76,3.906,12.285,0.431,7.999,0.431z"/></svg>
+</span><span class="username">carlosschults</span></a>
+
+          </li>
+          
+
+          
+          <li>
+            <a href="https://twitter.com/carlosschults"><span class="icon icon--twitter"><svg viewBox="0 0 16 16"><path fill="#828282" d="M15.969,3.058c-0.586,0.26-1.217,0.436-1.878,0.515c0.675-0.405,1.194-1.045,1.438-1.809c-0.632,0.375-1.332,0.647-2.076,0.793c-0.596-0.636-1.446-1.033-2.387-1.033c-1.806,0-3.27,1.464-3.27,3.27 c0,0.256,0.029,0.506,0.085,0.745C5.163,5.404,2.753,4.102,1.14,2.124C0.859,2.607,0.698,3.168,0.698,3.767 c0,1.134,0.577,2.135,1.455,2.722C1.616,6.472,1.112,6.325,0.671,6.08c0,0.014,0,0.027,0,0.041c0,1.584,1.127,2.906,2.623,3.206 C3.02,9.402,2.731,9.442,2.433,9.442c-0.211,0-0.416-0.021-0.615-0.059c0.416,1.299,1.624,2.245,3.055,2.271 c-1.119,0.877-2.529,1.4-4.061,1.4c-0.264,0-0.524-0.015-0.78-0.046c1.447,0.928,3.166,1.469,5.013,1.469 c6.015,0,9.304-4.983,9.304-9.304c0-0.142-0.003-0.283-0.009-0.423C14.976,4.29,15.531,3.714,15.969,3.058z"/></svg>
+</span><span class="username">carlosschults</span></a>
+
+          </li>
+          
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-3">
+        <p>Artigos sobre desenvolvimento de software e tecnologia.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+
+    <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-92788641-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+    <script src="/js/dark-mode.js"></script>
+  </body>
+
+</html>

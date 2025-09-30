@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Value Objects: A Tool for Self-Documented Code and Fewer Errors | carlos schults / blog</title>
+  <link rel="apple-touch-icon" sizes="57x57" href="/img/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/img/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/img/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/img/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/img/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/img/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/img/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/img/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"  href="/img/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/img/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon-16x16.png">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="description" content="Editorial note: I originally wrote this post for the NDepend blog.  You can check out the original here, at their site. While you’re there, take a look at ND...">
+  
+  <!-- Twitter card -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:creator" content="@carlosschults">
+  <meta name="twitter:site" content="@carlosschults">
+  <meta name="twitter:domain" content="carlosschults.net">
+  <meta name="twitter:title" content="Value Objects: A Tool for Self-Documented Code and Fewer Errors">
+  <meta name="twitter:description" content="Editorial note: I originally wrote this post for the NDepend blog.  You can check out the original here, at their site. While you’re there, take a look at ND...">
+
+   <!-- Facebook meta -->
+  
+  
+  <meta property="og:title" content="Value Objects: A Tool for Self-Documented Code and Fewer Errors">
+  <meta property="og:site_name" content="Carlos Schults / Blog" />
+  <meta property="og:locale" content="en_US">  
+  <meta property="og:type" content="article" />
+  <meta property="og:image" content="https://res.cloudinary.com/dz5ppacuo/image/upload/v1540385528/value-object-tool/value-object-tool-1038x437.jpg" />  
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:width" content="1038"> 
+  <meta property="og:image:height" content="437">  
+  
+  <meta property="og:article:published_time" content="2018-10-24T00:00:00+00:00" />  
+  <meta property="og:article:author" content="Carlos Schults" />
+  
+  <meta property="og:article:tag" content="csharp" />
+  <meta property="og:article:tag" content="best-practices" />
+  <meta property="og:article:tag" content="ddd" />
+  <meta property="og:article:tag" content="oop" />
+  <meta property="og:article:tag" content="software-design" />    
+  
+  <meta property="og:url" content="https://carlosschults.net/en/value-objects-tool/"/>
+  <meta property="og:description" content="Editorial note: I originally wrote this post for the NDepend blog.  You can check out the original here, at their site. While you’re there, take a look at ND...">
+  <link rel="stylesheet" href="/css/main.css">  
+  
+  <link rel="canonical" href="https://blog.ndepend.com/value-objects-tool-self-documented-code-fewer-errors/">
+   
+  
+  <link rel="alternate" hreflang="en" href="/en/value-objects-tool/" />
+  <link rel="alternate" hreflang="pt" href="/pt/value-objects-ferramenta/" />
+  
+  <link rel="alternate" type="application/rss+xml" title="carlos schults / blog" href="https://carlosschults.net/feed.xml">
+</head>
+
+  <body>
+    <header class="site-header">
+  <div class="wrapper">    
+    <a class="site-title" href="/">carlos schults / blog</a>
+    
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg viewBox="0 0 18 15">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+
+      <div class="trigger">        
+          
+          <a class="page-link" href="/footprints/">Dev Footprints</a>
+          <a class="page-link" href="/readings/">Readings</a>
+          <a class="page-link" href="/about/">About</a>
+		      <a class="page-link" href="/search/">Search</a>
+                  
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+<div class="wrapper" style="text-align: right; line-height: 2em">
+  
+   <a href="/en/value-objects-tool/" class="en">en</a>  <a href="/pt/value-objects-ferramenta/" class="pt">pt</a> 
+
+  
+  
+</div>
+
+
+    <div class="page-content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">    
+    <h2 class="postTitle" itemprop="headline">Value Objects: A Tool for Self-Documented Code and Fewer Errors</h2>
+    <p class="post-meta">   
+    <time datetime="2018-10-24T00:00:00+00:00" itemprop="datePublished">Oct 24, 2018
+    </time> • <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">Carlos Schults</span></span>
+  <span class="tags" itemprop="keywords"> • Tags: <a href="/tag/csharp">csharp </a> <a href="/tag/best-practices">best-practices </a> <a href="/tag/ddd">ddd </a> <a href="/tag/oop">oop </a> <a href="/tag/software-design">software-design </a> </span>
+  </p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <p><img src="https://res.cloudinary.com/dz5ppacuo/image/upload/v1540385528/value-object-tool/value-object-tool-1038x437.jpg" alt="" /></p>
+
+<p><em>Editorial note: I originally wrote this post for the NDepend blog.  You can <a href="https://blog.ndepend.com/value-objects-tool-self-documented-code-fewer-errors/">check out the original here, at their site</a>. While you’re there, take a look at NDepend.</em></p>
+
+<p>Have you ever heard of value objects? I bet you have. Even though they’re talked about a lot less than I’d like, they’re still talked about <em>enough </em>that many developers have at least some passing familiarity with the term.</p>
+
+<p>“Passing familiarity” isn’t good enough, though. So that’s what we’re fixing with this post. Today you’re going to learn what value objects are and how you, as a C# developer, can harness their power to make your code clearer, self-documenting, and less error-prone.</p>
+
+<h2 id="what-arevalue-objects">What Are Value Objects?</h2>
+
+<p><em>Value objects</em> are one of the building blocks of domain-driven design, as proposed by Eric Evans on his seminal book <a href="https://www.amazon.com/Domain-Driven-Design-Tackling-Complexity-Software/dp/0321125215">Domain-Driven Design: Tackling Complexity in the Heart of Software.</a></p>
+
+<p>Simply put, a value object is an object that represents a value. And I’m aware that sounds excruciatingly obvious and even boring when said this way. So, what’s all the fuss about it?</p>
+
+<h2 id="some-properties">Some Properties</h2>
+
+<p>I think it’s easier to understand value objects when we quit trying to explain what they are and talk about their characteristics instead.</p>
+
+<h3 id="value-objects-dont-have-identity">Value Objects Don’t Have Identity</h3>
+
+<p>I think it’s fair to say that the main characteristic of a value object is that it lacks <em>identity</em>.  But what does that really mean in practice?</p>
+
+<p>Let’s say you go to the nearest ATM and deposit a $50 bill into your checking account. Then you drive a couple of hours to another town, go to a bank there, and withdraw $50.</p>
+
+<p>Now comes the question: does it matter to you that the bill you’ve got in your hands now isn’t the same one you deposited earlier? Of course not!  And why is that? Well, the thing we generally care about, as it concerns money, is its <em>value,</em> not the vessel that holds that value<em>.</em></p>
+
+<p>In other words, we couldn’t care less about the <em>identity</em> of that particular bill. The only thing that matters is its value.</p>
+
+<p>It’s no coincidence that money is a classic example of a value object.</p>
+
+<h3 id="value-objects-are-immutable">Value Objects Are Immutable</h3>
+
+<p>Can you change the number five? No, you can’t. There’s nothing you (or anyone else) can do to <em>mutate</em> the value of the number five. If you add one to it, it doesn’t change; instead, you get six, which is <em>another</em> number.</p>
+
+<p>Could you alter a date? Nope, you also can’t do that. If you start with “2018-01-9” and add one day to it, you get “2018-01-10.” You don’t change the original date at all. In fact, the immutability aspect of a value object is a direct consequence of the previous point; since a value object doesn’t have identity, we can say the value object <em>is</em> its value. Therefore, it doesn’t even make sense to talk about changing it.</p>
+
+<p>The implication of this for you as a developer is that value objects are inherently safer and easier to reason about. There’s no risk of changing them by accident since they can’t be changed at all.</p>
+
+<h3 id="value-objects-have-structural-equality">Value Objects Have Structural Equality</h3>
+
+<p>Imagine you could magically teleport people to anywhere you wish, and you’ve decided to swap two men called “John Smith” during the night. How do you think their respective partners would react to see a total stranger in their beds instead of their husbands?</p>
+
+<p>People are obviously not interchangeable, despite sharing one or more characteristics. Even if our two Johns had not only the same name but also the same height, weight, skin color, and hair color, they would still be two completely different people. Even identical twins (or, on a slightly Black Mirror note, clones) continue to be different people, despite being as equal to one another as you can get.</p>
+
+<p>On the other hand, people change continuously during their lives, but they are still the same people (as long as we don’t get philosophical here, as in “<a href="https://www.brainyquote.com/quotes/heraclitus_107157">a man can’t step into the same river twice</a>” type of thing).</p>
+
+<p>You may be wondering if I’ve gotten off track here, but I haven’t. This only serves to illustrate the crucial differences between entities and value objects. With entities, we care about identity, not about the value of its attributes.  With value objects, we care only about the value itself.</p>
+
+<p>The implication of this, in programming terms, is that value objects typically present structural equality. It makes sense to compare them by their values, not their references or identities. So, when implementing a value object, you’ll want to override “Equals” and “GetHashCode.”</p>
+
+<h2 id="whats-in-it-for-me">What’s in It for Me?</h2>
+
+<p>By now you should have a pretty good idea of what value objects are. What’s not clear yet is why you should use them.  To answer this, let’s consider the following line of code:</p>
+
+<figure class="highlight"><pre><code class="language-c#" data-lang="c#">    <span class="kt">double</span>  <span class="n">distance</span>  <span class="p">=</span>  <span class="m">4.5</span><span class="p">;</span></code></pre></figure>
+
+<p>Is there something wrong with this? Well, I could <em><a href="https://starwars.wikia.com/wiki/Wookieepedia:Quote_of_the_Day/Archive/Obi-Wan_Kenobi">Ben Kenobi</a> </em>you and say that it might be wrong “from a certain point of view.” But I won’t. Instead, I’ll say it’s definitely wrong. It doesn’t matter that it compiles. It also doesn’t matter that it actually works some or even most of the time.</p>
+
+<p>The problem here is the code smell known as “primitive obsession,” i.e., modeling domain concepts using primitive types. The next few sections will dive in into why is this such a problem and how the use of value objects can help.</p>
+
+<h3 id="value-objects-provide-context">Value Objects Provide Context</h3>
+
+<p>OK, so why is <a href="https://blog.ndepend.com/easy-miss-code-smells/">primitive obsession a bad thing</a>? There are in fact several reasons, but one of the main problems with the code snippet presented in the previous section is that it lacks a critical piece of information. As you can see, the code assigns the value 4.5 to the variable. But 4.5 what? Meters? Kilometers? Miles? Parsecs? In other words, we don’t have the <strong>unit of measurement</strong>.</p>
+
+<p>This can be a recipe for disaster. It just takes a developer fetching a value from a database or a file, thinking it’s supposed to represent meters but it’s in fact kilometers. When they then proceed to use the value in a calculation, say, adding kilometers to miles…silence. Instead of failing fast, you’d get a program that silently misbehaves while corrupting data and providing inconsistent results.</p>
+
+<p>Well, at least you’re using <a href="https://blog.ndepend.com/unit-testing-affect-codebases/">unit tests</a>…right?</p>
+
+<p>Sure, nothing prevents you from encoding that information in the variable name itself:</p>
+
+<figure class="highlight"><pre><code class="language-c#" data-lang="c#">	<span class="kt">double</span>  <span class="n">distanceInKilometers</span>  <span class="p">=</span>  <span class="m">4.5</span><span class="p">;</span></code></pre></figure>
+
+<p>Yeah, this is slightly better than the previous version, but it’s still a very brittle solution. At any moment, the value can be assigned to another variable or even passed as an argument to some function, and then the information is lost.</p>
+
+<p>By using value objects, you can eliminate this problem easily. You’d just have to choose a unit to be the internal representation of the type—for distance, it probably makes sense to use meter, since it’s an SI unit. And then you can provide several static factory methods for each necessary unit:</p>
+
+<figure class="highlight"><pre><code class="language-c#" data-lang="c#">	<span class="kt">var</span>  <span class="n">distance</span>  <span class="p">=</span>  <span class="n">Distance</span><span class="p">.</span><span class="nf">FromMeters</span><span class="p">(</span><span class="m">4000</span><span class="p">);</span>
+	<span class="kt">var</span>  <span class="n">distance2</span>  <span class="p">=</span>  <span class="n">Distance</span><span class="p">.</span><span class="nf">FromKilometers</span><span class="p">(</span><span class="m">4</span><span class="p">);</span>
+	<span class="n">Assert</span><span class="p">.</span><span class="nf">AreEqual</span><span class="p">(</span><span class="n">distance</span><span class="p">,</span>  <span class="n">distance2</span><span class="p">);</span></code></pre></figure>
+
+<p>If you go on to overload the “+” operator (or create a “Plus” method), you can safely add two distances that originate from different units of measurement since the internal representation is the same.</p>
+
+<h3 id="value-objects-are-type-safe">Value Objects Are Type Safe</h3>
+
+<p>Let’s say you have a method with this signature:</p>
+
+<figure class="highlight"><pre><code class="language-c#" data-lang="c#">	<span class="kt">double</span>  <span class="nf">PerformSomeImportantCalculation</span><span class="p">(</span><span class="kt">double</span>  <span class="n">distance</span><span class="p">,</span>  <span class="kt">double</span>  <span class="n">temperature</span><span class="p">);</span></code></pre></figure>
+
+<p>What would happen if you made a mistake and inverted the values when calling the method? The program would silently misbehave, and you wouldn’t even be aware. Hopefully, you’d have a good QA process in place that would catch this bug before it hits production, but hope isn’t exactly a strategy, right?</p>
+
+<p>Well, as it turns out, that’s the exact kind of problem value types are great at preventing. You’d just have to use custom types for each concept instead of relying on primitives:</p>
+
+<figure class="highlight"><pre><code class="language-c#" data-lang="c#">	<span class="kt">double</span>  <span class="nf">PerformSomeImportantCalculation</span><span class="p">(</span><span class="n">Distance</span> <span class="n">distance</span><span class="p">,</span>  <span class="n">Temperature</span> <span class="n">temperature</span><span class="p">);</span></code></pre></figure>
+
+<p>That way, you can’t just pass the parameters in the wrong order: the compiler won’t let you!</p>
+
+<h3 id="value-objects-prevent-duplication-of-domain-logic">Value Objects Prevent Duplication of Domain Logic</h3>
+
+<p>When you model domain concepts using primitive types, you tend to have a lot of code related to that concept spread throughout the whole application. Let’s say you’re building an application that has the concept of a license plate, and you’re using strings to represent those. Of course, not all strings are valid license plates. So your code ends up with format validations for license plates everywhere.</p>
+
+<p>This could be prevented by creating a “LicensePlate” class and performing the necessary validations on its constructor. That way you’d consolidate the validation code in one place; should it ever change in the future, you’d only have to change it in this one place.</p>
+
+<h2 id="value-objects-and-value-types-arent-synonymous">Value Objects and Value Types Aren’t Synonymous</h2>
+
+<p>This section is necessary in order to clarify a common misconception, which is to mix up value objects with the concept of value types in C#. See, in C#, we have <a href="https://carlosschults.net/en/value-reference-types-in-csharp/">two categories of types: reference types and value types.</a></p>
+
+<p>While you certainly can use structs (value types) to implement value objects—examples in the BCL would be DateTime or the primitive numeric types— there’s nothing preventing you from using classes.</p>
+
+<p>On the other hand, structs are not automatically value objects. For instance, while it’s considered good practice to keep structs immutable, they’re not immutable by default.</p>
+
+<p>In short, value type is an implementation detail in C#/.NET while value object is a design pattern. Keep that in mind and consult the <a href="https://docs.microsoft.com/EN-US/dotnet/standard/design-guidelines/choosing-between-class-and-struct">Microsoft design guidelines</a> and you should be fine.</p>
+
+<h2 id="value-objects-are-worth-it">Value Objects Are Worth It!</h2>
+
+<p>Value objects are a relatively low-cost technique that can greatly enhance the manageability and clarity of your code. By employing value objects, you can make your code easier to reason about, crafting APIs that are self-documenting, easy to understand, hard to use incorrectly, and inherently type-safe.</p>
+
+    
+    
+      
+    
+    
+        Found a typo or mistake in the post? <a href="http://github.com/carlosschults/carlosschults.github.io/edit/master/_posts/2018-10-24-value-objects-tool.md">Suggest edit</a>
+        
+    
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+                    
+            <a rel="previous" class="previous" href="/en/coding-best-practices-short-time/">&larr; Coding Best Practices When You’re Short On Time </a>
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+        	    
+            <a rel="next" class="next" href="/en/functional-programming-csharp/">Functional Programming in C#: Map, Filter, and Reduce Your Way to Clean Code &rarr;</a>
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+      
+    <div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+        // Store these for reloads
+        window.disqus_identifier = window.location.pathname;
+        window.disqus_url = window.location.href;
+        
+        // Set initial theme - match it with the site's theme
+        const currentTheme = document.body.getAttribute('data-theme') || 'light';
+        this.page.theme = currentTheme === 'dark' ? 'dark' : 'light';
+    };
+    
+    (function() {
+        var d = document, s = d.createElement('script');
+        s.src = '//carlosschultsblog.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>    
+  </div>
+
+</article>
+
+      </div>
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">         
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-2">
+        <ul class="social-media-list">
+          
+          <li>
+            <a href="https://github.com/carlosschults"><span class="icon icon--github"><svg viewBox="0 0 16 16"><path fill="#828282" d="M7.999,0.431c-4.285,0-7.76,3.474-7.76,7.761 c0,3.428,2.223,6.337,5.307,7.363c0.388,0.071,0.53-0.168,0.53-0.374c0-0.184-0.007-0.672-0.01-1.32 c-2.159,0.469-2.614-1.04-2.614-1.04c-0.353-0.896-0.862-1.135-0.862-1.135c-0.705-0.481,0.053-0.472,0.053-0.472 c0.779,0.055,1.189,0.8,1.189,0.8c0.692,1.186,1.816,0.843,2.258,0.645c0.071-0.502,0.271-0.843,0.493-1.037 C4.86,11.425,3.049,10.76,3.049,7.786c0-0.847,0.302-1.54,0.799-2.082C3.768,5.507,3.501,4.718,3.924,3.65 c0,0,0.652-0.209,2.134,0.796C6.677,4.273,7.34,4.187,8,4.184c0.659,0.003,1.323,0.089,1.943,0.261 c1.482-1.004,2.132-0.796,2.132-0.796c0.423,1.068,0.157,1.857,0.077,2.054c0.497,0.542,0.798,1.235,0.798,2.082 c0,2.981-1.814,3.637-3.543,3.829c0.279,0.24,0.527,0.713,0.527,1.437c0,1.037-0.01,1.874-0.01,2.129 c0,0.208,0.14,0.449,0.534,0.373c3.081-1.028,5.302-3.935,5.302-7.362C15.76,3.906,12.285,0.431,7.999,0.431z"/></svg>
+</span><span class="username">carlosschults</span></a>
+
+          </li>
+          
+
+          
+          <li>
+            <a href="https://twitter.com/carlosschults"><span class="icon icon--twitter"><svg viewBox="0 0 16 16"><path fill="#828282" d="M15.969,3.058c-0.586,0.26-1.217,0.436-1.878,0.515c0.675-0.405,1.194-1.045,1.438-1.809c-0.632,0.375-1.332,0.647-2.076,0.793c-0.596-0.636-1.446-1.033-2.387-1.033c-1.806,0-3.27,1.464-3.27,3.27 c0,0.256,0.029,0.506,0.085,0.745C5.163,5.404,2.753,4.102,1.14,2.124C0.859,2.607,0.698,3.168,0.698,3.767 c0,1.134,0.577,2.135,1.455,2.722C1.616,6.472,1.112,6.325,0.671,6.08c0,0.014,0,0.027,0,0.041c0,1.584,1.127,2.906,2.623,3.206 C3.02,9.402,2.731,9.442,2.433,9.442c-0.211,0-0.416-0.021-0.615-0.059c0.416,1.299,1.624,2.245,3.055,2.271 c-1.119,0.877-2.529,1.4-4.061,1.4c-0.264,0-0.524-0.015-0.78-0.046c1.447,0.928,3.166,1.469,5.013,1.469 c6.015,0,9.304-4.983,9.304-9.304c0-0.142-0.003-0.283-0.009-0.423C14.976,4.29,15.531,3.714,15.969,3.058z"/></svg>
+</span><span class="username">carlosschults</span></a>
+
+          </li>
+          
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-3">
+        <p>Articles on software development and technology.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+
+    <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-92788641-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+    <script src="/js/dark-mode.js"></script>
+  </body>
+
+</html>

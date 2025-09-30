@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Git Create Branch: 4 Ways To Do It | carlos schults / blog</title>
+  <link rel="apple-touch-icon" sizes="57x57" href="/img/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/img/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/img/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/img/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/img/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/img/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/img/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/img/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"  href="/img/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/img/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon-16x16.png">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="description" content="Editorial note: I originally wrote this post for the Cloudbees blog.  You can check out the original here, at their site.If you write software for a living, ...">
+  
+  <!-- Twitter card -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:creator" content="@carlosschults">
+  <meta name="twitter:site" content="@carlosschults">
+  <meta name="twitter:domain" content="carlosschults.net">
+  <meta name="twitter:title" content="Git Create Branch: 4 Ways To Do It">
+  <meta name="twitter:description" content="Editorial note: I originally wrote this post for the Cloudbees blog.  You can check out the original here, at their site.If you write software for a living, ...">
+
+   <!-- Facebook meta -->
+  
+  
+  <meta property="og:title" content="Git Create Branch: 4 Ways To Do It">
+  <meta property="og:site_name" content="Carlos Schults / Blog" />
+  <meta property="og:locale" content="en_US">  
+  <meta property="og:type" content="article" />
+  <meta property="og:image" content="https://res.cloudinary.com/dz5ppacuo/image/upload/v1673926044/git-beautiful-history/git-beautiful-history-cover.png" />  
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:width" content="1038"> 
+  <meta property="og:image:height" content="437">  
+  
+  <meta property="og:article:published_time" content="2024-02-21T00:00:00+00:00" />  
+  <meta property="og:article:author" content="Carlos Schults" />
+  
+  <meta property="og:article:tag" content="git" />
+  <meta property="og:article:tag" content="tutorial" />    
+  
+  <meta property="og:url" content="https://carlosschults.net/en/git-create-branch"/>
+  <meta property="og:description" content="Editorial note: I originally wrote this post for the Cloudbees blog.  You can check out the original here, at their site.If you write software for a living, ...">
+  <link rel="stylesheet" href="/css/main.css">  
+  
+  <link rel="canonical" href="https://www.cloudbees.com/blog/git-create-branch">
+   
+  
+  <link rel="alternate" hreflang="en" href="/en/git-create-branch" />
+  <link rel="alternate" hreflang="pt" href="/pt/git-criar-branch" />
+  
+  <link rel="alternate" type="application/rss+xml" title="carlos schults / blog" href="https://carlosschults.net/feed.xml">
+</head>
+
+  <body>
+    <header class="site-header">
+  <div class="wrapper">    
+    <a class="site-title" href="/">carlos schults / blog</a>
+    
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg viewBox="0 0 18 15">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+
+      <div class="trigger">        
+          
+          <a class="page-link" href="/footprints/">Dev Footprints</a>
+          <a class="page-link" href="/readings/">Readings</a>
+          <a class="page-link" href="/about/">About</a>
+		      <a class="page-link" href="/search/">Search</a>
+                  
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+<div class="wrapper" style="text-align: right; line-height: 2em">
+  
+   <a href="/en/git-create-branch" class="en">en</a>  <a href="/pt/git-criar-branch" class="pt">pt</a> 
+
+  
+  
+</div>
+
+
+    <div class="page-content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">    
+    <h2 class="postTitle" itemprop="headline">Git Create Branch: 4 Ways To Do It</h2>
+    <p class="post-meta">   
+    <time datetime="2024-02-21T00:00:00+00:00" itemprop="datePublished">Feb 21, 2024
+    </time> • <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">Carlos Schults</span></span>
+  <span class="tags" itemprop="keywords"> • Tags: <a href="/tag/git">git </a> <a href="/tag/tutorial">tutorial </a> </span>
+  </p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <p><img src="https://res.cloudinary.com/dz5ppacuo/image/upload/v1673926044/git-beautiful-history/git-beautiful-history-cover.png" alt="" /></p>
+
+<p><em>Editorial note: I originally wrote this post for the Cloudbees blog.  You can <a href="https://www.cloudbees.com/blog/git-create-branch">check out the original here, at their site</a>.</em></p>
+
+<p>If you write software for a living, then I can say with confidence you’re familiar with Git. The tool created by Linus Torvalds has become synonymous with version control. And without a doubt, one of Git’s best features is how it takes away the pain of branching and merging. There are several ways you can create a branch in Git. In this post, we’ll review some of them. Then we’ll end with a little reflection on Git’s branching model and branching in general.</p>
+
+<h2 id="creating-a-branch-from-main">Creating a Branch From main</h2>
+
+<p>You create branches in Git, unsurprisingly, by using the <code class="language-plaintext highlighter-rouge">branch</code> command. Like many other Git commands, <code class="language-plaintext highlighter-rouge">branch</code> is very powerful and flexible. Besides creating branches, it can also be used to list and delete them, and you can further customize the command by employing a broad list of parameters. We’ll begin with the first way of creating a branch. Let’s say you want to create a new folder called “my-app”, enter it, and start a new Git repository. That’s exactly how you’d do it:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mkdir my-app
+cd my-app
+git init
+</code></pre></div></div>
+
+<p>Now you have a new, empty Git repository. But empty repositories are boring. So what about creating a new markdown file with “Hello World!” written in it?</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>echo Hello World! &gt; file.md
+</code></pre></div></div>
+
+<p>If you run “git status”, you should see a message saying your file is untracked:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ git status
+On branch main
+Untracked files:
+  (use "git add &lt;file&gt;..." to include in what will be committed)
+
+    file.md
+
+nothing added to commit but untracked files present (use "git add" to track)
+</code></pre></div></div>
+
+<p><a href="https://www.cloudbees.com/blog/git-remove-untracked-files">Untracked files are also uncool, though, so let’s track it:</a></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git add file.md
+</code></pre></div></div>
+
+<p>And finally, let’s create our first commit:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git commit -m "First commit"
+</code></pre></div></div>
+
+<p>We now have a repository with one branch, which has exactly one commit. That might not sound like the most exciting thing in the world (because it really isn’t), but it’s certainly less boring than having a repo with no commits at all, right?</p>
+
+<p>Now, let’s say that for whatever reason you need to change the file’s content. But you don’t feel like doing that. What if something goes wrong and you somehow spoil the beautiful, pristine content of your file? (Yeah, I know it’s just some stupid file with “Hello World!” in it, but use the wonderful powers of your imagination and think of the file as a proxy for a much more complex project.) The solution to this dilemma is, of course, creating a new branch:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git branch exp
+</code></pre></div></div>
+
+<p>So now we have a new branch called “exp”, for experimentation. Some people who are used to using different versioning systems, especially centralized ones, could say the branches have the same “content.” This isn’t entirely accurate when talking about Git, though. Think of branches like references that point to a given commit.</p>
+
+<h2 id="creating-a-branch-from-a-commit">Creating a Branch From a Commit</h2>
+
+<p>Suppose that, for whatever reason, we give up on our experiment, without adding a single commit to the new branch. Let’s go back to <code class="language-plaintext highlighter-rouge">main</code> and delete the <code class="language-plaintext highlighter-rouge">exp</code> branch:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git checkout main
+git branch -d exp
+</code></pre></div></div>
+
+<p>Now that we’re back to a single branch, let’s add some commits to it, to simulate work being done:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>echo a new line &gt;&gt; file.md
+git commit -a -m "Add a new line"
+echo yet another line &gt;&gt; file.md
+git commit -a -m "Add yet another line"
+echo one more line &gt;&gt; file.md
+git commit -a -m "Add one more line"
+echo this is the last line i promise &gt;&gt; file.md
+git commit -a -m "Add one last line"
+</code></pre></div></div>
+
+<p>Imagine that after doing all this “work,” you learn that, for whatever reason, you need to go back in time to when there were just two lines in the file and create new changes from then on. But at the same time, you must preserve the progress you already made. In other words,  you want to create a branch from a past commit. How would you do that? In Git, each commit has a unique identifier. So you can easily see this using the <code class="language-plaintext highlighter-rouge">git log</code> command. To create a new branch based on a specific commit, just pass its hash as a parameter to the <code class="language-plaintext highlighter-rouge">branch</code> command:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git branch new-branch 7e4decb
+</code></pre></div></div>
+
+<p>As an aside, you don’t even need the whole hash most of the time. Just the first five or six characters will do it.</p>
+
+<h2 id="creating-a-branch-from-a-tag">Creating a Branch From a Tag</h2>
+
+<p>If you’re a little bit more experienced with Git, then you should be familiar with the concept of <a href="https://git-scm.com/book/en/v2/Git-Basics-Tagging">tags</a>. You use tags to indicate that a given commit is important or special in some way. For instance, tags are generally used to indicate the actual versions of a product. If you’ve been working in your application for a while and you believe it’s time to release version 1.0, what you’d typically do is bump the version numbers wherever necessary, committing those changes and then adding a tag to that specific point in time. To create a tag, you’d usually run something like this:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git tag -a v1.0 -m "First major version"
+</code></pre></div></div>
+
+<p>The “-a” parameter indicates this is going to be an annotated tag. In contrast to a lightweight tag, this is a full-blown Git object, containing pieces of information such as the committer’s name and email, the timestamp, and a message. Now you have a tag, an indication that this particular point in history is special and has a name.</p>
+
+<p>Nice. You can continue doing work, as usual, creating and committing changes that will be part of the 1.1 version. Until a bug report comes in. Some clients that were updated to the 1.0 version of the product say an import feature isn’t working as intended.</p>
+
+<p>Well, you could theoretically fix the bug in the <code class="language-plaintext highlighter-rouge">main</code> branch and deploy it. But then the clients would receive features that are potentially untested and incomplete. That’s a no-no. So what do you do? The answer: You create a new branch from the tag you’ve created to indicate the major version. You fix the issue there, build, and deploy. And you should probably merge this back to <code class="language-plaintext highlighter-rouge">main</code> afterward, so the next releases contain the fix. How would you go about that? Easy:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git branch &lt;NAME-OF-THE-BRANCH&gt; &lt;TAG&gt;
+</code></pre></div></div>
+
+<p>More specifically, using our previous example:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git branch fix-bug-123 v1.0
+</code></pre></div></div>
+
+<p>After that, you can check out your new branch as usual. Or better yet, you could do it all in one step:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git checkout -b fix-bug-1234 v1.0
+</code></pre></div></div>
+
+<h2 id="creating-a-branch-in-detached-head-state">Creating a Branch in Detached Head State</h2>
+
+<p>Have you ever wished to go back in time? With Git this is possible…at least in regard to the files in our repository. You can, at any time, check out a commit if you know its hash:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git checkout &lt;SHA1&gt;
+</code></pre></div></div>
+
+<p>After running that, Git will show you a curious message:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>You are in 'detached HEAD' state. You can look around, make experimental
+changes and commit them, and you can discard any commits you make in this
+state without impacting any branches by performing another checkout.
+</code></pre></div></div>
+
+<p>When you check out a commit, you enter a special state called, as you can see, “<a href="https://www.cloudbees.com/blog/git-detached-head">detached HEAD</a>”. While you can commit changes in this state, those commits don’t belong to any branch and will become inaccessible as soon as you check out another branch. But what if you do want to keep those commits? The answer, unsurprisingly, is to use the <code class="language-plaintext highlighter-rouge">checkout</code> command again to create a new branch:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git checkout &lt;sha1&gt; #now you're in detached head state
+# do some work and stage it
+git commit -m "add some work while in detached head state"
+git branch new-branch-to-keep-commits
+git checkout new-branch-to-keep-commits
+</code></pre></div></div>
+
+<p>And of course, by now you know you can write the last two lines as a single command:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git checkout -b new-branch-to-keep-commits
+</code></pre></div></div>
+
+<p>Pretty easy, right?</p>
+
+<h2 id="just-because-you-candoesnt-mean-you-should">Just Because You Can…Doesn’t Mean You Should</h2>
+
+<p>Git’s branching model is one of its selling points. It turns what in other source control systems is a painful and even slow process into a breeze. One could say that Git has successfully democratized branching for the masses. But there lies a serious danger. Due to the cheapness of branching in Git, some developers might fall into the trap of working with <a href="https://rollout.io/blog/pitfalls-feature-branching/">extremely long-lived branches</a> or employing workflows or branching models that delay integration.</p>
+
+<p>We, as an industry, have been there. We’ve done that. It doesn’t work. Instead, embrace workflows that employ extremely short-lived branches. You’ll have a secure sandbox in which to code without fear of breaking stuff or wasting your coworkers’ time. But does that have you asking, “How do I deploy code with partially completed features?” <a href="https://rollout.io/blog/ultimate-feature-flag-guide/">In that case, it’s feature flags to the rescue</a>.</p>
+
+<p>Git branches are a powerful tool. Use them wisely, and don’t abuse them. And when they’re not enough, employ <a href="https://rollout.io/blog/continuous-integration-continuous-delivery-continuous-deployment/">continuous delivery/continuous integration</a> along with feature flags—including <a href="https://rollout.io/product/">specialized tools</a> at <a href="https://rollout.io/blog/5-tools-continuous-deployment/">your disposal</a>—so your applications can get to the next level.</p>
+
+    
+    
+      
+    
+    
+        Found a typo or mistake in the post? <a href="http://github.com/carlosschults/carlosschults.github.io/edit/master/_posts/2024-02-21-git-create-branch.md">Suggest edit</a>
+        
+    
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+                    
+            <a rel="previous" class="previous" href="/en/linq-join-operator">&larr; The LINQ Join Operator: A Complete Tutorial </a>
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+        	    
+            <a rel="next" class="next" href="/en/csharp-regex">C# Regex: How Regular Expressions Work in C#, With Examples &rarr;</a>
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+      
+    <div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+        // Store these for reloads
+        window.disqus_identifier = window.location.pathname;
+        window.disqus_url = window.location.href;
+        
+        // Set initial theme - match it with the site's theme
+        const currentTheme = document.body.getAttribute('data-theme') || 'light';
+        this.page.theme = currentTheme === 'dark' ? 'dark' : 'light';
+    };
+    
+    (function() {
+        var d = document, s = d.createElement('script');
+        s.src = '//carlosschultsblog.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>    
+  </div>
+
+</article>
+
+      </div>
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">         
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-2">
+        <ul class="social-media-list">
+          
+          <li>
+            <a href="https://github.com/carlosschults"><span class="icon icon--github"><svg viewBox="0 0 16 16"><path fill="#828282" d="M7.999,0.431c-4.285,0-7.76,3.474-7.76,7.761 c0,3.428,2.223,6.337,5.307,7.363c0.388,0.071,0.53-0.168,0.53-0.374c0-0.184-0.007-0.672-0.01-1.32 c-2.159,0.469-2.614-1.04-2.614-1.04c-0.353-0.896-0.862-1.135-0.862-1.135c-0.705-0.481,0.053-0.472,0.053-0.472 c0.779,0.055,1.189,0.8,1.189,0.8c0.692,1.186,1.816,0.843,2.258,0.645c0.071-0.502,0.271-0.843,0.493-1.037 C4.86,11.425,3.049,10.76,3.049,7.786c0-0.847,0.302-1.54,0.799-2.082C3.768,5.507,3.501,4.718,3.924,3.65 c0,0,0.652-0.209,2.134,0.796C6.677,4.273,7.34,4.187,8,4.184c0.659,0.003,1.323,0.089,1.943,0.261 c1.482-1.004,2.132-0.796,2.132-0.796c0.423,1.068,0.157,1.857,0.077,2.054c0.497,0.542,0.798,1.235,0.798,2.082 c0,2.981-1.814,3.637-3.543,3.829c0.279,0.24,0.527,0.713,0.527,1.437c0,1.037-0.01,1.874-0.01,2.129 c0,0.208,0.14,0.449,0.534,0.373c3.081-1.028,5.302-3.935,5.302-7.362C15.76,3.906,12.285,0.431,7.999,0.431z"/></svg>
+</span><span class="username">carlosschults</span></a>
+
+          </li>
+          
+
+          
+          <li>
+            <a href="https://twitter.com/carlosschults"><span class="icon icon--twitter"><svg viewBox="0 0 16 16"><path fill="#828282" d="M15.969,3.058c-0.586,0.26-1.217,0.436-1.878,0.515c0.675-0.405,1.194-1.045,1.438-1.809c-0.632,0.375-1.332,0.647-2.076,0.793c-0.596-0.636-1.446-1.033-2.387-1.033c-1.806,0-3.27,1.464-3.27,3.27 c0,0.256,0.029,0.506,0.085,0.745C5.163,5.404,2.753,4.102,1.14,2.124C0.859,2.607,0.698,3.168,0.698,3.767 c0,1.134,0.577,2.135,1.455,2.722C1.616,6.472,1.112,6.325,0.671,6.08c0,0.014,0,0.027,0,0.041c0,1.584,1.127,2.906,2.623,3.206 C3.02,9.402,2.731,9.442,2.433,9.442c-0.211,0-0.416-0.021-0.615-0.059c0.416,1.299,1.624,2.245,3.055,2.271 c-1.119,0.877-2.529,1.4-4.061,1.4c-0.264,0-0.524-0.015-0.78-0.046c1.447,0.928,3.166,1.469,5.013,1.469 c6.015,0,9.304-4.983,9.304-9.304c0-0.142-0.003-0.283-0.009-0.423C14.976,4.29,15.531,3.714,15.969,3.058z"/></svg>
+</span><span class="username">carlosschults</span></a>
+
+          </li>
+          
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-3">
+        <p>Articles on software development and technology.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+
+    <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-92788641-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+    <script src="/js/dark-mode.js"></script>
+  </body>
+
+</html>

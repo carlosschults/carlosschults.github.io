@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Git Bisect: An Introduction To Beginners | carlos schults / blog</title>
+  <link rel="apple-touch-icon" sizes="57x57" href="/img/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/img/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/img/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/img/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/img/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/img/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/img/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/img/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"  href="/img/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/img/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon-16x16.png">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="description" content="Photo by Yancy Min on UnsplashIf you’re trying to level up your git-fu, you could do worse than learn the git bisect command. Git has its (un)fair share of c...">
+  
+  <!-- Twitter card -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:creator" content="@carlosschults">
+  <meta name="twitter:site" content="@carlosschults">
+  <meta name="twitter:domain" content="carlosschults.net">
+  <meta name="twitter:title" content="Git Bisect: An Introduction To Beginners">
+  <meta name="twitter:description" content="Photo by Yancy Min on UnsplashIf you’re trying to level up your git-fu, you could do worse than learn the git bisect command. Git has its (un)fair share of c...">
+
+   <!-- Facebook meta -->
+  
+  
+  <meta property="og:title" content="Git Bisect: An Introduction To Beginners">
+  <meta property="og:site_name" content="Carlos Schults / Blog" />
+  <meta property="og:locale" content="en_US">  
+  <meta property="og:type" content="article" />
+  <meta property="og:image" content="https://res.cloudinary.com/dz5ppacuo/image/upload/v1673926044/git-beautiful-history/git-beautiful-history-cover.png" />  
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:width" content="1038"> 
+  <meta property="og:image:height" content="437">  
+  
+  <meta property="og:article:published_time" content="2024-01-22T00:00:00+00:00" />  
+  <meta property="og:article:author" content="Carlos Schults" />
+  
+  <meta property="og:article:tag" content="git" />    
+  
+  <meta property="og:url" content="https://carlosschults.net/git-bisect-intro/"/>
+  <meta property="og:description" content="Photo by Yancy Min on UnsplashIf you’re trying to level up your git-fu, you could do worse than learn the git bisect command. Git has its (un)fair share of c...">
+  <link rel="stylesheet" href="/css/main.css">  
+  
+   <link rel="canonical" href="https://carlosschults.net/git-bisect-intro/">
+   
+  
+  <link rel="alternate" hreflang="en" href="/git-bisect-intro/" />
+  <link rel="alternate" hreflang="pt" href="/pt/git-bisect-intro/" />
+  
+  <link rel="alternate" type="application/rss+xml" title="carlos schults / blog" href="https://carlosschults.net/feed.xml">
+</head>
+
+  <body>
+    <header class="site-header">
+  <div class="wrapper">    
+    <a class="site-title" href="/">carlos schults / blog</a>
+    
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg viewBox="0 0 18 15">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+
+      <div class="trigger">        
+          
+          <a class="page-link" href="/footprints/">Dev Footprints</a>
+          <a class="page-link" href="/readings/">Readings</a>
+          <a class="page-link" href="/about/">About</a>
+		      <a class="page-link" href="/search/">Search</a>
+                  
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+<div class="wrapper" style="text-align: right; line-height: 2em">
+  
+   <a href="/git-bisect-intro/" class="en">en</a>  <a href="/pt/git-bisect-intro/" class="pt">pt</a> 
+
+  
+  
+</div>
+
+
+    <div class="page-content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">    
+    <h2 class="postTitle" itemprop="headline">Git Bisect: An Introduction To Beginners</h2>
+    <p class="post-meta">   
+    <time datetime="2024-01-22T00:00:00+00:00" itemprop="datePublished">Jan 22, 2024
+    </time> • <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">Carlos Schults</span></span>
+  <span class="tags" itemprop="keywords"> • Tags: <a href="/tag/git">git </a> </span>
+  </p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <p><img src="https://res.cloudinary.com/dz5ppacuo/image/upload/v1673926044/git-beautiful-history/git-beautiful-history-cover.png" alt="" /></p>
+
+<p><span>Photo by <a href="https://unsplash.com/@yancymin?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Yancy Min</a> on <a href="https://unsplash.com/photos/842ofHC6MaI?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span></p>
+
+<p>If you’re trying to level up your <em>git-fu</em>, you could do worse than learn the <code class="language-plaintext highlighter-rouge">git bisect</code> command. Git has its (un)fair share of complicated commands, that’s true. The good news is that, unlike those, <code class="language-plaintext highlighter-rouge">git bisect</code> is quite easy to understand and use. The even better news is that it’s super useful to help you fix bugs.</p>
+
+<h2 id="prerequisites">Prerequisites</h2>
+
+<p>Before getting started, let’s review some prerequisites you’ll need to follow along with the post:</p>
+<ul>
+  <li>Having git installed on your machine</li>
+  <li>Knowing at least the basic git commands</li>
+  <li>Having Node.js installed on your machine (later on you’ll use a sample application provided by me, and it’s written in JavaScript.)</li>
+</ul>
+
+<p>Have all that? Great, let’s move on.</p>
+
+<h2 id="whats-git-bisect-why-do-you-need-it">What’s Git Bisect? Why Do You Need It?</h2>
+
+<p><code class="language-plaintext highlighter-rouge">Git bisect</code> is a command that enables you to perform a binary search on your commit history. Why do that?</p>
+
+<p>Here’s a common scenario during development. Someone reports a bug. You go see it and find out that, two weeks ago, the feature was working just fine.</p>
+
+<p>To fix the bug, it’d be useful to find out when exactly it was introduced to the codebase. Since you know one commit that you’re sure to be “good”—that is, it doesn’t contain the bug—you could <code class="language-plaintext highlighter-rouge">git checkout</code> your way there, going back one commit at a time and testing to see if the application works.</p>
+
+<p>That’s bound to work, but it could potentially take a long time, depending on the number of commits you’d have to check and where the problem is. For those who remember your Computer Science classes, the approach described above is a <a href="https://en.wikipedia.org/wiki/Linear_search">linear search</a>, which isn’t the most optimal way to search for a value within a list.</p>
+
+<p>Do you know what’s more efficient? A binary search. If you have, say, 50 commits you need to check, and you test the 25th one and don’t find the bug, what does that mean? You can disregard the first 25 commits and continue your search within the 25 later ones. Continue the process, always partioning by half, and you’ll find the faulty one in way fewer checks than would be necessary with a linear search.</p>
+
+<p>Doing this by hand would be super boring, though. And that’s where <code class="language-plaintext highlighter-rouge">git bisect</code> comes in handy. It has an easy syntax that allows you to specify both a good and a bad commit, and then git will perform the binary partitions on your behalf. At each step, you’ll have to test your application and inform git whether that commit is a bad or a good one. Then, git calculates the next step, takes you there, and the process ends when you find the culprit.</p>
+
+<h2 id="how-to-use-git-bisect-in-practice">How To Use <code class="language-plaintext highlighter-rouge">Git Bisect</code> In Practice?</h2>
+
+<p>Time to learn how to use <code class="language-plaintext highlighter-rouge">git bisect</code> in a hands-on approach. To practice this command, you need a repo with at least some commits, and that has a bug. It’d take a while for you to set up a repository like this, so I already made one for you—yes, I’m nice like that.</p>
+
+<h3 id="getting-the-sample-application">Getting The Sample Application</h3>
+<p>Just <a href="https://github.com/carlosschults/git-bisect-intro">clone this GitHub repo</a> and you’re good to go.</p>
+
+<p>The repo contains a silly toy JavaScript application that implements some rules from the <a href="https://osherove.com/tdd-kata-1">String Calculator Kata by Roy Osherov</a>. Here’s what the application is supposed to do:</p>
+<ul>
+  <li>after running it, the application will prompt you for a list of numbers, separated by comma;</li>
+  <li>you provide the numbers;</li>
+  <li>the sum of the numbers is displayed.</li>
+  <li>numbers larger than 1000 are ignored. So, the string “1,2,1000” should yield the result 1003, but “1,2,1001” should result in 3.</li>
+  <li>negative numbers shouldn’t be allowed. If you enter one or more negative numbers, the application should throw an error with the message “Negatives not allowed”, followed by the negative numbers that were inputted.</li>
+</ul>
+
+<p>After cloning the repository, let’s test the app. Access its folder via the command line, run <code class="language-plaintext highlighter-rouge">node index.js</code> and, when prompted for the numbers, enter “1,2,3” and press enter.</p>
+
+<p>Oops.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>node:internal/readline/emitKeypressEvents:74
+            throw err;
+            ^
+
+Error: Negatives not allowed: .
+    at C:\repos\git-bisect-intro\index.js:11:11
+    at [_onLine] [as _onLine] (node:internal/readline/interface:423:7)
+    at [_line] [as _line] (node:internal/readline/interface:886:18)
+    at [_ttyWrite] [as _ttyWrite] (node:internal/readline/interface:1264:22)
+    at ReadStream.onkeypress (node:internal/readline/interface:273:20)
+    at ReadStream.emit (node:events:513:28)
+    at emitKeys (node:internal/readline/utils:357:14)
+    at emitKeys.next (&lt;anonymous&gt;)
+    at ReadStream.onData (node:internal/readline/emitKeypressEvents:64:36)
+    at ReadStream.emit (node:events:513:28)
+
+Node.js v18.12.1
+</code></pre></div></div>
+<p>The app doesn’t work. It throws the “negatives not allowed” error even if no negatives were entered. If you want to see the app working, I made things easier for you: I created a tag called <code class="language-plaintext highlighter-rouge">good-commit</code> that references a point in the history guaranteed to be good. Just go there and check it:</p>
+
+<p><code class="language-plaintext highlighter-rouge">git checkout good-commit</code></p>
+
+<p>After running the command above, it’s possible you’ll see some messages about <a href="https://www.cloudbees.com/blog/git-detached-head">detached HEAD</a> and stuff. Just ignore those. Run the application again, and <em>voilá</em>:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Enter a list of numbers separated by comma:
+1,2,3
+The sum of the entered numbers is 6.
+</code></pre></div></div>
+
+<p>Ok, let’s now test the numbers-larger-than-1000-should-be-ignored rule:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Enter a list of numbers separated by comma:
+1,2,1000, 1001
+The sum of the entered numbers is 1003.
+</code></pre></div></div>
+
+<p>Nice! As expected, the number 1000 is considered but 1001 is ignored. For a final test, let’s verify the negative numbers prohibition:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Enter a list of numbers separated by comma:
+1,2,3,-5,-4,-7
+node:internal/readline/emitKeypressEvents:74
+            throw err;
+            ^
+
+Error: Negatives not allowed: -5, -4, -7.
+</code></pre></div></div>
+
+<p>Sweet. Now, for the next step. But first, run <code class="language-plaintext highlighter-rouge">git checkout main</code> to return to the latest commit.</p>
+
+<h3 id="time-to-roll-up-your-sleeves">Time To Roll-Up Your Sleeves</h3>
+<p>To start using the <code class="language-plaintext highlighter-rouge">git bisect</code> command, you need to begin a <em>bisect session</em>. You do this by simply running <code class="language-plaintext highlighter-rouge">git bisect start</code>. You’ll then see the following message:</p>
+
+<p><code class="language-plaintext highlighter-rouge">status: waiting for both good and bad commits</code></p>
+
+<p>Now, you have to tell git about a commit that’s known to be “good”—i.e. not contain the bug—and one commit that does contain the bug. Let’s start with the good one:</p>
+
+<p><code class="language-plaintext highlighter-rouge">git bisect good good-commit</code></p>
+
+<p>As I said before, I created a tag to point to a known good commit to make things easier for you. But you’re not restricted to tags when it comes to pointing to a commit for a bisecting session. Branch names will also work, as commit SHAs and pretty much any references that resolve to a commit.</p>
+
+<p>Anyway, after running the command, you’ll see this:
+<code class="language-plaintext highlighter-rouge">status: waiting for bad commit, 1 good commit known</code></p>
+
+<p>Now it’s time to point to a bad commit. I’m sure you’re able to guess the syntax now: <code class="language-plaintext highlighter-rouge">git bisect bad &lt;REFERENCE-TO-COMMIT&gt;</code>. But since the commit we’re at—in other words, the tip of <code class="language-plaintext highlighter-rouge">main</code>—is known to be bad, you can simply run:</p>
+
+<p><code class="language-plaintext highlighter-rouge">git bisect bad</code></p>
+
+<p>Now the fun begins! Git will display a message, showing you the status of the bisecting operation. It’ll tell you how many revisions are left to test , and how many steps that would take, and to which commit it has “transported” you:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Bisecting: 11 revisions left to test after this (roughly 4 steps)
+[e159647d4d142c410894aaf10c1e11e2208848d7] Edit to negative rule
+</code></pre></div></div>
+
+<p>Your job now is to test the application and tell git whether that’s a good or bad commit. So, let’s run <code class="language-plaintext highlighter-rouge">node index.js</code> and provide some numbers:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Enter a list of numbers separated by comma:
+1,2,3
+node:internal/readline/emitKeypressEvents:74
+            throw err;
+            ^
+
+Error: Negatives not allowed: .
+</code></pre></div></div>
+
+<p>I’ve cut some of the output for brevity, but anyway: the app’s not working. So, tell git that:</p>
+
+<p><code class="language-plaintext highlighter-rouge">git bisect bad</code></p>
+
+<p>It takes you to a different commit:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Bisecting: 5 revisions left to test after this (roughly 3 steps)
+[0b8f71999bed054d8a95d9da3be6f0c831074cd7] Update README.md - Commit 6
+</code></pre></div></div>
+
+<p>Let’s repeat the test with <code class="language-plaintext highlighter-rouge">node index.js</code>:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Enter a list of numbers separated by comma:
+1,2,3
+The sum of the entered numbers is 6.
+</code></pre></div></div>
+
+<p>Awesome! At this commit, the app seems to work fine. Let’s do a different test, using negative numbers:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Enter a list of numbers separated by comma:
+1,2,3,-5,-4,-10
+node:internal/readline/emitKeypressEvents:74
+            throw err;
+            ^
+
+Error: Negatives not allowed: -5, -4, -10.
+</code></pre></div></div>
+
+<p>Perfect: it’s throwing an error, as it’s supposed to do in this scenario. So, run <code class="language-plaintext highlighter-rouge">git bisect good</code> to mark this commit as good.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Bisecting: 2 revisions left to test after this (roughly 2 steps)
+[e6413a915c7ca92871394b01a8497c8df3fc46ae] Update README.md - Commit 9
+</code></pre></div></div>
+
+<p>Yet another commit, yet another test:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>node index.js
+Enter a list of numbers separated by comma:
+1,2,3
+The sum of the entered numbers is 6.
+</code></pre></div></div>
+<p>Let’s test the negatives:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>node index.js
+Enter a list of numbers separated by comma:
+10,20,-5
+node:internal/readline/emitKeypressEvents:74
+            throw err;
+            ^
+
+Error: Negatives not allowed: -5.
+</code></pre></div></div>
+
+<p>Everything looks fine, let’s mark it as good:
+<code class="language-plaintext highlighter-rouge">git bisect good</code></p>
+
+<p>And the result:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Bisecting: 0 revisions left to test after this (roughly 1 step)
+[053207649aefdb09cd255567df673cadbe2e38e3] Restore README
+</code></pre></div></div>
+
+<p>We’re getting close! Let’s test:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>node index.js
+Enter a list of numbers separated by comma:
+1,2,3
+The sum of the entered numbers is 6.
+
+node index.js
+Enter a list of numbers separated by comma:
+1,2,3,-5,-6
+node:internal/readline/emitKeypressEvents:74
+            throw err;
+            ^
+
+Error: Negatives not allowed: -5, -6.
+</code></pre></div></div>
+
+<p>Marking it as good: <code class="language-plaintext highlighter-rouge">git bisect good</code>. And, <em>voilà</em>, here’s our answer:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>e159647d4d142c410894aaf10c1e11e2208848d7 is the first bad commit
+commit e159647d4d142c410894aaf10c1e11e2208848d7
+Author: Carlos Schults &lt;carlos.schults@gmail.com&gt;
+Date:   Tue Jan 9 08:53:47 2024 -0300
+
+    Edit to negative rule
+
+ index.js | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+</code></pre></div></div>
+
+<h3 id="what-now">What Now?</h3>
+<p>Ok, now you know that the commit <code class="language-plaintext highlighter-rouge">e159647d4d142c410894aaf10c1e11e2208848d7</code> is the one that introduced the bug. What should you do now?</p>
+
+<p>In short, you need to see details of this commit, to learn what changes it makes so you can understand what caused the problem. Let’s use the <code class="language-plaintext highlighter-rouge">git show</code> command for that:</p>
+
+<p><code class="language-plaintext highlighter-rouge">git show e159647d4d142c410894aaf10c1e11e2208848d7</code></p>
+
+<p>This command will output several things about the commit, including author, date, and message. I’ll reproduce only the part I’m interested in, which is the diff:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>diff --git a/index.js b/index.js
+index 5f351e0..4e65e0c 100644
+--- a/index.js
++++ b/index.js
+@@ -6,7 +6,7 @@ const readline = require('readline').createInterface({
+   readline.question('Enter a list of numbers separated by comma:\n', numbers =&gt; {
+     let integers = numbers.split(',').map(x =&gt; parseInt(x) || 0);
+     let negatives = integers.filter(x =&gt; x &lt; 0);
+-    if (negatives.length &gt; 0) {
++    if (negatives.length &gt;= 0) {
+       throw new Error(`Negatives not allowed: ${negatives.join(', ')}.`);
+     }
+</code></pre></div></div>
+
+<p>And now as an image, so you can see the colors:</p>
+
+<p><img src="/img/diff.png" alt="" /></p>
+
+<p>As you can see, this commit made a change to the <code class="language-plaintext highlighter-rouge">if</code> statement that tests for negative numbers, adding an equals sign to the comparison. That way, the error will be thrown regardless of whether the <code class="language-plaintext highlighter-rouge">negatives</code> array has elements.</p>
+
+<p>Now that you know how the bug was introduced, it’s super easy to fix it. To end the bisect session, just run <code class="language-plaintext highlighter-rouge">git bisect reset</code>. That way, you’ll be back to the point in which you originally started.</p>
+
+<h2 id="a-note-about-good-and-bad">A Note About “Good” and “Bad”</h2>
+
+<p>Astute readers will have noticed that, although this command uses terms like “goo”,’ “bad,” and “bug,” there’s nothing stopping you from using <code class="language-plaintext highlighter-rouge">git bisect</code> to find out the point in time at which any property of the codebase has changed. After all, Git can’t know how your application is supposed to work; it was you, the whole time, who was testing it.</p>
+
+<p>Even the <a href="https://git-scm.com/docs/git-bisect#_alternate_terms">documentation for the command</a> acknowledges this fact:</p>
+
+<blockquote>
+  <p>Sometimes you are not looking for the commit that introduced a breakage, but rather for a commit that caused a change between some other “old” state and “new” state.
+For example, you might be looking for the commit that introduced a particular fix. Or you might be looking for the first commit in which the source-code filenames were finally all converted to your company’s naming standard. Or whatever.</p>
+</blockquote>
+
+<p>In such a scenario, it’d be weird to use the terms “good” and “bad”. The good news is that you can use “new” and “old” instead: the <em>new</em> commit is one that contains the property you’re looking after, and the <em>old</em> doesn’t contain such property.</p>
+
+<p>To use this terminology, just start a bisecting session as usual, and then run <code class="language-plaintext highlighter-rouge">git bisect old &lt;COMMIT&gt;</code> to indicate the old commit, and <code class="language-plaintext highlighter-rouge">git bisect new &lt;COMMIT&gt;</code> to indicate the new one.</p>
+
+<p>Keep in mind that you can either use good/bad or old/new, but not mix the two. At any point during a session, you can run <code class="language-plaintext highlighter-rouge">git bisect terms</code> to be reminded of the terms you’re using.</p>
+
+<p>The command is even more flexible than that: you can pick your own terms! Just start a session by running the following:</p>
+
+<p><code class="language-plaintext highlighter-rouge">git bisect start --term-old &lt;term-old&gt; --term-new &lt;term-new&gt;</code></p>
+
+<h2 id="git-bisect-where-do-you-go-now">Git Bisect: Where Do You Go Now?</h2>
+
+<p>I know this is only anecdotal data but, from my observations, I’d say that <code class="language-plaintext highlighter-rouge">git bisect</code> is an underused command. Which is pretty sad, considering that <code class="language-plaintext highlighter-rouge">git bisect</code> is a)incredibly useful and b)easy to understand and use, at least in its most basic use case.</p>
+
+<p>If you’re already comfortable with the most common git commands — i.e. <code class="language-plaintext highlighter-rouge">status</code>, <code class="language-plaintext highlighter-rouge">log</code>, <code class="language-plaintext highlighter-rouge">commit</code>, <code class="language-plaintext highlighter-rouge">add</code>, <code class="language-plaintext highlighter-rouge">pull</code>, <code class="language-plaintext highlighter-rouge">push</code>, <code class="language-plaintext highlighter-rouge">checkout</code> — and want to go one step higher, learning <code class="language-plaintext highlighter-rouge">git bisect</code> is a great place for you to start.</p>
+
+<p>So, you’ve learned the basics of this command with the introduction I wrote. Awesome, but where should you go from here? I’ve got a few suggestions:</p>
+
+<ul>
+  <li>Put it into practice ASAP. Even if you’re not bug-hunting right now, come up with <em>some</em> characteristic of your application and find the commit in which it was introduced using <code class="language-plaintext highlighter-rouge">git bisect</code>.</li>
+  <li>Dive depeer into the command and look for more advanced use cases. For instance, it’s possible to <a href="https://dev.to/emilysamp/how-to-run-an-automated-git-bisect-with-rspec-3dm3">automate <code class="language-plaintext highlighter-rouge">git bisect</code></a> so you don’t even have to manually test in order to triage the good commits from the bad ones!</li>
+  <li>Read the <a href="https://git-scm.com/docs/git-bisect">documentation</a> for <code class="language-plaintext highlighter-rouge">git bisect</code>. Keep going back to it from time to time, and you’re bound to learn something new and useful.</li>
+</ul>
+
+<p>That’s it for this post. I hope you like it, and I really appreciate any feedback. Thanks for reading!</p>
+
+    
+    
+      
+    
+    
+        Found a typo or mistake in the post? <a href="http://github.com/carlosschults/carlosschults.github.io/edit/master/_posts/2024-01-22-git-bisect-intro.md">Suggest edit</a>
+        
+    
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+                    
+            <a rel="previous" class="previous" href="/en/fivel-levels-readable-code/">&larr; The 5 Levels of Readable Code </a>
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+        	    
+            <a rel="next" class="next" href="/en/linq-join-operator">The LINQ Join Operator: A Complete Tutorial &rarr;</a>
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+      
+    <div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+        // Store these for reloads
+        window.disqus_identifier = window.location.pathname;
+        window.disqus_url = window.location.href;
+        
+        // Set initial theme - match it with the site's theme
+        const currentTheme = document.body.getAttribute('data-theme') || 'light';
+        this.page.theme = currentTheme === 'dark' ? 'dark' : 'light';
+    };
+    
+    (function() {
+        var d = document, s = d.createElement('script');
+        s.src = '//carlosschultsblog.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>    
+  </div>
+
+</article>
+
+      </div>
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">         
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-2">
+        <ul class="social-media-list">
+          
+          <li>
+            <a href="https://github.com/carlosschults"><span class="icon icon--github"><svg viewBox="0 0 16 16"><path fill="#828282" d="M7.999,0.431c-4.285,0-7.76,3.474-7.76,7.761 c0,3.428,2.223,6.337,5.307,7.363c0.388,0.071,0.53-0.168,0.53-0.374c0-0.184-0.007-0.672-0.01-1.32 c-2.159,0.469-2.614-1.04-2.614-1.04c-0.353-0.896-0.862-1.135-0.862-1.135c-0.705-0.481,0.053-0.472,0.053-0.472 c0.779,0.055,1.189,0.8,1.189,0.8c0.692,1.186,1.816,0.843,2.258,0.645c0.071-0.502,0.271-0.843,0.493-1.037 C4.86,11.425,3.049,10.76,3.049,7.786c0-0.847,0.302-1.54,0.799-2.082C3.768,5.507,3.501,4.718,3.924,3.65 c0,0,0.652-0.209,2.134,0.796C6.677,4.273,7.34,4.187,8,4.184c0.659,0.003,1.323,0.089,1.943,0.261 c1.482-1.004,2.132-0.796,2.132-0.796c0.423,1.068,0.157,1.857,0.077,2.054c0.497,0.542,0.798,1.235,0.798,2.082 c0,2.981-1.814,3.637-3.543,3.829c0.279,0.24,0.527,0.713,0.527,1.437c0,1.037-0.01,1.874-0.01,2.129 c0,0.208,0.14,0.449,0.534,0.373c3.081-1.028,5.302-3.935,5.302-7.362C15.76,3.906,12.285,0.431,7.999,0.431z"/></svg>
+</span><span class="username">carlosschults</span></a>
+
+          </li>
+          
+
+          
+          <li>
+            <a href="https://twitter.com/carlosschults"><span class="icon icon--twitter"><svg viewBox="0 0 16 16"><path fill="#828282" d="M15.969,3.058c-0.586,0.26-1.217,0.436-1.878,0.515c0.675-0.405,1.194-1.045,1.438-1.809c-0.632,0.375-1.332,0.647-2.076,0.793c-0.596-0.636-1.446-1.033-2.387-1.033c-1.806,0-3.27,1.464-3.27,3.27 c0,0.256,0.029,0.506,0.085,0.745C5.163,5.404,2.753,4.102,1.14,2.124C0.859,2.607,0.698,3.168,0.698,3.767 c0,1.134,0.577,2.135,1.455,2.722C1.616,6.472,1.112,6.325,0.671,6.08c0,0.014,0,0.027,0,0.041c0,1.584,1.127,2.906,2.623,3.206 C3.02,9.402,2.731,9.442,2.433,9.442c-0.211,0-0.416-0.021-0.615-0.059c0.416,1.299,1.624,2.245,3.055,2.271 c-1.119,0.877-2.529,1.4-4.061,1.4c-0.264,0-0.524-0.015-0.78-0.046c1.447,0.928,3.166,1.469,5.013,1.469 c6.015,0,9.304-4.983,9.304-9.304c0-0.142-0.003-0.283-0.009-0.423C14.976,4.29,15.531,3.714,15.969,3.058z"/></svg>
+</span><span class="username">carlosschults</span></a>
+
+          </li>
+          
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-3">
+        <p>Articles on software development and technology.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+
+    <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-92788641-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+    <script src="/js/dark-mode.js"></script>
+  </body>
+
+</html>

@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Fazendo Seu Histórico Git Ficar Bonitão Com Amend e Rebase | carlos schults / blog</title>
+  <link rel="apple-touch-icon" sizes="57x57" href="/img/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/img/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/img/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/img/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/img/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/img/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/img/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/img/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"  href="/img/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/img/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon-16x16.png">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="description" content="Foto por Yancy Min no UnsplashVocê faz parte de uma equipe de software de pequeno a médio porte e morre de inveja do histórico de commits das pessoas que tra...">
+  
+  <!-- Twitter card -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:creator" content="@carlosschults">
+  <meta name="twitter:site" content="@carlosschults">
+  <meta name="twitter:domain" content="carlosschults.net">
+  <meta name="twitter:title" content="Fazendo Seu Histórico Git Ficar Bonitão Com Amend e Rebase">
+  <meta name="twitter:description" content="Foto por Yancy Min no UnsplashVocê faz parte de uma equipe de software de pequeno a médio porte e morre de inveja do histórico de commits das pessoas que tra...">
+
+   <!-- Facebook meta -->
+  
+  
+  <meta property="og:title" content="Fazendo Seu Histórico Git Ficar Bonitão Com Amend e Rebase">
+  <meta property="og:site_name" content="Carlos Schults / Blog" />
+  <meta property="og:locale" content="pt_BR">  
+  <meta property="og:type" content="article" />
+  <meta property="og:image" content="https://res.cloudinary.com/dz5ppacuo/image/upload/v1673926044/git-beautiful-history/git-beautiful-history-cover.png" />  
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:width" content="1038"> 
+  <meta property="og:image:height" content="437">  
+  
+  <meta property="og:article:published_time" content="2023-01-17T00:00:00+00:00" />  
+  <meta property="og:article:author" content="Carlos Schults" />
+  
+  <meta property="og:article:tag" content="git" />    
+  
+  <meta property="og:url" content="https://carlosschults.net/pt/git-historico-bonito/"/>
+  <meta property="og:description" content="Foto por Yancy Min no UnsplashVocê faz parte de uma equipe de software de pequeno a médio porte e morre de inveja do histórico de commits das pessoas que tra...">
+  <link rel="stylesheet" href="/css/main.css">  
+  
+   <link rel="canonical" href="https://carlosschults.net/pt/git-historico-bonito/">
+   
+  
+  <link rel="alternate" hreflang="en" href="/en/git-beautiful-history/" />
+  <link rel="alternate" hreflang="pt" href="/pt/git-historico-bonito/" />
+  
+  <link rel="alternate" type="application/rss+xml" title="carlos schults / blog" href="https://carlosschults.net/rss.xml">
+</head>
+
+  <body>
+    <header class="site-header">
+  <div class="wrapper">    
+    <a class="site-title" href="/pt/">carlos schults / blog</a>
+    
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg viewBox="0 0 18 15">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+
+      <div class="trigger">        
+          
+          <a class="page-link" href="/sobre/">Sobre</a>
+          <a class="page-link" href="/busca/">Busca</a>
+                  
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+<div class="wrapper" style="text-align: right; line-height: 2em">
+  
+   <a href="/en/git-beautiful-history/" class="en">en</a>  <a href="/pt/git-historico-bonito/" class="pt">pt</a> 
+
+  
+  
+</div>
+
+
+    <div class="page-content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">    
+    <h2 class="postTitle" itemprop="headline">Fazendo Seu Histórico Git Ficar Bonitão Com Amend e Rebase</h2>
+    <p class="post-meta">   
+    <time datetime="2023-01-17T00:00:00+00:00" itemprop="datePublished">17/01/2023
+    </time> • <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">Carlos Schults</span></span>
+  <span class="tags" itemprop="keywords"> • Tags: <a href="/tag_ptbr/git">git </a> </span>
+  </p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <p><img src="https://res.cloudinary.com/dz5ppacuo/image/upload/v1673926044/git-beautiful-history/git-beautiful-history-cover.png" alt="" /></p>
+
+<p><span>Foto por <a href="https://unsplash.com/@yancymin?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Yancy Min</a> no <a href="https://unsplash.com/photos/842ofHC6MaI?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span></p>
+
+<p>Você faz parte de uma equipe de software de pequeno a médio porte e morre de inveja do histórico de commits das pessoas que trabalham com você. Elas produzem histórias limpas e bem estruturadas com mensagens de commit bem escritas. A sua, em comparação, é um desastre, cheia de descrições como “corrigir erro de digitação”, “adicionar arquivo esquecido” e assim por diante. Você queria entender como eles fazem isso.</p>
+
+<p>A resposta é simples: <em>eles trapaceiam</em>. Seguinte: eles provavelmente cometem tantos erros quanto você, mas usam as features do Git para escondê-los. Eles então apresentam uma história mais limpa e bonita para o mundo.</p>
+
+<p>Algumas ferramentas de controle de versão tratam o histórico do projeto como se fosse esta coisa super sagrada. Git não é assim. Ele lhe dá o poder de reescrever a história como você quiser. Tanto poder que você pode até se dar mal se não tiver cuidado.</p>
+
+<p>Neste post, eu lhe mostrarei como usar <code class="language-plaintext highlighter-rouge">amend</code> e rebase interativo para fazer sua história de commits no Git ficar bonitona antes de publicá-la. Não vai ter muita teoria; eu o acompanharei através de alguns cenários comuns, mostrando como eu iria resolvê-los.</p>
+
+<p>Antes de terminar, vou ensiná-lo a não atirar no seu pé com estes comandos. Como explicarei, <code class="language-plaintext highlighter-rouge">amend</code> e <code class="language-plaintext highlighter-rouge">rebase</code> são ações destrutivas, e tem situações em que você não deve executá-las.</p>
+
+<h2 id="requisitos">Requisitos</h2>
+<p>Para acompanhar este posto, presumo que você:</p>
+
+<ul>
+  <li>sabe  trabalhar com a linha de comando</li>
+  <li>tem o Git instalado em sua máquina</li>
+  <li>conhece ao menos os comandos básicos do Git</li>
+</ul>
+
+<p>Ao escrever este post, estou no Windows, usando a versão Git <strong>2.38.1.windows.1</strong>* e digitando meus comandos no Git Bash. Se você estiver no Linux ou OSX, acho que tudo funcionará da mesma forma, mas eu não testei.</p>
+
+<h2 id="definindo-o-vs-code-como-seu-editor-de-texto-predefinido">Definindo o VS Code como seu editor de texto predefinido</h2>
+<p>Apenas um último detalhe antes da gente começar pra valer. Alguns dos comandos que você verá ao longo deste post exigirão que você edite e salve um arquivo de texto. Eles fazem isso abrindo seu editor de texto padrão conforme configurado em seu arquivo de configuração Git e esperando até que você edite, salve e feche o arquivo.</p>
+
+<p>Se você estiver no Windows como eu, usando o Git Bash, seu editor padrão será o Vim. Vim é um editor de texto de linha de comando, e algumas pessoas o acham intimidante. Embora aprender Vim exija algum trabalho, não é tão difícil de começar, e eu recomendaria que você investisse algum tempo para aprender pelo menos os comandos mais básicos - especialmente como sair!</p>
+
+<p>Entretanto, Git permite que você escolha outros editores de texto como seu padrão. Se você tiver o <a href="https://code.visualstudio.com/">Visual Studio Code</a> instalado e quiser usá-lo, execute o seguinte comando:</p>
+
+<p><code class="language-plaintext highlighter-rouge">git config --global core.editor "code --wait"</code></p>
+
+<h2 id="reescrevendo-história-3-cenários-comuns">Reescrevendo História: 3 Cenários comuns</h2>
+<p>Vou mostrar alguns cenários comuns nos quais você poderá se encontrar, nos quais a reescrita da história o salvará.</p>
+
+<h3 id="minha-mensagem-de-commit-tem-um-erro">Minha Mensagem de Commit Tem Um Erro</h3>
+<p>Você está correndo para corrigir este bug de alta prioridade. Depois de horas de depuração exaustiva, você encontra o código ofensivo, faz a correção e faz o commit da mudança.</p>
+
+<p>Só então você vê que cometeu um erro de digitação. Como corrigir isso?</p>
+
+<p>Vamos começar criando um repositório para que você possa praticar:</p>
+
+<p><code class="language-plaintext highlighter-rouge">git init</code></p>
+
+<p>Agora, vamos adicionar um novo arquivo e commitar:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">touch </span>file.txt
+git add file.txt
+git commit <span class="nt">-m</span> <span class="s2">"fix async request in getUsers() functino"</span><span class="sb">`</span>
+</code></pre></div></div>
+
+<p>Execute <code class="language-plaintext highlighter-rouge">git log--oneline</code> para ver sua mensagem de commit. Você verá algo como isto:</p>
+
+<p><img src="/img/git-beautiful-history/img1.png" alt="" /></p>
+
+<p>Preste atenção no identificador do commit, e talvez até mesmo anote-o em algum lugar; será importante mais tarde. (O seu será diferente do meu).</p>
+
+<p>De qualquer forma, sua mensagem tem um erro. Como você a corrige?</p>
+
+<p>Basta executar o comando <code class="language-plaintext highlighter-rouge">git commit --amend</code>, exatamente assim. O Git abrirá seu editor de texto e esperará que você edite a mensagem do commit:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>fix async request in getUsers() functino
+
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+#
+# Date:      Tue Jan 10 19:14:17 2023 -0300
+#
+# On branch master
+#
+# Initial commit
+#
+# Changes to be committed:
+#   new file:   file.txt
+#
+</code></pre></div></div>
+
+<p>A primeira linha é a mensagem de commit propriamente dita. As linhas que começam com o “#” são comentários e serão ignoradas. Basta corrigir o erro, salvar e fechar o arquivo de texto, e você terá uma nova mensagem de commit. Execute o <code class="language-plaintext highlighter-rouge">git log --oneline</code> novamente para vê-lo:</p>
+
+<p><img src="/img/git-beautiful-history/img2.png" alt="" /></p>
+
+<p>Você notará que a identificação (SHA-1) do commit é agora diferente do que era antes - e também diferente daquela da imagem acima. Voltarei a este assunto mais tarde.</p>
+
+<p>Por enquanto, você alterou com sucesso sua mensagem de commit. Parabéns!</p>
+
+<h3 id="esqueci-de-incluir-um-arquivo">Esqueci de Incluir um Arquivo</h3>
+<p>Às vezes você tem vários arquivos alterados e quer commitar alguns, mas não todos. Na sua pressa, você deixa um ou mais arquivos para trás. Como corrigir isso?</p>
+
+<p><code class="language-plaintext highlighter-rouge">amend</code> ao resgate novamente.</p>
+
+<p>Para simular esta situação, vamos criar um novo arquivo e também adicionar uma nova linha ao existente:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">touch </span>file2.txt
+<span class="nb">echo</span> <span class="s1">'New line'</span> <span class="o">&gt;&gt;</span> file.txt
+</code></pre></div></div>
+
+<p>Um erro comum aqui é fazer o commit com a opção <code class="language-plaintext highlighter-rouge">-a</code>, pensando que ela incluirá ambos os arquivos:</p>
+
+<p><code class="language-plaintext highlighter-rouge">git commit -am "atualizar arquivo e adicionar arquivo2"</code></p>
+
+<p>Execute o comando acima. Em seguida, execute o comando <code class="language-plaintext highlighter-rouge">git status</code>. Este é o resultado que você vai obter:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>On branch master
+
+Untracked files:
+
+  (use "git add &lt;file&gt;..." to include in what will be committed)
+
+        file2.txt
+
+nothing added to commit but untracked files present (use "git add" to track)
+</code></pre></div></div>
+<p>Corrigir a situação é fácil. Primeiro, você rastreia ou adiciona ao index o arquivo esquecido:</p>
+
+<p><code class="language-plaintext highlighter-rouge">git add file2.txt</code></p>
+
+<p>Em seguida, utilize novamente o <code class="language-plaintext highlighter-rouge">git commit -amend</code>. Seu editor irá abrir, mas neste caso, não há nada de errado com a mensagem. Basta fechar o editor e pronto: agora você tem um commit “emendado” que inclui o arquivo anteriormente esquecido.</p>
+
+<p>Mas se você se parece comigo, provavelmente se sentiu meio trouxa tendo aberto seu editor de texto sem nenhuma razão.</p>
+
+<p>Felizmente, você nem sempre tem que fazer isso. Quando você quer apenas adicionar um ou mais arquivos faltantes sem alterar a mensagem de commit, você pode usar a opção <code class="language-plaintext highlighter-rouge">--no-edit</code>, desta forma:</p>
+
+<p><code class="language-plaintext highlighter-rouge">git commit --amend --no-edit</code></p>
+
+<p>Desta forma, Git não abrirá seu editor de texto, mantendo a mensagem de commit original.</p>
+
+<h3 id="quero-mesclar-vários-commits-em-um-só">Quero Mesclar Vários Commits Em Um Só</h3>
+<p>A fusão de vários commits em um só é uma operação chamada “squashing”. Mas por que você iria querer fazer isso?</p>
+
+<p>Bem, tudo se resume ao seu estilo Git. Eu gosto de fazer pequenos commits, com muita freqüência. Depois, quando estou prestes a torná-los públicos (por exemplo, ao abrir um pull request) eu os junto em um único commit, com uma mensagem bem escrita.</p>
+
+<p>Esta também é uma exigência comum dos mantenedores de projetos de código aberto, por isso é uma boa habilidade pra se ter. Vamos aprender como fazer isso.</p>
+
+<p>Primeiro, vamos criar três commits:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git commit <span class="nt">--allow-empty</span> <span class="nt">-m</span> <span class="s2">"empty commit"</span> <span class="nt">-m</span>
+git commit <span class="nt">--allow-empty</span> <span class="nt">-m</span> <span class="s2">"empty commit 2"</span> <span class="nt">-m</span>
+git commit <span class="nt">--allow-empty</span> <span class="nt">-m</span> <span class="s2">"empty commit 3"</span> <span class="nt">-m</span>
+</code></pre></div></div>
+
+<p>Ter de ficar criando arquivos inúteis para poder commitar é tedioso. É por isso que eu estou usando a opção <code class="language-plaintext highlighter-rouge">--allow-empty</code>, que me permite criar commits vazios.</p>
+
+<p>Agora, digamos que eu preciso juntar os três commits acima em um só. Para fazer isso, precisarei rebaseá-los interativamente. Ao fazer um rebase interativo, você pode realizar tarefas como:</p>
+
+<ul>
+  <li>Reordenar commits</li>
+  <li>Abandonar um ou mais commits</li>
+  <li>Mudar suas mensagens</li>
+  <li>Mesclar um ou mais commits</li>
+</ul>
+
+<p>Agora vem a parte que pode ser confusa, então preste atenção, por favor. Já que vamos trabalhar com os três últimos commits, dizemos que os estamos rebaseando em cima do quarto commit (contando a partir do último.)</p>
+
+<p>Então, use o comando <code class="language-plaintext highlighter-rouge">git log --oneline -4</code> para exibir os últimos quatro commits e depois copie o SHA-1 do quarto commit do resultado:</p>
+
+<p><img src="/img/git-beautiful-history/img3.png" alt="" /></p>
+
+<p>Copie o identificador desse commit e passe-o para o comando de rebase, assim:</p>
+
+<p><code class="language-plaintext highlighter-rouge">git rebase -i 45f90ca</code></p>
+
+<p>Naturalmente, seu valor real de SHA-1 será diferente. Mas há uma maneira mais fácil:</p>
+
+<p><code class="language-plaintext highlighter-rouge">git rebase -i HEAD~3</code></p>
+
+<p>Para simplificar, <code class="language-plaintext highlighter-rouge">HEAD</code> aqui significa o último commit, e <code class="language-plaintext highlighter-rouge">~3</code> significa “três commits antes deste”.</p>
+
+<p>Após executar um dos dois comandos acima, seu editor irá abrir, mostrando um arquivo de texto que contém as mensagens dos três commits que queremos reorganizar, cada um precedido pela palavra “pick”. E depois disso, um conjunto de instruções:</p>
+
+<p><img src="/img/git-beautiful-history/img4.png" alt="" /></p>
+
+<p>Observe que os commits aqui não estão na ordem em que você está acostumado a vê-los no Git. Em vez de estarem em ordem cronológica inversa, eles estão em ordem cronológica direta, e há uma razão para isso.</p>
+
+<p>Cada linha que você vê acima é um comando que o Git executará quando você confirmar a operação de rebase. Há vários comandos disponíveis, e o <code class="language-plaintext highlighter-rouge">pick</code> é o comando padrão. Isso significa simplesmente que o commit será mantido como está. Você pode usar <code class="language-plaintext highlighter-rouge">drop</code> para remover um commit, <code class="language-plaintext highlighter-rouge">reword</code> para editar uma mensagem de commit, e assim por diante.</p>
+
+<p>O comando que vamos utilizar é <code class="language-plaintext highlighter-rouge">squash</code>. Basta substituir a palavra <code class="language-plaintext highlighter-rouge">pick</code> por <code class="language-plaintext highlighter-rouge">squash</code> no segundo e terceiro commits, desta forma:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pick dd25df9 empty commit <span class="c"># empty</span>
+squash c68804f empty commit 2 <span class="c"># empty</span>
+squash a76fd60 empty commit 3 <span class="c"># empty</span>
+</code></pre></div></div>
+
+<p>O comando <code class="language-plaintext highlighter-rouge">squash</code> mescla um commit com aquele anterior. Assim, o terceiro será fundido com o segundo, que será fundido com o primeiro. E é por isso que o primeiro precisa ser <em>picked</em>.</p>
+
+<p>Depois de editar o texto como eu lhe disse, salve e feche o arquivo. Quando você fizer isso, seu editor será aberto novamente. Desta vez, você será solicitado a escrever uma mensagem de commit para o novo commit que irá surgir:</p>
+
+<p><img src="/img/git-beautiful-history/img5.png" alt="" /></p>
+
+<p>Substituir o conteúdo do arquivo por “this is now a single commit”. Salve e feche o arquivo.</p>
+
+<p>Finalmente, vamos ver o resultado:</p>
+
+<p><code class="language-plaintext highlighter-rouge">git log --oneline</code></p>
+
+<p>Isto é o que você deveria ver:</p>
+
+<p><img src="/img/git-beautiful-history/img6.png" alt="" /></p>
+
+<p>Como você pode ver, os três commits vazios foram substituídos por um único commit. Você realizou com sucesso sua primeira operação de <code class="language-plaintext highlighter-rouge">squash</code>. Parabéns!</p>
+
+<h2 id="quando-não-se-deve-mexer-com-a-história">Quando Não Se Deve Mexer Com a História</h2>
+<p>Antes de terminar, vamos entender quando a mudança da história é problemática.</p>
+
+<p>Primeiro, entenda que tanto <code class="language-plaintext highlighter-rouge">amend</code> quanto <code class="language-plaintext highlighter-rouge">rebase</code> produzem <strong>mudanças destrutivas</strong>. É como se eles estivessem destruindo a história e criando uma nova.</p>
+
+<p>Então, imagine que você junta três commits (que já haviam sido enviados para o servidor) e depois faz o <code class="language-plaintext highlighter-rouge">push</code> desse novo commit para dentro do repositório remoto (você teria que forçar o <code class="language-plaintext highlighter-rouge">push</code> para que isso funcionasse, a propósito.) Mas enquanto você estava trabalhando, seu colega de trabalho tinha criado um branch novo a partir do (o que era então) último commit.</p>
+
+<p>Esse commit não existe mais (tecnicamente, isso não é bem verdade, mas vamos fingir por um minuto que é), o que significa que eles não serão capazes de simplesmente dar o push das suas mudanças. Eles terão que puxar seus novos commits e então realizar um merge potencialmente complexo a fim de conseguir que as coisas sejam ordenadas.</p>
+
+<p>Portanto, a regra de ouro é <strong>nunca reescreva a história da qual outras pessoas dependem.</strong> O que isto significa em específico depende do workflow de branches que você e sua equipe utilizam.</p>
+
+<p>Se você usar <a href="https://trunkbaseddevelopment.com/">trunk-based development,</a> nunca reescreva o branch master/main. O mesmo é verdade se seu trabalho com <a href="https://docs.github.com/en/get-started/quickstart/github-flow">GitHub Flow</a>. Se você usa o git-flow, isso significa nunca reescrever os branches permanentes, ou seja, master/main e develop.</p>
+
+<h2 id="ok-eu-menti-toma-um-pouco-de-teoria">OK, Eu Menti: Toma Um Pouco De Teoria</h2>
+<p>Ao longo deste artigo, usei expressões como “mudar a mensagem do commit”, “juntar múltiplos commits em um”, e assim por diante.</p>
+
+<p>Tecnicamente falando, tudo isso eram mentiras. Quando você utiliza comandos como <code class="language-plaintext highlighter-rouge">git commit --amend</code> ou <code class="language-plaintext highlighter-rouge">rebase -i</code>, você não está mudando nada. O que Git está fazendo é <strong>criar novos commits</strong>.</p>
+
+<p>Lembra-se quando você usou o <code class="language-plaintext highlighter-rouge">amend</code> pela primeira vez e eu disse que era relevante que o commit agora tinha um novo identificador? Acontece que aquele era um commit completamente novo, e o antigo ainda está por aí!</p>
+
+<p>O mesmo vale para a operação de rebase. Quando você “mescla três commits em um”, não é isso que está acontecendo. Em vez disso, Git cria um novo commit e atualiza a referência do branch, de modo que aponte para o novo commit. Os três commits antigos ainda estão lá (pelo menos por algum tempo), mas como nenhum branch aponta para eles, eles são inalcançáveis - a menos que você consiga obter de alguma forma os valores SHA-1 deles.</p>
+
+<p>A imagem a seguir representa o que realmente aconteceu depois que você deu squash nos seus commits:</p>
+
+<p><img src="/img/git-beautiful-history/img7.png" alt="" /></p>
+
+<p>Agora, vamos ver o cenário após o squash:</p>
+
+<p><img src="/img/git-beautiful-history/img8.png" alt="" /></p>
+
+<p>Como você pode ver, há agora um novo commit, em laranja, que é o resultado de “mesclar” os três originais. No entanto, os três commits antigos ainda estão lá. Mas não se pode alcançá-los facilmente, porque agora não há nenhum branch apontando para eles.</p>
+
+<p>O leitor astuto vai notar que até mesmo as imagens acima são uma simplificação. “Deveríamos ter mais commits na imagem”, dizem eles, com seu dedo indicador acusatório apontando para a tela. E adivinhe, eles estão certos.</p>
+
+<p>Lembra-se de que começamos tudo isso alterando dois commits? Bem, como dar <code class="language-plaintext highlighter-rouge">amend</code> não altera os commits, mas cria novos, temos dois commits extra perdidos em nosso repositório. Eu os omiti dos diagramas acima <sup>porque eu estava com preguiça</sup> por uma questão de brevidade. Mas como um exercício para o leitor, você mesmo pode adicioná-los.</p>
+
+<h2 id="reescreva-o-passado-para-parecer-e-ser-mais-inteligente">Reescreva o Passado Para Parecer (e ser) Mais Inteligente</h2>
+<p>Reescrever a história é uma poderosa capacidade do Git. Com comandos como <code class="language-plaintext highlighter-rouge">git commit --amend</code> e <code class="language-plaintext highlighter-rouge">git rebase -i</code> você pode “mudar” seus commits passados, escondendo seus erros e fazendo parecer que você fez tudo certo desde o início. Eu faço isso o tempo todo e colho os benefícios: meus colegas de trabalho pensam que sou muito mais esperto do que realmente sou - por favor, não conta meu segredo pra eles.</p>
+
+<p>Falando sério agora: esses comandos são ferramentas fantásticas para você conseguir um histórico mais organizado. Com eles, você pode perder de uma vez o medo de commitar com frequência. Faça commits pequenos e frequentes, e não ligue muito para a mensagem — por exemplo, se você usa <a href="/pt/testes-unitarios-csharp-intro-tdd/">TDD</a>, você pode commitar toda vez que os testes passarem.</p>
+
+<p>Depois, quando for a hora de publicar o seu trabalho, dê squash nos commits e capriche na descrição. Aproveite e adote uma convenção de mensagens de commit para você e seu time, como o <a href="https://www.conventionalcommits.org/pt-br/v1.0.0/">Conventional Commits</a>. Seus colegas (e seu eu futuro) vão te agradecer.</p>
+
+    
+    
+      
+    
+    
+        Encontrou algum erro no post? <a href="http://github.com/carlosschults/carlosschults.github.io/edit/master/_posts/2023-01-17-git-rebase-amend-reescrever.md">Sugira uma edição</a>      
+    
+    
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+                    
+            <a rel="previous" class="previous" href="/pt/reduzir-complexidade-ciclomatica/">&larr; Como Reduzir a Complexidade Ciclomática: Um Guia Completo </a>
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+        	    
+            <a rel="next" class="next" href="/pt/cinco-niveis-codigo-legivel">Os Cinco Níveis de Código Legível &rarr;</a>
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+      
+    <div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+        // Store these for reloads
+        window.disqus_identifier = window.location.pathname;
+        window.disqus_url = window.location.href;
+        
+        // Set initial theme - match it with the site's theme
+        const currentTheme = document.body.getAttribute('data-theme') || 'light';
+        this.page.theme = currentTheme === 'dark' ? 'dark' : 'light';
+    };
+    
+    (function() {
+        var d = document, s = d.createElement('script');
+        s.src = '//carlosschultsblog.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>    
+  </div>
+
+</article>
+
+      </div>
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">         
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-2">
+        <ul class="social-media-list">
+          
+          <li>
+            <a href="https://github.com/carlosschults"><span class="icon icon--github"><svg viewBox="0 0 16 16"><path fill="#828282" d="M7.999,0.431c-4.285,0-7.76,3.474-7.76,7.761 c0,3.428,2.223,6.337,5.307,7.363c0.388,0.071,0.53-0.168,0.53-0.374c0-0.184-0.007-0.672-0.01-1.32 c-2.159,0.469-2.614-1.04-2.614-1.04c-0.353-0.896-0.862-1.135-0.862-1.135c-0.705-0.481,0.053-0.472,0.053-0.472 c0.779,0.055,1.189,0.8,1.189,0.8c0.692,1.186,1.816,0.843,2.258,0.645c0.071-0.502,0.271-0.843,0.493-1.037 C4.86,11.425,3.049,10.76,3.049,7.786c0-0.847,0.302-1.54,0.799-2.082C3.768,5.507,3.501,4.718,3.924,3.65 c0,0,0.652-0.209,2.134,0.796C6.677,4.273,7.34,4.187,8,4.184c0.659,0.003,1.323,0.089,1.943,0.261 c1.482-1.004,2.132-0.796,2.132-0.796c0.423,1.068,0.157,1.857,0.077,2.054c0.497,0.542,0.798,1.235,0.798,2.082 c0,2.981-1.814,3.637-3.543,3.829c0.279,0.24,0.527,0.713,0.527,1.437c0,1.037-0.01,1.874-0.01,2.129 c0,0.208,0.14,0.449,0.534,0.373c3.081-1.028,5.302-3.935,5.302-7.362C15.76,3.906,12.285,0.431,7.999,0.431z"/></svg>
+</span><span class="username">carlosschults</span></a>
+
+          </li>
+          
+
+          
+          <li>
+            <a href="https://twitter.com/carlosschults"><span class="icon icon--twitter"><svg viewBox="0 0 16 16"><path fill="#828282" d="M15.969,3.058c-0.586,0.26-1.217,0.436-1.878,0.515c0.675-0.405,1.194-1.045,1.438-1.809c-0.632,0.375-1.332,0.647-2.076,0.793c-0.596-0.636-1.446-1.033-2.387-1.033c-1.806,0-3.27,1.464-3.27,3.27 c0,0.256,0.029,0.506,0.085,0.745C5.163,5.404,2.753,4.102,1.14,2.124C0.859,2.607,0.698,3.168,0.698,3.767 c0,1.134,0.577,2.135,1.455,2.722C1.616,6.472,1.112,6.325,0.671,6.08c0,0.014,0,0.027,0,0.041c0,1.584,1.127,2.906,2.623,3.206 C3.02,9.402,2.731,9.442,2.433,9.442c-0.211,0-0.416-0.021-0.615-0.059c0.416,1.299,1.624,2.245,3.055,2.271 c-1.119,0.877-2.529,1.4-4.061,1.4c-0.264,0-0.524-0.015-0.78-0.046c1.447,0.928,3.166,1.469,5.013,1.469 c6.015,0,9.304-4.983,9.304-9.304c0-0.142-0.003-0.283-0.009-0.423C14.976,4.29,15.531,3.714,15.969,3.058z"/></svg>
+</span><span class="username">carlosschults</span></a>
+
+          </li>
+          
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-3">
+        <p>Artigos sobre desenvolvimento de software e tecnologia.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+
+    <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-92788641-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+    <script src="/js/dark-mode.js"></script>
+  </body>
+
+</html>

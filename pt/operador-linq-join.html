@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Operador &#39;Join&#39; do LINQ: Um Tutorial Completo | carlos schults / blog</title>
+  <link rel="apple-touch-icon" sizes="57x57" href="/img/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/img/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/img/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/img/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/img/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/img/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/img/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/img/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"  href="/img/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/img/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon-16x16.png">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="description" content="NOTA: Eu escrevi este artigo, originalmente, para o blog da Stackify. Caso lhe interesse, você pode ver o artigo original, em inglês, no site deles.Acho que ...">
+  
+  <!-- Twitter card -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:creator" content="@carlosschults">
+  <meta name="twitter:site" content="@carlosschults">
+  <meta name="twitter:domain" content="carlosschults.net">
+  <meta name="twitter:title" content="Operador 'Join' do LINQ: Um Tutorial Completo">
+  <meta name="twitter:description" content="NOTA: Eu escrevi este artigo, originalmente, para o blog da Stackify. Caso lhe interesse, você pode ver o artigo original, em inglês, no site deles.Acho que ...">
+
+   <!-- Facebook meta -->
+  
+  
+  <meta property="og:title" content="Operador 'Join' do LINQ: Um Tutorial Completo">
+  <meta property="og:site_name" content="Carlos Schults / Blog" />
+  <meta property="og:locale" content="pt_BR">  
+  <meta property="og:type" content="article" />
+  <meta property="og:image" content="https://res.cloudinary.com/dz5ppacuo/image/upload/v1617641333/reduce-cyclomatic-complexity/reduce-cyclomatic-complexity-1038x437.jpg" />  
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:width" content="1038"> 
+  <meta property="og:image:height" content="437">  
+  
+  <meta property="og:article:published_time" content="2024-02-06T00:00:00+00:00" />  
+  <meta property="og:article:author" content="Carlos Schults" />
+  
+  <meta property="og:article:tag" content="csharp" />
+  <meta property="og:article:tag" content="linq" />
+  <meta property="og:article:tag" content="dotnet" />    
+  
+  <meta property="og:url" content="https://carlosschults.net/pt/operador-linq-join"/>
+  <meta property="og:description" content="NOTA: Eu escrevi este artigo, originalmente, para o blog da Stackify. Caso lhe interesse, você pode ver o artigo original, em inglês, no site deles.Acho que ...">
+  <link rel="stylesheet" href="/css/main.css">  
+  
+  <link rel="canonical" href="https://stackify.com/the-linq-join-operator-a-complete-tutorial/">
+   
+  
+  <link rel="alternate" hreflang="en" href="/en/linq-join-operator" />
+  <link rel="alternate" hreflang="pt" href="/pt/operador-linq-join" />
+  
+  <link rel="alternate" type="application/rss+xml" title="carlos schults / blog" href="https://carlosschults.net/rss.xml">
+</head>
+
+  <body>
+    <header class="site-header">
+  <div class="wrapper">    
+    <a class="site-title" href="/pt/">carlos schults / blog</a>
+    
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg viewBox="0 0 18 15">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+
+      <div class="trigger">        
+          
+          <a class="page-link" href="/sobre/">Sobre</a>
+          <a class="page-link" href="/busca/">Busca</a>
+                  
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+<div class="wrapper" style="text-align: right; line-height: 2em">
+  
+   <a href="/en/linq-join-operator" class="en">en</a>  <a href="/pt/operador-linq-join" class="pt">pt</a> 
+
+  
+  
+</div>
+
+
+    <div class="page-content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">    
+    <h2 class="postTitle" itemprop="headline">Operador 'Join' do LINQ: Um Tutorial Completo</h2>
+    <p class="post-meta">   
+    <time datetime="2024-02-06T00:00:00+00:00" itemprop="datePublished">06/02/2024
+    </time> • <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">Carlos Schults</span></span>
+  <span class="tags" itemprop="keywords"> • Tags: <a href="/tag_ptbr/csharp">csharp </a> <a href="/tag_ptbr/linq">linq </a> <a href="/tag_ptbr/dotnet">dotnet </a> </span>
+  </p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <p><img src="https://res.cloudinary.com/dz5ppacuo/image/upload/v1617641333/reduce-cyclomatic-complexity/reduce-cyclomatic-complexity-1038x437.jpg" alt="" /></p>
+
+<p><em>NOTA: Eu escrevi este artigo, originalmente, para o blog da Stackify. Caso lhe interesse, você pode <a href="https://stackify.com/the-linq-join-operator-a-complete-tutorial/">ver o artigo original, em inglês, no site deles</a>.</em></p>
+
+<p>Acho que a maioria dos desenvolvedores C# concordaria que o LINQ é parte essencial da experiência de escrever código com a linguagem. O LINQ oferece uma maneira fluente, intuitiva e consistente de consultar conjuntos de dados. Neste artigo, ajudaremos você a dominar o LINQ, abordando o operador <code class="language-plaintext highlighter-rouge">join</code>.</p>
+
+<p>Vou abrir o post com uma definição do próprio LINQ, para que estejamos todos na mesma página. Depois disso, você verá uma explicação das operações de join no LINQ. Depois, é hora de arregaçar as mangas e colocar a mão na massa com nosso guia prático sobre o operador de <code class="language-plaintext highlighter-rouge">join</code>.</p>
+
+<p>Vamos começar.</p>
+
+<h2 id="o-quê-é-linq">O Quê é LINQ?</h2>
+<p><a href="https://learn.microsoft.com/pt-br/dotnet/csharp/linq/">LINQ</a> significa <em>Language Integrated Query</em>. É um recurso do C# que oferece uma sintaxe única e consistente para consultar conjuntos de dados, independentemente da origem deles. A principal vantagem do LINQ é que você pode usar a mesma sintaxe para consultar dados na memória, em um banco de dados, em arquivos XML e assim por diante.</p>
+
+<p>O LINQ está disponível em dois “sabores” diferentes: a sintaxe de consulta (query syntax) e a sintaxe de método (method syntax).</p>
+
+<p>A sintaxe de consulta utiliza palavras-chave especiais para criar uma sintaxe que é familiar a qualquer pessoa que tenha trabalhado com SQL. Aqui está um exemplo que consulta uma sequência de números, filtrando os maiores que 5:</p>
+
+<figure class="highlight"><pre><code class="language-c#" data-lang="c#"><span class="kt">int</span><span class="p">[]</span> <span class="n">numbers</span> <span class="p">=</span> <span class="p">{</span> <span class="m">2</span><span class="p">,</span> <span class="m">8</span><span class="p">,</span> <span class="m">4</span><span class="p">,</span> <span class="m">9</span><span class="p">,</span> <span class="m">3</span><span class="p">,</span> <span class="m">6</span><span class="p">,</span> <span class="m">1</span><span class="p">,</span> <span class="m">7</span><span class="p">,</span> <span class="m">5</span> <span class="p">};</span>
+<span class="kt">var</span> <span class="n">largerThanFive</span> <span class="p">=</span>
+    <span class="k">from</span> <span class="n">num</span> <span class="k">in</span> <span class="n">numbers</span>
+    <span class="k">where</span> <span class="n">num</span> <span class="p">&gt;</span> <span class="m">5</span>
+    <span class="k">select</span> <span class="n">num</span><span class="p">;</span></code></pre></figure>
+
+<p>A syntaxe de método usa métodos de extensão para realizar a mesma consulta:</p>
+
+<figure class="highlight"><pre><code class="language-c#" data-lang="c#"><span class="kt">int</span><span class="p">[]</span> <span class="n">numbers</span> <span class="p">=</span> <span class="p">{</span> <span class="m">2</span><span class="p">,</span> <span class="m">8</span><span class="p">,</span> <span class="m">4</span><span class="p">,</span> <span class="m">9</span><span class="p">,</span> <span class="m">3</span><span class="p">,</span> <span class="m">6</span><span class="p">,</span> <span class="m">1</span><span class="p">,</span> <span class="m">7</span><span class="p">,</span> <span class="m">5</span> <span class="p">};</span>
+<span class="kt">var</span> <span class="n">largerThanFive</span> <span class="p">=</span> <span class="n">numbers</span><span class="p">.</span><span class="nf">Where</span><span class="p">(</span><span class="n">x</span> <span class="p">=&gt;</span> <span class="n">x</span> <span class="p">&gt;</span> <span class="m">5</span><span class="p">);</span></code></pre></figure>
+
+<h2 id="o-que-é-o-operador-linq-join">O que é o operador LINQ Join?</h2>
+
+<p>Ao trabalhar com dados, um cenário comum é ter duas fontes de dados que você deseja combinar com base em alguns critérios. Por exemplo, você pode ter uma tabela <code class="language-plaintext highlighter-rouge">Books</code> (Livros) e uma tabela <code class="language-plaintext highlighter-rouge">Authors</code> (Autores) em seu banco de dados, com um relacionamento de um para muitos entre elas, ou seja, um autor pode ser autor de muitos livros, mas cada livro tem apenas um autor. Se você precisar compilar uma lista de livros que contenha o nome do autor, precisará executar uma junção para fazer a correspondência entre cada linha da tabela <code class="language-plaintext highlighter-rouge">Books</code> e sua contraparte na tabela <code class="language-plaintext highlighter-rouge">Authors</code>.</p>
+
+<p>Uma junção no LINQ é essencialmente a mesma coisa: uma operação em que você pode mesclar duas coleções de acordo com alguns critérios que você define.</p>
+
+<h2 id="o-operador-linq-join-na-prática">O operador LINQ Join na prática</h2>
+
+<p>Os exemplos sempre deixam as coisas mais claras. Então, vamos ver como usar o operador <code class="language-plaintext highlighter-rouge">join</code> na prática.</p>
+
+<h3 id="iniciando-com-um-problema"><strong>Iniciando com um problema</strong></h3>
+
+<p>Digamos que você tenha um aplicativo de comércio eletrônico com alguns dados sobre categorias:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>Name</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>Electronics</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>Toys</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>Stationery</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>Books</td>
+    </tr>
+    <tr>
+      <td>10</td>
+      <td>Clothes</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Agora, vamos ver alguns produtos:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>Name</th>
+      <th>Category_Id</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>Amazon Kindle</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>Refactoring</td>
+      <td>7</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>C# in Depth</td>
+      <td>7</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>Legal Pad 50 sheets</td>
+      <td>5</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Você já entendeu aonde isso vai, né? A próxima coisa que você deseja fazer é produzir uma única coleção, com a lista de produtos e os nomes das categorias às quais eles pertencem. Em outras palavras, uma visualização como esta:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>Name</th>
+      <th>Category</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>Amazon Kindle</td>
+      <td>Electronics</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>Refactoring</td>
+      <td>Books</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>C# in Depth</td>
+      <td>Books</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>Legal Pad 50 sheets</td>
+      <td>Stationery</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="resolvendo-o-problema-executando-um-linq-inner-join">Resolvendo o problema: executando um LINQ Inner Join</h3>
+
+<p>Como seria essa operação no código? Em primeiro lugar, precisamos de código para representar nossas categorias e produtos. Graças ao recurso de <code class="language-plaintext highlighter-rouge">record</code> do C#, duas linhas de código são suficientes para isso:</p>
+
+<figure class="highlight"><pre><code class="language-c#" data-lang="c#"><span class="k">public</span> <span class="n">record</span> <span class="nf">Product</span><span class="p">(</span><span class="kt">int</span> <span class="n">Id</span><span class="p">,</span> <span class="kt">string</span> <span class="n">Name</span><span class="p">,</span> <span class="kt">int</span> <span class="n">CategoryId</span><span class="p">);</span>
+<span class="k">public</span> <span class="n">record</span> <span class="nf">Category</span><span class="p">(</span><span class="kt">int</span> <span class="n">Id</span><span class="p">,</span> <span class="kt">string</span> <span class="n">Name</span><span class="p">);</span></code></pre></figure>
+
+<p>Agora, vamos ter uma lista de cada tipo:</p>
+
+<figure class="highlight"><pre><code class="language-c#" data-lang="c#"><span class="kt">var</span> <span class="n">categories</span> <span class="p">=</span> <span class="k">new</span> <span class="n">List</span><span class="p">&lt;</span><span class="n">Category</span><span class="p">&gt;</span>
+<span class="p">{</span>
+    <span class="k">new</span> <span class="nf">Category</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="s">"Electronics"</span><span class="p">),</span>
+    <span class="k">new</span> <span class="nf">Category</span><span class="p">(</span><span class="m">4</span><span class="p">,</span> <span class="s">"Toys"</span><span class="p">),</span>
+    <span class="k">new</span> <span class="nf">Category</span><span class="p">(</span><span class="m">5</span><span class="p">,</span> <span class="s">"Stationery"</span><span class="p">),</span>
+    <span class="k">new</span> <span class="nf">Category</span><span class="p">(</span><span class="m">7</span><span class="p">,</span> <span class="s">"Books"</span><span class="p">),</span>
+    <span class="k">new</span> <span class="nf">Category</span><span class="p">(</span><span class="m">10</span><span class="p">,</span> <span class="s">"Clothes"</span> <span class="p">(</span><span class="n">Categoria</span> <span class="m">10</span><span class="p">,</span> <span class="s">"Roupas"</span><span class="p">)</span>
+<span class="p">};</span>
+
+<span class="kt">var</span> <span class="n">products</span> <span class="p">=</span> <span class="k">new</span> <span class="n">List</span><span class="p">&lt;</span><span class="n">Product</span><span class="p">&gt;</span>
+<span class="p">{</span>
+    <span class="k">new</span> <span class="nf">Product</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="s">"Amazon Kindle"</span><span class="p">,</span> <span class="m">1</span><span class="p">),</span>
+    <span class="k">new</span> <span class="nf">Product</span><span class="p">(</span><span class="m">2</span><span class="p">,</span> <span class="s">"Refactoring"</span><span class="p">,</span> <span class="m">7</span><span class="p">),</span>
+    <span class="k">new</span> <span class="nf">Product</span><span class="p">(</span><span class="m">3</span><span class="p">,</span> <span class="s">"C# In Depth"</span><span class="p">,</span> <span class="m">7</span><span class="p">),</span>
+    <span class="k">new</span> <span class="nf">Product</span><span class="p">(</span><span class="m">4</span><span class="p">,</span> <span class="s">"Legal Pad 50 Sheets"</span><span class="p">,</span> <span class="m">5</span><span class="p">),</span>
+    <span class="k">new</span> <span class="nf">Product</span><span class="p">(</span><span class="m">5</span><span class="p">,</span> <span class="s">"Surgical Gloves"</span><span class="p">,</span> <span class="m">12</span><span class="p">)</span>
+<span class="p">};</span></code></pre></figure>
+
+<p>Como você pode ver, a lista de produtos tem um produto adicional (luvas cirúrgicas) cujo ID de categoria não corresponde a nenhuma das categorias disponíveis. Tenha isso em mente, pois será relevante em um momento.</p>
+
+<p>Agora, vamos escrever o código para realizar essa união. Vou mostrar o código de uma só vez e depois eu explico:</p>
+
+<figure class="highlight"><pre><code class="language-c#" data-lang="c#"><span class="kt">var</span> <span class="n">query</span> <span class="p">=</span>
+    <span class="k">from</span> <span class="n">p</span> <span class="k">in</span> <span class="n">products</span>
+    <span class="k">join</span> <span class="n">c</span> <span class="k">in</span> <span class="n">categories</span>
+    <span class="k">on</span> <span class="n">p</span><span class="p">.</span><span class="n">CategoryId</span> <span class="k">equals</span> <span class="n">c</span><span class="p">.</span><span class="n">Id</span>
+    <span class="k">select</span> <span class="k">new</span>
+    <span class="p">{</span>
+        <span class="n">Id</span> <span class="p">=</span> <span class="n">p</span><span class="p">.</span><span class="n">Id</span><span class="p">,</span>
+        <span class="n">Name</span> <span class="p">=</span> <span class="n">p</span><span class="p">.</span><span class="n">Name</span><span class="p">,</span>
+        <span class="n">Category</span> <span class="p">=</span> <span class="n">c</span><span class="p">.</span><span class="n">Name</span>
+    <span class="p">};</span>
+
+<span class="k">foreach</span> <span class="p">(</span><span class="kt">var</span> <span class="n">line</span> <span class="k">in</span> <span class="n">query</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="n">line</span><span class="p">);</span>
+<span class="p">}</span></code></pre></figure>
+
+<p>Agora, a explicação:</p>
+
+<p><strong>from p in products</strong> -&gt; estamos definindo a origem de uma de nossas fontes de dados</p>
+<ul>
+  <li><strong>join c in categories</strong> -&gt; Aqui, estamos dizendo que queremos juntar a coleção anterior com esta
+*on p.CategoryId equals c.Id** -&gt; Essa é a condição para a união: o CategoryId em cada produto deve corresponder ao Id de uma categoria</li>
+  <li><strong>select new…</strong> -&gt; Aqui, estamos aproveitando o recurso de objetos anônimos do C# para criar um novo objeto em tempo real, que tem as propriedades que desejamos</li>
+</ul>
+
+<p>O resultado dessa consulta é um <code class="language-plaintext highlighter-rouge">IEnumerable</code> do nosso objeto anônimo. Em seguida, iteramos por cada item dessa coleção, exibindo-o no console. Este é o resultado:
+`</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{ Id = 1, Name = Amazon Kindle, Category = Electronics }
+{ Id = 2, Name = Refactoring, Category = Books }
+{ Id = 3, Name = C# In Depth, Category = Books }
+{ Id = 4, Name = Legal Pad 50 Sheets, Category = Stationery }
+</code></pre></div></div>
+
+<p>Aqueles que se lembram das aulas de banco de dados perceberão que a junção LINQ que realizamos é equivalente a uma junção interna (<em>inner join</em>) no SQL. Em outras palavras, somente os itens que têm uma correspondência são retornados. Em SQL, a consulta equivalente seria a seguinte:</p>
+
+<figure class="highlight"><pre><code class="language-sql" data-lang="sql"><span class="k">SELECT</span> <span class="n">p</span><span class="p">.</span><span class="n">Id</span><span class="p">,</span> <span class="n">p</span><span class="p">.</span><span class="n">Name</span><span class="p">,</span> <span class="k">c</span><span class="p">.</span><span class="n">Name</span> <span class="k">AS</span> <span class="n">Category</span>
+<span class="k">FROM</span> <span class="n">products</span> <span class="k">AS</span> <span class="n">p</span>
+<span class="k">JOIN</span> <span class="n">categories</span> <span class="k">AS</span> <span class="k">c</span> <span class="k">ON</span> <span class="n">p</span><span class="p">.</span><span class="n">CategoryId</span> <span class="o">=</span> <span class="k">c</span><span class="p">.</span><span class="n">Id</span></code></pre></figure>
+
+<h3 id="executando-uma-junção-externa-outer-join-no-linq">Executando uma junção externa (OUTER JOIN) no LINQ</h3>
+
+<p>E se você quisesse executar o equivalente a um <code class="language-plaintext highlighter-rouge">OUTER JOIN</code> do SQL? Ou seja, você deseja recuperar todos os produtos, mesmo aqueles que não correspondem a nenhuma categoria. Como fazer isso?</p>
+
+<p>Aqui está a consulta atualizada:</p>
+
+<figure class="highlight"><pre><code class="language-c#" data-lang="c#"><span class="kt">var</span> <span class="n">query</span> <span class="p">=</span>
+    <span class="k">from</span> <span class="n">p</span> <span class="k">in</span> <span class="n">products</span>
+    <span class="k">join</span> <span class="n">c</span> <span class="k">in</span> <span class="n">categories</span>
+    <span class="k">on</span> <span class="n">p</span><span class="p">.</span><span class="n">CategoryId</span> <span class="k">equals</span> <span class="n">c</span><span class="p">.</span><span class="n">Id</span> <span class="k">into</span> <span class="n">joinedCategories</span>
+    <span class="k">from</span> <span class="n">c</span> <span class="k">in</span> <span class="n">joinedCategories</span><span class="p">.</span><span class="nf">DefaultIfEmpty</span><span class="p">()</span>
+    <span class="k">select</span> <span class="k">new</span>
+    <span class="p">{</span>
+        <span class="n">Id</span> <span class="p">=</span> <span class="n">p</span><span class="p">.</span><span class="n">Id</span><span class="p">,</span>
+        <span class="n">Name</span> <span class="p">=</span> <span class="n">p</span><span class="p">.</span><span class="n">Name</span><span class="p">,</span>
+        <span class="n">Category</span> <span class="p">=</span> <span class="n">c</span><span class="p">?.</span><span class="n">Name</span>
+    <span class="p">};</span></code></pre></figure>
+
+<p>Parece semelhante, mas há duas diferenças:</p>
+
+<ul>
+  <li><strong>on p.CategoryId equals c.Id into joinedCategories</strong> -&gt; aqui, depois de unir produtos com categorias, enviamos o resultado, como uma sequência agrupada, para a variável de intervalo <strong>joinedCategories</strong></li>
+  <li><strong>from c in joinedCategories.DefaultIfEmpty()</strong> -&gt; Em seguida, recuperamos os itens da groupedSequence, usando o método DefaultIfEmpty() para retornar o valor padrão quando nenhuma correspondência for encontrada</li>
+  <li><strong>Category = c?.Name</strong> -&gt; Por fim, ao atribuir o nome da categoria à propriedade Category do nosso objeto anônimo, precisamos usar o operador condicional nulo para evitar uma exceção de referência nula (já que o valor padrão de Category é nulo porque é um <a href="https://carlosschults.net/pt/tipos-valor-referencia-em-csharp/">tipo de referência</a>).</li>
+</ul>
+
+<p>O resultado agora é diferente:</p>
+
+<figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w"> </span><span class="err">Id</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="err">Name</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="err">Amazon</span><span class="w"> </span><span class="err">Kindle</span><span class="p">,</span><span class="w"> </span><span class="err">Category</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="err">Electronics</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span><span class="p">{</span><span class="w"> </span><span class="err">Id</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="err">Name</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="err">Refactoring</span><span class="p">,</span><span class="w"> </span><span class="err">Category</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="err">Books</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span><span class="p">{</span><span class="w"> </span><span class="err">Id</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="err">Name</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="err">C#</span><span class="w"> </span><span class="err">In</span><span class="w"> </span><span class="err">Depth</span><span class="p">,</span><span class="w"> </span><span class="err">Category</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="err">Books</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span><span class="p">{</span><span class="w"> </span><span class="err">Id</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="err">Name</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="err">Legal</span><span class="w"> </span><span class="err">Pad</span><span class="w"> </span><span class="mi">50</span><span class="w"> </span><span class="err">Sheets</span><span class="p">,</span><span class="w"> </span><span class="err">Category</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="err">Stationery</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span><span class="p">{</span><span class="w"> </span><span class="err">Id</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w"> </span><span class="err">Name</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="err">Surgical</span><span class="w"> </span><span class="err">Gloves</span><span class="p">,</span><span class="w"> </span><span class="err">Category</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="p">}</span></code></pre></figure>
+
+<p>Como você pode ver, o produto “Surgical Gloves” (Luvas cirúrgicas) agora aparece, mesmo que não tenha uma categoria correspondente.</p>
+
+<h3 id="inner-join-do-linq-com-a-condição-where">Inner Join do LINQ com a condição <code class="language-plaintext highlighter-rouge">Where</code></h3>
+
+<p>Realizar uma junção com uma cláusula <code class="language-plaintext highlighter-rouge">where</code> é muito fácil. Neste exemplo, realizaremos uma junção interna, filtrando apenas os produtos cujo id seja igual ou maior que 3:</p>
+
+<figure class="highlight"><pre><code class="language-c#" data-lang="c#"><span class="kt">var</span> <span class="n">query</span> <span class="p">=</span>
+    <span class="k">from</span> <span class="n">p</span> <span class="k">in</span> <span class="n">products</span>
+    <span class="k">where</span> <span class="n">p</span><span class="p">.</span><span class="n">Id</span> <span class="p">&gt;=</span> <span class="m">3</span>
+    <span class="k">join</span> <span class="n">c</span> <span class="k">in</span> <span class="n">categories</span>
+    <span class="k">on</span> <span class="n">p</span><span class="p">.</span><span class="n">CategoryId</span> <span class="k">equals</span> <span class="n">c</span><span class="p">.</span><span class="n">Id</span>
+    <span class="k">select</span> <span class="k">new</span>
+    <span class="p">{</span>
+        <span class="n">Id</span> <span class="p">=</span> <span class="n">p</span><span class="p">.</span><span class="n">Id</span><span class="p">,</span>
+        <span class="n">Name</span> <span class="p">=</span> <span class="n">p</span><span class="p">.</span><span class="n">Name</span><span class="p">,</span>
+        <span class="n">Category</span> <span class="p">=</span> <span class="n">c</span><span class="p">.</span><span class="n">Name</span>
+    <span class="p">};</span></code></pre></figure>
+
+<h3 id="inner-join-do-linq-com-várias-condições">Inner Join do LINQ com várias condições</h3>
+
+<p>Se você quiser usar várias condições em sua junção, basta usar mais de uma cláusula where. Vamos atualizar nossa consulta mais uma vez:</p>
+
+<figure class="highlight"><pre><code class="language-c#" data-lang="c#"><span class="kt">var</span> <span class="n">query</span> <span class="p">=</span>
+    <span class="k">from</span> <span class="n">p</span> <span class="k">in</span> <span class="n">products</span>
+    <span class="k">join</span> <span class="n">c</span> <span class="k">in</span> <span class="n">categories</span>
+    <span class="k">on</span> <span class="n">p</span><span class="p">.</span><span class="n">CategoryId</span> <span class="k">equals</span> <span class="n">c</span><span class="p">.</span><span class="n">Id</span>
+    <span class="k">where</span> <span class="n">p</span><span class="p">.</span><span class="n">Id</span> <span class="p">&gt;=</span> <span class="m">3</span>
+    <span class="k">where</span> <span class="n">c</span><span class="p">.</span><span class="n">Name</span><span class="p">.</span><span class="nf">EndsWith</span><span class="p">(</span><span class="sc">'s'</span><span class="p">)</span>
+    <span class="k">select</span> <span class="k">new</span>
+    <span class="p">{</span>
+        <span class="n">Id</span> <span class="p">=</span> <span class="n">p</span><span class="p">.</span><span class="n">Id</span><span class="p">,</span>
+        <span class="n">Name</span> <span class="p">=</span> <span class="n">p</span><span class="p">.</span><span class="n">Name</span><span class="p">,</span>
+        <span class="n">Category</span> <span class="p">=</span> <span class="n">c</span><span class="p">.</span><span class="n">Name</span>
+    <span class="p">};</span></code></pre></figure>
+
+<p>Aqui, estamos filtrando apenas as categorias cujos nomes terminam com a letra “s”.`</p>
+
+<h3 id="linq-join-com-chave-composta">LINQ Join com chave composta</h3>
+
+<p>Até agora, todos os nossos exemplos usaram chaves únicas para fazer a correspondência. Você também pode usar chaves compostas, ou seja, mais de um valor, para fazer a correspondência.</p>
+
+<p>Suponha que as nossas classes <code class="language-plaintext highlighter-rouge">Product</code> e <code class="language-plaintext highlighter-rouge">Category</code> tenham adquirido uma nova propriedade chamada <code class="language-plaintext highlighter-rouge">Status</code>, que é um enum que pode variar entre três estados: <code class="language-plaintext highlighter-rouge">Pending</code> (pendente), <code class="language-plaintext highlighter-rouge">Active</code> (ativo) e <code class="language-plaintext highlighter-rouge">Archived</code> (arquivado). Agora, a propriedade Status também precisa ser usada para a correspondência.</p>
+
+<p>Todos os nossos produtos estão ativos, mas nem todas as categorias:</p>
+
+<figure class="highlight"><pre><code class="language-c#" data-lang="c#"><span class="kt">var</span> <span class="n">categories</span> <span class="p">=</span> <span class="k">new</span> <span class="n">List</span><span class="p">&lt;</span><span class="n">Category</span><span class="p">&gt;</span>
+<span class="p">{</span>
+    <span class="k">new</span> <span class="nf">Category</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="s">"Electronics"</span><span class="p">,</span> <span class="n">Status</span><span class="p">.</span><span class="n">Active</span><span class="p">),</span>
+    <span class="k">new</span> <span class="nf">Category</span><span class="p">(</span><span class="m">4</span><span class="p">,</span> <span class="s">"Toys"</span><span class="p">,</span> <span class="n">Status</span><span class="p">.</span><span class="n">Active</span><span class="p">),</span>
+    <span class="k">new</span> <span class="nf">Category</span><span class="p">(</span><span class="m">5</span><span class="p">,</span> <span class="s">"Stationery"</span><span class="p">,</span> <span class="n">Status</span><span class="p">.</span><span class="n">Archived</span><span class="p">),</span>
+    <span class="k">new</span> <span class="nf">Category</span> <span class="p">(</span><span class="m">7</span><span class="p">,</span> <span class="s">"Books"</span><span class="p">,</span> <span class="n">Status</span><span class="p">.</span><span class="n">Pending</span><span class="p">),</span>
+    <span class="k">new</span> <span class="nf">Category</span> <span class="p">(</span><span class="m">10</span><span class="p">,</span> <span class="s">"Clothes"</span><span class="p">,</span> <span class="n">Status</span><span class="p">.</span><span class="n">Active</span><span class="p">)</span>
+<span class="p">};</span>
+
+<span class="kt">var</span> <span class="n">products</span> <span class="p">=</span> <span class="k">new</span> <span class="n">List</span><span class="p">&lt;</span><span class="n">Product</span><span class="p">&gt;</span>
+<span class="p">{</span>
+    <span class="k">new</span> <span class="nf">Product</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="s">"Amazon Kindle"</span><span class="p">,</span> <span class="m">1</span><span class="p">,</span> <span class="n">Status</span><span class="p">.</span><span class="n">Active</span><span class="p">),</span>
+    <span class="k">new</span> <span class="nf">Product</span><span class="p">(</span><span class="m">2</span><span class="p">,</span> <span class="s">"Refactoring"</span><span class="p">,</span> <span class="m">7</span><span class="p">,</span> <span class="n">Status</span><span class="p">.</span><span class="n">Active</span><span class="p">),</span>
+    <span class="k">new</span> <span class="nf">Product</span><span class="p">(</span><span class="m">3</span><span class="p">,</span> <span class="s">"C# In Depth"</span><span class="p">,</span> <span class="m">7</span><span class="p">,</span> <span class="n">Status</span><span class="p">.</span><span class="n">Active</span><span class="p">),</span>
+    <span class="k">new</span> <span class="nf">Product</span><span class="p">(</span><span class="m">4</span><span class="p">,</span> <span class="s">"Legal Pad 50 Sheets"</span><span class="p">,</span> <span class="m">5</span><span class="p">,</span> <span class="n">Status</span><span class="p">.</span><span class="n">Active</span><span class="p">),</span>
+    <span class="k">new</span> <span class="nf">Product</span><span class="p">(</span><span class="m">5</span><span class="p">,</span> <span class="s">"Surgical Gloves"</span><span class="p">,</span> <span class="m">12</span><span class="p">,</span> <span class="n">Status</span><span class="p">.</span><span class="n">Active</span><span class="p">)</span>
+<span class="p">};</span></code></pre></figure>
+
+<p>Fica assim a consulta atualizada:</p>
+
+<figure class="highlight"><pre><code class="language-c#" data-lang="c#"><span class="kt">var</span> <span class="n">query</span> <span class="p">=</span>
+    <span class="k">from</span> <span class="n">p</span> <span class="k">in</span> <span class="n">products</span>
+    <span class="k">join</span> <span class="n">c</span> <span class="k">in</span> <span class="n">categories</span>
+    <span class="k">on</span> <span class="k">new</span> <span class="p">{</span> <span class="n">Id</span> <span class="p">=</span> <span class="n">p</span><span class="p">.</span><span class="n">CategoryId</span><span class="p">,</span> <span class="n">Status</span> <span class="p">=</span> <span class="n">p</span><span class="p">.</span><span class="n">Status</span> <span class="p">}</span>
+    <span class="k">equals</span> <span class="k">new</span> <span class="p">{</span> <span class="n">Id</span> <span class="p">=</span> <span class="n">c</span><span class="p">.</span><span class="n">Id</span><span class="p">,</span> <span class="n">Status</span> <span class="p">=</span> <span class="n">c</span><span class="p">.</span><span class="n">Status</span> <span class="p">}</span>
+    <span class="k">select</span> <span class="k">new</span>
+    <span class="p">{</span>
+        <span class="n">Id</span> <span class="p">=</span> <span class="n">p</span><span class="p">.</span><span class="n">Id</span><span class="p">,</span>
+        <span class="n">Name</span> <span class="p">=</span> <span class="n">p</span><span class="p">.</span><span class="n">Name</span><span class="p">,</span>
+        <span class="n">Category</span> <span class="p">=</span> <span class="n">c</span><span class="p">.</span><span class="n">Name</span>
+    <span class="p">};</span></code></pre></figure>
+
+<p>Não é muito mais complicado do que antes. A diferença é que, agora, usamos um objeto anônimo para realizar a comparação usando as propriedades id e status.</p>
+
+<p>Um único resultado é exibido a partir dessa consulta:</p>
+
+<figure class="highlight"><pre><code class="language-c#" data-lang="c#"><span class="p">{</span> <span class="n">Id</span> <span class="p">=</span> <span class="m">1</span><span class="p">,</span> <span class="n">Name</span> <span class="p">=</span> <span class="n">Amazon</span> <span class="n">Kindle</span><span class="p">,</span> <span class="n">Category</span> <span class="p">=</span> <span class="n">Electronics</span> <span class="p">}</span></code></pre></figure>
+
+<h2 id="conclusão">Conclusão</h2>
+
+<p>Como vimos, o LINQ é uma parte essencial do trabalho com o C#. Você pode aproveitar o LINQ em muitos cenários diferentes, desde o trabalho com dados na memória até XML e SQL. Você pode usar o LINQ em ORMs, como <a href="https://stackify.com/entity-framework-core-nhibernate/">NHibernate e Entity Framework</a>.</p>
+
+<p>As equipes que desejam tornar suas experiências com LINQ ainda melhores podem usar as ferramentas à sua disposição. Por exemplo, <a href="https://stackify.com/prefix/">Stackify’s Prefix</a> e <a href="https://stackify.com/retrace-code-profiling/">Retrace</a> oferecem recursos avançados de rastreamento, criação de perfil e registro centralizado que ajudam as equipes a inspecionar seu código para encontrar oportunidades de melhorias de desempenho, o que inclui consultas LINQ.</p>
+
+    
+    
+      
+    
+    
+        Encontrou algum erro no post? <a href="http://github.com/carlosschults/carlosschults.github.io/edit/master/_posts/2024-02-06-operador-linq-join.md">Sugira uma edição</a>      
+    
+    
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+                    
+            <a rel="previous" class="previous" href="/pt/git-bisect-intro/">&larr; Git Bisect: Uma Introdução Para Iniciantes </a>
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+        	    
+            <a rel="next" class="next" href="/pt/git-criar-branch">Git Criar Branch: 4 Maneiras Diferentes &rarr;</a>
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+      
+    <div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+        // Store these for reloads
+        window.disqus_identifier = window.location.pathname;
+        window.disqus_url = window.location.href;
+        
+        // Set initial theme - match it with the site's theme
+        const currentTheme = document.body.getAttribute('data-theme') || 'light';
+        this.page.theme = currentTheme === 'dark' ? 'dark' : 'light';
+    };
+    
+    (function() {
+        var d = document, s = d.createElement('script');
+        s.src = '//carlosschultsblog.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>    
+  </div>
+
+</article>
+
+      </div>
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">         
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-2">
+        <ul class="social-media-list">
+          
+          <li>
+            <a href="https://github.com/carlosschults"><span class="icon icon--github"><svg viewBox="0 0 16 16"><path fill="#828282" d="M7.999,0.431c-4.285,0-7.76,3.474-7.76,7.761 c0,3.428,2.223,6.337,5.307,7.363c0.388,0.071,0.53-0.168,0.53-0.374c0-0.184-0.007-0.672-0.01-1.32 c-2.159,0.469-2.614-1.04-2.614-1.04c-0.353-0.896-0.862-1.135-0.862-1.135c-0.705-0.481,0.053-0.472,0.053-0.472 c0.779,0.055,1.189,0.8,1.189,0.8c0.692,1.186,1.816,0.843,2.258,0.645c0.071-0.502,0.271-0.843,0.493-1.037 C4.86,11.425,3.049,10.76,3.049,7.786c0-0.847,0.302-1.54,0.799-2.082C3.768,5.507,3.501,4.718,3.924,3.65 c0,0,0.652-0.209,2.134,0.796C6.677,4.273,7.34,4.187,8,4.184c0.659,0.003,1.323,0.089,1.943,0.261 c1.482-1.004,2.132-0.796,2.132-0.796c0.423,1.068,0.157,1.857,0.077,2.054c0.497,0.542,0.798,1.235,0.798,2.082 c0,2.981-1.814,3.637-3.543,3.829c0.279,0.24,0.527,0.713,0.527,1.437c0,1.037-0.01,1.874-0.01,2.129 c0,0.208,0.14,0.449,0.534,0.373c3.081-1.028,5.302-3.935,5.302-7.362C15.76,3.906,12.285,0.431,7.999,0.431z"/></svg>
+</span><span class="username">carlosschults</span></a>
+
+          </li>
+          
+
+          
+          <li>
+            <a href="https://twitter.com/carlosschults"><span class="icon icon--twitter"><svg viewBox="0 0 16 16"><path fill="#828282" d="M15.969,3.058c-0.586,0.26-1.217,0.436-1.878,0.515c0.675-0.405,1.194-1.045,1.438-1.809c-0.632,0.375-1.332,0.647-2.076,0.793c-0.596-0.636-1.446-1.033-2.387-1.033c-1.806,0-3.27,1.464-3.27,3.27 c0,0.256,0.029,0.506,0.085,0.745C5.163,5.404,2.753,4.102,1.14,2.124C0.859,2.607,0.698,3.168,0.698,3.767 c0,1.134,0.577,2.135,1.455,2.722C1.616,6.472,1.112,6.325,0.671,6.08c0,0.014,0,0.027,0,0.041c0,1.584,1.127,2.906,2.623,3.206 C3.02,9.402,2.731,9.442,2.433,9.442c-0.211,0-0.416-0.021-0.615-0.059c0.416,1.299,1.624,2.245,3.055,2.271 c-1.119,0.877-2.529,1.4-4.061,1.4c-0.264,0-0.524-0.015-0.78-0.046c1.447,0.928,3.166,1.469,5.013,1.469 c6.015,0,9.304-4.983,9.304-9.304c0-0.142-0.003-0.283-0.009-0.423C14.976,4.29,15.531,3.714,15.969,3.058z"/></svg>
+</span><span class="username">carlosschults</span></a>
+
+          </li>
+          
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-3">
+        <p>Artigos sobre desenvolvimento de software e tecnologia.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+
+    <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-92788641-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+    <script src="/js/dark-mode.js"></script>
+  </body>
+
+</html>

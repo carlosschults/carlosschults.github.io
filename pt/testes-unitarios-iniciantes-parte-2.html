@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Testes Unitários Para Iniciantes - Parte 2 | carlos schults / blog</title>
+  <link rel="apple-touch-icon" sizes="57x57" href="/img/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/img/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/img/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/img/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/img/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/img/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/img/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/img/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"  href="/img/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/img/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon-16x16.png">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="description" content="Antes tarde do que mais tarde! Hora de continuar nossa série sobre testes unitários para iniciantes. Hoje você vai escrever seu primeiro teste unitário.">
+  
+  <!-- Twitter card -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:creator" content="@carlosschults">
+  <meta name="twitter:site" content="@carlosschults">
+  <meta name="twitter:domain" content="carlosschults.net">
+  <meta name="twitter:title" content="Testes Unitários Para Iniciantes - Parte 2">
+  <meta name="twitter:description" content="Antes tarde do que mais tarde! Hora de continuar nossa série sobre testes unitários para iniciantes. Hoje você vai escrever seu primeiro teste unitário.">
+
+   <!-- Facebook meta -->
+  
+  
+  <meta property="og:title" content="Testes Unitários Para Iniciantes - Parte 2">
+  <meta property="og:site_name" content="Carlos Schults / Blog" />
+  <meta property="og:locale" content="pt_BR">  
+  <meta property="og:type" content="article" />
+  <meta property="og:image" content="https://res.cloudinary.com/dz5ppacuo/image/upload/v1459979937/testes-unitarios-iniciantes-min_povcse.png" />  
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:width" content="1038"> 
+  <meta property="og:image:height" content="437">  
+  
+  <meta property="og:article:published_time" content="2017-08-08T00:00:00+00:00" />  
+  <meta property="og:article:author" content="Carlos Schults" />
+  
+  <meta property="og:article:tag" content="csharp" />
+  <meta property="og:article:tag" content="iniciantes" />
+  <meta property="og:article:tag" content="testes-de-software" />
+  <meta property="og:article:tag" content="testes-unitarios" />
+  <meta property="og:article:tag" content="testes-automatizados" />
+  <meta property="og:article:tag" content="csharp" />
+  <meta property="og:article:tag" content="metodologias-ageis" />
+  <meta property="og:article:tag" content="serie-testes-unitarios" />    
+  
+  <meta property="og:url" content="https://carlosschults.net/pt/testes-unitarios-iniciantes-parte-2"/>
+  <meta property="og:description" content="Antes tarde do que mais tarde! Hora de continuar nossa série sobre testes unitários para iniciantes. Hoje você vai escrever seu primeiro teste unitário.">
+  <link rel="stylesheet" href="/css/main.css">  
+  
+   <link rel="canonical" href="https://carlosschults.net/pt/testes-unitarios-iniciantes-parte-2">
+   
+  
+  <link rel="alternate" hreflang="en" href="/en/unit-testing-for-beginners-part2/" />
+  <link rel="alternate" hreflang="pt" href="/pt/testes-unitarios-iniciantes-parte-2" />
+  
+  <link rel="alternate" type="application/rss+xml" title="carlos schults / blog" href="https://carlosschults.net/rss.xml">
+</head>
+
+  <body>
+    <header class="site-header">
+  <div class="wrapper">    
+    <a class="site-title" href="/pt/">carlos schults / blog</a>
+    
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg viewBox="0 0 18 15">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+
+      <div class="trigger">        
+          
+          <a class="page-link" href="/sobre/">Sobre</a>
+          <a class="page-link" href="/busca/">Busca</a>
+                  
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+<div class="wrapper" style="text-align: right; line-height: 2em">
+  
+   <a href="/en/unit-testing-for-beginners-part2/" class="en">en</a>  <a href="/pt/testes-unitarios-iniciantes-parte-2" class="pt">pt</a> 
+
+  
+  
+</div>
+
+
+    <div class="page-content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">    
+    <h2 class="postTitle" itemprop="headline">Testes Unitários Para Iniciantes - Parte 2</h2>
+    <p class="post-meta">   
+    <time datetime="2017-08-08T00:00:00+00:00" itemprop="datePublished">08/08/2017
+    </time> • <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">Carlos Schults</span></span>
+  <span class="tags" itemprop="keywords"> • Tags: <a href="/tag_ptbr/csharp">csharp </a> <a href="/tag_ptbr/iniciantes">iniciantes </a> <a href="/tag_ptbr/testes-de-software">testes-de-software </a> <a href="/tag_ptbr/testes-unitarios">testes-unitarios </a> <a href="/tag_ptbr/testes-automatizados">testes-automatizados </a> <a href="/tag_ptbr/csharp">csharp </a> <a href="/tag_ptbr/metodologias-ageis">metodologias-ageis </a> <a href="/tag_ptbr/serie-testes-unitarios">serie-testes-unitarios </a> </span>
+  </p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <p><img src="https://res.cloudinary.com/dz5ppacuo/image/upload/v1459979937/testes-unitarios-iniciantes-min_povcse.png" alt="" /></p>
+
+<p>Antes tarde do que mais tarde! Hora de continuar nossa série sobre testes unitários para iniciantes. Hoje você vai escrever seu primeiro teste unitário.
+<!--more--></p>
+
+<h2 id="introdução">Introdução</h2>
+
+<p><em>Este post faz parte de uma série. <a href="http://carlosschults.net/tag_ptbr/serie-testes-unitarios/">Veja os outros artigos.</a></em></p>
+
+<p>No <a href="https://carlosschults.net/pt/testes-unitarios-iniciantes-parte1">primeiro artigo nesta série</a> eu defini o que são testes unitários, e também falei dos benefícios de sua utilização.</p>
+
+<p>Hoje você vai aprender, na prática, como criar testes unitários. Vou mostrar como instalar e utilizar o framework de testes <strong>NUnit</strong>. E depois vamos criar alguns testes para você conhecer algumas das features deste framework.</p>
+
+<h2 id="instalando-o-nunit">Instalando o NUnit</h2>
+
+<p>Como eu expliquei no <a href="https://carlosschults.net/pt/testes-unitarios-iniciantes-parte1">primeiro post da série</a>, para utilizar testes unitários na sua aplicação você necessita de um <strong>Framework de Testes</strong>.</p>
+
+<p>O framework que vamos utilizar é o <strong>NUnit</strong>, que é baseado no JUnit, um framework de testes desenvolvido para a linguagem Java. Existem outros frameworks de teste disponíveis no mundo .Net, como o MS Test, desenvolvido pela própria Microsoft.
+Se for do seu interesse, você poderá experimentar os outros frameworks por conta própria mais tarde.</p>
+
+<p>Ok, vamos começar. Para este projeto, eu vou utilizar o Visual Studio 2017. <a href="https://www.visualstudio.com/pt-br/downloads/">Clique aqui para baixar a versão Community</a>.</p>
+
+<p>Crie uma nova solução do tipo <strong>Class Library</strong>, com o nome de <strong>LearningUnitTesting</strong>.</p>
+
+<p>Uma coisa que eu sempre costumo fazer ao criar uma nova solução é excluir a classe <code class="language-plaintext highlighter-rouge">Class1</code> que vem criada por padrão. Você também poderia renomeá-la, é claro, mas fica totalmente ao seu critério.</p>
+
+<p>Agora, vamos renomear o projeto padrão que foi criado para <strong>Application</strong>. Este projeto vai servir para guardar o <em>código de produção</em> em nossa solução.</p>
+
+<blockquote>
+  <p>No contexto de testes unitários, usamos o termo <strong>Código de Produção</strong> para nos referirmos ao código “real” da nossa aplicação, em contraste ao <strong>Código de Testes</strong>.</p>
+</blockquote>
+
+<p>O próximo passo é <strong>criar o projeto de testes</strong>. Existem algumas opiniões diferentes a respeito de <em>onde</em> devem ficar as classes de teste: se junto às classes de produção, ou em um local separado. Eu particularmente prefiro criar um projeto à parte, e o sistema de nomenclatura que eu costumo usar é: o mesmo nome do projeto de produção, mais a palavra <em>Test</em> no final.</p>
+
+<p>O nome do projeto será, portanto, <strong>ApllicationTest</strong>, e também será do tipo <strong>Class Library</strong>. 
+Após a criação do projeto, vou remover a classe adicionada por padrão, assim como fiz com o projeto de produção.</p>
+
+<p>Sua solução deveria estar desta forma:</p>
+
+<p><img src="https://res.cloudinary.com/dz5ppacuo/image/upload/v1498503229/unit2-img1_ugbo3b.png" alt="" /></p>
+
+<p>Chegou a hora de instalarmos o NUnit. Felizmente, o framework é disponibilizado como um pacote do Nuget, o que torna sua instalação trivial.</p>
+
+<p>Pimeiro, abra o <strong>Console do Gerenciador de Pacotes</strong>. Vá para: <strong>Ferramentas</strong> &gt; <strong>Gerenciador de Pacotes do Nuget</strong> &gt; <strong>Console do Gerenciador de Pacotes</strong>.</p>
+
+<p>Quando o console estiver aberto, digite ou copie e cole o seguinte comando:</p>
+
+<blockquote>
+  <p>Install-Package NUnit</p>
+</blockquote>
+
+<p>Verifique que o projeto de testes é o que está selecionado, como na imagem:</p>
+
+<p><img src="https://res.cloudinary.com/dz5ppacuo/image/upload/v1498503359/unit2-img2_nzedn5.png" alt="" /></p>
+
+<p>E pressione <em>ENTER</em>. A instalação será realizada em poucos segundos.</p>
+
+<p>Entretanto, isto não é tudo. Precisamos instalar um outro pacote, o <strong>NUnit Test Adapter</strong>, para que sejamos capazes de executar os testes do NUnit com o Visual Studio. O processo é o mesmo, o que muda é o comando:</p>
+
+<blockquote>
+  <p>Install-Package NUnit3TestAdapter</p>
+</blockquote>
+
+<p>Assim como no passo anterior, verifique que o projeto correto está selecionado antes de confirmar. A instalação deve terminar em poucos segundos.</p>
+
+<p>É isto.</p>
+
+<h2 id="criando-e-executando-o-primeiro-teste">Criando e executando o primeiro teste</h2>
+
+<p>Vamos começar a criar alguns testes. Primeiro, vamos adicionar uma nova classe ao nosso projeto de Produção. A classe se chamará <code class="language-plaintext highlighter-rouge">Employee</code> e terá o seguinte código:</p>
+
+<script src="https://gist.github.com/carlosschults/3f42e324b10ceb42b360382686d314de.js"></script>
+
+<p>Eu imagino que a classe seja simples o suficiente e não necessita de explicação. Agora, vamos criar nossa classe de teste. No projeto <strong>ApplicationTest</strong>, adicione uma nova classe com o nome de <strong>EmployeeTest</strong>.</p>
+
+<blockquote>
+  <p>Este é um dos padrões de nomenclatura que eu também utilizo: nomear a classe de teste com o mesmo nome da classe de produção, acrescentando <em>Test</em> no final.</p>
+</blockquote>
+
+<p>Após a criação da classe, adicione o namespace <em>NUnit.Framework</em> na lista de usings da classe. Em seguida, crie um novo método público de retorno <em>void</em> chamado <strong>MyFirstTestMethod</strong> e adicione o atributo <code class="language-plaintext highlighter-rouge">[Test]</code> a ele.</p>
+
+<p>Nesse ponto, o código da classe deve estar assim:</p>
+
+<script src="https://gist.github.com/carlosschults/406525bd23d3ee2ecba4f7592c0f8af3.js"></script>
+
+<p>O esqueleto do teste já está pronto. Então vamos escrever nossa primeira <strong>asserção</strong>. Uma asserção é uma <em>afirmação</em> sobre como um determinado método deveria se comportar. Caso a afirmação se prove verdadeira, dizemos que o teste <em>passou</em>. Caso a afirmação se prove falsa, dizemos que o teste <em>falhou</em>, ou quebrou.</p>
+
+<p>No NUnit, utilizamos a classe <code class="language-plaintext highlighter-rouge">Assert</code> para escrevermos nossas asserções. Esta classe possui um número grande de métodos que nos permitem expressar nossas expectativas com relação ao comportamento das unidades que estamos testando.</p>
+
+<p>Adicione a seguinte linha de código ao método de teste:</p>
+
+<blockquote>
+  <p>Assert.Pass();</p>
+</blockquote>
+
+<p>Esta é uma asserção que serve para forçar o teste a passar. Vamos agora rodar esse teste para vê-lo passando. Primeiro, precisamos abrir o <strong>Gerenciador de Testes</strong>. Vá para: <strong>Testar</strong> &gt; <strong>Janelas</strong> &gt; <strong>Gerenciador de Testes</strong>.</p>
+
+<p>Na janela exibida, clique em <em>Executar Tudo</em>. Caso tudo tenha funcionado da maneira correta, você verá isso:</p>
+
+<p><img src="https://res.cloudinary.com/dz5ppacuo/image/upload/v1498507514/MyFirstTestPass_atkrjl.png" alt="" /></p>
+
+<p>Ao clicar no nome do teste, serão exibidas algumas informações adicionais, como o arquivo do teste e tempo decorrido:</p>
+
+<p><img src="https://res.cloudinary.com/dz5ppacuo/image/upload/v1498508050/MyFirstTestPass2_ageqqm.png" alt="" /></p>
+
+<p>Note o uso da cor verde para indicar o sucesso do teste.</p>
+
+<p>Vamos agora fazer o contrário: forçar a falha do teste. Substitua a linha no método por:</p>
+
+<blockquote>
+  <p>Assert.Fail();</p>
+</blockquote>
+
+<p>Execute o teste novamente e verá a mensagem de falha, dessa vez com a barra vermelha:</p>
+
+<p><img src="https://res.cloudinary.com/dz5ppacuo/image/upload/v1498508371/myfirsttestfail_xwuo5u.png" alt="" /></p>
+
+<p>Agora que você já está pegando o jeito, vamos começar a testar a nossa classe <code class="language-plaintext highlighter-rouge">Employee</code>. Não esqueça de voltar o método de teste que fizemos para <code class="language-plaintext highlighter-rouge">Assert.Pass</code> para que ele não fique falhando.</p>
+
+<p>Em seguida, adicione um novo método de teste chamado <code class="language-plaintext highlighter-rouge">IntroduceMethodShouldWorkCorrectly</code>. Nele, vamos criar uma nova instância do objeto <code class="language-plaintext highlighter-rouge">Employee</code> e verificar que o método <code class="language-plaintext highlighter-rouge">Introduce</code> está funcionando como deveria.</p>
+
+<p>Antes de fazermos isso, porém, precisamos adicionar uma referência do projeto de produção ao nosso projeto de testes. Do contrário, nossa classe de teste não conseguirá enxergar as classes que deveria testar!</p>
+
+<p>Para isso, clique com o botão direito no projeto <strong>ApplicationTest</strong> &gt; <strong>Adicionar</strong> &gt; <strong>Referência…</strong>. Na janela exibida, selecione o projeto, conforme a imagem a seguir:</p>
+
+<p><img src="https://res.cloudinary.com/dz5ppacuo/image/upload/v1498509304/Captura_de_tela_2017-06-26_17.34.04_hgianj.png" alt="" /></p>
+
+<p>E depois clique em OK.</p>
+
+<p>De volta à classe de teste, modifique o método de teste para que fique da forma abaixo:</p>
+
+<script src="https://gist.github.com/carlosschults/c840590dab95a023d4530962fca048db.js"></script>
+
+<p>Você vai notar que <code class="language-plaintext highlighter-rouge">Employee</code> está marcado como erro. Ao passar o cursor em cima, você verá uma mensagem avisando que o nome <code class="language-plaintext highlighter-rouge">Employee</code> não pode ser encontrado e perguntando se não tem alguma referência ou diretiva <em>using</em> faltando.</p>
+
+<p>É claro que tem uma diretiva <em>using</em> faltando, relativa à referência que acabamos de adicionar. Para corrigir o problema, basta adicionar a linha <code class="language-plaintext highlighter-rouge">using Application;</code> no começo do arquivo.</p>
+
+<p>Agora que o código compila, vamos entender este método, linha a linha.</p>
+
+<p>Na primeira linha, instanciamos nossa classe <code class="language-plaintext highlighter-rouge">Employee</code>, definindo nome, profissão e salário. Na linha seguinte, atribuímos a uma variável o valor que <strong>esperamos</strong> que o método retorne. Em seguida, atribuímos a outra variável o resultado da execução do método.</p>
+
+<p>Finalmente, utilizamos o método <code class="language-plaintext highlighter-rouge">AreEqual</code> da classe <code class="language-plaintext highlighter-rouge">Assert</code> para verificar se os dois valores são iguais. Este método é, provavelmente, o que você mais vai utilizar durante seus testes.</p>
+
+<p>Agora é hora de executar o teste. Utilize o atalho <strong>CTRL + R, A</strong> ou clique em <strong>Executar Tudo</strong> na janela do Gerenciador de Teste. Se tudo der certo, você verá a barra verde e a mensagem indicando que os dois testes passaram.</p>
+
+<p>Vamos agora testar o teste: vamos “estragar” o método <code class="language-plaintext highlighter-rouge">Introduce</code> e ver se o método falha como deveria. De volta à classe de produção, vamos modificar o método da seguinte forma:</p>
+
+<script src="https://gist.github.com/carlosschults/02554ca9b8dd69f8c904dbbcc271c99e.js"></script>
+
+<p>Como você viu, nós retiramos os colchetes ao redor de JobTitle. Desta forma, a interpolação de string não será realizada, fixando o texto “JobTitle” ao invés de substituí-lo pelo valor da variável.</p>
+
+<p>Ao rodar os testes novamente, obtemos o seguinte resultado:</p>
+
+<blockquote>
+  <p>Mensagem:   Expected string length 48 but was 46. Strings differ at index 37.
+Expected: “Hi! My name is Alice and I work as a Programmer.”
+But was:  “Hi! My name is Alice and I work as a JobTitle.”
+————————————————^</p>
+</blockquote>
+
+<p>Em tradução livre, seria algo como:</p>
+
+<blockquote>
+  <p>O comprimento esperado da string era 48 mas o obtido foi 46. As string diferem a partir do índice 37.
+Esperado: “Hi! My name is Alice and I work as a Programmer.”
+Mas foi: “Hi! My name is Alice and I work as a JobTitle.”</p>
+</blockquote>
+
+<p>Como podemos ver, a mensagem é bem explicativa. Ela nos informa não apenas que as string divergiram mas exatamente em que parte elas começaram a divergir. Também nos informa exatamente o texto esperado e o que realmente foi obtido. É importante salientar que a ordem dos parâmetros do método <code class="language-plaintext highlighter-rouge">AreEqual</code> importa, pois isso influi na mensagem exibida quando o teste falha.</p>
+
+<blockquote>
+  <p><strong>A ordem dos parâmetros no método <code class="language-plaintext highlighter-rouge">AreEqual</code> é muito importante. Passe primeiro o resultado esperado, e depois o que realmente foi obtido.</strong></p>
+</blockquote>
+
+<p>Ótimo. Podemos voltar o método para sua implementação anterior e executar os testes novamente, para ver que o teste volte a passar.</p>
+
+<p>Como você pode ver, um teste de unidade envolve uma sequência de passos bem definida: <strong>preparamos</strong> o cenário, <strong>executamos</strong> a ação, e <strong>verificamos</strong> o resultado. Essa sequência de passos - ou fases - é muitas vezes chamada de AAA: <strong>Arrange-Act-Assert</strong>.</p>
+
+<blockquote>
+  <p>Um teste de unidade típico envolve as fases <strong>Arrange-Act-Assert</strong>.</p>
+</blockquote>
+
+<p>Embora existam outras nomenclaturas para as fases do teste de unidade, vamos adotar <strong>Arrange-Act-Assert</strong> como nossa nomenclatura padrão, ao menos por enquanto.</p>
+
+<p>Você talvez esteja se perguntando por qual motivo eu de o nome de “sut” à variável declarada no início do método. Este é um padrão de nomenclatura que aprendi lendo o blog do <a href="https://blog.ploeh.dk/">Mark Seeman</a>. <strong>SUT</strong> significa <em>System Under Test</em>, ou “Sistema Sob Teste”, em tradução livre. É um termo usado para se referir à classe sendo testada no teste atual. Não há nada que obrigue a utilização de <code class="language-plaintext highlighter-rouge">sut</code> como o nome da variável, mas eu gosto de usar dessa forma, pois deixa evidente no teste quem é que está sendo testado.</p>
+
+<blockquote>
+  <p><strong>Dica: Procure utilizar padrões de codificação que melhorem a legibilidade e deixem a intenção do autor explícita para o leitor do código.</strong></p>
+</blockquote>
+
+<p>Logo abaixo temos o método de teste, dessa vez com comentários demonstrando cada fase do teste:</p>
+
+<script src="https://gist.github.com/carlosschults/a91d41ff7ac732fc9c57e63c03a6be07.js"></script>
+
+<p>Embora não seja realmente necessário, eu sugiro que você use comentários para demarcar as fases do teste como no exemplo acima, ao menos no início de seu aprendizado.</p>
+
+<h2 id="mais-um-teste-método-giveraise">Mais um teste: método <code class="language-plaintext highlighter-rouge">GiveRaise</code></h2>
+
+<p>Um aumento no salário é sempre bem-vindo, concordam? Vamos testar que o método <code class="language-plaintext highlighter-rouge">GiveRaise</code> funciona como deveria. Na sua classe de teste, adicione o método a seguir:</p>
+
+<script src="https://gist.github.com/carlosschults/2ce153c1da6f83e80342fa7f83ea4786.js"></script>
+
+<p>Execute o teste e você deverá ver a familiar barra verde de sucesso. Deu certo? Ótimo. Hora de <strong>testar o teste:</strong> vamos “sabotar” a implementação do método <code class="language-plaintext highlighter-rouge">GiveRaise</code> e ver se o teste falha.</p>
+
+<p>Na classe de produção, vamos deixar o método assim:</p>
+
+<script src="https://gist.github.com/carlosschults/fba5901aaa2f542bcd8528de0e96afff.js"></script>
+
+<p>Agora que o método está obviamente errado, o teste deveria falhar. Vamos executá-lo?</p>
+
+<blockquote>
+  <p>Mensagem:   Expected: 110
+   But was:  5m</p>
+</blockquote>
+
+<p>Ok, podemos ver que o teste realmente falhou. Podemos voltar o método ao normal e ver que agora tudo passa como deveria.</p>
+
+<h2 id="um-último-teste">Um último teste</h2>
+
+<p>Digamos que surgiu um novo requisito: se a porcentagem de aumento passada for negativa, o salário deve permanecer o mesmo. Vamos então alterar o método <code class="language-plaintext highlighter-rouge">GiveRaise</code> para tratar este caso:</p>
+
+<script src="https://gist.github.com/carlosschults/3f09a8043a1e58753adf9bfdee37350a.js"></script>
+
+<p>Fizemos uma alteração no código de produção. Nossa prioridade agora é <strong>verificar que nada quebrou</strong>. Execute os testes para verificar se todos ainda estão passando normalmente.</p>
+
+<p>Tudo ainda está verde? Ótimo, vamos em frente. Agora precisamos criar um novo teste para documentar o caso da tentativa de aumento negativo.</p>
+
+<blockquote>
+  <p>Testes de unidade também são uma forma de documentação.</p>
+</blockquote>
+
+<p>Na classe de teste, adicione o método a seguir:</p>
+
+<script src="https://gist.github.com/carlosschults/a474698655450da6547dbfa6b9dbcb8c.js"></script>
+
+<p>Nada de surpreendente aqui, certo? À esta altura, você já deve ter pegado o jeito da coisa. Assim, vou deixar por sua conta o <strong>teste do teste:</strong> sabote o método de uma ou mais maneiras e confira que o teste falhou conforme deveria.</p>
+
+<h2 id="recapitulando">Recapitulando</h2>
+
+<p>O artigo de hoje foi bem mais prático que o anterior. Conseguimos abordar diversos tópicos:</p>
+
+<ul>
+  <li>Instalação do <strong>NUnit</strong> e <strong>NUnit Test Adapter</strong>;</li>
+  <li>Criação de caso de teste;</li>
+  <li>Conceito de <em>asserção</em> e classe <code class="language-plaintext highlighter-rouge">Assert</code>;</li>
+  <li>Execução dos testes, tanto por meio do <em>Gerenciador de Testes</em> quanto por teclas de atalho;</li>
+  <li>Interpretação da mensagem de erro do teste;</li>
+  <li>Fases do teste unitário (<em>Arrange-Act-Assert</em>).</li>
+</ul>
+
+<p>Além desses tópicos, também ampliamos nosso vocabulário relativo à testes, com os termos <em>SUT</em>, <em>asserção</em>, <em>código de teste x código de produção</em>, entre outros.</p>
+
+<p>Também foram abordados alguns padrões de nomenclatura, tanto para classes quanto para métodos de teste.</p>
+
+<p>Finalmente, você aprendeu sobre a importância de ver o teste falhar, e como podemos “testar o teste” através de uma sabotagem deliberada do código de produção.</p>
+
+<h2 id="notas">Notas</h2>
+
+<ul>
+  <li>O código do post de hoje <a href="https://github.com/carlosschults/learning-unit-testing/">está no Github</a>.</li>
+  <li>Agradeço novamente ao amigo Gunter Italiano Ribeiro por revisar este artigo.</li>
+</ul>
+
+<h2 id="conclusão">Conclusão</h2>
+
+<p>Este foi o segundo artigo da minha série sobre testes unitários. Como já mencionei, ele é propositalmente maior e mais prático que o artigo inicial da série. Ainda assim, tudo o que foi abordado é apenas a ponta do iceberg do que existe a respeito de testes de unidade. Livros inteiros poderiam foram escritos sobre este assunto. Nos artigos futuros indicarei alguns, além de outros materiais para estudo.</p>
+
+<p>Nos testes que escrevemos hoje, utilizamos a abordagem mais intuitiva - e provavelmente mais comum - de se criar os testes após o código de produção. Porém, muitas pessoas e equipes trabalham com uma metodologia diferente: eles escrevem os testes <em>antes</em> do código de produção.</p>
+
+<p>Pode parecer estranho, à princípio, mas trabalhar desta forma pode trazer diversos benefícios para seu projeto. Este e outros tópicos serão abordados no próximo artigo.</p>
+
+<p>Até lá!</p>
+
+    
+    
+      
+    
+    
+        Encontrou algum erro no post? <a href="http://github.com/carlosschults/carlosschults.github.io/edit/master/_posts/2017-08-08-testes-unitarios-iniciantes-parte2.md">Sugira uma edição</a>      
+    
+    
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+                    
+            <a rel="previous" class="previous" href="/pt/funcionalidades-csharp-7-parte-2">&larr; Funcionalidades do C# 7 que vale a pena conhecer - Parte 2 </a>
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+        	    
+            <a rel="next" class="next" href="/pt/como-aprender-ingles-parte-1">Como aprender inglês: Um guia para desenvolvedores &rarr;</a>
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+      
+    <div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+        // Store these for reloads
+        window.disqus_identifier = window.location.pathname;
+        window.disqus_url = window.location.href;
+        
+        // Set initial theme - match it with the site's theme
+        const currentTheme = document.body.getAttribute('data-theme') || 'light';
+        this.page.theme = currentTheme === 'dark' ? 'dark' : 'light';
+    };
+    
+    (function() {
+        var d = document, s = d.createElement('script');
+        s.src = '//carlosschultsblog.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>    
+  </div>
+
+</article>
+
+      </div>
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">         
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-2">
+        <ul class="social-media-list">
+          
+          <li>
+            <a href="https://github.com/carlosschults"><span class="icon icon--github"><svg viewBox="0 0 16 16"><path fill="#828282" d="M7.999,0.431c-4.285,0-7.76,3.474-7.76,7.761 c0,3.428,2.223,6.337,5.307,7.363c0.388,0.071,0.53-0.168,0.53-0.374c0-0.184-0.007-0.672-0.01-1.32 c-2.159,0.469-2.614-1.04-2.614-1.04c-0.353-0.896-0.862-1.135-0.862-1.135c-0.705-0.481,0.053-0.472,0.053-0.472 c0.779,0.055,1.189,0.8,1.189,0.8c0.692,1.186,1.816,0.843,2.258,0.645c0.071-0.502,0.271-0.843,0.493-1.037 C4.86,11.425,3.049,10.76,3.049,7.786c0-0.847,0.302-1.54,0.799-2.082C3.768,5.507,3.501,4.718,3.924,3.65 c0,0,0.652-0.209,2.134,0.796C6.677,4.273,7.34,4.187,8,4.184c0.659,0.003,1.323,0.089,1.943,0.261 c1.482-1.004,2.132-0.796,2.132-0.796c0.423,1.068,0.157,1.857,0.077,2.054c0.497,0.542,0.798,1.235,0.798,2.082 c0,2.981-1.814,3.637-3.543,3.829c0.279,0.24,0.527,0.713,0.527,1.437c0,1.037-0.01,1.874-0.01,2.129 c0,0.208,0.14,0.449,0.534,0.373c3.081-1.028,5.302-3.935,5.302-7.362C15.76,3.906,12.285,0.431,7.999,0.431z"/></svg>
+</span><span class="username">carlosschults</span></a>
+
+          </li>
+          
+
+          
+          <li>
+            <a href="https://twitter.com/carlosschults"><span class="icon icon--twitter"><svg viewBox="0 0 16 16"><path fill="#828282" d="M15.969,3.058c-0.586,0.26-1.217,0.436-1.878,0.515c0.675-0.405,1.194-1.045,1.438-1.809c-0.632,0.375-1.332,0.647-2.076,0.793c-0.596-0.636-1.446-1.033-2.387-1.033c-1.806,0-3.27,1.464-3.27,3.27 c0,0.256,0.029,0.506,0.085,0.745C5.163,5.404,2.753,4.102,1.14,2.124C0.859,2.607,0.698,3.168,0.698,3.767 c0,1.134,0.577,2.135,1.455,2.722C1.616,6.472,1.112,6.325,0.671,6.08c0,0.014,0,0.027,0,0.041c0,1.584,1.127,2.906,2.623,3.206 C3.02,9.402,2.731,9.442,2.433,9.442c-0.211,0-0.416-0.021-0.615-0.059c0.416,1.299,1.624,2.245,3.055,2.271 c-1.119,0.877-2.529,1.4-4.061,1.4c-0.264,0-0.524-0.015-0.78-0.046c1.447,0.928,3.166,1.469,5.013,1.469 c6.015,0,9.304-4.983,9.304-9.304c0-0.142-0.003-0.283-0.009-0.423C14.976,4.29,15.531,3.714,15.969,3.058z"/></svg>
+</span><span class="username">carlosschults</span></a>
+
+          </li>
+          
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-3">
+        <p>Artigos sobre desenvolvimento de software e tecnologia.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+
+    <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-92788641-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+    <script src="/js/dark-mode.js"></script>
+  </body>
+
+</html>

@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Testes de Mutação: O Que São e Como Tornam A Cobertura de Código Relevante | carlos schults / blog</title>
+  <link rel="apple-touch-icon" sizes="57x57" href="/img/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/img/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/img/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/img/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/img/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/img/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/img/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/img/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"  href="/img/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/img/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon-16x16.png">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="description" content="Photo by Christina @ wocintechchat.com on UnsplashNOTA: Este post foi originalmente escrito para o blog da NCrunch. Você pode ler o artigo original, em inglê...">
+  
+  <!-- Twitter card -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:creator" content="@carlosschults">
+  <meta name="twitter:site" content="@carlosschults">
+  <meta name="twitter:domain" content="carlosschults.net">
+  <meta name="twitter:title" content="Testes de Mutação: O Que São e Como Tornam A Cobertura de Código Relevante">
+  <meta name="twitter:description" content="Photo by Christina @ wocintechchat.com on UnsplashNOTA: Este post foi originalmente escrito para o blog da NCrunch. Você pode ler o artigo original, em inglê...">
+
+   <!-- Facebook meta -->
+  
+  
+  <meta property="og:title" content="Testes de Mutação: O Que São e Como Tornam A Cobertura de Código Relevante">
+  <meta property="og:site_name" content="Carlos Schults / Blog" />
+  <meta property="og:locale" content="pt_BR">  
+  <meta property="og:type" content="article" />
+  <meta property="og:image" content="https://res.cloudinary.com/dz5ppacuo/image/upload/v1595528879/mutation/mutation-testing-1038x437.jpg" />  
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:width" content="1038"> 
+  <meta property="og:image:height" content="437">  
+  
+  <meta property="og:article:published_time" content="2020-07-23T00:00:00+00:00" />  
+  <meta property="og:article:author" content="Carlos Schults" />
+  
+  <meta property="og:article:tag" content="testes-de-software" />
+  <meta property="og:article:tag" content="testes-unitarios" />
+  <meta property="og:article:tag" content="testes-automatizados" />
+  <meta property="og:article:tag" content="cobertura-de-codigo" />
+  <meta property="og:article:tag" content="testes-de-mutacao" />
+  <meta property="og:article:tag" content="tdd" />    
+  
+  <meta property="og:url" content="https://carlosschults.net/pt/testes-de-mutacao/"/>
+  <meta property="og:description" content="Photo by Christina @ wocintechchat.com on UnsplashNOTA: Este post foi originalmente escrito para o blog da NCrunch. Você pode ler o artigo original, em inglê...">
+  <link rel="stylesheet" href="/css/main.css">  
+  
+   <link rel="canonical" href="https://carlosschults.net/pt/testes-de-mutacao/">
+   
+  
+  <link rel="alternate" hreflang="en" href="/en/mutation-testing/" />
+  <link rel="alternate" hreflang="pt" href="/pt/testes-de-mutacao/" />
+  
+  <link rel="alternate" type="application/rss+xml" title="carlos schults / blog" href="https://carlosschults.net/rss.xml">
+</head>
+
+  <body>
+    <header class="site-header">
+  <div class="wrapper">    
+    <a class="site-title" href="/pt/">carlos schults / blog</a>
+    
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg viewBox="0 0 18 15">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+
+      <div class="trigger">        
+          
+          <a class="page-link" href="/sobre/">Sobre</a>
+          <a class="page-link" href="/busca/">Busca</a>
+                  
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+<div class="wrapper" style="text-align: right; line-height: 2em">
+  
+   <a href="/en/mutation-testing/" class="en">en</a>  <a href="/pt/testes-de-mutacao/" class="pt">pt</a> 
+
+  
+  
+</div>
+
+
+    <div class="page-content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">    
+    <h2 class="postTitle" itemprop="headline">Testes de Mutação: O Que São e Como Tornam A Cobertura de Código Relevante</h2>
+    <p class="post-meta">   
+    <time datetime="2020-07-23T00:00:00+00:00" itemprop="datePublished">23/07/2020
+    </time> • <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">Carlos Schults</span></span>
+  <span class="tags" itemprop="keywords"> • Tags: <a href="/tag_ptbr/testes-de-software">testes-de-software </a> <a href="/tag_ptbr/testes-unitarios">testes-unitarios </a> <a href="/tag_ptbr/testes-automatizados">testes-automatizados </a> <a href="/tag_ptbr/cobertura-de-codigo">cobertura-de-codigo </a> <a href="/tag_ptbr/testes-de-mutacao">testes-de-mutacao </a> <a href="/tag_ptbr/tdd">tdd </a> </span>
+  </p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <p><img src="https://res.cloudinary.com/dz5ppacuo/image/upload/v1595528879/mutation/mutation-testing-1038x437.jpg" alt="" /></p>
+
+<p><span>Photo by <a href="https://unsplash.com/@wocintechchat?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Christina @ wocintechchat.com</a> on <a href="https://unsplash.com/s/photos/software-testing?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span></p>
+
+<p><em>NOTA: Este post foi originalmente escrito para o blog da NCrunch. Você pode ler o <a href="https://blog.ncrunch.net/post/mutation-testing-code-coverage.aspx">artigo original, em inglês, no site deles</a>.</em></p>
+
+<p>Sou fascinado com o conceito de testes de mutação desde que os conheci. Pensei finalmente ter encontrado a resposta para tantos problemas que tive ao escrever testes. Com os testes de mutação, agora eu tinha uma maneira de realmente confiar em meus testes. Finalmente, a cobertura de código tinha significado novamente.</p>
+
+<p>Então, fiquei atônito ao perceber que muito poucos desenvolvedores compartilhavam meu interesse em testes de mutação. Na verdade, ouso dizer que a maioria dos desenvolvedores ainda nem sequer ouviu falar sobre isso. E isso é uma pena porque eles - e nós, como uma indústria - estamos perdendo tantos benefícios.</p>
+
+<p>Portanto, este posto é minha humilde tentativa de remediar a situação. Vou começar por explicar os atuais dilemas que os desenvolvedores enfrentam em relação à confiabilidade dos testes que escrevem. Em seguida, vou prosseguir para lhe mostrar como os testes de mutação são a resposta a estes dilemas. Explicarei o que é, como pode tornar seus testes mais confiáveis, e como pode transformar a cobertura de código na valiosa métrica que deve ser.</p>
+
+<h2 id="o-problema-a-confiabilidade-dos-testes">O problema: a confiabilidade dos testes</h2>
+
+<p>Ao aprender sobre <a href="https://carlosschults.net/pt/testes-unitarios-iniciantes-parte1/">testes unitários</a> - ou testes automatizados em geral - a maioria das pessoas fará a mesma pergunta ou uma pergunta semelhante: Como sei que meus testes estão corretos? Essa é uma preocupação legítima. Se seus testes não são confiáveis, então talvez você esteja melhor sem nenhum teste.</p>
+
+<p>Então, qual é a resposta? Como as pessoas lidam com o problema da confiabilidade dos testes sem depender de testes de mutação?</p>
+
+<h2 id="tornando-os-testes-confiáveis-sem-testes-de-mutação">Tornando os testes confiáveis sem testes de mutação</h2>
+
+<p>Há técnicas que os desenvolvedores empregam para melhorar a confiabilidade de seus testes, e cobriremos brevemente algumas delas nesta seção. Se você tem experiência com testes unitários, provavelmente está familiarizado com essas técnicas. Vamos lá.</p>
+
+<h3 id="manter-os-testes-simples">Manter os testes simples</h3>
+
+<p>A primeira técnica que cobriremos aqui para melhorar a confiabilidade de seus testes é apenas mantê-los simples. E por “simples” quero dizer com menos complexidade ciclomática. Quanto menor a <a href="https://pt.wikipedia.org/wiki/Complexidade_ciclom%C3%A1tica">complexidade ciclomática</a> de um determinado código, mais provável é que ele realmente faz o que você pensa que faz. O código simples é mais fácil de entender, que é uma propriedade que você definitivamente quer que seus testes unitários tenham.</p>
+
+<p>Mantenha o código de teste simples ao ponto de ser óbvio. Isso significa, por exemplo, evitar loops ou estruturas de decisão. Além disso, evite fazer qualquer coisa para computar o resultado esperado (mais sobre isso na próxima seção). Em vez disso, codifique-o de maneira fixa.</p>
+
+<h3 id="não-duplique-o-código-de-implementação">Não Duplique o Código de Implementação</h3>
+
+<p>Digamos que você esteja praticando o <a href="https://codingdojo.org/kata/RomanNumerals/">Coding Kata dos números romanos</a>. Resista à tentação de gerar automaticamente os valores esperados (“I” para 1, “II” para 2, e assim por diante). Em vez disso, codifique os valores de forma fixa. Se a repetição realmente o incomoda e sua ferramenta de teste o permite, use testes parametrizados.</p>
+
+<p>Por que isso seria um problema? Simples: Quanto mais sofisticado for o código de teste, mais provável é que seja uma duplicação do código de produção. Se este for o caso, você pode ter o azar de se encontrar na situação em que seu código de produção está errado (não resolve o problema como deveria fazer), mas os testes passam. Esse é um dos piores cenários possíveis. É ainda pior do que não ter nenhum teste.</p>
+
+<h3 id="garanta-que-você-veja-o-teste-falhar">Garanta que você veja o teste falhar</h3>
+
+<p>Garantir que cada teste falhe pelo menos uma vez antes de ser aprovado. Se você vê o teste falhar quando acha que deveria estar falhando e vice-versa, isso é um sinal de que você está se movendo na direção certa. Não garante nada, mas diminui a probabilidade de o teste estar passando devido a uma coincidência.</p>
+
+<p>Como fazer isso? Assim que você chegar à fase verde, danifique o código de implementação de tal maneira que um ou mais testes devem falhar. Você poderia inverter os condicionantes, substituir strings ou literais numéricos por valores aleatórios, ou mesmo apagar um if. Se você conseguir sabotar o código de produção e se safar, isso não é um bom sinal. Seu conjunto de testes ou está errado ou incompleto. Em certo sentido, você está testando os testes.</p>
+
+<p>Desenvolvedores que empregam <a href="https://carlosschults.net/pt/testes-unitarios-csharp-intro-tdd/">TDD (desenvolvimento orientado a testes)</a> já fazem isso, por definição. Uma vez que você escreve um teste falho e depois procede para que ele seja aprovado, você está vendo o teste falhar. É claro, o teste deve falhar da maneira esperada. Isso significa que se você estiver realizando uma asserção, o teste deve falhar devido a uma falha na asserção e não, digamos, porque o método sob teste lança uma exceção. Sim, isto é melhor do que nada, mas ainda assim pode não ser suficiente. Como um teste unitário representa um caso de uso único, é totalmente possível introduzir um defeito no código de produção de tal forma que este teste em particular ainda passe.</p>
+
+<h2 id="temos-que-fazer-melhor-é-aí-que-entra-o-teste-de-mutação">Temos que fazer melhor: É Aí Que Entra o Teste de Mutação</h2>
+
+<p>Então, você acabou de aplicar a técnica descrita na última seção. Ótimo! Não é perfeita, porém. Aí vem um problema. Você não pode simplesmente inserir muitos defeitos e executar os testes, pois não seria capaz de identificar qual defeito foi responsável pelo fracasso dos testes. A maneira correta de fazer isso é inserir um único defeito deliberado, executar todos os testes, verificar seu resultado e <em>então</em> reverter a mudança. Depois disso, você pode introduzir outro erro, executar todos os testes novamente, verificar o resultado, reverter a mudança…e repetir, muitas vezes. Nem precisa dizer que tal abordagem é extremamente lenta, entediante e propensa a erros.</p>
+
+<p>É aí que entram os testes de mutação.</p>
+
+<h3 id="o-que-é-teste-de-mutação-afinal">O que é teste de mutação, afinal?</h3>
+
+<p>O teste de mutação é nada mais, nada menos, do que automatizar todo o processo de “sabotar o código de produção e executar testes para ver se eles falham” que você acabou de ver. Para usar o teste de mutação, você precisa de um framework, ou ferramenta, de teste de mutação. O framework irá alterar o código de produção, introduzindo defeitos que são chamados de “mutações”. Para cada mutação introduzida, o framework executará novamente o conjunto de testes unitários. Se todos os testes forem aprovados, dizemos que a mutação sobreviveu. Isso é uma coisa ruim. Significa que ou seu conjunto de testes está faltando ou os testes existentes estão errados.</p>
+
+<p>Se, por outro lado, um ou mais testes falharem, isso significa que a mutação foi morta, o que é uma coisa boa. A ferramenta repetirá esse processo até que se teste a parte relevante da base de código. Quando tudo estiver feito, você poderá verificar os resultados, que conterão o número de mutações introduzidas, assim como a proporção de mutantes sobreviventes vs. mutantes mortos.</p>
+
+<h3 id="os-testes-de-mutação-melhoram-a-cobertura-do-código">Os testes de mutação melhoram a cobertura do código</h3>
+
+<p>Um dos tópicos mais controversos no mundo dos testes de unidade é o argumento sobre a cobertura de código. Alguns desenvolvedores dizem que chegar à cobertura total é essencial; outros argumentarão que é uma métrica inútil. Quem está certo?</p>
+
+<p>Primeiro de tudo, é preciso entender que esta questão não é preto no branco. Como é o caso de praticamente tudo em software, há alguma nuance. É claro que a cobertura de código não é inútil. Saber que sua base de código tem, digamos, 10% de cobertura de teste é definitivamente um dado útil. Tal cobertura é muito baixa: ver a barra verde não lhes oferecerá nenhuma confiança. Isso não quer dizer que ter 100% de cobertura é necessariamente uma coisa boa em si mesmo. Você poderia ter testes que não têm afirmações, por exemplo. Sim, este é um exemplo elaborado, mas algo assim poderia (e às vezes acontece) acontecer.</p>
+
+<p>Uma ocorrência mais comum seria ter apenas testes que não exercitam suficientemente os caminhos no software. Em resumo: baixa cobertura de código é definitivamente uma coisa ruim, mas alta (ou total) cobertura de código não é <em>necessariamente</em> uma coisa boa, uma vez que não diz nada sobre a qualidade dos testes na suíte.</p>
+
+<p>Como os testes de mutação verificam a qualidade da suíte de testes, é a peça que falta no quebra-cabeça. Se sua base de código tem uma alta cobertura de código e os resultados dos testes de mutação mostram que a maioria ou todas as mutações introduzidas estão sendo mortas, então sorria! Você provavelmente tem uma ótima suíte de teste no lugar!</p>
+
+<h2 id="testes-de-mutação-abrace-hoje">Testes de Mutação Abrace Hoje</h2>
+
+<p>No post de hoje, falamos sobre o problema da confiabilidade dos testes, depois procedemos a uma revisão de algumas técnicas e diretrizes que você pode usar para superar esse desafio. Finalmente, vimos como o teste de mutação é a abordagem superior para resolver esse problema.</p>
+
+<p>Eis o seguinte: As técnicas que abordamos são boas diretrizes a serem seguidas ao escrever testes unitários. Seus testes serão beneficiados por cumpri-los, quer você empregue ou não testes de mutação. Mas as diretrizes só podem levá-lo até agora. Elas dependem muito da força de vontade e disciplina humanas, e todos nós temos quantidades limitadas delas. A fim de levar a qualidade de seus testes ao próximo nível, você precisa adotar a automação.</p>
+
+<p>São necessários apenas alguns minutos de pesquisa no Google para encontrar uma ferramenta de teste de mutação para a plataforma de sua preferência. Faça isso hoje e comece a aproveitar os benefícios que os testes de mutação podem oferecer a você e à sua equipe!</p>
+
+
+    
+    
+      
+    
+    
+        Encontrou algum erro no post? <a href="http://github.com/carlosschults/carlosschults.github.io/edit/master/_posts/2020-07-23-testes-de-mutacao.md">Sugira uma edição</a>      
+    
+    
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+                    
+            <a rel="previous" class="previous" href="/pt/testes-unitarios-csharp-intro-tdd/">&larr; Testes Unitários em C#: Iniciando Com TDD </a>
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+        	    
+            <a rel="next" class="next" href="/pt/reduzir-complexidade-ciclomatica/">Como Reduzir a Complexidade Ciclomática: Um Guia Completo &rarr;</a>
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+      
+    <div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+        // Store these for reloads
+        window.disqus_identifier = window.location.pathname;
+        window.disqus_url = window.location.href;
+        
+        // Set initial theme - match it with the site's theme
+        const currentTheme = document.body.getAttribute('data-theme') || 'light';
+        this.page.theme = currentTheme === 'dark' ? 'dark' : 'light';
+    };
+    
+    (function() {
+        var d = document, s = d.createElement('script');
+        s.src = '//carlosschultsblog.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>    
+  </div>
+
+</article>
+
+      </div>
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">         
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-2">
+        <ul class="social-media-list">
+          
+          <li>
+            <a href="https://github.com/carlosschults"><span class="icon icon--github"><svg viewBox="0 0 16 16"><path fill="#828282" d="M7.999,0.431c-4.285,0-7.76,3.474-7.76,7.761 c0,3.428,2.223,6.337,5.307,7.363c0.388,0.071,0.53-0.168,0.53-0.374c0-0.184-0.007-0.672-0.01-1.32 c-2.159,0.469-2.614-1.04-2.614-1.04c-0.353-0.896-0.862-1.135-0.862-1.135c-0.705-0.481,0.053-0.472,0.053-0.472 c0.779,0.055,1.189,0.8,1.189,0.8c0.692,1.186,1.816,0.843,2.258,0.645c0.071-0.502,0.271-0.843,0.493-1.037 C4.86,11.425,3.049,10.76,3.049,7.786c0-0.847,0.302-1.54,0.799-2.082C3.768,5.507,3.501,4.718,3.924,3.65 c0,0,0.652-0.209,2.134,0.796C6.677,4.273,7.34,4.187,8,4.184c0.659,0.003,1.323,0.089,1.943,0.261 c1.482-1.004,2.132-0.796,2.132-0.796c0.423,1.068,0.157,1.857,0.077,2.054c0.497,0.542,0.798,1.235,0.798,2.082 c0,2.981-1.814,3.637-3.543,3.829c0.279,0.24,0.527,0.713,0.527,1.437c0,1.037-0.01,1.874-0.01,2.129 c0,0.208,0.14,0.449,0.534,0.373c3.081-1.028,5.302-3.935,5.302-7.362C15.76,3.906,12.285,0.431,7.999,0.431z"/></svg>
+</span><span class="username">carlosschults</span></a>
+
+          </li>
+          
+
+          
+          <li>
+            <a href="https://twitter.com/carlosschults"><span class="icon icon--twitter"><svg viewBox="0 0 16 16"><path fill="#828282" d="M15.969,3.058c-0.586,0.26-1.217,0.436-1.878,0.515c0.675-0.405,1.194-1.045,1.438-1.809c-0.632,0.375-1.332,0.647-2.076,0.793c-0.596-0.636-1.446-1.033-2.387-1.033c-1.806,0-3.27,1.464-3.27,3.27 c0,0.256,0.029,0.506,0.085,0.745C5.163,5.404,2.753,4.102,1.14,2.124C0.859,2.607,0.698,3.168,0.698,3.767 c0,1.134,0.577,2.135,1.455,2.722C1.616,6.472,1.112,6.325,0.671,6.08c0,0.014,0,0.027,0,0.041c0,1.584,1.127,2.906,2.623,3.206 C3.02,9.402,2.731,9.442,2.433,9.442c-0.211,0-0.416-0.021-0.615-0.059c0.416,1.299,1.624,2.245,3.055,2.271 c-1.119,0.877-2.529,1.4-4.061,1.4c-0.264,0-0.524-0.015-0.78-0.046c1.447,0.928,3.166,1.469,5.013,1.469 c6.015,0,9.304-4.983,9.304-9.304c0-0.142-0.003-0.283-0.009-0.423C14.976,4.29,15.531,3.714,15.969,3.058z"/></svg>
+</span><span class="username">carlosschults</span></a>
+
+          </li>
+          
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-3">
+        <p>Artigos sobre desenvolvimento de software e tecnologia.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+
+    <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-92788641-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+    <script src="/js/dark-mode.js"></script>
+  </body>
+
+</html>
