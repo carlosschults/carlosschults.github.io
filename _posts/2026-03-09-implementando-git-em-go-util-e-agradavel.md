@@ -78,7 +78,7 @@ nothing to commit (create/copy files and use "git add" to track)
 Parabéns! Você acabou de criar um repositório git manualmente. Isso é exatamente o que [meu código Go está fazendo](https://github.com/carlosschults/go-gitter/blob/main/ggt/main.go).
 
 ## Acompanhe as Atualizações
-As atualizações deste progresso serão rastreadas pela tag <a href="{{ site.baseurl }}/tag_ptbr/{{ tag }}">go-gitter</a>, então você pode salvar essa página nos favoritos, se quiser.
+As atualizações deste progresso serão rastreadas pela tag <a href="{{ site.baseurl }}/tag_ptbr/go-gitter">go-gitter</a>, então você pode salvar essa página nos favoritos, se quiser.
 Já vinculei ao repositório, mas aqui está novamente, caso você tenha perdido: [go-gitter](https://github.com/carlosschults/go-gitter).
 
 Obrigado pela leitura. Até a próxima atualização.
