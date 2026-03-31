@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Suas Mensagens de Commit São Um Lixo. Vou Te Ajudar a Melhorar | carlos schults / blog</title>
+  <link rel="apple-touch-icon" sizes="57x57" href="/img/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/img/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/img/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/img/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/img/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/img/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/img/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/img/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"  href="/img/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/img/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon-16x16.png">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="description" content="Suas mensagens de commit são um lixo. Na melhor das hipóteses, elas são inúteis. Mas geralmente, elas são piores do que nada.Eu não digo isso pra ser babaca....">
+  
+  <!-- Twitter card -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:creator" content="@carlosschults">
+  <meta name="twitter:site" content="@carlosschults">
+  <meta name="twitter:domain" content="carlosschults.net">
+  <meta name="twitter:title" content="Suas Mensagens de Commit São Um Lixo. Vou Te Ajudar a Melhorar">
+  <meta name="twitter:description" content="Suas mensagens de commit são um lixo. Na melhor das hipóteses, elas são inúteis. Mas geralmente, elas são piores do que nada.Eu não digo isso pra ser babaca....">
+
+   <!-- Facebook meta -->
+  
+  
+  <meta property="og:title" content="Suas Mensagens de Commit São Um Lixo. Vou Te Ajudar a Melhorar">
+  <meta property="og:site_name" content="Carlos Schults / Blog" />
+  <meta property="og:locale" content="pt_BR">  
+  <meta property="og:type" content="article" />
+  
+  <meta property="og:article:published_time" content="2026-03-31T00:00:00+00:00" />  
+  <meta property="og:article:author" content="Carlos Schults" />
+  
+  <meta property="og:article:tag" content="tutorial" />
+  <meta property="og:article:tag" content="git" />
+  <meta property="og:article:tag" content="rant" />    
+  
+  <meta property="og:url" content="https://carlosschults.net/pt/suas-mensagens-de-commit-sao-um-lixo"/>
+  <meta property="og:description" content="Suas mensagens de commit são um lixo. Na melhor das hipóteses, elas são inúteis. Mas geralmente, elas são piores do que nada.Eu não digo isso pra ser babaca....">
+  <link rel="stylesheet" href="/css/main.css">  
+  
+   <link rel="canonical" href="https://carlosschults.net/pt/suas-mensagens-de-commit-sao-um-lixo">
+   
+  
+  <link rel="alternate" hreflang="en" href="/en/your-commit-messages-suck" />
+  <link rel="alternate" hreflang="pt" href="/pt/suas-mensagens-de-commit-sao-um-lixo" />
+  
+  <link rel="alternate" type="application/rss+xml" title="carlos schults / blog" href="https://carlosschults.net/rss.xml">
+</head>
+
+  <body>
+    <header class="site-header">
+  <div class="wrapper">    
+    <a class="site-title" href="/pt/">carlos schults / blog</a>
+    
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg viewBox="0 0 18 15">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+
+      <div class="trigger">        
+          
+          <a class="page-link" href="/sobre/">Sobre</a>
+          <a class="page-link" href="/busca/">Busca</a>
+                  
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+<div class="wrapper" style="text-align: right; line-height: 2em">
+  
+   <a href="/en/your-commit-messages-suck" class="en">en</a>  <a href="/pt/suas-mensagens-de-commit-sao-um-lixo" class="pt">pt</a> 
+
+  
+  
+</div>
+
+
+    <div class="page-content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">    
+    <h2 class="postTitle" itemprop="headline">Suas Mensagens de Commit São Um Lixo. Vou Te Ajudar a Melhorar</h2>
+    <p class="post-meta">   
+    <time datetime="2026-03-31T00:00:00+00:00" itemprop="datePublished">31/03/2026
+    </time> • <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">Carlos Schults</span></span>
+  <span class="tags" itemprop="keywords"> • Tags: <a href="/tag_ptbr/tutorial">tutorial </a> <a href="/tag_ptbr/git">git </a> <a href="/tag_ptbr/rant">rant </a> </span>
+  </p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <p>Suas mensagens de commit são um lixo. Na melhor das hipóteses, elas são inúteis. Mas geralmente, elas são piores do que nada.
+Eu não digo isso pra ser babaca. Na verdade, é o contrário. Eu quero te ajudar.</p>
+
+<p>Se você sabe que você é exceção pra isso, você pode parar de ler. É sério, fecha a aba e vai pro YouTube. Pronto, te dei alguns minutos de volta, de nada.</p>
+
+<p>Se você ainda tá aqui, então você sabe que tem um problema. Como eu dizia, suas mensagens de commit não servem pra nada.
+Não fique ofendido. Isso não é culpa só sua. É bem provável que ninguém nunca te ensinou como escrever boas mensagens de commit, ou nem o porquê disso ser importante. E escrever é realmente muito difícil.</p>
+
+<p>A boa notícia é que agora você finalmente tem alguém pra te ajudar. Nesse post, eu vou explicar tudo que você precisa saber sobre mensagens de commit horríveis, e o que fazer pra escrever as que não são horríveis.</p>
+
+<h2 id="suas-mensagens-de-commit-são-um-lixo-porque">Suas Mensagens de Commit São um Lixo Porque…</h2>
+
+<p>Por que a maioria das mensagens de commit é tão ruim? Na minha experiência, os motivos se resumem ao que vou falar agora. Vale lembrar que não tem nada de científico ou baseado em dados aqui. É tudo baseado na minha experiência pessoal.</p>
+
+<h3 id="você-só-liga-pra-código">…Você Só Liga pra Código</h3>
+
+<p>Se você é como a maioria dos devs, você só — ou quase só — liga pra codar. É onde a diversão mora, e tudo o mais você vê como perda de tempo.
+Eu sei também que você provavelmente está sob muita pressão pra performar, pra entregar o máximo de valor o mais rápido possível. Então o que você mais quer é terminar o que está fazendo, mergar o PR e então pegar outro ticket do Jira/Azure/Linear pra começar a implementar.</p>
+
+<p>O que acaba acontecendo é que tudo que não é código é tratado como detalhe secundário e não recebe a devida atenção. Isso inclui testes, documentação, preparar uma revisão da feature implementada pra retrospectiva semanal e, claro, escrever mensagens de commit e descrições de PR.</p>
+
+<h3 id="às-vezes-você-não-entende-o-que-está-fazendo">…Às Vezes Você Não Entende o Que Está Fazendo</h3>
+
+<p>Boas mensagens de commit — e boa documentação em geral — devem focar no <em>porquê</em> das coisas. Qual é a motivação por trás das suas mudanças? Qual é o problema que você está tentando resolver, por que vale a pena resolvê-lo, de que forma isso ajuda seu time e sua empresa?</p>
+
+<p>Pode parecer loucura que um programador comece a trabalhar numa tarefa que não entende completamente. Mas eu já fiz isso, e aposto que você também. E claro, como você vai explicar o porquê de uma mudança se nem você mesmo entende direito?</p>
+
+<h3 id="escrever-é-difícil">…Escrever é Difícil</h3>
+
+<p>Como Phil Karlton disse uma vez, <a href="https://martinfowler.com/bliki/TwoHardThings.html">só existem duas coisas difíceis em ciência da computação</a>, e dar nome às coisas é uma delas.</p>
+
+<p>Se você parar pra pensar, “dar nome às coisas” é uma forma de escrever. Um subconjunto da escrita, digamos assim. Então sim, escrever mensagens de commit é difícil porque escrever, em geral, é difícil.</p>
+
+<h3 id="ninguém-te-ensinou">…Ninguém Te Ensinou</h3>
+
+<p>Acho que a formação de desenvolvedores frequentemente falha em ensinar muita coisa importante que você realmente vai precisar como engenheiro de software. Tratamento de erros de verdade é um exemplo.</p>
+
+<p>Tudo bem, eles vão te ensinar a mecânica de como um try-catch-finally funciona, mas raramente vão te ensinar quando capturar uma exceção, quando não capturar, quando lançar uma exceção, quando logar ou não, e assim por diante.</p>
+
+<p>E escrever mensagens de commit é uma dessas coisas.</p>
+
+<h3 id="o-github-te-ensinou-maus-hábitos">…O GitHub Te Ensinou Maus Hábitos</h3>
+
+<p>Vamos deixar uma coisa clara: eu uso o GitHub todo dia e gosto muito. O GitHub é o <a href="https://pt.wikipedia.org/wiki/Aplicativo_matador">aplicativo matador/killer app</a> do Git, e o Git não teria tido o mesmo nível de adoção sem ele.</p>
+
+<p>Dito isso, acredito que a popularidade do GitHub e dos pull requests fez as pessoas se importarem mais com os PRs do que com os commits individuais. E faz sentido: pull requests suportam discussões que ficam como artefatos históricos do projeto, suportam anexos, texto rico e tudo mais.</p>
+
+<p>Então faz sentido que algumas pessoas não se esforcem muito pra escrever boas mensagens de commit, argumentando que podem escrever descrições ricas no PR.</p>
+
+<p>Claro que o que acaba acontecendo frequentemente é que elas não escrevem as descrições de PR também!</p>
+
+<h3 id="a-flag--m-do-git-te-viciou">…A Flag <code class="language-plaintext highlighter-rouge">-m</code> do Git Te Viciou</h3>
+
+<p>Acho que a maioria dos programadores nem sabe que mensagens de commit podem ter um corpo com várias linhas. E a culpada aqui é a forma como a maioria das pessoas ensina o comando <code class="language-plaintext highlighter-rouge">commit</code>:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git commit <span class="nt">-m</span> <span class="s2">"Alguma mensagem"</span>
+</code></pre></div></div>
+
+<p>Sem nem mencionar que a flag <code class="language-plaintext highlighter-rouge">-m</code> é só uma conveniência pra quando você tem uma mensagem de uma linha, o que deveria ser a exceção, não a regra.</p>
+
+<h3 id="você-não-tem-higiene-de-commits">…Você Não Tem Higiene de Commits</h3>
+
+<p>Escrever mensagens de commit que não são lixo faz parte de algo mais amplo que algumas pessoas chamam de “higiene de controle de versão.”</p>
+
+<p>É exatamente o que parece: não seja porco na hora de escrever código.</p>
+
+<p>Às vezes você tem dificuldade pra escrever uma mensagem de commit porque trabalha de forma bagunçada. Se suas mudanças são uma salada de correções de bug, refatorações, código morto e ideias de implementação pela metade, claro que você vai ter problema pra escrever uma mensagem descritiva e útil.</p>
+
+<p>Isso costuma ser causado por falta de domínio do Git. Se você não domina ferramentas como stash, reset, rebase interativo e outras, é mais provável que você transforme seu trabalho num caos.</p>
+
+<h2 id="taxonomia-das-mensagens-de-commit-ruins">Taxonomia das Mensagens de Commit Ruins</h2>
+
+<p>Descobri que mensagens de commit ruins se encaixam em algumas categorias. Vou cobrir algumas delas agora.</p>
+
+<h3 id="a-mensagem-de-uma-linha-quase-inútil">A Mensagem de Uma Linha Quase Inútil</h3>
+
+<p>Essa é a mensagem de uma linha que dá uma explicação superficial do que foi mudado. Eu chamo de “quase” inútil porque pelo menos o resumo é preciso.</p>
+
+<p>Mas aí ela falha em dar qualquer contexto adicional. Fico com perguntas como:</p>
+<ul>
+  <li>Qual foi o problema que originou essa mudança?</li>
+  <li>Por que o autor considerou essa a melhor forma de resolver o problema?</li>
+  <li>Existe algum issue ou ticket associado a esse trabalho?</li>
+</ul>
+
+<p>Alguns exemplos, com meus comentários:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Added new index to table # que índice? que tabela? com qual propósito?
+Enable EF Core execution strategy # o que é essa tal "strategy"? por que você teve que habilitar?
+Added Required attribute to model # qual model? isso não é uma breaking change que vai afetar os usuários atuais?
+</code></pre></div></div>
+
+<h3 id="a-mensagem-de-uma-linha-inútil">A Mensagem de Uma Linha Inútil</h3>
+
+<p>A mensagem de uma linha inútil é… bem, como a quase inútil, mas completamente inútil.</p>
+
+<p>Os exemplos não precisam de mais comentários:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>changes
+ui
+not working
+more changes
+</code></pre></div></div>
+
+<p>Quer dizer, no momento em que você escreve “changes” como mensagem de commit, você poderia simplesmente escrever “batata”. Ou contar uma piada. Seria igualmente inútil, mas pelo menos poderia ter graça.</p>
+
+<h3 id="só-a-referência-do-sistema-de-tickets">Só a Referência do Sistema de Tickets</h3>
+
+<p>É quando as pessoas colocam apenas o id de um issue/ticket/card do sistema de gerenciamento, e nada mais. Alguns exemplos:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>JIRA-42
+AZ-2234
+<span class="c">#125</span>
+</code></pre></div></div>
+
+<p>Acho que essa categoria consegue ser ao mesmo tempo mais útil e mais irritante do que as anteriores. Sim, é mais útil, já que posso sempre ir ao sistema de tickets, procurar o issue, e aprender mais sobre o trabalho. Claro, nada garante que o commit vai conter apenas mudanças relacionadas ao issue em questão, mas isso é conversa pra outro momento.</p>
+
+<p>É mais irritante também porque obriga o leitor a parar e ir a outro lugar pra entender o contexto daquela mudança. Não sei você, mas eu prefiro aprender o motivo por trás de um commit pelo próprio commit, como <del>Deus</del>Linus quis.</p>
+
+<p>Além do incômodo, existe um risco maior aqui: a possibilidade de que, um dia, sua empresa migre do sistema de tickets atual e você fique sem aquelas descrições. Todas as empresas em que trabalhei como desenvolvedor fizeram pelo menos uma migração dessas, e tenho certeza que você já passou por pelo menos uma também.</p>
+
+<h3 id="a-mensagem-de-uma-linha-enganosa">A Mensagem de Uma Linha Enganosa</h3>
+
+<p>Às vezes você tem uma mensagem que parece inofensiva, como <code class="language-plaintext highlighter-rouge">Add PrintHtmlOutput() method</code>. Aí você vai ver as mudanças e elas também incluem uma breaking change em um endpoint ou alteram a forma como a aplicação interage com o banco de dados.</p>
+
+<h2 id="você-vai-escrever-boas-mensagens-de-commit-quando">Você Vai Escrever Boas Mensagens de Commit Quando…</h2>
+
+<p>Agora você entende por que escreve mensagens ruins, e <em>como</em> elas são ruins. Pronto pra aprender a melhorar?</p>
+
+<h3 id="escrever-suas-mensagens-em-inglês">…Escrever Suas Mensagens Em Inglês</h3>
+<p>Um dos posts mais visitados desse blog discute se <a href="/pt/programar-portugues-ou-ingles/">devemos escrever código em português ou inglês</a>. Eu considero que fiz bons argumentos, mostrando os prós e constras de ambos os lados e deixando meu posicionamento bem claro.</p>
+
+<p>Ainda assim, alguns leitores me acusaram de ficar em cima do muro.</p>
+
+<p>Dessa vez, então, vou falar sem sombra de dúvida: <strong>ESCREVA SUAS MENSAGENS DE COMMIT EM INGLÊS.</strong> É simplesmente o padrão do mercado, e o quanto antes você se acostumar com isso, melhor.</p>
+
+<p>E é por isso, inclusive, que os exemplos de mensagem de commit deste post estão todos em inglês. Eu escrevi o post originalmente em inglês e agora estou traduzindo para português, mas deixei as mensagens em inglês de propósito mesmo, por causa desse ponto.</p>
+
+<h3 id="parar-de-escrever-mensagens-de-uma-linha">…Parar de Escrever Mensagens de Uma Linha</h3>
+
+<p>Mensagens de uma linha são ótimas quando o escopo da mudança é pequeno. Se o seu commit só corrige um typo, então <code class="language-plaintext highlighter-rouge">Fix typo</code> é uma mensagem de commit válida. Mas na maioria das vezes os commits contêm muito mais mudanças, e nesses casos escrever uma mensagem de uma linha é uma oportunidade perdida de criar uma documentação duradoura.</p>
+
+<p>Então, por favor, pare de usar a flag <code class="language-plaintext highlighter-rouge">-m</code> na hora de commitar. Escreva um corpo adequado com mais detalhes na maioria das suas mensagens.</p>
+
+<h3 id="começar-pelo-o-quê-expandir-com-o-por-quê-e-o-como">…Começar pelo “O Quê”, Expandir com o “Por Quê” e o “Como”</h3>
+
+<p>Agora você sabe que deve escrever um resumo e um corpo na maioria das suas mensagens de commit. O que colocar em cada um?</p>
+
+<p>Simples: comece com o resumo, descrevendo <em>o que</em> você fez. Seja descritivo, mas conciso.</p>
+
+<p>No corpo, descreva qual é o problema que você está tentando resolver, ou o motivo que motivou a mudança. Em seguida, explique como você resolveu, mas de forma macro. Não entre em muito detalhe, porque lembre-se que seu leitor sempre pode ver o diff.</p>
+
+<p>Se necessário, adicione mais informações, como:</p>
+<ul>
+  <li>trade-offs envolvidos na sua decisão</li>
+  <li>alternativas que você considerou mas decidiu não usar</li>
+  <li>links de referência para termos que possam ser desconhecidos (por exemplo, um link para um artigo da Wikipedia, ou para o <a href="https://refactoring.com/catalog/">Catálogo de Refatorações</a> do Martin Fowler)</li>
+  <li>links de referência para a solução que você aplicou (por exemplo, um link para uma resposta no Stack Overflow)</li>
+</ul>
+
+<h3 id="seguir-a-regra-do-5072">…Seguir a Regra do 50/72</h3>
+
+<p>A regra do 50/72 é o mais próximo que temos de um padrão quando se trata de mensagens de commit. Foi <a href="https://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html">proposta pela primeira vez por Tim Pope</a> e funciona assim:</p>
+
+<ul>
+  <li>Comece com um resumo, com a primeira letra maiúscula, com no máximo 50 caracteres</li>
+  <li>Adicione uma linha em branco</li>
+  <li>Em seguida, adicione um corpo, quebrando as linhas em no máximo 72 caracteres</li>
+</ul>
+
+<p>Esses limites podem parecer arbitrários, mas existem razões históricas pra eles terem sido escolhidos. Pra resumir, eles funcionam bem com muitas ferramentas diferentes que trabalham com mensagens de commit.</p>
+
+<p>Outro ponto importante: você deve escrever o resumo no modo imperativo. Ou seja, “Implement password hashing” em vez de “Implemented password hashing”, por exemplo. A princípio isso pode parecer estranho, mas é o padrão que o próprio Git usa. Se não acreditar, use <code class="language-plaintext highlighter-rouge">git revert</code> pra reverter um commit e vai ver que a mensagem gerada está no modo imperativo:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Revert <span class="s2">"Add line of text"</span>
+
+This reverts commit 5ab08c5d3ee7bfdb334406d418d96f76d08962fe.
+</code></pre></div></div>
+
+<p>Viu? “Revert” em vez de “Reverted.”</p>
+
+<p>Adicionalmente, e de forma opcional, você pode adicionar um trailer ao commit. Trailers são metadados que você pode adicionar no final da mensagem de commit, seguindo a sintaxe <code class="language-plaintext highlighter-rouge">Nome: valor</code>. Eles servem pra adicionar metadados úteis, como quem aprovou uma mudança, quem co-autorou algo com você, e também pra associar seu commit a um issue ou ticket.</p>
+
+<p>Por exemplo, se você usa GitHub Issues, você pode adicionar um trailer assim:</p>
+
+<p><code class="language-plaintext highlighter-rouge">Closes: #456</code></p>
+
+<p>E ele vai automaticamente associar o commit ao issue e fechá-lo. Existem outras palavras-chave que você pode usar, como <code class="language-plaintext highlighter-rouge">Fixes</code>, <code class="language-plaintext highlighter-rouge">Resolves</code>, <code class="language-plaintext highlighter-rouge">Resolved</code>, e assim por diante. Você pode aprender mais sobre como fechar issues do GitHub automaticamente <a href="https://docs.github.com/pt/issues/tracking-your-work-with-issues/using-issues/linking-a-pull-request-to-an-issue">aqui</a>.</p>
+
+<h3 id="adotar-commits-atômicos">…Adotar Commits Atômicos</h3>
+
+<p>A ideia dos commits atômicos é simples: um commit deve conter apenas mudanças logicamente relacionadas. É o oposto da falta de higiene de controle de versão que mencionei antes.</p>
+
+<p>Digamos que você está trabalhando numa feature. Aí seu chefe te pede pra parar e corrigir um bug. Você vai lá e corrige o bug, e agora tem aquelas mudanças misturadas com as do início da sua implementação de feature.</p>
+
+<p>Não commita tudo junto! Commita apenas as mudanças do bug fix como uma unidade coesa, com uma mensagem descritiva e de qualidade. Aí você volta pra sua feature e commita aquilo.</p>
+
+<p>Fazer isso exige que você domine as ferramentas do Git. Você precisa saber como fazer stage das mudanças e commitar apenas aquelas em vez de tudo. Precisa saber usar o stash. Com frequência, vai precisar saber como commitar coisas e depois editar esse histórico.</p>
+
+<p>Essas habilidades valem a pena ter. Vai atrás delas!</p>
+
+<h3 id="commitar-sempre-polir-depois">…Commitar Sempre, Polir Depois</h3>
+
+<p>Você não precisa esperar estar “pronto” pra commitar. Pelo contrário, você deve commitar o tempo todo. Trabalhe em incrementos pequenos e commite ao longo do caminho.</p>
+
+<p>Assim, se cometer erros e precisar descartar algum trabalho, você vai reverter apenas alguns minutos de trabalho em vez de horas. Você também tem esses checkpoints pra voltar caso a luz caia ou algo do tipo.</p>
+
+<p>Por exemplo, quem pratica TDD (desenvolvimento orientado a testes) frequentemente commita toda vez que chega na fase verde. Ou seja, toda vez que os testes passam.</p>
+
+<p>Também é uma boa ideia manter todos os seus commits limpos. Com isso quero dizer que todos os seus commits, quando aplicados, devem deixar o projeto em um estado onde ele builda com sucesso e todos os testes passam. Isso facilita para você ou outra pessoa usar o <a href="/pt/git-bisect-intro/">git bisect no futuro pra encontrar onde um bug foi introduzido</a>.</p>
+
+<p>Mas se você seguir essa dica, pode acabar com muitos commits pequeninhos que não têm boas mensagens, ou que não representam um conjunto coeso de mudanças. Como resolver isso?</p>
+
+<p>A resposta é: <a href="/pt/git-historico-bonito/">você edita seu histórico pra deixá-lo bonito</a>. Editar o histórico é mal visto — e com razão — quando é uma branch da qual outras pessoas já dependem. Mas se você está trabalhando na sua própria branch isolada e ninguém depende das suas mudanças, você pode fazer o que quiser até aquele ponto. Então commite cedo e com frequência, e depois use amend e rebase até ter um histórico que faça sentido e tenha ótimas mensagens de commit.</p>
+
+<h2 id="exemplos-de-boas-mensagens-de-commit">Exemplos de Boas Mensagens de Commit</h2>
+
+<p>Finalmente chegou a hora de mostrar alguns exemplos de mensagens de commit valiosas que incorporam tudo que cobrimos até aqui.</p>
+
+<p>Por exemplo, em vez de:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Added Required attribute to model
+</code></pre></div></div>
+
+<p>Escreva:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Make PhoneNumber required on /reservations endpoint
+
+The /reservations endpoint originally didn<span class="s1">'t require a phone number.
+The reservations were being accepted but, as data flowed to downstream
+systems, the lack of phone number was causing some processes to crash.
+
+We are now adding the [Required] attribute to the PhoneNumber property
+on the ReservationRequestModel. This is a breaking change, so that'</span>s
+why, as part of this changes, we are versioning the endpoint as 2.0
+
+Fixes: AB#456
+</code></pre></div></div>
+
+<p>Veja como fica:</p>
+<ul>
+  <li>A mensagem começa com um resumo que descreve o que foi feito</li>
+  <li>O corpo começa com uma descrição do problema, depois explica como a mudança atual o resolve</li>
+  <li>Por fim, temos um trailer para associar e fechar um ticket no board</li>
+</ul>
+
+<p>Para o segundo exemplo, vamos fazer algo um pouco mais elaborado. Em vez de <code class="language-plaintext highlighter-rouge">Enable EF Core execution strategy</code>, você pode usar:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Enable EF Core execution strategy <span class="k">for </span>Azure SQL
+
+After migrating to Azure SQL, save operations started failing
+intermittently <span class="k">in </span>production with transient connection errors.
+Azure SQL occasionally drops connections during scaling events
+and failovers, and Entity Framework does not retry failed
+operations by default.
+
+Enabled the built-in SQL Server execution strategy <span class="k">in </span>EF Core,
+which automatically retries failed operations using exponential
+backoff when a transient error is detected.
+
+An execution strategy is a configurable EF Core component that
+intercepts database operations and decides whether to retry
+them on failure. The SQL Server provider ships with a strategy
+that knows which error codes Azure SQL considers transient.
+
+<span class="o">[</span>1]: https://learn.microsoft.com/en-us/ef/core/miscellaneous/connection-resiliency
+
+Closes: <span class="c">#89</span>
+</code></pre></div></div>
+
+<p>Todas as mensagens precisam ter esse nível de profundidade? Claro que não. Por exemplo, <code class="language-plaintext highlighter-rouge">Fix typo</code> é uma ótima mensagem de commit, se tudo que você está fazendo naquele commit é corrigir um typo. O mesmo vale para <code class="language-plaintext highlighter-rouge">Remove commented-out code</code>, <code class="language-plaintext highlighter-rouge">Remove blank lines</code>, e assim por diante.
+O tamanho da sua mensagem de commit precisa ser diretamente proporcional ao tamanho e escopo da sua mudança.</p>
+
+<h2 id="a-ia-muda-tudo-ouserá-que-não">A IA Muda Tudo. Ou…Será Que Não?</h2>
+
+<p>Eu sei o que você ficou se perguntando durante todo esse tempo. “Mas…mas…mas…e o ChatGPT?”</p>
+
+<p>Minha opinião sincera é que a IA muda pouco, ou nada, do que discutimos até aqui.</p>
+
+<p>Pra começar, com IA ou sem IA, os fundamentos continuam os mesmos:</p>
+<ul>
+  <li>Boas mensagens de commit ainda devem focar mais no porquê do que no quê e no como.</li>
+  <li>A regra do 50/72 ainda é uma boa diretriz a seguir.</li>
+  <li>Usar o modo imperativo nos resumos continua sendo o padrão para muitas ferramentas, incluindo o próprio Git e o GitHub.</li>
+  <li>Boas mensagens de commit ainda têm imenso valor para leitores futuros, que podem incluir a própria IA.</li>
+</ul>
+
+<p><em>Mas a IA é ótima pra escrever mensagens de commit. Por que eu deveria me preocupar?</em></p>
+
+<p>Quando se trata de mensagens de commit, a IA é de fato ótima em uma coisa. E essa coisa é resumir um conjunto de mudanças e escrever, de forma muito bem escrita, gramaticalmente correta, com tom profissional… uma listagem detalhada de todas as mudanças.</p>
+
+<p>Que é exatamente o que você não deveria estar fazendo! Onde a IA falha é exatamente na parte mais importante, que a esta altura você já deve estar cansado de ler: o porquê.</p>
+
+<p>Não estou dizendo que você não deve usar IA pra te ajudar a criar mensagens de commit. Claro que pode. Eu uso bastante. Este é um exemplo de prompt que uso frequentemente com o Claude, com algumas variações:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Write a concise, well-crafted commit message for the diff I'm going to give you.
+Make it more high-level, focusing on the why rather than listing all changes in great detail.
+Follow these rules:
+- Summary
+	- Brief description of what was done
+	- 50 chars at the most
+	- Use imperative mood
+	- Do not use conventional commits
+- Body
+	- Brief description of the "how", but focus more on the reason for the changes
+	- Use prose rather than bullet points.
+	- Use past tense
+	- Lines no longer than 72 chars
+</code></pre></div></div>
+
+<p>Depois eu rodo <code class="language-plaintext highlighter-rouge">git diff | clip</code> e colo o resultado junto com esse prompt.</p>
+
+<p>O que eu recebo de volta é sempre uma mensagem muito bem escrita, muito mais detalhada sobre descrever as mudanças do que eu gostaria, e que perde completamente o ponto do porquê estamos fazendo as mudanças. O que não surpreende nada, porque como diabos ela saberia se eu não contei?</p>
+
+<p>O que faço então é explicar os motivos da mudança. E pedir pra tentar de novo, mais alto nível e incluindo a explicação. Às vezes a segunda versão já está boa o suficiente, mas geralmente preciso de pelo menos três até ficar satisfeito.</p>
+
+<p>Entendeu o padrão? Isso é uma colaboração entre a IA e eu. Estamos trabalhando juntos pra criar uma mensagem. Não estou terceirizando 100% pra IA.</p>
+
+<p>Quando uso o Claude Code, essas regras do prompt acima ficam no arquivo <code class="language-plaintext highlighter-rouge">Claude.md</code> do projeto. Nesse cenário, ele tende a ir muito melhor em entender o “porquê”, porque tudo começou com um prompt em que eu expliquei o motivo por trás da mudança, e então fizemos uma sessão de planejamento antes de começar a implementar.</p>
+
+<p>Mas mesmo assim, a IA frequentemente ainda precisa de muita orientação até conseguir escrever uma mensagem de commit que realmente foque nos motivos por trás da mudança e que dê informações no nível certo de abstração. Por conta própria, a IA produz mensagens bem escritas que são essencialmente um diff em prosa.</p>
+
+<h2 id="conclusão">Conclusão</h2>
+
+<p>A essa altura, você provavelmente percebeu que este é um post bem opinionado. Algumas das coisas cobertas aqui estão muito perto de ser um padrão, como a regra do 50/72 e a ideia de escrever resumos no modo imperativo.</p>
+
+<p>Porém, algumas coisas que discuti são preferências pessoais. Por exemplo, eu normalmente não uso <a href="https://www.conventionalcommits.org/en/v1.0.0/">Conventional Commits</a>. Os motivos pra isso estão além do escopo deste post, mas existem. São motivos bastante pessoais, então não vou te julgar se você gosta de usar Conventional Commits.</p>
+
+<p>A principal lição que quero que você leve deste post é: coloque trabalho nas suas mensagens de commit. Não escreva qualquer coisa; elabore suas mensagens. Trabalhe nelas, aperfeiçoe-as, até não conseguir mais melhorar.</p>
+
+<p>Sim, é difícil. Pode ser frustrante. Pode parecer uma perda de tempo ficar 10, 15 ou até 20 minutos elaborando uma mensagem que o seu LLM favorito teria gerado em segundos.</p>
+
+<p>Mas eu garanto: anos depois, quando você estiver investigando um incidente crítico em produção e se deparar com ótimas mensagens de commit que oferecem insights valiosos sobre o porquê de algumas mudanças terem sido feitas… você vai ficar feliz por ter feito isso.</p>
+
+<p>Obrigado por ler.</p>
+
+    
+    
+      
+    
+    
+        Encontrou algum erro no post? <a href="http://github.com/carlosschults/carlosschults.github.io/edit/master/_posts/2026-03-31-suas-mensagens-de-commit-sao-um-lixo.md">Sugira uma edição</a>      
+    
+    
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+                    
+            <a rel="previous" class="previous" href="/pt/implementando-git-em-go">&larr; Implementando o git em Go do Zero: Unindo o Útil ao...Agradável? </a>
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+      
+    <div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+        // Store these for reloads
+        window.disqus_identifier = window.location.pathname;
+        window.disqus_url = window.location.href;
+        
+        // Set initial theme - match it with the site's theme
+        const currentTheme = document.body.getAttribute('data-theme') || 'light';
+        this.page.theme = currentTheme === 'dark' ? 'dark' : 'light';
+    };
+    
+    (function() {
+        var d = document, s = d.createElement('script');
+        s.src = '//carlosschultsblog.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>    
+  </div>
+
+</article>
+
+      </div>
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">         
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-2">
+        <ul class="social-media-list">
+          
+          <li>
+            <a href="https://github.com/carlosschults"><span class="icon icon--github"><svg viewBox="0 0 16 16"><path fill="#828282" d="M7.999,0.431c-4.285,0-7.76,3.474-7.76,7.761 c0,3.428,2.223,6.337,5.307,7.363c0.388,0.071,0.53-0.168,0.53-0.374c0-0.184-0.007-0.672-0.01-1.32 c-2.159,0.469-2.614-1.04-2.614-1.04c-0.353-0.896-0.862-1.135-0.862-1.135c-0.705-0.481,0.053-0.472,0.053-0.472 c0.779,0.055,1.189,0.8,1.189,0.8c0.692,1.186,1.816,0.843,2.258,0.645c0.071-0.502,0.271-0.843,0.493-1.037 C4.86,11.425,3.049,10.76,3.049,7.786c0-0.847,0.302-1.54,0.799-2.082C3.768,5.507,3.501,4.718,3.924,3.65 c0,0,0.652-0.209,2.134,0.796C6.677,4.273,7.34,4.187,8,4.184c0.659,0.003,1.323,0.089,1.943,0.261 c1.482-1.004,2.132-0.796,2.132-0.796c0.423,1.068,0.157,1.857,0.077,2.054c0.497,0.542,0.798,1.235,0.798,2.082 c0,2.981-1.814,3.637-3.543,3.829c0.279,0.24,0.527,0.713,0.527,1.437c0,1.037-0.01,1.874-0.01,2.129 c0,0.208,0.14,0.449,0.534,0.373c3.081-1.028,5.302-3.935,5.302-7.362C15.76,3.906,12.285,0.431,7.999,0.431z"/></svg>
+</span><span class="username">carlosschults</span></a>
+
+          </li>
+          
+
+          
+          <li>
+            <a href="https://twitter.com/carlosschults"><span class="icon icon--twitter"><svg viewBox="0 0 16 16"><path fill="#828282" d="M15.969,3.058c-0.586,0.26-1.217,0.436-1.878,0.515c0.675-0.405,1.194-1.045,1.438-1.809c-0.632,0.375-1.332,0.647-2.076,0.793c-0.596-0.636-1.446-1.033-2.387-1.033c-1.806,0-3.27,1.464-3.27,3.27 c0,0.256,0.029,0.506,0.085,0.745C5.163,5.404,2.753,4.102,1.14,2.124C0.859,2.607,0.698,3.168,0.698,3.767 c0,1.134,0.577,2.135,1.455,2.722C1.616,6.472,1.112,6.325,0.671,6.08c0,0.014,0,0.027,0,0.041c0,1.584,1.127,2.906,2.623,3.206 C3.02,9.402,2.731,9.442,2.433,9.442c-0.211,0-0.416-0.021-0.615-0.059c0.416,1.299,1.624,2.245,3.055,2.271 c-1.119,0.877-2.529,1.4-4.061,1.4c-0.264,0-0.524-0.015-0.78-0.046c1.447,0.928,3.166,1.469,5.013,1.469 c6.015,0,9.304-4.983,9.304-9.304c0-0.142-0.003-0.283-0.009-0.423C14.976,4.29,15.531,3.714,15.969,3.058z"/></svg>
+</span><span class="username">carlosschults</span></a>
+
+          </li>
+          
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-3">
+        <p>Artigos sobre desenvolvimento de software e tecnologia.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+
+    <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-92788641-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+    <script src="/js/dark-mode.js"></script>
+  </body>
+
+</html>
