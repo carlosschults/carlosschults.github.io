@@ -3,74 +3,99 @@
 ---
 @charset "utf-8";
 
-// Our variables
+// Basic typography
 $base-font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 $base-font-size:   16px;
 $base-font-weight: 400;
 $small-font-size:  $base-font-size * 0.875;
 $base-line-height: 1.5;
-
 $spacing-unit:     30px;
 
-// Light mode colors
-$text-color:       #111;
-$background-color: #fdfdfd;
-$brand-color:      #2a7ae2;
+// Layout sizes
+$content-width:    800px;
+$on-palm:         600px;
+$on-laptop:       800px;
 
-$grey-color:       #828282;
+// Light theme colors
+$background-color: #fdfdfd;
+$text-color:      #111;
+$grey-color:      #828282;
 $grey-color-light: lighten($grey-color, 40%);
 $grey-color-dark:  darken($grey-color, 25%);
 
-// Dark mode colors
-$text-color-dark:  #e0e0e0;
-$background-color-dark: #242424;
-$brand-color-dark: #66b3ff;
-$grey-color-dark-theme: #a0a0a0;
-$border-color-dark: #404040;
-$code-background-dark: #2a2a2a;
+// Dark theme colors
+$background-color-dark: #111827;
+$text-color-dark: #e5e7eb;
+$grey-color-dark-theme: #9ca3af;
+$border-color-dark: #374151;
+$code-background-dark: #1f2937;
+$header-bg: rgba(17, 24, 39, 0.8);
 
-// Width of the content area
-$content-width:    800px;
-$on-palm:          600px;
-$on-laptop:        800px;
+// Brand colors
+$brand-color: #3b82f6;
+$brand-color-dark: #60a5fa;
+$accent-yellow: #fbbf24;
+$hover-yellow: #fbbf24;
+$hover-blue: #60a5fa;
 
+// Mixins
 @mixin media-query($device) {
     @media screen and (max-width: $device) {
         @content;
     }
 }
 
+@mixin backdrop-blur {
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+
+@mixin smooth-transition {
+    transition: all 0.2s ease-in-out;
+}
+
 // Import partials from `sass_dir`
 @import
-        "base",
-        "layout",
-        "syntax-highlighting";
+    "base",
+    "layout",
+    "syntax-highlighting";
 
-// Theme toggle styles - keeping these after all imports to ensure they're not overridden
+// Scrollbar styles
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: $background-color-dark;
+}
+
+::-webkit-scrollbar-thumb {
+    background: $border-color-dark;
+    border-radius: 4px;
+    
+    &:hover {
+        background: lighten($border-color-dark, 10%);
+    }
+}
+
+// Theme toggle styles
 .theme-toggle {
     position: fixed;
     top: 1rem;
     right: 1rem;
     padding: 0.5rem 1rem;
-    border-radius: 20px;
-    border: 2px solid $grey-color-light;
-    background: $background-color;
-    color: $text-color;
+    border-radius: 8px;
+    border: 1px solid $border-color-dark;
+    background: rgba($background-color-dark, 0.8);
+    color: $text-color-dark;
     cursor: pointer;
-    transition: all 0.3s ease;
+    @include smooth-transition;
+    @include backdrop-blur;
     z-index: 1000;
-    font-size: 1.2rem;
-    outline: none;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-
+    font-size: 0.875rem;
+    
     &:hover {
-        opacity: 0.9;
-        transform: scale(1.05);
-    }
-
-    body[data-theme="dark"] & {
-        border-color: $border-color-dark;
-        background: $background-color-dark;
-        color: $text-color-dark;
+        background: rgba(lighten($background-color-dark, 5%), 0.9);
+        border-color: $hover-yellow;
     }
 }
