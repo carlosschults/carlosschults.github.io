@@ -5,10 +5,276 @@
     <description>Articles on software development and technology.</description>
     <link>https://carlosschults.net/</link>
     <atom:link href="https://carlosschults.net/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Thu, 09 Apr 2026 17:14:39 +0000</pubDate>
-    <lastBuildDate>Thu, 09 Apr 2026 17:14:39 +0000</lastBuildDate>
+    <pubDate>Fri, 29 May 2026 16:32:41 +0000</pubDate>
+    <lastBuildDate>Fri, 29 May 2026 16:32:41 +0000</lastBuildDate>
     <generator>Jekyll v4.3.1</generator>
     
+    
+      <item>
+        <title>Building git in Go From Scratch - Part 2</title>
+        <description>&lt;p&gt;Welcome back to my journey of building git from scratch in Go, in order to learn more about both. If you don’t know what
+I’m talking about, go read &lt;a href=&quot;/en/implementing-git-in-go&quot;&gt;the first post&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2 id=&quot;its-been-a-while&quot;&gt;It’s Been a While&lt;/h2&gt;
+&lt;p&gt;I published the first entry for this log of sorts on March 9th. What have I been up to, and why it took me so long to continue the series?&lt;/p&gt;
+
+&lt;p&gt;The answer is what you probably already know: I’m a busy adult and don’t have much time. Also, there are other personal projects that demand my time.&lt;/p&gt;
+
+&lt;p&gt;Anyway, enough with the excuses. Let’s talk about what I’ve managed to implement since the last update.&lt;/p&gt;
+
+&lt;h2 id=&quot;plumbing-vs-porcelain-commands&quot;&gt;Plumbing vs Porcelain Commands&lt;/h2&gt;
+&lt;p&gt;Before I go into more detail about what I implemented, I’ll need to digress a little bit and talk about a distinction that exists regarding git commands.&lt;/p&gt;
+
+&lt;p&gt;When you think about git commands, what come to your mind are probably commands like &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;git add&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;git init&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;git log&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;git status&lt;/code&gt;, and so on. And even that only if you actually use commands. Many people simply use GUIs for everything and never manage to learn not even the basic commands.&lt;/p&gt;
+
+&lt;p&gt;These are the so-called “porcelain” commands. They are the high-level commands, intended to be used by git’s end-users, like you and me.&lt;/p&gt;
+
+&lt;p&gt;There is another layer of commands, which people call “plumbing” commands. Plumbing commands are the low-level commands, which perform the nitty-gritty data manipulation that enables the high-level commands to do their work.&lt;/p&gt;
+
+&lt;p&gt;So, recently, I’ve been implementing some plumbing commands that act as the foundation for much of what git does. They are &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;hash-object&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;cat-file&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h2 id=&quot;understanding-hash-object-and-cat-file&quot;&gt;Understanding &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;hash-object&lt;/code&gt; And &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;cat-file&lt;/code&gt;&lt;/h2&gt;
+&lt;p&gt;I’m going to talk very briefly about what these commands do before I talk about my experience implementing them. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;hash-object&lt;/code&gt; is the command used to save some data as a blob (binary large object) inside a git repository. You give the command a piece of text, and it saves an object with that information, and gives you back a SHA1 hash.&lt;/p&gt;
+
+&lt;p&gt;The &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;cat-file&lt;/code&gt; command does the opposite. You give it an object hash, and it returns you its contents (or size, or type, depending on how you call it).&lt;/p&gt;
+
+&lt;h3 id=&quot;hashing-your-first-object&quot;&gt;Hashing Your First Object&lt;/h3&gt;
+&lt;p&gt;Do you want to test it? Run the following command:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;echo &lt;/span&gt;hi | git hash-object &lt;span class=&quot;nt&quot;&gt;--stdin&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;After running this, you should see this exact hash as a result: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;45b983be36b73c0788dc9cbcb76cbb80fc7bb057&lt;/code&gt;.&lt;/p&gt;
+
+&lt;div class=&quot;callout callout-info&quot;&gt;
+  &lt;div class=&quot;callout-title&quot;&gt;
+    &lt;span class=&quot;callout-icon&quot;&gt;ℹ️&lt;/span&gt;
+    Info
+  &lt;/div&gt;
+  &lt;div class=&quot;callout-content&quot;&gt;
+    
+&lt;p&gt;If you’re on Linux or another Unix system, you probably got the result above. The same is true for Windows if you’re using Git Bash. But if you’re on Windows and using the command prompt or powershell, your result was probably different. That happens because of different line endings between the systems.&lt;/p&gt;
+
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;p&gt;What happened here is that git calculated a hash for the “hi” string and returned it to you. We’re using the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;--stdin&lt;/code&gt; flag so you can pipe the content from the standard input.&lt;/p&gt;
+
+&lt;p&gt;However, that wasn’t saved anywhere. To actually write the data to disk, you need to use a different version of the command, and this time it needs to be inside a repository.&lt;/p&gt;
+
+&lt;h3 id=&quot;saving-an-object&quot;&gt;Saving an Object&lt;/h3&gt;
+
+&lt;p&gt;Go to some place, create a new folder and a new repo inside it:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;mkdir &lt;/span&gt;testing-commands
+&lt;span class=&quot;nb&quot;&gt;cd &lt;/span&gt;testing-commands
+git init
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;That’s good. Now, you can do this:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;echo &lt;/span&gt;hi | git hash-object &lt;span class=&quot;nt&quot;&gt;-w&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--stdin&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;This is similar to how you used the command before, but notice the extra &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;-w&lt;/code&gt; flag. That means &lt;strong&gt;write&lt;/strong&gt; and it’s what makes git save the content to a file. You’ll still get the SHA1 hash as a response, same as before, but now you got a brand new blob git object saved somewhere. Wanna see it?&lt;/p&gt;
+
+&lt;p&gt;Go to the folder where this repository lives, then go inside the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;testing-commands&lt;/code&gt; folder. As in, using a GUI, not in the command line. Change whatever configurations you need so you can see hidden folders and files. You’ll see a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.git&lt;/code&gt; folder:&lt;/p&gt;
+
+&lt;p&gt;Go inside this folder and you’ll see basically this structure:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;├───hooks
+├───info
+├───objects   
+└───refs
+- config
+- description
+- HEAD
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;config&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;description&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;HEAD&lt;/code&gt; are files, and the others are folders. Go inside the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;objects&lt;/code&gt; folder. You’ll probably find an &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;info&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;pack&lt;/code&gt; folders there, but ignore them.&lt;/p&gt;
+
+&lt;p&gt;What we’re really after here is a folder named with two characters. If you ran the commands above on Linux or using Git bash on Windows, it should be &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;45&lt;/code&gt;. Otherwise, it should be the first two characters of whatever hash you got back after running &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;echo hi | git hash-object -w --stdin&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Go into that folder. Inside, you’ll find a file named after the remaining characters of the hash you got back. In my case, I see &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;b983be36b73c0788dc9cbcb76cbb80fc7bb057&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;That is your blob.&lt;/strong&gt; That file is the object that git saved when you ran the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;hash-object&lt;/code&gt; command with the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;-w&lt;/code&gt; flag.&lt;/p&gt;
+
+&lt;h3 id=&quot;reading-objects-back&quot;&gt;Reading Objects Back&lt;/h3&gt;
+&lt;p&gt;Try opening the blob file using your text editor of choice. You’ll see that, yes, the file opens fine. But the contents are pure giberish. That’s because that’s a compressed, binary format. It isn’t plain text.&lt;/p&gt;
+
+&lt;p&gt;This is what git does, in sequence:&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;It creates a header, by concatenating the word “blob”, a space, and the size, in bytes of the contents. For instance, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;blob 2&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;Then it concatenates that with a &lt;a href=&quot;https://en.wikipedia.org/wiki/Null_character&quot;&gt;null character&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;It then concatenates the actual content after that. In our example, “hi”.&lt;/li&gt;
+  &lt;li&gt;It generates the SHA1 of the complete string.&lt;/li&gt;
+  &lt;li&gt;If you’re not using the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;-w&lt;/code&gt; flag, git then returns the SHA1 and that’s it.&lt;/li&gt;
+  &lt;li&gt;In case you are using the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;-w&lt;/code&gt; flag, it the compresses the complete string (header + null byte + contents)&lt;/li&gt;
+  &lt;li&gt;It takes the two first characters of the SHA1 hash and creates a directory with that name, inside &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;objects&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;Finally, it creates a file inside that folder, named with the remaining characters of the SHA1 hash, and writes to this file the contents, compressed using zlib.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;In order to read this data back, you use the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;cat-file&lt;/code&gt; command, along with one of its flags. In order to just read the contents, you use &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;cat-file -p&lt;/code&gt;, where the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;-p&lt;/code&gt; flag means “pretty print”:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git cat-file &lt;span class=&quot;nt&quot;&gt;-p&lt;/span&gt; 45b983be36b73c0788dc9cbcb76cbb80fc7bb057
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;If you run the command above, you get “hi” back. You can also use the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;-t&lt;/code&gt; flag for the type of object, or &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;-s&lt;/code&gt; to return its size in bytes:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git cat-file &lt;span class=&quot;nt&quot;&gt;-t&lt;/span&gt; 45b983be36b73c0788dc9cbcb76cbb80fc7bb057
+blob
+
+git cat-file &lt;span class=&quot;nt&quot;&gt;-s&lt;/span&gt; 45b983be36b73c0788dc9cbcb76cbb80fc7bb057
+3
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;enter-go-gitter&quot;&gt;Enter Go-Gitter&lt;/h2&gt;
+&lt;p&gt;Now that you understand what these two commands do, let’s talk about how I implemented them in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;go-gitter&lt;/code&gt;, starting with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;hash-object&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h3 id=&quot;implementing-hash-object&quot;&gt;Implementing &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;hash-object&lt;/code&gt;&lt;/h3&gt;
+
+&lt;p&gt;My first step was implementing the most basic version of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;hash-object&lt;/code&gt;, without the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;-w&lt;/code&gt; flag. So, the command would be able to display the SHA1 hash for a given text, but not actually save it to disk yet.&lt;/p&gt;
+
+&lt;p&gt;As you can see from the &lt;a href=&quot;https://github.com/carlosschults/go-gitter/commit/3ae9cc58f32059cda6091aa27dbab4507cebbca7&quot;&gt;commit&lt;/a&gt;, this is far from an example of clean code. The code mixes argument parsing and actual logic into the same file. At this point, I hadn’t even created functions for each command, though I ended up doing that later.&lt;/p&gt;
+
+&lt;p&gt;The part of the code that does the actual hashing turned out to be really simple, once I understood what the format was supposed to be:&lt;/p&gt;
+
+&lt;div class=&quot;language-go highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;size&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;header&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fmt&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Sprintf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;blob %s%c&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;strconv&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Itoa&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;size&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;content&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;header&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;hash&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sha1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;New&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;hash&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Write&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([]&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;byte&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;content&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;hashedData&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;hash&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Sum&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;nil&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;hashedString&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;hex&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;EncodeToString&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;hashedData&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;fmt&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Println&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;hashedString&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;So, as you can see we create the header by concatenating the word “blob” plus a space with the size of the contents and then the null character, here represented by the integer zero. Then we hash everything, encode it as a string and print that.&lt;/p&gt;
+
+&lt;p&gt;It took me some googling to find out the necessary libraries and the syntax to do this in go, since my self-imposed rules say I can’t use LLMs for any code generation, but I ended up doing it fine.&lt;/p&gt;
+
+&lt;p&gt;In the &lt;a href=&quot;https://github.com/carlosschults/go-gitter/commit/8b08cb93545f3966b1485989ce67501e1a5ff3ba&quot;&gt;next commit&lt;/a&gt; I added support for the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;-w&lt;/code&gt; flag. As you can see, at that point I created a function for the command.&lt;/p&gt;
+
+&lt;p&gt;There isn’t much difference, really. What I added was some primitive argument parsing to figure out whether I should write to disk.&lt;/p&gt;
+
+&lt;p&gt;Then, the actual code that does the writing:&lt;/p&gt;
+
+&lt;div class=&quot;language-go highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;saveFile&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+	&lt;span class=&quot;c&quot;&gt;// create the directory for the blob&lt;/span&gt;
+	&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;err&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;os&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Mkdir&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;.git/objects/&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;folderName&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;os&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ModePerm&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;err&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;nil&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+		&lt;span class=&quot;n&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Fatal&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;err&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+		&lt;span class=&quot;n&quot;&gt;os&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Exit&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+	&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+	&lt;span class=&quot;c&quot;&gt;// compress the content using zlib and save the file&lt;/span&gt;
+	&lt;span class=&quot;k&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;buffer&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;bytes&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Buffer&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;w&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;zlib&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;NewWriter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;buffer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;w&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Write&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([]&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;byte&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;content&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;w&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Close&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+	&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;err&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;os&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;WriteFile&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;.git/objects/&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;folderName&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;/&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fileName&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;buffer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Bytes&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(),&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0666&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;err&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;nil&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+		&lt;span class=&quot;n&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Fatal&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;err&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+		&lt;span class=&quot;n&quot;&gt;os&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Exit&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+	&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;It took me a bit of time to get this right. Mostly because at some point I was completely misunderstanding what git actually did. I thought I was supposed to compress and save the &lt;em&gt;hash&lt;/em&gt; that I calculated earlier. Yes, I know, makes no sense, but what can I say?&lt;/p&gt;
+
+&lt;p&gt;Once I understood that, getting this to work was mainly a matter of figuring out the zlib compression part. Google and documentation did it for me, like in the old days.&lt;/p&gt;
+
+&lt;h3 id=&quot;implementing-cat-file&quot;&gt;Implementing &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;cat-file&lt;/code&gt;&lt;/h3&gt;
+&lt;p&gt;The &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;cat-file&lt;/code&gt; command was easier to implement, because it’s essentially just the opposite. Based on a hash, find the corresponding file, uncompress it, and read its contents.&lt;/p&gt;
+
+&lt;p&gt;This time I created a dedicated function for the new command from the start, as shown in the &lt;a href=&quot;https://github.com/carlosschults/go-gitter/commit/81c9f03e1ca76a483335876b42637833f8a0a524&quot;&gt;first commit&lt;/a&gt;. This commit only implements the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;-p&lt;/code&gt; flag, though.&lt;/p&gt;
+
+&lt;p&gt;This is an abridged version of the code from the commit above, stripped of the function boilerplate and also the error handling:&lt;/p&gt;
+
+&lt;div class=&quot;language-go highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;folderName&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;h&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;fileName&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;h&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;fullPath&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;filepath&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Join&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;.git/objects&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;folderName&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fileName&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;contents&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[]&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;byte&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;err&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;error&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;contents&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;err&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;os&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ReadFile&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fullPath&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;err&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;zlib&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;NewReader&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;bytes&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;NewReader&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;contents&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;buf&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;new&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;strings&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Builder&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;_&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;err&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;io&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Copy&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;buf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;uncompressedContents&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;buf&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;contentsWithoutHeader&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;strings&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Split&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;uncompressedContents&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\x00&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)[&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Close&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;fmt&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Println&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;contentsWithoutHeader&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;The &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;h&lt;/code&gt; variable is the SHA1 the command receives. From that, we get the directory and file name, which we then use to assemble the full path, read the contents of the file and then uncompres it.&lt;/p&gt;
+
+&lt;p&gt;Finally, I split the string by the null character and return the second part, which is whatever comes after the header.&lt;/p&gt;
+
+&lt;p&gt;The &lt;a href=&quot;https://github.com/carlosschults/go-gitter/commit/56d10d3cb2ad0baa217a357b8f5d204eb5970620&quot;&gt;next commit&lt;/a&gt; after that implements the remaining flags. I won’t go line by line, since the important part is super simple:&lt;/p&gt;
+
+&lt;div class=&quot;language-go highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;parts&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;strings&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Split&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;uncompressedContents&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\x00&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;flag&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;arguments&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;result&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;string&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;switch&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;flag&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;case&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;-p&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;result&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;parts&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;case&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;-t&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;result&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;strings&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Fields&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;parts&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])[&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;case&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;-s&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;result&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;strings&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Fields&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;parts&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])[&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Go programmers reading this: I suspect this code isn’t the most beautiful and idiomatic Go you’ve ever seen, and I promise you that once I learn more about the language, I will refactor this. The priority for me at the moment was getting it to work.&lt;/p&gt;
+
+&lt;h2 id=&quot;what-ive-learned-so-far&quot;&gt;What I’ve Learned So Far&lt;/h2&gt;
+&lt;p&gt;The goal of this project is to learn the Go language and also more about Git’s implementation. So, what did I learn about both by completing these two commands?&lt;/p&gt;
+
+&lt;p&gt;First, the Git side. I can say I was surprised about how simple is the way git saves objects. It is really just the type of the object, a space, the size, a null character to act as delimiter, and then the contents. I understood, at a high level, how git stored objects, but actually implementing it gave me an appreciation for how simple and elegant it all is.&lt;/p&gt;
+
+&lt;p&gt;And about the Go side? Generally speaking, I really like it. I appreciate how readable the language is. I think even someone with zero experience in Go could read this code and at least get the gist of it, as long as they are already a programmer.&lt;/p&gt;
+
+&lt;p&gt;I also like the fact that Go is opinionated. For instance, if you have an &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;if&lt;/code&gt; statement, you have to use the curly braces. Otherwise, your won’t compile. So, this is one less thing for programmers to fight about and to have coding standard meeting about and to write linter rules about. It makes life simpler.&lt;/p&gt;
+
+&lt;p&gt;One aspect that I don’t like is the error handling. Having those if statements verifing &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;err&lt;/code&gt; everywhere polutes the code. In C#/.NET, when there is an error that is something that should be absolutely impossible, I just let the exception bubble out until it reaches the top level exception handling middleware, where it gets logged and the user receives a message with the adequate level of detail.&lt;/p&gt;
+
+&lt;p&gt;Maybe there’s some idiomatic way to do something like that in Go as well, but right now I’m not aware. But other than that, I really like the language so far.&lt;/p&gt;
+
+&lt;h2 id=&quot;whats-next&quot;&gt;What’s Next?&lt;/h2&gt;
+&lt;p&gt;For the next step I’ll implement another plumbing command called &lt;a href=&quot;https://git-scm.com/docs/git-update-index&quot;&gt;update-index&lt;/a&gt;. This is necessary so I can stage changes and eventually commit them.&lt;/p&gt;
+
+&lt;p&gt;If you want to play with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;go-gitter&lt;/code&gt;, install it like this:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;go &lt;span class=&quot;nb&quot;&gt;install &lt;/span&gt;github.com/carlosschults/go-gitter/ggt@latest
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Then you can use the commands like this:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;echo &lt;/span&gt;hi | gtt hash-object &lt;span class=&quot;nt&quot;&gt;--stdin&lt;/span&gt;
+ggt cat-file &lt;span class=&quot;nt&quot;&gt;-p&lt;/span&gt; 45b983be36b73c0788dc9cbcb76cbb80fc7bb057
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;You should be able to hash something with real git and then reading it with go-gitter, and vice-versa.&lt;/p&gt;
+
+&lt;p&gt;Thanks for reading, and see you on the next update.&lt;/p&gt;
+</description>
+        <pubDate>Fri, 29 May 2026 00:00:00 +0000</pubDate>
+        <link>https://carlosschults.net/en/building-git-in-go-part2</link>
+        <guid isPermaLink="true">https://carlosschults.net/en/building-git-in-go-part2</guid>
+        
+        <category>projects</category>
+        
+        <category>git</category>
+        
+        <category>go</category>
+        
+        <category>go-gitter</category>
+        
+        
+      </item>
     
       <item>
         <title>Your Commit Messages Suck. Let Me Show You How To Fix That</title>
@@ -91,7 +357,7 @@ Also, I acknowledge that you’re probably under a lot of pressure to perform, t
 
 &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Added new index to table # what index? what table? to what purpose?
 Enable EF Core execution strategy# what is this strategy thing? why did you have to enable it?
-Added Required attribute to model # Which model? Also, isn't this a breaking change that will affect current users?
+Added Required attribute to model # Which model? Also, isn&apos;t this a breaking change that will affect current users?
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;h3 id=&quot;useless-one-liner&quot;&gt;Useless One-Liner&lt;/h3&gt;
@@ -210,12 +476,12 @@ This reverts commit 5ab08c5d3ee7bfdb334406d418d96f76d08962fe.
 
 &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Make PhoneNumber required on /reservations endpoint
 
-The /reservations endpoint originally didn&lt;span class=&quot;s1&quot;&gt;'t require a phone number.
+The /reservations endpoint originally didn&lt;span class=&quot;s1&quot;&gt;&apos;t require a phone number.
 The reservations were being accepted but, as data flowed to downstream
 systems, the lack of phone number was causing some processes to crash.
 
 We are now adding the [Required] attribute to the PhoneNumber property
-on the ReservationRequestModel. This is a breaking change, so that'&lt;/span&gt;s
+on the ReservationRequestModel. This is a breaking change, so that&apos;&lt;/span&gt;s
 why, as part of this changes, we are versioning the endpoint as 2.0
 
 Fixes: AB#456
@@ -274,7 +540,7 @@ The length of your commit message needs to be directly proportional to the size/
 
 &lt;p&gt;I’m not saying you shouldn’t use AI to help you in crafting commit messages. Of course you can. I use it a lot. This is an example of prompt I frequently use with Claude, with some variations:&lt;/p&gt;
 
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Write a concise, well-crafted commit message for the diff I'm going to give you.
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Write a concise, well-crafted commit message for the diff I&apos;m going to give you.
 Make it more high-level, focusing on the why rather than listing all changes in great detail.
 Follow these rules:
 - Summary
@@ -1828,7 +2094,7 @@ git commit &lt;span class=&quot;nt&quot;&gt;-m&lt;/span&gt; &lt;span class=&quot
 
 &lt;p&gt;What if you could not only take a look at the past, but also change it? That’s what a detached HEAD allows you to do. Let’s review how the detached message starts:&lt;/p&gt;
 
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;You are in 'detached HEAD' state. 
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;You are in &apos;detached HEAD&apos; state. 
 You can look around, make experimental changes and commit them,
 and you can discard any commits you make in this state without
 impacting any branches by switching back to a branch.
@@ -2010,7 +2276,7 @@ git checkout alt-history&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
     &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Regex&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;IsMatch&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pattern&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
     &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;Console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;WriteLine&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;$&quot;The string '&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;' matches the pattern '&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pattern&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;Console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;WriteLine&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;$&quot;The string &apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos; matches the pattern &apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pattern&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
     &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
@@ -2026,10 +2292,10 @@ git checkout alt-history&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;p&gt;Now, let’s run the code and see what we get:&lt;/p&gt;
 
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;The string '28-JUL-2023' matches the pattern '[0-9]{2}-[A-Z]{3}-[0-9]{4}'
-The string '89-ABC-1234' matches the pattern '[0-9]{2}-[A-Z]{3}-[0-9]{4}'
-The string '11-JUN-2022' matches the pattern '[0-9]{2}-[A-Z]{3}-[0-9]{4}'
-The string '11-JUN-2022, a date plus other stuff' matches the pattern '[0-9]{2}-[A-Z]{3}-[0-9]{4}'
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;The string &apos;28-JUL-2023&apos; matches the pattern &apos;[0-9]{2}-[A-Z]{3}-[0-9]{4}&apos;
+The string &apos;89-ABC-1234&apos; matches the pattern &apos;[0-9]{2}-[A-Z]{3}-[0-9]{4}&apos;
+The string &apos;11-JUN-2022&apos; matches the pattern &apos;[0-9]{2}-[A-Z]{3}-[0-9]{4}&apos;
+The string &apos;11-JUN-2022, a date plus other stuff&apos; matches the pattern &apos;[0-9]{2}-[A-Z]{3}-[0-9]{4}&apos;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;The first three results probably didn’t surprise you. I even include something that’s not a date but matches the pattern we’re using in order to really drive home the point that regular expressions are about patterns and shapes and not about any semantics of the data we’re looking for.&lt;/p&gt;
@@ -2049,7 +2315,7 @@ The string '11-JUN-2022, a date plus other stuff' matches the pattern '[0-9]{2}-
 
 &lt;p&gt;If we run the code now, it displays only the strings that are an exact match with the pattern:&lt;/p&gt;
 
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;The string '28-JUL-2023' matches the pattern '^[0-9]{2}-[A-Z]{3}-[0-9]{4}
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;The string &apos;28-JUL-2023&apos; matches the pattern &apos;^[0-9]{2}-[A-Z]{3}-[0-9]{4}
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;h3 id=&quot;c-regex-a-manipulation-example&quot;&gt;C# Regex: A Manipulation Example&lt;/h3&gt;
@@ -2180,161 +2446,6 @@ Michael Taylor,(000) 000-0000
         <category>regex</category>
         
         <category>regular_expressions</category>
-        
-        <category>tutorial</category>
-        
-        
-      </item>
-    
-      <item>
-        <title>Git Create Branch: 4 Ways To Do It</title>
-        <description>&lt;p&gt;&lt;img src=&quot;https://res.cloudinary.com/dz5ppacuo/image/upload/v1673926044/git-beautiful-history/git-beautiful-history-cover.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;em&gt;Editorial note: I originally wrote this post for the Cloudbees blog.  You can &lt;a href=&quot;https://www.cloudbees.com/blog/git-create-branch&quot;&gt;check out the original here, at their site&lt;/a&gt;.&lt;/em&gt;&lt;/p&gt;
-
-&lt;p&gt;If you write software for a living, then I can say with confidence you’re familiar with Git. The tool created by Linus Torvalds has become synonymous with version control. And without a doubt, one of Git’s best features is how it takes away the pain of branching and merging. There are several ways you can create a branch in Git. In this post, we’ll review some of them. Then we’ll end with a little reflection on Git’s branching model and branching in general.&lt;/p&gt;
-
-&lt;h2 id=&quot;creating-a-branch-from-main&quot;&gt;Creating a Branch From main&lt;/h2&gt;
-
-&lt;p&gt;You create branches in Git, unsurprisingly, by using the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;branch&lt;/code&gt; command. Like many other Git commands, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;branch&lt;/code&gt; is very powerful and flexible. Besides creating branches, it can also be used to list and delete them, and you can further customize the command by employing a broad list of parameters. We’ll begin with the first way of creating a branch. Let’s say you want to create a new folder called “my-app”, enter it, and start a new Git repository. That’s exactly how you’d do it:&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;mkdir my-app
-cd my-app
-git init
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Now you have a new, empty Git repository. But empty repositories are boring. So what about creating a new markdown file with “Hello World!” written in it?&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;echo Hello World! &amp;gt; file.md
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;If you run “git status”, you should see a message saying your file is untracked:&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ git status
-On branch main
-Untracked files:
-  (use &quot;git add &amp;lt;file&amp;gt;...&quot; to include in what will be committed)
-
-    file.md
-
-nothing added to commit but untracked files present (use &quot;git add&quot; to track)
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;a href=&quot;https://www.cloudbees.com/blog/git-remove-untracked-files&quot;&gt;Untracked files are also uncool, though, so let’s track it:&lt;/a&gt;&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git add file.md
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;And finally, let’s create our first commit:&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git commit -m &quot;First commit&quot;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;We now have a repository with one branch, which has exactly one commit. That might not sound like the most exciting thing in the world (because it really isn’t), but it’s certainly less boring than having a repo with no commits at all, right?&lt;/p&gt;
-
-&lt;p&gt;Now, let’s say that for whatever reason you need to change the file’s content. But you don’t feel like doing that. What if something goes wrong and you somehow spoil the beautiful, pristine content of your file? (Yeah, I know it’s just some stupid file with “Hello World!” in it, but use the wonderful powers of your imagination and think of the file as a proxy for a much more complex project.) The solution to this dilemma is, of course, creating a new branch:&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git branch exp
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;So now we have a new branch called “exp”, for experimentation. Some people who are used to using different versioning systems, especially centralized ones, could say the branches have the same “content.” This isn’t entirely accurate when talking about Git, though. Think of branches like references that point to a given commit.&lt;/p&gt;
-
-&lt;h2 id=&quot;creating-a-branch-from-a-commit&quot;&gt;Creating a Branch From a Commit&lt;/h2&gt;
-
-&lt;p&gt;Suppose that, for whatever reason, we give up on our experiment, without adding a single commit to the new branch. Let’s go back to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;main&lt;/code&gt; and delete the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;exp&lt;/code&gt; branch:&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git checkout main
-git branch -d exp
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Now that we’re back to a single branch, let’s add some commits to it, to simulate work being done:&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;echo a new line &amp;gt;&amp;gt; file.md
-git commit -a -m &quot;Add a new line&quot;
-echo yet another line &amp;gt;&amp;gt; file.md
-git commit -a -m &quot;Add yet another line&quot;
-echo one more line &amp;gt;&amp;gt; file.md
-git commit -a -m &quot;Add one more line&quot;
-echo this is the last line i promise &amp;gt;&amp;gt; file.md
-git commit -a -m &quot;Add one last line&quot;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Imagine that after doing all this “work,” you learn that, for whatever reason, you need to go back in time to when there were just two lines in the file and create new changes from then on. But at the same time, you must preserve the progress you already made. In other words,  you want to create a branch from a past commit. How would you do that? In Git, each commit has a unique identifier. So you can easily see this using the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;git log&lt;/code&gt; command. To create a new branch based on a specific commit, just pass its hash as a parameter to the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;branch&lt;/code&gt; command:&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git branch new-branch 7e4decb
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;As an aside, you don’t even need the whole hash most of the time. Just the first five or six characters will do it.&lt;/p&gt;
-
-&lt;h2 id=&quot;creating-a-branch-from-a-tag&quot;&gt;Creating a Branch From a Tag&lt;/h2&gt;
-
-&lt;p&gt;If you’re a little bit more experienced with Git, then you should be familiar with the concept of &lt;a href=&quot;https://git-scm.com/book/en/v2/Git-Basics-Tagging&quot;&gt;tags&lt;/a&gt;. You use tags to indicate that a given commit is important or special in some way. For instance, tags are generally used to indicate the actual versions of a product. If you’ve been working in your application for a while and you believe it’s time to release version 1.0, what you’d typically do is bump the version numbers wherever necessary, committing those changes and then adding a tag to that specific point in time. To create a tag, you’d usually run something like this:&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git tag -a v1.0 -m &quot;First major version&quot;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;The “-a” parameter indicates this is going to be an annotated tag. In contrast to a lightweight tag, this is a full-blown Git object, containing pieces of information such as the committer’s name and email, the timestamp, and a message. Now you have a tag, an indication that this particular point in history is special and has a name.&lt;/p&gt;
-
-&lt;p&gt;Nice. You can continue doing work, as usual, creating and committing changes that will be part of the 1.1 version. Until a bug report comes in. Some clients that were updated to the 1.0 version of the product say an import feature isn’t working as intended.&lt;/p&gt;
-
-&lt;p&gt;Well, you could theoretically fix the bug in the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;main&lt;/code&gt; branch and deploy it. But then the clients would receive features that are potentially untested and incomplete. That’s a no-no. So what do you do? The answer: You create a new branch from the tag you’ve created to indicate the major version. You fix the issue there, build, and deploy. And you should probably merge this back to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;main&lt;/code&gt; afterward, so the next releases contain the fix. How would you go about that? Easy:&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git branch &amp;lt;NAME-OF-THE-BRANCH&amp;gt; &amp;lt;TAG&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;More specifically, using our previous example:&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git branch fix-bug-123 v1.0
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;After that, you can check out your new branch as usual. Or better yet, you could do it all in one step:&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git checkout -b fix-bug-1234 v1.0
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h2 id=&quot;creating-a-branch-in-detached-head-state&quot;&gt;Creating a Branch in Detached Head State&lt;/h2&gt;
-
-&lt;p&gt;Have you ever wished to go back in time? With Git this is possible…at least in regard to the files in our repository. You can, at any time, check out a commit if you know its hash:&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git checkout &amp;lt;SHA1&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;After running that, Git will show you a curious message:&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;You are in 'detached HEAD' state. You can look around, make experimental
-changes and commit them, and you can discard any commits you make in this
-state without impacting any branches by performing another checkout.
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;When you check out a commit, you enter a special state called, as you can see, “&lt;a href=&quot;https://www.cloudbees.com/blog/git-detached-head&quot;&gt;detached HEAD&lt;/a&gt;”. While you can commit changes in this state, those commits don’t belong to any branch and will become inaccessible as soon as you check out another branch. But what if you do want to keep those commits? The answer, unsurprisingly, is to use the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;checkout&lt;/code&gt; command again to create a new branch:&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git checkout &amp;lt;sha1&amp;gt; #now you're in detached head state
-# do some work and stage it
-git commit -m &quot;add some work while in detached head state&quot;
-git branch new-branch-to-keep-commits
-git checkout new-branch-to-keep-commits
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;And of course, by now you know you can write the last two lines as a single command:&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git checkout -b new-branch-to-keep-commits
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Pretty easy, right?&lt;/p&gt;
-
-&lt;h2 id=&quot;just-because-you-candoesnt-mean-you-should&quot;&gt;Just Because You Can…Doesn’t Mean You Should&lt;/h2&gt;
-
-&lt;p&gt;Git’s branching model is one of its selling points. It turns what in other source control systems is a painful and even slow process into a breeze. One could say that Git has successfully democratized branching for the masses. But there lies a serious danger. Due to the cheapness of branching in Git, some developers might fall into the trap of working with &lt;a href=&quot;https://rollout.io/blog/pitfalls-feature-branching/&quot;&gt;extremely long-lived branches&lt;/a&gt; or employing workflows or branching models that delay integration.&lt;/p&gt;
-
-&lt;p&gt;We, as an industry, have been there. We’ve done that. It doesn’t work. Instead, embrace workflows that employ extremely short-lived branches. You’ll have a secure sandbox in which to code without fear of breaking stuff or wasting your coworkers’ time. But does that have you asking, “How do I deploy code with partially completed features?” &lt;a href=&quot;https://rollout.io/blog/ultimate-feature-flag-guide/&quot;&gt;In that case, it’s feature flags to the rescue&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;Git branches are a powerful tool. Use them wisely, and don’t abuse them. And when they’re not enough, employ &lt;a href=&quot;https://rollout.io/blog/continuous-integration-continuous-delivery-continuous-deployment/&quot;&gt;continuous delivery/continuous integration&lt;/a&gt; along with feature flags—including &lt;a href=&quot;https://rollout.io/product/&quot;&gt;specialized tools&lt;/a&gt; at &lt;a href=&quot;https://rollout.io/blog/5-tools-continuous-deployment/&quot;&gt;your disposal&lt;/a&gt;—so your applications can get to the next level.&lt;/p&gt;
-</description>
-        <pubDate>Wed, 21 Feb 2024 00:00:00 +0000</pubDate>
-        <link>https://carlosschults.net/en/git-create-branch</link>
-        <guid isPermaLink="true">https://carlosschults.net/en/git-create-branch</guid>
-        
-        <category>git</category>
         
         <category>tutorial</category>
         

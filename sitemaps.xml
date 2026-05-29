@@ -3,6 +3,34 @@
   
     
       <url>
+        <loc>/pt/construindo-git-em-go-parte2</loc>
+        
+        
+          <xhtml:link rel="alternate" hreflang="pt" href="/pt/construindo-git-em-go-parte2" />
+        
+          <xhtml:link rel="alternate" hreflang="en" href="/en/building-git-in-go-part2" />
+        
+        <lastmod>2026-05-29T00:00:00+00:00</lastmod>
+        <changefreq>weekly</changefreq>
+      </url>
+    
+  
+    
+      <url>
+        <loc>/en/building-git-in-go-part2</loc>
+        
+        
+          <xhtml:link rel="alternate" hreflang="pt" href="/pt/construindo-git-em-go-parte2" />
+        
+          <xhtml:link rel="alternate" hreflang="en" href="/en/building-git-in-go-part2" />
+        
+        <lastmod>2026-05-29T00:00:00+00:00</lastmod>
+        <changefreq>weekly</changefreq>
+      </url>
+    
+  
+    
+      <url>
         <loc>/en/your-commit-messages-suck</loc>
         
         

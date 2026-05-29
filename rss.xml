@@ -5,10 +5,285 @@
     <description>Artigos sobre desenvolvimento de software e tecnologia.</description>
     <link>https://carlosschults.net/</link>
     <atom:link href="https://carlosschults.net/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Thu, 09 Apr 2026 17:14:39 +0000</pubDate>
-    <lastBuildDate>Thu, 09 Apr 2026 17:14:39 +0000</lastBuildDate>
+    <pubDate>Fri, 29 May 2026 16:32:41 +0000</pubDate>
+    <lastBuildDate>Fri, 29 May 2026 16:32:41 +0000</lastBuildDate>
     <generator>Jekyll v4.3.1</generator>
     
+    
+      <item>
+        <title>Construindo o git em Go do zero - Parte 2</title>
+        <description>&lt;p&gt;Bem-vindo de volta à minha jornada de construir o git do zero em Go, com o objetivo de aprender mais sobre os dois. Se você não sabe do que estou falando, leia &lt;a href=&quot;/pt/implementando-git-em-go&quot;&gt;o primeiro post&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2 id=&quot;já-faz-um-tempo&quot;&gt;Já faz um tempo&lt;/h2&gt;
+
+&lt;p&gt;Eu postei o primeiro post em 9 de março. O que eu fiquei fazendo, e por que demorei tanto para continuar a série?&lt;/p&gt;
+
+&lt;p&gt;A resposta é o que você provavelmente já sabe: eu sou um adulto ocupado e não tenho muito tempo. Além disso, outros projetos pessoais também demandam atenção.&lt;/p&gt;
+
+&lt;p&gt;Mas chega de desculpa. Vamos falar sobre o que consegui implementar desde a última atualização.&lt;/p&gt;
+
+&lt;h2 id=&quot;comandos-plumbing-vs-porcelain&quot;&gt;Comandos Plumbing vs Porcelain&lt;/h2&gt;
+
+&lt;p&gt;Antes de entrar em detalhes sobre o que implementei, preciso falar rapidinho sobre uma distinção que existe entre os comandos do git.&lt;/p&gt;
+
+&lt;p&gt;Quando você pensa em comandos do git, o que provavelmente vem à mente são coisas como &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;git add&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;git init&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;git log&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;git status&lt;/code&gt;, e por aí vai. E mesmo isso só vale se você realmente usa a linha de comando. Muita gente usa interfaces gráficas para tudo e nunca aprende nem os comandos básicos.&lt;/p&gt;
+
+&lt;p&gt;Esses são os chamados comandos “porcelain”. São os comandos de alto nível, voltados para os usuários finais do git, como você e eu.&lt;/p&gt;
+
+&lt;p&gt;Existe outra camada de comandos, conhecida como comandos “plumbing”. Os comandos plumbing são os de baixo nível, que realizam a manipulação de dados que permite aos comandos de alto nível fazer o seu trabalho.&lt;/p&gt;
+
+&lt;p&gt;Recentemente, estive implementando alguns desses comandos plumbing que servem de fundação para grande parte do que o git faz. São eles: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;hash-object&lt;/code&gt; e &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;cat-file&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h2 id=&quot;entendendo-o-hash-object-e-o-cat-file&quot;&gt;Entendendo o &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;hash-object&lt;/code&gt; e o &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;cat-file&lt;/code&gt;&lt;/h2&gt;
+
+&lt;p&gt;Vou falar rapidamente sobre o que esses comandos fazem antes de contar minha experiência. O &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;hash-object&lt;/code&gt; é o comando usado para salvar dados como um blob (binary large object) dentro de um repositório git. Você passa um texto para o comando, ele salva um objeto com aquela informação e te devolve um hash SHA1.&lt;/p&gt;
+
+&lt;p&gt;O &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;cat-file&lt;/code&gt; faz o oposto. Você passa um hash de objeto e ele retorna o conteúdo (ou o tamanho, ou o tipo, dependendo de como você o chama).&lt;/p&gt;
+
+&lt;h3 id=&quot;calculando-o-hash-do-seu-primeiro-objeto&quot;&gt;Calculando o hash do seu primeiro objeto&lt;/h3&gt;
+
+&lt;p&gt;Quer testar? Execute o seguinte comando:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;echo &lt;/span&gt;hi | git hash-object &lt;span class=&quot;nt&quot;&gt;--stdin&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Você deverá ver exatamente este hash como resultado: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;45b983be36b73c0788dc9cbcb76cbb80fc7bb057&lt;/code&gt;.&lt;/p&gt;
+
+&lt;div class=&quot;callout callout-info&quot;&gt;
+  &lt;div class=&quot;callout-title&quot;&gt;
+    &lt;span class=&quot;callout-icon&quot;&gt;ℹ️&lt;/span&gt;
+    Info
+  &lt;/div&gt;
+  &lt;div class=&quot;callout-content&quot;&gt;
+    
+&lt;p&gt;Se você está no Linux ou em outro sistema Unix, você provavelmente viu  o resultado acima. O mesmo vale para Windows usando o Git Bash. Mas se você está no Windows usando o prompt de comando ou o PowerShell, o resultado provavelmente foi diferente. Isso acontece por causa das diferenças de terminadores de linha entre os sistemas.&lt;/p&gt;
+
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;p&gt;O que aconteceu aqui é que o git calculou um hash para a string “hi” e o retornou para você. Usamos a flag &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;--stdin&lt;/code&gt; para poder passar o conteúdo pela entrada padrão.&lt;/p&gt;
+
+&lt;p&gt;Porém, nada foi salvo em disco. Para de fato gravar os dados, você precisa usar uma versão diferente do comando, e desta vez dentro de um repositório.&lt;/p&gt;
+
+&lt;h3 id=&quot;salvando-um-objeto&quot;&gt;Salvando um objeto&lt;/h3&gt;
+
+&lt;p&gt;Vá para algum lugar, crie uma nova pasta e inicialize um repositório nela:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;mkdir &lt;/span&gt;testing-commands
+&lt;span class=&quot;nb&quot;&gt;cd &lt;/span&gt;testing-commands
+git init
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Pronto. Agora você pode fazer o seguinte:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;echo &lt;/span&gt;hi | git hash-object &lt;span class=&quot;nt&quot;&gt;-w&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--stdin&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;O comando é parecido com o anterior, mas repare na flag extra &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;-w&lt;/code&gt;. Ela significa &lt;strong&gt;write&lt;/strong&gt; (escrever) e é o que faz o git salvar o conteúdo em um arquivo. Você ainda receberá o hash SHA1 como resposta, igual a antes, mas agora um novo objeto blob foi salvo em algum lugar. Quer ver?&lt;/p&gt;
+
+&lt;p&gt;Vá até a pasta onde o repositório foi criado, dentro de &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;testing-commands&lt;/code&gt;. Use um explorador de arquivos, não a linha de comando. Ative as configurações necessárias para visualizar pastas e arquivos ocultos. Você verá uma pasta &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.git&lt;/code&gt;:&lt;/p&gt;
+
+&lt;p&gt;Entre nessa pasta e você verá basicamente esta estrutura:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;├───hooks
+├───info
+├───objects   
+└───refs
+- config
+- description
+- HEAD
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;config&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;description&lt;/code&gt; e &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;HEAD&lt;/code&gt; são arquivos; os outros são pastas. Entre na pasta &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;objects&lt;/code&gt;. Você provavelmente vai encontrar as pastas &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;info&lt;/code&gt; e &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;pack&lt;/code&gt; lá. Elas não importam pra gente.&lt;/p&gt;
+
+&lt;p&gt;O que nos interessa aqui é uma pasta cujo nome tem dois caracteres. Se você executou os comandos acima no Linux ou no Git Bash do Windows, ela deve ser &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;45&lt;/code&gt;. Caso contrário, deve começar com os dois primeiros caracteres do hash que você recebeu ao rodar &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;echo hi | git hash-object -w --stdin&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Entre nessa pasta. Dentro, você vai encontrar um arquivo cujo nome é formado pelo restante dos caracteres do hash. No meu caso, vejo &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;b983be36b73c0788dc9cbcb76cbb80fc7bb057&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Esse é o seu blob.&lt;/strong&gt; Esse arquivo é o objeto que o git salvou quando você executou o comando &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;hash-object&lt;/code&gt; com a flag &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;-w&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h3 id=&quot;lendo-objetos-de-volta&quot;&gt;Lendo objetos de volta&lt;/h3&gt;
+
+&lt;p&gt;Tente abrir o arquivo do blob no seu editor de texto favorito. O arquivo abre normalmente, mas o conteúdo é puro lixo que não dá pra ler. Isso porque ele está em formato binário comprimido, não em texto puro.&lt;/p&gt;
+
+&lt;p&gt;O que o git faz, em sequência, é o seguinte:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Cria um cabeçalho concatenando a palavra “blob”, um espaço e o tamanho do conteúdo em bytes. Por exemplo, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;blob 2&lt;/code&gt;.&lt;/li&gt;
+  &lt;li&gt;Concatena isso com um &lt;a href=&quot;https://pt.wikipedia.org/wiki/Caractere_nulo&quot;&gt;caractere nulo&lt;/a&gt;.&lt;/li&gt;
+  &lt;li&gt;Concatena o conteúdo real em seguida. No nosso exemplo, “hi”.&lt;/li&gt;
+  &lt;li&gt;Gera o SHA1 da string completa.&lt;/li&gt;
+  &lt;li&gt;Se você não usou a flag &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;-w&lt;/code&gt;, o git retorna o SHA1 e para por aí.&lt;/li&gt;
+  &lt;li&gt;Caso tenha usado a flag &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;-w&lt;/code&gt;, o git comprime a string completa (cabeçalho + byte nulo + conteúdo).&lt;/li&gt;
+  &lt;li&gt;Pega os dois primeiros caracteres do hash SHA1 e cria um diretório com esse nome dentro de &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;objects&lt;/code&gt;.&lt;/li&gt;
+  &lt;li&gt;Por fim, cria um arquivo dentro dessa pasta, com o nome formado pelos caracteres restantes do hash SHA1, e grava nesse arquivo o conteúdo comprimido com zlib.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Para ler esses dados de volta, você usa o comando &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;cat-file&lt;/code&gt; com uma de suas flags. Para ler o conteúdo, use &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;cat-file -p&lt;/code&gt;, onde &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;-p&lt;/code&gt; significa “pretty print”:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git cat-file &lt;span class=&quot;nt&quot;&gt;-p&lt;/span&gt; 45b983be36b73c0788dc9cbcb76cbb80fc7bb057
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Ao executar o comando acima, você recebe “hi” de volta. Você também pode usar a flag &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;-t&lt;/code&gt; para obter o tipo do objeto, ou &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;-s&lt;/code&gt; para retornar seu tamanho em bytes:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git cat-file &lt;span class=&quot;nt&quot;&gt;-t&lt;/span&gt; 45b983be36b73c0788dc9cbcb76cbb80fc7bb057
+blob
+
+git cat-file &lt;span class=&quot;nt&quot;&gt;-s&lt;/span&gt; 45b983be36b73c0788dc9cbcb76cbb80fc7bb057
+3
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;implementação-no-go-gitter&quot;&gt;Implementação no Go-Gitter&lt;/h2&gt;
+
+&lt;p&gt;Agora que você entende o que esses dois comandos fazem, vamos falar sobre como os implementei no &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;go-gitter&lt;/code&gt;, começando pelo &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;hash-object&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h3 id=&quot;implementando-o-hash-object&quot;&gt;Implementando o &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;hash-object&lt;/code&gt;&lt;/h3&gt;
+
+&lt;p&gt;Meu primeiro passo foi implementar a versão mais básica do &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;hash-object&lt;/code&gt;, sem a flag &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;-w&lt;/code&gt;. O comando conseguiria exibir o hash SHA1 de um texto passado como argumento, mas ainda sem salvar nada em disco.&lt;/p&gt;
+
+&lt;p&gt;Como você pode ver no &lt;a href=&quot;https://github.com/carlosschults/go-gitter/commit/3ae9cc58f32059cda6091aa27dbab4507cebbca7&quot;&gt;commit&lt;/a&gt;, o código está longe de ser um exemplo de código limpo. Ele mistura o parsing de argumentos com a lógica real no mesmo arquivo. Naquele ponto, eu ainda nem tinha criado funções separadas para cada comando, mas fiz isso depois.&lt;/p&gt;
+
+&lt;p&gt;A parte do código que realiza o hash em si acabou sendo bem simples, assim que entendi qual deveria ser o formato:&lt;/p&gt;
+
+&lt;div class=&quot;language-go highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;size&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;header&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fmt&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Sprintf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;blob %s%c&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;strconv&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Itoa&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;size&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;content&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;header&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;hash&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sha1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;New&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;hash&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Write&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([]&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;byte&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;content&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;hashedData&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;hash&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Sum&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;nil&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;hashedString&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;hex&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;EncodeToString&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;hashedData&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;fmt&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Println&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;hashedString&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Como você pode ver, criamos o cabeçalho concatenando a palavra “blob” mais um espaço com o tamanho do conteúdo e depois o caractere nulo, representado aqui pelo inteiro zero. Em seguida, hasheamos tudo, codificamos como string e imprimimos.&lt;/p&gt;
+
+&lt;p&gt;Precisei pesquisar um pouco para encontrar as bibliotecas necessárias e a sintaxe do Go, já que as regras que eu criei pra mim proíbem o uso de LLMs para geração de código, mas acabou dando certo.&lt;/p&gt;
+
+&lt;p&gt;No &lt;a href=&quot;https://github.com/carlosschults/go-gitter/commit/8b08cb93545f3966b1485989ce67501e1a5ff3ba&quot;&gt;commit seguinte&lt;/a&gt;, adicionei suporte à flag &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;-w&lt;/code&gt;. Nesse ponto, como você pode ver, criei uma função para o comando.&lt;/p&gt;
+
+&lt;p&gt;A diferença não é grande. O que acrescentei foi um parsing de argumentos bem simples para identificar se o conteúdo deve ser gravado em disco.&lt;/p&gt;
+
+&lt;p&gt;Então, o código que efetivamente faz a gravação:&lt;/p&gt;
+
+&lt;div class=&quot;language-go highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;saveFile&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+	&lt;span class=&quot;c&quot;&gt;// cria o diretório para o blob&lt;/span&gt;
+	&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;err&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;os&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Mkdir&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;.git/objects/&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;folderName&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;os&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ModePerm&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;err&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;nil&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+		&lt;span class=&quot;n&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Fatal&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;err&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+		&lt;span class=&quot;n&quot;&gt;os&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Exit&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+	&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+	&lt;span class=&quot;c&quot;&gt;// comprime o conteúdo com zlib e salva o arquivo&lt;/span&gt;
+	&lt;span class=&quot;k&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;buffer&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;bytes&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Buffer&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;w&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;zlib&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;NewWriter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;buffer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;w&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Write&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([]&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;byte&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;content&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;w&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Close&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+	&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;err&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;os&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;WriteFile&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;.git/objects/&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;folderName&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;/&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fileName&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;buffer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Bytes&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(),&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0666&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;err&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;nil&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+		&lt;span class=&quot;n&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Fatal&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;err&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+		&lt;span class=&quot;n&quot;&gt;os&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Exit&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+	&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Demorei um pouco para acertar. Em grande parte porque, em determinado momento, eu estava entendendo completamente errado o que o git faz. Achei que deveria comprimir e salvar o &lt;em&gt;hash&lt;/em&gt; que calculei. Sim, eu sei, não faz sentido nenhum, mas o que posso dizer?&lt;/p&gt;
+
+&lt;p&gt;Depois que entendi o fluxo correto, fazer funcionar foi principalmente uma questão de descobrir como usar a compressão zlib. O Google e a documentação resolveram, como nos bons tempos.&lt;/p&gt;
+
+&lt;h3 id=&quot;implementando-o-cat-file&quot;&gt;Implementando o &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;cat-file&lt;/code&gt;&lt;/h3&gt;
+
+&lt;p&gt;O &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;cat-file&lt;/code&gt; foi mais fácil de implementar, porque é essencialmente o caminho inverso. A partir de um hash, localizar o arquivo correspondente, descomprimir o arquivo e ler o conteúdo.&lt;/p&gt;
+
+&lt;p&gt;Desta vez, criei uma função dedicada para o novo comando desde o início, como pode ser visto no &lt;a href=&quot;https://github.com/carlosschults/go-gitter/commit/81c9f03e1ca76a483335876b42637833f8a0a524&quot;&gt;primeiro commit&lt;/a&gt;. Esse commit implementa apenas a flag &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;-p&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Abaixo está uma versão resumida do código desse commit, sem o boilerplate da função e também sem o tratamento de erros:&lt;/p&gt;
+
+&lt;div class=&quot;language-go highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;folderName&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;h&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;fileName&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;h&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;fullPath&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;filepath&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Join&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;.git/objects&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;folderName&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fileName&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;contents&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[]&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;byte&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;err&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;error&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;contents&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;err&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;os&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ReadFile&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fullPath&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;err&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;zlib&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;NewReader&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;bytes&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;NewReader&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;contents&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;buf&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;new&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;strings&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Builder&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;_&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;err&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;io&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Copy&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;buf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;uncompressedContents&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;buf&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;contentsWithoutHeader&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;strings&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Split&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;uncompressedContents&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\x00&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)[&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Close&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;fmt&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Println&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;contentsWithoutHeader&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;A variável &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;h&lt;/code&gt; é o SHA1 recebido pelo comando. A partir dela, extraímos o nome do diretório e do arquivo, que usamos para montar o caminho completo, ler o conteúdo do arquivo e descomprimi-lo.&lt;/p&gt;
+
+&lt;p&gt;Por fim, faço um split da string pelo caractere nulo e retorno a segunda parte, que é tudo o que vem depois do cabeçalho.&lt;/p&gt;
+
+&lt;p&gt;O &lt;a href=&quot;https://github.com/carlosschults/go-gitter/commit/56d10d3cb2ad0baa217a357b8f5d204eb5970620&quot;&gt;commit seguinte&lt;/a&gt; implementa as flags restantes. Não vou percorrer linha por linha, já que a parte importante é bem simples:&lt;/p&gt;
+
+&lt;div class=&quot;language-go highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;parts&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;strings&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Split&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;uncompressedContents&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\x00&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;flag&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;arguments&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;result&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;string&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;switch&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;flag&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;case&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;-p&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;result&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;parts&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;case&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;-t&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;result&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;strings&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Fields&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;parts&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])[&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;case&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;-s&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;result&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;strings&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Fields&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;parts&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])[&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Para os programadores Go que estão lendo isso: eu sei que esse código não seja o mais bonito e idiomático que você já viu, e prometo que, conforme for aprendendo mais sobre a linguagem, vou refatorar. A prioridade no momento era fazer funcionar.&lt;/p&gt;
+
+&lt;h2 id=&quot;o-que-aprendi-até-agora&quot;&gt;O que aprendi até agora&lt;/h2&gt;
+
+&lt;p&gt;O objetivo deste projeto é aprender a linguagem Go e também mais sobre a implementação do Git. Então, o que aprendi sobre os dois ao completar esses dois comandos?&lt;/p&gt;
+
+&lt;p&gt;Primeiro, o lado do Git. Posso dizer que me surpreendeu a simplicidade com que o git salva objetos. É realmente só o tipo do objeto, um espaço, o tamanho, um caractere nulo como delimitador e o conteúdo. Eu entendia, em alto nível, como o git armazenava objetos, mas implementar de fato me deu uma nova apreciação pela simplicidade e elegância do design.&lt;/p&gt;
+
+&lt;p&gt;E sobre o lado do Go? De maneira geral, estou gostando muito. Eu gosto da legibilidade da linguagem. Acho que até alguém com zero experiência em Go conseguiria ler este código e ao menos entender a essência, desde que já seja programador.&lt;/p&gt;
+
+&lt;p&gt;Gosto também do fato de Go ser opinativo. Por exemplo, se você tem um &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;if&lt;/code&gt;, precisa usar as chaves. Do contrário, o código não compila. Isso elimina mais uma coisa para os programadores brigarem, reuniões sobre padrões de código, regras de linter. Simplifica a vida.&lt;/p&gt;
+
+&lt;p&gt;Um aspecto que não gosto é o tratamento de erros. Ter aqueles &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;if&lt;/code&gt; verificando &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;err&lt;/code&gt; em todo lugar polui o código. Em C#/.NET, quando ocorre um erro que deveria ser absolutamente impossível, eu só deixo a exceção subir até o middleware de tratamento de exceções no nível mais alto, onde ela é logada e o usuário recebe uma mensagem com o nível adequado de detalhes.&lt;/p&gt;
+
+&lt;p&gt;Talvez exista alguma forma idiomática de fazer algo assim em Go também, mas por enquanto não conheço. Fora isso, estou gostando muito da linguagem.&lt;/p&gt;
+
+&lt;h2 id=&quot;o-que-vem-a-seguir&quot;&gt;O que vem a seguir?&lt;/h2&gt;
+
+&lt;p&gt;Para o próximo passo vou implementar outro comando plumbing chamado &lt;a href=&quot;https://git-scm.com/docs/git-update-index&quot;&gt;update-index&lt;/a&gt;. Ele é necessário para eu poder stagear mudanças e eventualmente fazer commits.&lt;/p&gt;
+
+&lt;p&gt;Se quiser experimentar o &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;go-gitter&lt;/code&gt;, instale assim:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;go &lt;span class=&quot;nb&quot;&gt;install &lt;/span&gt;github.com/carlosschults/go-gitter/ggt@latest
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Depois é só usar os comandos assim:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;echo &lt;/span&gt;hi | ggt hash-object &lt;span class=&quot;nt&quot;&gt;--stdin&lt;/span&gt;
+ggt cat-file &lt;span class=&quot;nt&quot;&gt;-p&lt;/span&gt; 45b983be36b73c0788dc9cbcb76cbb80fc7bb057
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Você deve conseguir fazer o hash de algo com o git de verdade e ler com o go-gitter, e vice-versa.&lt;/p&gt;
+
+&lt;p&gt;Obrigado por ler, e até a próxima atualização.&lt;/p&gt;
+</description>
+        <pubDate>Fri, 29 May 2026 00:00:00 +0000</pubDate>
+        <link>https://carlosschults.net/pt/construindo-git-em-go-parte2</link>
+        <guid isPermaLink="true">https://carlosschults.net/pt/construindo-git-em-go-parte2</guid>
+        
+        <category>projetos</category>
+        
+        <category>git</category>
+        
+        <category>go</category>
+        
+        <category>go-gitter</category>
+        
+        
+      </item>
     
       <item>
         <title>Suas Mensagens de Commit São Um Lixo. Vou Te Ajudar a Melhorar</title>
@@ -240,12 +515,12 @@ This reverts commit 5ab08c5d3ee7bfdb334406d418d96f76d08962fe.
 
 &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Make PhoneNumber required on /reservations endpoint
 
-The /reservations endpoint originally didn&lt;span class=&quot;s1&quot;&gt;'t require a phone number.
+The /reservations endpoint originally didn&lt;span class=&quot;s1&quot;&gt;&apos;t require a phone number.
 The reservations were being accepted but, as data flowed to downstream
 systems, the lack of phone number was causing some processes to crash.
 
 We are now adding the [Required] attribute to the PhoneNumber property
-on the ReservationRequestModel. This is a breaking change, so that'&lt;/span&gt;s
+on the ReservationRequestModel. This is a breaking change, so that&apos;&lt;/span&gt;s
 why, as part of this changes, we are versioning the endpoint as 2.0
 
 Fixes: AB#456
@@ -307,7 +582,7 @@ O tamanho da sua mensagem de commit precisa ser diretamente proporcional ao tama
 
 &lt;p&gt;Não estou dizendo que você não deve usar IA pra te ajudar a criar mensagens de commit. Claro que pode. Eu uso bastante. Este é um exemplo de prompt que uso frequentemente com o Claude, com algumas variações:&lt;/p&gt;
 
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Write a concise, well-crafted commit message for the diff I'm going to give you.
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Write a concise, well-crafted commit message for the diff I&apos;m going to give you.
 Make it more high-level, focusing on the why rather than listing all changes in great detail.
 Follow these rules:
 - Summary
@@ -1718,7 +1993,7 @@ Foto de &lt;a href=&quot;https://unsplash.com/pt-br/@francisco_legarreta?utm_con
       </item>
     
       <item>
-        <title>Erro 'Git Detached Head': O Que Significa e Como Resolver</title>
+        <title>Erro &apos;Git Detached Head&apos;: O Que Significa e Como Resolver</title>
         <description>&lt;p&gt;&lt;img src=&quot;https://res.cloudinary.com/dz5ppacuo/image/upload/v1673926044/git-beautiful-history/git-beautiful-history-cover.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;div class=&quot;callout callout-info&quot;&gt;
@@ -1819,7 +2094,7 @@ git commit &lt;span class=&quot;nt&quot;&gt;-m&lt;/span&gt; &lt;span class=&quot
 
 &lt;p&gt;E se você pudesse não apenas olhar para o passado, mas também mudá-lo? É isso que um HEAD desanexado permite que você faça. Vamos revisar como a mensagem de desanexação começa:&lt;/p&gt;
 
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Você está no estado 'detached HEAD'.
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Você está no estado &apos;detached HEAD&apos;.
 Você pode olhar ao redor, fazer mudanças experimentais e fazer commits delas,
 e você pode descartar quaisquer commits que fizer neste estado sem
 impactar nenhum branch, simplesmente mudando de volta para um branch.
@@ -2807,274 +3082,6 @@ dotnet user-secrets set “AdminPassword” “hunter2”
         <category>configuracao</category>
         
         <category>traducoes</category>
-        
-        <category>tutorial</category>
-        
-        
-      </item>
-    
-      <item>
-        <title>C# Regex: Como Expressões Regulares Funcionam em C#, Com Exemplos</title>
-        <description>&lt;p&gt;&lt;img src=&quot;https://res.cloudinary.com/dz5ppacuo/image/upload/v1513817072/csharp8-1037x438_skogpz.jpg&quot; alt=&quot;&quot; /&gt;
-&lt;em&gt;NOTA: Eu originalmente escrevi esse post para o blog da empresa Stackify.  Você pode &lt;a href=&quot;https://stackify.com/c-regex-how-regular-expressions-work-in-c-with-examples/&quot;&gt;ler o artigo original, em inglês, no site deles&lt;/a&gt;.&lt;/em&gt;&lt;/p&gt;
-
-&lt;p&gt;A manipulação de texto é uma das tarefas mais comuns na programação, sendo que praticamente todas as principais linguagens de programação oferecem suporte a regex (expressão regular) por meio de suas bibliotecas padrão. O C# não é exceção, portanto, hoje trazemos a você um guia de regex do C#.&lt;/p&gt;
-
-&lt;p&gt;Você aprenderá o que são expressões regulares, por que você deseja usá-las e como começar de uma maneira abrangente e acessível. Dessa forma, você poderá começar a usar expressões regulares para resolver problemas reais o mais rápido possível.&lt;/p&gt;
-
-&lt;p&gt;Prepare-se para sua jornada de aprendizado de regex, que começa agora!&lt;/p&gt;
-
-&lt;h2 id=&quot;o-que-é-regex&quot;&gt;O Que é Regex?&lt;/h2&gt;
-&lt;p&gt;Uma expressão regular (também chamadas de regex, abreviação para &lt;em&gt;regular expression&lt;/em&gt;) é uma expressão que contém um ou vários caracteres que expressam um determinado padrão no texto. Se isso parecer um pouco vago, um exemplo vai ajudar. Considere uma data no seguinte formato:&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;28-JUL-2023
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Usando um regex, podemos expressar esse formato da seguinte forma:&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[0-9]{2}-[A-Z]{3}-[0-9]{4}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Observe que a expressão regular acima expressa um padrão com:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;dois dígitos numéricos seguidos de um hífen&lt;/li&gt;
-  &lt;li&gt;três letras maiúsculas seguidas de um hífen&lt;/li&gt;
-  &lt;li&gt;mais quatro números&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Você saberá mais sobre o significado de cada parte de uma regex em um minuto. Por enquanto, lembre-se de que a regex acima não &lt;em&gt;sabe&lt;/em&gt; nada sobre datas. Acontece que conseguimos criar uma expressão regular que corresponde ao padrão ou ao formato da data. Todos os itens a seguir correspondem a essa regex, mesmo que não sejam datas válidas:&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;32-ABC-7894
-30-FEV-1978
-00-AAA-9999
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h2 id=&quot;existe-regex-no-c&quot;&gt;Existe Regex no C#?&lt;/h2&gt;
-
-&lt;p&gt;Sim, é claro. Mas isso não vem da própria linguagem. Em vez disso, o suporte a regex vem da &lt;a href=&quot;https://learn.microsoft.com/pt-br/dotnet/standard/class-library-overview&quot;&gt;.NET’s BCL (Base Class Library),&lt;/a&gt; que é essencialmente a biblioteca padrão do C#.&lt;/p&gt;
-
-&lt;h2 id=&quot;por-que-usar-regex-em-c&quot;&gt;Por Que Usar Regex em C#?&lt;/h2&gt;
-
-&lt;p&gt;Como você viu, regex é algo a ser usado para expressar um padrão que pode corresponder a um determinado texto.&lt;/p&gt;
-
-&lt;p&gt;Na prática, todos os usos de regex em C# ou em outras linguagens se resumem a três motivos: validação, manipulação e extração.&lt;/p&gt;
-
-&lt;h3 id=&quot;validação&quot;&gt;Validação&lt;/h3&gt;
-
-&lt;p&gt;Um caso de uso incrivelmente comum para regex é a validação de dados. Por exemplo, digamos que você tenha um formulário da Web e queira garantir que um determinado campo só aceite entradas em um formato específico. Como resolver isso? O Regex vem em seu socorro.&lt;/p&gt;
-
-&lt;h3 id=&quot;manipulação&quot;&gt;Manipulação&lt;/h3&gt;
-
-&lt;p&gt;Às vezes, você precisa alterar informações dentro do texto. Vamos voltar ao exemplo anterior. Imagine que, por motivos de compliance, você precise remover todos os números de telefone desse corpo de texto e substituí-los pela palavra “REDACTED”. Novamente, as expressões regulares seriam perfeitas para essa situação.&lt;/p&gt;
-
-&lt;p&gt;É interessante notar que as linguagens de programação não são as únicas a usar expressões regulares para resolver problemas. Até mesmo os editores de texto, como o Notepad++, oferecem recursos de localizar e substituir com o auxílio de expressões regulares.&lt;/p&gt;
-
-&lt;h2 id=&quot;extração&quot;&gt;Extração&lt;/h2&gt;
-
-&lt;p&gt;Digamos que você tenha uma quantidade considerável de texto. Esse texto contém números de telefone que você precisa extrair. Você conhece o formato desses números e o fato de que eles estão dentro do texto, mas esse é o limite do seu conhecimento.&lt;/p&gt;
-
-&lt;p&gt;Como você faria para extrair essas informações? Um regex C# bem feito certamente seria útil nessa situação.&lt;/p&gt;
-
-&lt;h2 id=&quot;como-usar-o-regex-em-c-primeiros-passos-na-prática&quot;&gt;Como usar o Regex em C#: Primeiros passos na prática&lt;/h2&gt;
-
-&lt;p&gt;O C# é uma &lt;a href=&quot;https://stackify.com/oop-concepts-c-sharp/&quot;&gt;linguagem orientada a objetos&lt;/a&gt;, portanto, não é de surpreender que você use uma classe para trabalhar com regex no C#. Mais especificamente, a classe de que estou falando é apropriadamente chamada de &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Regex&lt;/code&gt; e reside no namespace &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;System.Text.RegularExpressions&lt;/code&gt;.&lt;/p&gt;
-
-&lt;h3 id=&quot;c-regex-um-exemplo-de-validação&quot;&gt;C# Regex: Um exemplo de validação&lt;/h3&gt;
-
-&lt;p&gt;Vamos começar com um exemplo simples de validação sobre como usar regex para validar se várias cadeias de caracteres correspondem a um determinado padrão. A primeira etapa é adicionar a seguinte instrução &lt;strong&gt;using&lt;/strong&gt; ao seu código:&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c#&quot; data-lang=&quot;c#&quot;&gt;&lt;span class=&quot;k&quot;&gt;using&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;System.Text.RegularExpressions&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;Agora, vamos criar um array de strings e preenchê-la com alguns valores:&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c#&quot; data-lang=&quot;c#&quot;&gt;&lt;span class=&quot;kt&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;candidates&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[]&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;s&quot;&gt;&quot;28-JUL-2023&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-    &lt;span class=&quot;s&quot;&gt;&quot;whatever&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-    &lt;span class=&quot;s&quot;&gt;&quot;89-ABC-1234&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-    &lt;span class=&quot;s&quot;&gt;&quot;11-JUN-2022&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-    &lt;span class=&quot;s&quot;&gt;&quot;11-JUN-2022, uma data e outras coisas&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-    &lt;span class=&quot;s&quot;&gt;&quot;Isso certamente não é uma data&quot;&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;Por fim, percorreremos os valores e usaremos o método estático &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;IsMatch&lt;/code&gt; da classe &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Regex&lt;/code&gt; para verificar qual das cadeias de caracteres corresponde ao padrão desejado:&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c#&quot; data-lang=&quot;c#&quot;&gt;&lt;span class=&quot;kt&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pattern&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;[0-9]{2}-[A-Z]{3}-[0-9]{4}&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;foreach&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;c&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;candidates&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Regex&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;IsMatch&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pattern&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;Console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;WriteLine&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;$&quot;A string '&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;' corresponde ao padrão '&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pattern&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;Antes de prosseguir, vamos detalhar o padrão parte por parte:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;strong&gt;[0-9]{2}&lt;/strong&gt;: A primeira parte significa “Corresponde exatamente a dois caracteres, que devem ser dígitos de 0 a 9”.&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;-&lt;/strong&gt;: Esse caractere corresponde exatamente a um hífen.&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;[A-Z]{3}&lt;/strong&gt;: Aqui, a expressão diz: “Vamos corresponder exatamente a três caracteres, que podem ser qualquer uma das letras de A a Z.”&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;-&lt;/strong&gt;: Isso corresponde a outro hífen&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;[0-9]{4}&lt;/strong&gt;: Isso já deve ser fácil de entender, certo? Exatamente quatro números.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Agora, vamos executar o código e ver o que obtemos:&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;A string '28-JUL-2023' corresponde ao padrão '[0-9]{2}-[A-Z]{3}-[0-9]{4}'
-A string '89-ABC-1234' corresponde ao padrão '[0-9]{2}-[A-Z]{3}-[0-9]{4}'
-A cadeia de caracteres '11-JUN-2022' corresponde ao padrão '[0-9]{2}-[A-Z]{3}-[0-9]{4}'
-A cadeia de caracteres '11-JUN-2022, a date plus other stuff' corresponde ao padrão '[0-9]{2}-[A-Z]{3}-[0-9]{4}'
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Os três primeiros resultados provavelmente não o surpreenderam. Eu até incluí algo que não é uma data, mas que corresponde ao padrão que estamos usando para realmente enfatizar que as expressões regulares tratam de padrões e formas e não de qualquer semântica dos dados que estamos procurando.&lt;/p&gt;
-
-&lt;p&gt;Entretanto, o quarto resultado pode tê-lo surpreendido. O texto de fato começa com dados que correspondem ao padrão que estamos procurando, mas depois tem algum texto adicional. E mesmo assim, essa string correspondeu!&lt;/p&gt;
-
-&lt;p&gt;A explicação para esse comportamento é simples e está explicada para nós no &lt;a href=&quot;https://learn.microsoft.com/pt-br/dotnet/api/system.text.regularexpressions.regex.ismatch?view=net-7.0#system-text-regularexpressions-regex-ismatch(system-string-system-string)&quot;&gt;summary&lt;/a&gt; do método &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;IsMatch&lt;/code&gt;:&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Indica se a expressão regular especificada encontra uma correspondência na cadeia de caracteres de entrada especificada.
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;A expressão regular de fato encontrou uma correspondência na string de entrada especificada (“11-JUN-2022, a date plus other stuff”), e é por isso que foi considerada uma correspondência.&lt;/p&gt;
-
-&lt;p&gt;Mas e se quiséssemos uma correspondência exata? Nesse caso, seria necessário alterar o padrão, adicionando um acento circunflexo (“^”) ao início do padrão e um cifrão (“$”) ao seu final. Em outras palavras, veja como o padrão deve ficar agora:&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c#&quot; data-lang=&quot;c#&quot;&gt;&lt;span class=&quot;kt&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pattern&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;^[0-9]{2}-[A-Z]{3}-[0-9]{4}$&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;Se executarmos o código agora, ele exibirá apenas as cadeias de caracteres que são uma correspondência exata com o padrão:&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;A string '28-JUL-2023' corresponde ao padrão '^[0-9]{2}-[A-Z]{3}-[0-9]{4}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h3 id=&quot;c-regex-um-exemplo-de-manipulação&quot;&gt;C# Regex: Um exemplo de manipulação&lt;/h3&gt;
-
-&lt;p&gt;Considere que você tem um texto que contém dados sensíveis do usuário. Devido a questões de privacidade/compliance, você deseja excluir esses dados. Felizmente para você, é muito fácil usar uma regex para isso.&lt;/p&gt;
-
-&lt;p&gt;Vamos começar criando uma matriz contendo nomes e números de telefone de pessoas fictícias:&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c#&quot; data-lang=&quot;c#&quot;&gt;&lt;span class=&quot;kt&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;contacts&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[]&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;s&quot;&gt;&quot;Emily Johnson,(555) 123-4567&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-    &lt;span class=&quot;s&quot;&gt;&quot;Benjamin Williams,(555) 987-6543&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-    &lt;span class=&quot;s&quot;&gt;&quot;Olivia Davis,(555) 222-3333&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-    &lt;span class=&quot;s&quot;&gt;&quot;Alexander Smith,(555) 444-5555&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-    &lt;span class=&quot;s&quot;&gt;&quot;Sophia Brown,(555) 777-8888&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-    &lt;span class=&quot;s&quot;&gt;&quot;William Anderson,(555) 111-2222&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-    &lt;span class=&quot;s&quot;&gt;&quot;Ava Martinez,(555) 666-7777&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-    &lt;span class=&quot;s&quot;&gt;&quot;James Thompson,(555) 888-9999&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-    &lt;span class=&quot;s&quot;&gt;&quot;Isabella Wilson,(555) 333-4444&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-    &lt;span class=&quot;s&quot;&gt;&quot;Michael Taylor,(555) 777-1111&quot;&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;Em seguida, vamos criar o padrão para corresponder aos números de telefone:&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c#&quot; data-lang=&quot;c#&quot;&gt;&lt;span class=&quot;kt&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pattern&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;@&quot;\([0-9]{3}\)\s[0-9]{3}-[0-9]{4}&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;O padrão acima é um pouco mais complexo do que os que usamos anteriormente, mas ainda é simples. No entanto, há alguns elementos novos:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;strong&gt;A barra invertida (\):&lt;/strong&gt; Precisamos dela aqui para escapar dos parênteses de abertura e fechamento, que é um caractere com significado em uma expressão regular. Nesse caso, queremos de fato corresponder a um caractere “(“, portanto, precisamos escapar dele.&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;O caractere \s:&lt;/strong&gt; corresponde a um único espaço.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Por fim, vamos percorrer essa matriz e, para cada item, usar o método &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Regex.Replace&lt;/code&gt; para gerar uma nova string na qual o número de telefone é substituído por todos os zeros:&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c#&quot; data-lang=&quot;c#&quot;&gt;&lt;span class=&quot;k&quot;&gt;foreach&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;contact&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;contacts&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;Console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;WriteLine&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;Regex&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;Replace&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;contact&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pattern&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;(000) 000-0000&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;));&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;Usar o método estático &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Replace&lt;/code&gt; é fácil. Embora ele tenha várias sobrecargas, a que usamos recebe apenas três argumentos:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;a string de entrada&lt;/li&gt;
-  &lt;li&gt;o padrão que você deseja corresponder&lt;/li&gt;
-  &lt;li&gt;a string de substituição&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Depois de executar o código, eis o resultado que obtemos:&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Emily Johnson,(000) 000-0000
-Benjamin Williams,(000) 000-0000
-Olivia Davis,(000) 000-0000
-Alexander Smith,(000) 000-0000
-Sophia Brown,(000) 000-0000
-William Anderson,(000) 000-0000
-Ava Martinez,(000) 000-0000
-James Thompson,(000) 000-0000
-Isabella Wilson,(000) 000-0000
-Michael Taylor,(000) 000-0000
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h3 id=&quot;c-regex-um-exemplo-de-extração&quot;&gt;C# Regex: Um exemplo de extração&lt;/h3&gt;
-
-&lt;p&gt;Para o nosso último exemplo, vamos extrair dados de uma string usando uma expressão regular. Vamos começar convertendo o array do exemplo anterior em uma única string:&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c#&quot; data-lang=&quot;c#&quot;&gt;&lt;span class=&quot;kt&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;contacts&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;
-    &lt;span class=&quot;s&quot;&gt;&quot;Emily Johnson+(555) 123-4567&quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;+&lt;/span&gt;
-    &lt;span class=&quot;s&quot;&gt;&quot;\nBenjamin Williams+(555) 987-6543&quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;+&lt;/span&gt;
-    &lt;span class=&quot;s&quot;&gt;&quot;\nOlivia Davis+(555) 222-3333&quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;+&lt;/span&gt;
-    &lt;span class=&quot;s&quot;&gt;&quot;\nAlexander Smith+(555) 444-5555&quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;+&lt;/span&gt;
-    &lt;span class=&quot;s&quot;&gt;&quot;\nSophia Brown+(555) 777-8888&quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;+&lt;/span&gt;
-    &lt;span class=&quot;s&quot;&gt;&quot;\nWilliam Anderson+(555) 111-2222&quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;+&lt;/span&gt;
-    &lt;span class=&quot;s&quot;&gt;&quot;\nAva Martinez+(555) 666-7777&quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;+&lt;/span&gt;
-    &lt;span class=&quot;s&quot;&gt;&quot;\nJames Thompson+(555) 888-9999&quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;+&lt;/span&gt;
-    &lt;span class=&quot;s&quot;&gt;&quot;\nIsabella Wilson+(555) 333-4444&quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;+&lt;/span&gt;
-    &lt;span class=&quot;s&quot;&gt;&quot;\nMichael Taylor+(555) 777-1111&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;Em seguida, definimos o padrão novamente (o mesmo) e usamos o método estático &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Matches&lt;/code&gt; para obter todas as correspondências da string:&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c#&quot; data-lang=&quot;c#&quot;&gt;&lt;span class=&quot;kt&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pattern&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;@&quot;\([0-9]{3}\)\s[0-9]{3}-[0-9]{4}&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;MatchCollection&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;matches&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Regex&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;Matches&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;contacts&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pattern&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;A classe &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;MatchCollection&lt;/code&gt; contém todas as cadeias de caracteres que corresponderam ao padrão que fornecemos ao método. Esse objeto é enumerável, portanto, podemos fazer um loop sobre ele com um foreach:&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c#&quot; data-lang=&quot;c#&quot;&gt;&lt;span class=&quot;n&quot;&gt;Console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;WriteLine&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Aqui estão os números de telefone extraídos:&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;foreach&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Match&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;match&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;matches&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;Console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;WriteLine&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;match&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Value&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;E, finalmente, nossos resultados:&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c#&quot; data-lang=&quot;c#&quot;&gt;&lt;span class=&quot;n&quot;&gt;Aqui&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;est&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;ã&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;o&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;os&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;ú&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;meros&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;de&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;telefone&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;extra&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;í&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dos&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;555&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;123&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;4567&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;555&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;987&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;6543&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;555&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;222&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;3333&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;555&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;444&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;5555&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;555&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;777&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;8888&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;555&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;111&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;2222&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;555&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;666&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;7777&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;555&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;888&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;9999&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;555&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;333&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;4444&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;555&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;777&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1111&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;h2 id=&quot;c-regex-uma-ferramenta-indispensável&quot;&gt;C# Regex: Uma Ferramenta Indispensável&lt;/h2&gt;
-
-&lt;p&gt;Como dissemos na introdução, a manipulação de texto é um elemento básico da programação, e as expressões regulares facilitam essa tarefa. Neste guia de regex em C#, você aprendeu o que são expressões regulares, seus cenários de uso mais comuns e como começar a usar expressões regulares em C#.&lt;/p&gt;
-
-&lt;p&gt;Antes de ir embora, algumas dicas:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Faça mais experimentos com a classe &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Regex&lt;/code&gt;. Ela oferece muitos recursos, e os métodos que usamos hoje têm muitas sobrecargas com recursos úteis.&lt;/li&gt;
-  &lt;li&gt;Saiba mais e pratique a escrita de expressões regulares. &lt;a href=&quot;https://regexr.com/&quot;&gt;Aqui está um ótimo site&lt;/a&gt; que você pode usar.&lt;/li&gt;
-  &lt;li&gt;Informe-se sobre as considerações de desempenho do C# regex. Por exemplo, leia este &lt;a href=&quot;https://learn.microsoft.com/pt-br/dotnet/standard/base-types/compilation-and-reuse-in-regular-expressions?redirectedfrom=MSDN&quot;&gt;artigo da Microsoft sobre a compilação e a reutilização de expressões regulares&lt;/a&gt;.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Por fim, se quiser saber mais sobre o C# em geral, o blog da Stackify está repleto de recursos úteis. Como sugestão, dê uma olhada em &lt;a href=&quot;https://stackify.com/unit-test-frameworks-csharp/&quot;&gt;os prós e contras dos 3 principais frameworks de teste de unidade para C#&lt;/a&gt;, &lt;a href=&quot;https://stackify.com/csharp-catch-all-exceptions/&quot;&gt;como capturar exceções e localizar erros de aplicativos em C#&lt;/a&gt; e &lt;a href=&quot;https://stackify.com/what-is-c-reflection/&quot;&gt;como funciona a reflexão em C#&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;Obrigado pela leitura!&lt;/p&gt;
-</description>
-        <pubDate>Tue, 07 May 2024 00:00:00 +0000</pubDate>
-        <link>https://carlosschults.net/pt/csharp-expressoes-regulares</link>
-        <guid isPermaLink="true">https://carlosschults.net/pt/csharp-expressoes-regulares</guid>
-        
-        <category>csharp</category>
-        
-        <category>regex</category>
-        
-        <category>expressoes_regulares</category>
         
         <category>tutorial</category>
         

@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Construindo o git em Go do zero - Parte 2 | carlos schults / blog</title>
+  <link rel="apple-touch-icon" sizes="57x57" href="/img/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/img/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/img/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/img/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/img/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/img/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/img/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/img/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"  href="/img/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/img/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon-16x16.png">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="description" content="Bem-vindo de volta à minha jornada de construir o git do zero em Go, com o objetivo de aprender mais sobre os dois. Se você não sabe do que estou falando, le...">
+  
+  <!-- Twitter card -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:creator" content="@carlosschults">
+  <meta name="twitter:site" content="@carlosschults">
+  <meta name="twitter:domain" content="carlosschults.net">
+  <meta name="twitter:title" content="Construindo o git em Go do zero - Parte 2">
+  <meta name="twitter:description" content="Bem-vindo de volta à minha jornada de construir o git do zero em Go, com o objetivo de aprender mais sobre os dois. Se você não sabe do que estou falando, le...">
+
+   <!-- Facebook meta -->
+  
+  
+  <meta property="og:title" content="Construindo o git em Go do zero - Parte 2">
+  <meta property="og:site_name" content="Carlos Schults / Blog" />
+  <meta property="og:locale" content="pt_BR">  
+  <meta property="og:type" content="article" />
+  
+  <meta property="og:article:published_time" content="2026-05-29T00:00:00+00:00" />  
+  <meta property="og:article:author" content="Carlos Schults" />
+  
+  <meta property="og:article:tag" content="projetos" />
+  <meta property="og:article:tag" content="git" />
+  <meta property="og:article:tag" content="go" />
+  <meta property="og:article:tag" content="go-gitter" />    
+  
+  <meta property="og:url" content="https://carlosschults.net/pt/construindo-git-em-go-parte2"/>
+  <meta property="og:description" content="Bem-vindo de volta à minha jornada de construir o git do zero em Go, com o objetivo de aprender mais sobre os dois. Se você não sabe do que estou falando, le...">
+  <link rel="stylesheet" href="/css/main.css">  
+  
+   <link rel="canonical" href="https://carlosschults.net/pt/construindo-git-em-go-parte2">
+   
+  
+  <link rel="alternate" hreflang="en" href="/en/building-git-in-go-part2" />
+  <link rel="alternate" hreflang="pt" href="/pt/construindo-git-em-go-parte2" />
+  
+  <link rel="alternate" type="application/rss+xml" title="carlos schults / blog" href="https://carlosschults.net/rss.xml">
+</head>
+
+  <body>
+    <header class="site-header">
+  <div class="wrapper">    
+    <a class="site-title" href="/pt/">carlos schults / blog</a>
+    
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg viewBox="0 0 18 15">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+
+      <div class="trigger">        
+          
+          <a class="page-link" href="/sobre/">Sobre</a>
+          <a class="page-link" href="/busca/">Busca</a>
+                  
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+<div class="wrapper" style="text-align: right; line-height: 2em">
+  
+   <a href="/en/building-git-in-go-part2" class="en">en</a>  <a href="/pt/construindo-git-em-go-parte2" class="pt">pt</a> 
+
+  
+  
+</div>
+
+
+    <div class="page-content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">    
+    <h2 class="postTitle" itemprop="headline">Construindo o git em Go do zero - Parte 2</h2>
+    <p class="post-meta">   
+    <time datetime="2026-05-29T00:00:00+00:00" itemprop="datePublished">29/05/2026
+    </time> • <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">Carlos Schults</span></span>
+  <span class="tags" itemprop="keywords"> • Tags: <a href="/tag_ptbr/projetos">projetos </a> <a href="/tag_ptbr/git">git </a> <a href="/tag_ptbr/go">go </a> <a href="/tag_ptbr/go-gitter">go-gitter </a> </span>
+  </p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <p>Bem-vindo de volta à minha jornada de construir o git do zero em Go, com o objetivo de aprender mais sobre os dois. Se você não sabe do que estou falando, leia <a href="/pt/implementando-git-em-go">o primeiro post</a>.</p>
+
+<h2 id="já-faz-um-tempo">Já faz um tempo</h2>
+
+<p>Eu postei o primeiro post em 9 de março. O que eu fiquei fazendo, e por que demorei tanto para continuar a série?</p>
+
+<p>A resposta é o que você provavelmente já sabe: eu sou um adulto ocupado e não tenho muito tempo. Além disso, outros projetos pessoais também demandam atenção.</p>
+
+<p>Mas chega de desculpa. Vamos falar sobre o que consegui implementar desde a última atualização.</p>
+
+<h2 id="comandos-plumbing-vs-porcelain">Comandos Plumbing vs Porcelain</h2>
+
+<p>Antes de entrar em detalhes sobre o que implementei, preciso falar rapidinho sobre uma distinção que existe entre os comandos do git.</p>
+
+<p>Quando você pensa em comandos do git, o que provavelmente vem à mente são coisas como <code class="language-plaintext highlighter-rouge">git add</code>, <code class="language-plaintext highlighter-rouge">git init</code>, <code class="language-plaintext highlighter-rouge">git log</code>, <code class="language-plaintext highlighter-rouge">git status</code>, e por aí vai. E mesmo isso só vale se você realmente usa a linha de comando. Muita gente usa interfaces gráficas para tudo e nunca aprende nem os comandos básicos.</p>
+
+<p>Esses são os chamados comandos “porcelain”. São os comandos de alto nível, voltados para os usuários finais do git, como você e eu.</p>
+
+<p>Existe outra camada de comandos, conhecida como comandos “plumbing”. Os comandos plumbing são os de baixo nível, que realizam a manipulação de dados que permite aos comandos de alto nível fazer o seu trabalho.</p>
+
+<p>Recentemente, estive implementando alguns desses comandos plumbing que servem de fundação para grande parte do que o git faz. São eles: <code class="language-plaintext highlighter-rouge">hash-object</code> e <code class="language-plaintext highlighter-rouge">cat-file</code>.</p>
+
+<h2 id="entendendo-o-hash-object-e-o-cat-file">Entendendo o <code class="language-plaintext highlighter-rouge">hash-object</code> e o <code class="language-plaintext highlighter-rouge">cat-file</code></h2>
+
+<p>Vou falar rapidamente sobre o que esses comandos fazem antes de contar minha experiência. O <code class="language-plaintext highlighter-rouge">hash-object</code> é o comando usado para salvar dados como um blob (binary large object) dentro de um repositório git. Você passa um texto para o comando, ele salva um objeto com aquela informação e te devolve um hash SHA1.</p>
+
+<p>O <code class="language-plaintext highlighter-rouge">cat-file</code> faz o oposto. Você passa um hash de objeto e ele retorna o conteúdo (ou o tamanho, ou o tipo, dependendo de como você o chama).</p>
+
+<h3 id="calculando-o-hash-do-seu-primeiro-objeto">Calculando o hash do seu primeiro objeto</h3>
+
+<p>Quer testar? Execute o seguinte comando:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">echo </span>hi | git hash-object <span class="nt">--stdin</span>
+</code></pre></div></div>
+
+<p>Você deverá ver exatamente este hash como resultado: <code class="language-plaintext highlighter-rouge">45b983be36b73c0788dc9cbcb76cbb80fc7bb057</code>.</p>
+
+<div class="callout callout-info">
+  <div class="callout-title">
+    <span class="callout-icon">ℹ️</span>
+    Info
+  </div>
+  <div class="callout-content">
+    
+<p>Se você está no Linux ou em outro sistema Unix, você provavelmente viu  o resultado acima. O mesmo vale para Windows usando o Git Bash. Mas se você está no Windows usando o prompt de comando ou o PowerShell, o resultado provavelmente foi diferente. Isso acontece por causa das diferenças de terminadores de linha entre os sistemas.</p>
+
+  </div>
+</div>
+
+<p>O que aconteceu aqui é que o git calculou um hash para a string “hi” e o retornou para você. Usamos a flag <code class="language-plaintext highlighter-rouge">--stdin</code> para poder passar o conteúdo pela entrada padrão.</p>
+
+<p>Porém, nada foi salvo em disco. Para de fato gravar os dados, você precisa usar uma versão diferente do comando, e desta vez dentro de um repositório.</p>
+
+<h3 id="salvando-um-objeto">Salvando um objeto</h3>
+
+<p>Vá para algum lugar, crie uma nova pasta e inicialize um repositório nela:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">mkdir </span>testing-commands
+<span class="nb">cd </span>testing-commands
+git init
+</code></pre></div></div>
+
+<p>Pronto. Agora você pode fazer o seguinte:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">echo </span>hi | git hash-object <span class="nt">-w</span> <span class="nt">--stdin</span>
+</code></pre></div></div>
+
+<p>O comando é parecido com o anterior, mas repare na flag extra <code class="language-plaintext highlighter-rouge">-w</code>. Ela significa <strong>write</strong> (escrever) e é o que faz o git salvar o conteúdo em um arquivo. Você ainda receberá o hash SHA1 como resposta, igual a antes, mas agora um novo objeto blob foi salvo em algum lugar. Quer ver?</p>
+
+<p>Vá até a pasta onde o repositório foi criado, dentro de <code class="language-plaintext highlighter-rouge">testing-commands</code>. Use um explorador de arquivos, não a linha de comando. Ative as configurações necessárias para visualizar pastas e arquivos ocultos. Você verá uma pasta <code class="language-plaintext highlighter-rouge">.git</code>:</p>
+
+<p>Entre nessa pasta e você verá basicamente esta estrutura:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>├───hooks
+├───info
+├───objects   
+└───refs
+- config
+- description
+- HEAD
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">config</code>, <code class="language-plaintext highlighter-rouge">description</code> e <code class="language-plaintext highlighter-rouge">HEAD</code> são arquivos; os outros são pastas. Entre na pasta <code class="language-plaintext highlighter-rouge">objects</code>. Você provavelmente vai encontrar as pastas <code class="language-plaintext highlighter-rouge">info</code> e <code class="language-plaintext highlighter-rouge">pack</code> lá. Elas não importam pra gente.</p>
+
+<p>O que nos interessa aqui é uma pasta cujo nome tem dois caracteres. Se você executou os comandos acima no Linux ou no Git Bash do Windows, ela deve ser <code class="language-plaintext highlighter-rouge">45</code>. Caso contrário, deve começar com os dois primeiros caracteres do hash que você recebeu ao rodar <code class="language-plaintext highlighter-rouge">echo hi | git hash-object -w --stdin</code>.</p>
+
+<p>Entre nessa pasta. Dentro, você vai encontrar um arquivo cujo nome é formado pelo restante dos caracteres do hash. No meu caso, vejo <code class="language-plaintext highlighter-rouge">b983be36b73c0788dc9cbcb76cbb80fc7bb057</code>.</p>
+
+<p><strong>Esse é o seu blob.</strong> Esse arquivo é o objeto que o git salvou quando você executou o comando <code class="language-plaintext highlighter-rouge">hash-object</code> com a flag <code class="language-plaintext highlighter-rouge">-w</code>.</p>
+
+<h3 id="lendo-objetos-de-volta">Lendo objetos de volta</h3>
+
+<p>Tente abrir o arquivo do blob no seu editor de texto favorito. O arquivo abre normalmente, mas o conteúdo é puro lixo que não dá pra ler. Isso porque ele está em formato binário comprimido, não em texto puro.</p>
+
+<p>O que o git faz, em sequência, é o seguinte:</p>
+
+<ol>
+  <li>Cria um cabeçalho concatenando a palavra “blob”, um espaço e o tamanho do conteúdo em bytes. Por exemplo, <code class="language-plaintext highlighter-rouge">blob 2</code>.</li>
+  <li>Concatena isso com um <a href="https://pt.wikipedia.org/wiki/Caractere_nulo">caractere nulo</a>.</li>
+  <li>Concatena o conteúdo real em seguida. No nosso exemplo, “hi”.</li>
+  <li>Gera o SHA1 da string completa.</li>
+  <li>Se você não usou a flag <code class="language-plaintext highlighter-rouge">-w</code>, o git retorna o SHA1 e para por aí.</li>
+  <li>Caso tenha usado a flag <code class="language-plaintext highlighter-rouge">-w</code>, o git comprime a string completa (cabeçalho + byte nulo + conteúdo).</li>
+  <li>Pega os dois primeiros caracteres do hash SHA1 e cria um diretório com esse nome dentro de <code class="language-plaintext highlighter-rouge">objects</code>.</li>
+  <li>Por fim, cria um arquivo dentro dessa pasta, com o nome formado pelos caracteres restantes do hash SHA1, e grava nesse arquivo o conteúdo comprimido com zlib.</li>
+</ol>
+
+<p>Para ler esses dados de volta, você usa o comando <code class="language-plaintext highlighter-rouge">cat-file</code> com uma de suas flags. Para ler o conteúdo, use <code class="language-plaintext highlighter-rouge">cat-file -p</code>, onde <code class="language-plaintext highlighter-rouge">-p</code> significa “pretty print”:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git cat-file <span class="nt">-p</span> 45b983be36b73c0788dc9cbcb76cbb80fc7bb057
+</code></pre></div></div>
+
+<p>Ao executar o comando acima, você recebe “hi” de volta. Você também pode usar a flag <code class="language-plaintext highlighter-rouge">-t</code> para obter o tipo do objeto, ou <code class="language-plaintext highlighter-rouge">-s</code> para retornar seu tamanho em bytes:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git cat-file <span class="nt">-t</span> 45b983be36b73c0788dc9cbcb76cbb80fc7bb057
+blob
+
+git cat-file <span class="nt">-s</span> 45b983be36b73c0788dc9cbcb76cbb80fc7bb057
+3
+</code></pre></div></div>
+
+<h2 id="implementação-no-go-gitter">Implementação no Go-Gitter</h2>
+
+<p>Agora que você entende o que esses dois comandos fazem, vamos falar sobre como os implementei no <code class="language-plaintext highlighter-rouge">go-gitter</code>, começando pelo <code class="language-plaintext highlighter-rouge">hash-object</code>.</p>
+
+<h3 id="implementando-o-hash-object">Implementando o <code class="language-plaintext highlighter-rouge">hash-object</code></h3>
+
+<p>Meu primeiro passo foi implementar a versão mais básica do <code class="language-plaintext highlighter-rouge">hash-object</code>, sem a flag <code class="language-plaintext highlighter-rouge">-w</code>. O comando conseguiria exibir o hash SHA1 de um texto passado como argumento, mas ainda sem salvar nada em disco.</p>
+
+<p>Como você pode ver no <a href="https://github.com/carlosschults/go-gitter/commit/3ae9cc58f32059cda6091aa27dbab4507cebbca7">commit</a>, o código está longe de ser um exemplo de código limpo. Ele mistura o parsing de argumentos com a lógica real no mesmo arquivo. Naquele ponto, eu ainda nem tinha criado funções separadas para cada comando, mas fiz isso depois.</p>
+
+<p>A parte do código que realiza o hash em si acabou sendo bem simples, assim que entendi qual deveria ser o formato:</p>
+
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">size</span> <span class="o">:=</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="n">header</span> <span class="o">:=</span> <span class="n">fmt</span><span class="o">.</span><span class="n">Sprintf</span><span class="p">(</span><span class="s">"blob %s%c"</span><span class="p">,</span> <span class="n">strconv</span><span class="o">.</span><span class="n">Itoa</span><span class="p">(</span><span class="n">size</span><span class="p">),</span> <span class="m">0</span><span class="p">)</span>
+<span class="n">content</span> <span class="o">:=</span> <span class="n">header</span> <span class="o">+</span> <span class="kt">string</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="n">hash</span> <span class="o">:=</span> <span class="n">sha1</span><span class="o">.</span><span class="n">New</span><span class="p">()</span>
+<span class="n">hash</span><span class="o">.</span><span class="n">Write</span><span class="p">([]</span><span class="kt">byte</span><span class="p">(</span><span class="n">content</span><span class="p">))</span>
+<span class="n">hashedData</span> <span class="o">:=</span> <span class="n">hash</span><span class="o">.</span><span class="n">Sum</span><span class="p">(</span><span class="no">nil</span><span class="p">)</span>
+<span class="n">hashedString</span> <span class="o">:=</span> <span class="n">hex</span><span class="o">.</span><span class="n">EncodeToString</span><span class="p">(</span><span class="n">hashedData</span><span class="p">)</span>
+<span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="n">hashedString</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Como você pode ver, criamos o cabeçalho concatenando a palavra “blob” mais um espaço com o tamanho do conteúdo e depois o caractere nulo, representado aqui pelo inteiro zero. Em seguida, hasheamos tudo, codificamos como string e imprimimos.</p>
+
+<p>Precisei pesquisar um pouco para encontrar as bibliotecas necessárias e a sintaxe do Go, já que as regras que eu criei pra mim proíbem o uso de LLMs para geração de código, mas acabou dando certo.</p>
+
+<p>No <a href="https://github.com/carlosschults/go-gitter/commit/8b08cb93545f3966b1485989ce67501e1a5ff3ba">commit seguinte</a>, adicionei suporte à flag <code class="language-plaintext highlighter-rouge">-w</code>. Nesse ponto, como você pode ver, criei uma função para o comando.</p>
+
+<p>A diferença não é grande. O que acrescentei foi um parsing de argumentos bem simples para identificar se o conteúdo deve ser gravado em disco.</p>
+
+<p>Então, o código que efetivamente faz a gravação:</p>
+
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">if</span> <span class="n">saveFile</span> <span class="p">{</span>
+	<span class="c">// cria o diretório para o blob</span>
+	<span class="k">if</span> <span class="n">err</span> <span class="o">:=</span> <span class="n">os</span><span class="o">.</span><span class="n">Mkdir</span><span class="p">(</span><span class="s">".git/objects/"</span><span class="o">+</span><span class="n">folderName</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">ModePerm</span><span class="p">);</span> <span class="n">err</span> <span class="o">!=</span> <span class="no">nil</span> <span class="p">{</span>
+		<span class="n">log</span><span class="o">.</span><span class="n">Fatal</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
+		<span class="n">os</span><span class="o">.</span><span class="n">Exit</span><span class="p">(</span><span class="m">1</span><span class="p">)</span>
+	<span class="p">}</span>
+
+	<span class="c">// comprime o conteúdo com zlib e salva o arquivo</span>
+	<span class="k">var</span> <span class="n">buffer</span> <span class="n">bytes</span><span class="o">.</span><span class="n">Buffer</span>
+	<span class="n">w</span> <span class="o">:=</span> <span class="n">zlib</span><span class="o">.</span><span class="n">NewWriter</span><span class="p">(</span><span class="o">&amp;</span><span class="n">buffer</span><span class="p">)</span>
+	<span class="n">w</span><span class="o">.</span><span class="n">Write</span><span class="p">([]</span><span class="kt">byte</span><span class="p">(</span><span class="n">content</span><span class="p">))</span>
+	<span class="n">w</span><span class="o">.</span><span class="n">Close</span><span class="p">()</span>
+	<span class="k">if</span> <span class="n">err</span> <span class="o">:=</span> <span class="n">os</span><span class="o">.</span><span class="n">WriteFile</span><span class="p">(</span><span class="s">".git/objects/"</span><span class="o">+</span><span class="n">folderName</span><span class="o">+</span><span class="s">"/"</span><span class="o">+</span><span class="n">fileName</span><span class="p">,</span> <span class="n">buffer</span><span class="o">.</span><span class="n">Bytes</span><span class="p">(),</span> <span class="m">0666</span><span class="p">);</span> <span class="n">err</span> <span class="o">!=</span> <span class="no">nil</span> <span class="p">{</span>
+		<span class="n">log</span><span class="o">.</span><span class="n">Fatal</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
+		<span class="n">os</span><span class="o">.</span><span class="n">Exit</span><span class="p">(</span><span class="m">1</span><span class="p">)</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Demorei um pouco para acertar. Em grande parte porque, em determinado momento, eu estava entendendo completamente errado o que o git faz. Achei que deveria comprimir e salvar o <em>hash</em> que calculei. Sim, eu sei, não faz sentido nenhum, mas o que posso dizer?</p>
+
+<p>Depois que entendi o fluxo correto, fazer funcionar foi principalmente uma questão de descobrir como usar a compressão zlib. O Google e a documentação resolveram, como nos bons tempos.</p>
+
+<h3 id="implementando-o-cat-file">Implementando o <code class="language-plaintext highlighter-rouge">cat-file</code></h3>
+
+<p>O <code class="language-plaintext highlighter-rouge">cat-file</code> foi mais fácil de implementar, porque é essencialmente o caminho inverso. A partir de um hash, localizar o arquivo correspondente, descomprimir o arquivo e ler o conteúdo.</p>
+
+<p>Desta vez, criei uma função dedicada para o novo comando desde o início, como pode ser visto no <a href="https://github.com/carlosschults/go-gitter/commit/81c9f03e1ca76a483335876b42637833f8a0a524">primeiro commit</a>. Esse commit implementa apenas a flag <code class="language-plaintext highlighter-rouge">-p</code>.</p>
+
+<p>Abaixo está uma versão resumida do código desse commit, sem o boilerplate da função e também sem o tratamento de erros:</p>
+
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">folderName</span> <span class="o">:=</span> <span class="n">h</span><span class="p">[</span><span class="m">0</span><span class="o">:</span><span class="m">2</span><span class="p">]</span>
+<span class="n">fileName</span> <span class="o">:=</span> <span class="n">h</span><span class="p">[</span><span class="m">2</span><span class="o">:</span><span class="p">]</span>
+<span class="n">fullPath</span> <span class="o">:=</span> <span class="n">filepath</span><span class="o">.</span><span class="n">Join</span><span class="p">(</span><span class="s">".git/objects"</span><span class="p">,</span> <span class="n">folderName</span><span class="p">,</span> <span class="n">fileName</span><span class="p">)</span>
+
+<span class="k">var</span> <span class="n">contents</span> <span class="p">[]</span><span class="kt">byte</span>
+<span class="k">var</span> <span class="n">err</span> <span class="kt">error</span>
+<span class="n">contents</span><span class="p">,</span> <span class="n">err</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">ReadFile</span><span class="p">(</span><span class="n">fullPath</span><span class="p">)</span>
+
+<span class="n">r</span><span class="p">,</span> <span class="n">err</span> <span class="o">:=</span> <span class="n">zlib</span><span class="o">.</span><span class="n">NewReader</span><span class="p">(</span><span class="n">bytes</span><span class="o">.</span><span class="n">NewReader</span><span class="p">(</span><span class="n">contents</span><span class="p">))</span>
+
+<span class="n">buf</span> <span class="o">:=</span> <span class="nb">new</span><span class="p">(</span><span class="n">strings</span><span class="o">.</span><span class="n">Builder</span><span class="p">)</span>
+<span class="n">_</span><span class="p">,</span> <span class="n">err</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">Copy</span><span class="p">(</span><span class="n">buf</span><span class="p">,</span> <span class="n">r</span><span class="p">)</span>
+
+<span class="n">uncompressedContents</span> <span class="o">:=</span> <span class="n">buf</span><span class="o">.</span><span class="n">String</span><span class="p">()</span>
+<span class="n">contentsWithoutHeader</span> <span class="o">:=</span> <span class="n">strings</span><span class="o">.</span><span class="n">Split</span><span class="p">(</span><span class="n">uncompressedContents</span><span class="p">,</span> <span class="s">"</span><span class="se">\x00</span><span class="s">"</span><span class="p">)[</span><span class="m">1</span><span class="p">]</span>
+<span class="n">r</span><span class="o">.</span><span class="n">Close</span><span class="p">()</span>
+<span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="n">contentsWithoutHeader</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>A variável <code class="language-plaintext highlighter-rouge">h</code> é o SHA1 recebido pelo comando. A partir dela, extraímos o nome do diretório e do arquivo, que usamos para montar o caminho completo, ler o conteúdo do arquivo e descomprimi-lo.</p>
+
+<p>Por fim, faço um split da string pelo caractere nulo e retorno a segunda parte, que é tudo o que vem depois do cabeçalho.</p>
+
+<p>O <a href="https://github.com/carlosschults/go-gitter/commit/56d10d3cb2ad0baa217a357b8f5d204eb5970620">commit seguinte</a> implementa as flags restantes. Não vou percorrer linha por linha, já que a parte importante é bem simples:</p>
+
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">parts</span> <span class="o">:=</span> <span class="n">strings</span><span class="o">.</span><span class="n">Split</span><span class="p">(</span><span class="n">uncompressedContents</span><span class="p">,</span> <span class="s">"</span><span class="se">\x00</span><span class="s">"</span><span class="p">)</span>
+<span class="n">flag</span> <span class="o">:=</span> <span class="n">arguments</span><span class="p">[</span><span class="m">2</span><span class="p">]</span>
+<span class="k">var</span> <span class="n">result</span> <span class="kt">string</span>
+
+<span class="k">switch</span> <span class="n">flag</span> <span class="p">{</span>
+<span class="k">case</span> <span class="s">"-p"</span><span class="o">:</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">parts</span><span class="p">[</span><span class="m">1</span><span class="p">]</span>
+<span class="k">case</span> <span class="s">"-t"</span><span class="o">:</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">strings</span><span class="o">.</span><span class="n">Fields</span><span class="p">(</span><span class="n">parts</span><span class="p">[</span><span class="m">0</span><span class="p">])[</span><span class="m">0</span><span class="p">]</span>
+<span class="k">case</span> <span class="s">"-s"</span><span class="o">:</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">strings</span><span class="o">.</span><span class="n">Fields</span><span class="p">(</span><span class="n">parts</span><span class="p">[</span><span class="m">0</span><span class="p">])[</span><span class="m">1</span><span class="p">]</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Para os programadores Go que estão lendo isso: eu sei que esse código não seja o mais bonito e idiomático que você já viu, e prometo que, conforme for aprendendo mais sobre a linguagem, vou refatorar. A prioridade no momento era fazer funcionar.</p>
+
+<h2 id="o-que-aprendi-até-agora">O que aprendi até agora</h2>
+
+<p>O objetivo deste projeto é aprender a linguagem Go e também mais sobre a implementação do Git. Então, o que aprendi sobre os dois ao completar esses dois comandos?</p>
+
+<p>Primeiro, o lado do Git. Posso dizer que me surpreendeu a simplicidade com que o git salva objetos. É realmente só o tipo do objeto, um espaço, o tamanho, um caractere nulo como delimitador e o conteúdo. Eu entendia, em alto nível, como o git armazenava objetos, mas implementar de fato me deu uma nova apreciação pela simplicidade e elegância do design.</p>
+
+<p>E sobre o lado do Go? De maneira geral, estou gostando muito. Eu gosto da legibilidade da linguagem. Acho que até alguém com zero experiência em Go conseguiria ler este código e ao menos entender a essência, desde que já seja programador.</p>
+
+<p>Gosto também do fato de Go ser opinativo. Por exemplo, se você tem um <code class="language-plaintext highlighter-rouge">if</code>, precisa usar as chaves. Do contrário, o código não compila. Isso elimina mais uma coisa para os programadores brigarem, reuniões sobre padrões de código, regras de linter. Simplifica a vida.</p>
+
+<p>Um aspecto que não gosto é o tratamento de erros. Ter aqueles <code class="language-plaintext highlighter-rouge">if</code> verificando <code class="language-plaintext highlighter-rouge">err</code> em todo lugar polui o código. Em C#/.NET, quando ocorre um erro que deveria ser absolutamente impossível, eu só deixo a exceção subir até o middleware de tratamento de exceções no nível mais alto, onde ela é logada e o usuário recebe uma mensagem com o nível adequado de detalhes.</p>
+
+<p>Talvez exista alguma forma idiomática de fazer algo assim em Go também, mas por enquanto não conheço. Fora isso, estou gostando muito da linguagem.</p>
+
+<h2 id="o-que-vem-a-seguir">O que vem a seguir?</h2>
+
+<p>Para o próximo passo vou implementar outro comando plumbing chamado <a href="https://git-scm.com/docs/git-update-index">update-index</a>. Ele é necessário para eu poder stagear mudanças e eventualmente fazer commits.</p>
+
+<p>Se quiser experimentar o <code class="language-plaintext highlighter-rouge">go-gitter</code>, instale assim:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>go <span class="nb">install </span>github.com/carlosschults/go-gitter/ggt@latest
+</code></pre></div></div>
+
+<p>Depois é só usar os comandos assim:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">echo </span>hi | ggt hash-object <span class="nt">--stdin</span>
+ggt cat-file <span class="nt">-p</span> 45b983be36b73c0788dc9cbcb76cbb80fc7bb057
+</code></pre></div></div>
+
+<p>Você deve conseguir fazer o hash de algo com o git de verdade e ler com o go-gitter, e vice-versa.</p>
+
+<p>Obrigado por ler, e até a próxima atualização.</p>
+
+    
+    
+      
+    
+    
+        Encontrou algum erro no post? <a href="http://github.com/carlosschults/carlosschults.github.io/edit/master/_posts/2026-05-29-construindo-o-git-em-go-parte2.md">Sugira uma edição</a>      
+    
+    
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+                    
+            <a rel="previous" class="previous" href="/pt/suas-mensagens-de-commit-sao-um-lixo">&larr; Suas Mensagens de Commit São Um Lixo. Vou Te Ajudar a Melhorar </a>
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+      
+    <div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+        // Store these for reloads
+        window.disqus_identifier = window.location.pathname;
+        window.disqus_url = window.location.href;
+        
+        // Set initial theme - match it with the site's theme
+        const currentTheme = document.body.getAttribute('data-theme') || 'light';
+        this.page.theme = currentTheme === 'dark' ? 'dark' : 'light';
+    };
+    
+    (function() {
+        var d = document, s = d.createElement('script');
+        s.src = '//carlosschultsblog.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>    
+  </div>
+
+</article>
+
+      </div>
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">         
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-2">
+        <ul class="social-media-list">
+          
+          <li>
+            <a href="https://github.com/carlosschults"><span class="icon icon--github"><svg viewBox="0 0 16 16"><path fill="#828282" d="M7.999,0.431c-4.285,0-7.76,3.474-7.76,7.761 c0,3.428,2.223,6.337,5.307,7.363c0.388,0.071,0.53-0.168,0.53-0.374c0-0.184-0.007-0.672-0.01-1.32 c-2.159,0.469-2.614-1.04-2.614-1.04c-0.353-0.896-0.862-1.135-0.862-1.135c-0.705-0.481,0.053-0.472,0.053-0.472 c0.779,0.055,1.189,0.8,1.189,0.8c0.692,1.186,1.816,0.843,2.258,0.645c0.071-0.502,0.271-0.843,0.493-1.037 C4.86,11.425,3.049,10.76,3.049,7.786c0-0.847,0.302-1.54,0.799-2.082C3.768,5.507,3.501,4.718,3.924,3.65 c0,0,0.652-0.209,2.134,0.796C6.677,4.273,7.34,4.187,8,4.184c0.659,0.003,1.323,0.089,1.943,0.261 c1.482-1.004,2.132-0.796,2.132-0.796c0.423,1.068,0.157,1.857,0.077,2.054c0.497,0.542,0.798,1.235,0.798,2.082 c0,2.981-1.814,3.637-3.543,3.829c0.279,0.24,0.527,0.713,0.527,1.437c0,1.037-0.01,1.874-0.01,2.129 c0,0.208,0.14,0.449,0.534,0.373c3.081-1.028,5.302-3.935,5.302-7.362C15.76,3.906,12.285,0.431,7.999,0.431z"/></svg>
+</span><span class="username">carlosschults</span></a>
+
+          </li>
+          
+
+          
+          <li>
+            <a href="https://twitter.com/carlosschults"><span class="icon icon--twitter"><svg viewBox="0 0 16 16"><path fill="#828282" d="M15.969,3.058c-0.586,0.26-1.217,0.436-1.878,0.515c0.675-0.405,1.194-1.045,1.438-1.809c-0.632,0.375-1.332,0.647-2.076,0.793c-0.596-0.636-1.446-1.033-2.387-1.033c-1.806,0-3.27,1.464-3.27,3.27 c0,0.256,0.029,0.506,0.085,0.745C5.163,5.404,2.753,4.102,1.14,2.124C0.859,2.607,0.698,3.168,0.698,3.767 c0,1.134,0.577,2.135,1.455,2.722C1.616,6.472,1.112,6.325,0.671,6.08c0,0.014,0,0.027,0,0.041c0,1.584,1.127,2.906,2.623,3.206 C3.02,9.402,2.731,9.442,2.433,9.442c-0.211,0-0.416-0.021-0.615-0.059c0.416,1.299,1.624,2.245,3.055,2.271 c-1.119,0.877-2.529,1.4-4.061,1.4c-0.264,0-0.524-0.015-0.78-0.046c1.447,0.928,3.166,1.469,5.013,1.469 c6.015,0,9.304-4.983,9.304-9.304c0-0.142-0.003-0.283-0.009-0.423C14.976,4.29,15.531,3.714,15.969,3.058z"/></svg>
+</span><span class="username">carlosschults</span></a>
+
+          </li>
+          
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-3">
+        <p>Artigos sobre desenvolvimento de software e tecnologia.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+
+    <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-92788641-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+    <script src="/js/dark-mode.js"></script>
+  </body>
+
+</html>
