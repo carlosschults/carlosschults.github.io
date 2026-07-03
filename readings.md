@@ -65,6 +65,9 @@ I copied the idea from [here](https://blog.royalsloth.eu/interesting-articles/).
 - [Challenging algorithms and data structures every programmer should try](https://austinhenley.com/blog/challengingalgorithms.html) by Austin Z. Henley  
   Yet another sequel, this time targeting algorithms and data structures.
 
+- [Pure and Impure Engineering](https://www.seangoedecke.com/pure-and-impure-engineering/) by Sean Goedecke  
+  A distinction between "pure" engineering (solving technically interesting problems) and "impure" engineering (solving business problems with messy constraints), and why the latter is often more valuable.
+
 ## Writing
 
 - [A blogging style guide](https://robertheaton.com/2018/12/06/a-blogging-style-guide/) by Robert Heaton  
