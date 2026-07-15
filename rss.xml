@@ -5,10 +5,250 @@
     <description>Artigos sobre desenvolvimento de software e tecnologia.</description>
     <link>https://carlosschults.net/</link>
     <atom:link href="https://carlosschults.net/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Fri, 03 Jul 2026 17:34:25 +0000</pubDate>
-    <lastBuildDate>Fri, 03 Jul 2026 17:34:25 +0000</lastBuildDate>
+    <pubDate>Wed, 15 Jul 2026 10:58:17 +0000</pubDate>
+    <lastBuildDate>Wed, 15 Jul 2026 10:58:17 +0000</lastBuildDate>
     <generator>Jekyll v4.3.1</generator>
     
+    
+      <item>
+        <title>Operador LIKE do PostgreSQL: Um Guia Detalhado</title>
+        <description>
+&lt;div class=&quot;callout callout-info&quot;&gt;
+  &lt;div class=&quot;callout-title&quot;&gt;
+    &lt;span class=&quot;callout-icon&quot;&gt;ℹ️&lt;/span&gt;
+    Info
+  &lt;/div&gt;
+  &lt;div class=&quot;callout-content&quot;&gt;
+    
+&lt;p&gt;&lt;em&gt;Nota editorial: escrevi esse post originalmente para o blog da CoderPad. Você pode &lt;a href=&quot;https://coderpad.io/blog/development/postgresql-like-operator-a-detailed-guide/&quot;&gt;conferir o original aqui, em inglês, no site deles&lt;/a&gt;.&lt;/em&gt;&lt;/p&gt;
+
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Ao trabalhar com bancos de dados, precisar buscar valores que correspondam a um padrão é bem comum. Você pode querer achar todos os alunos que o sobrenome comece com uma determinada letra, ou atualizar todos os produtos cujo id contenha uma string específica. Se você usa PostgreSQL, vai usar o operador &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;LIKE&lt;/code&gt; para isso.&lt;/p&gt;
+
+&lt;p&gt;Se você quer aprender mais sobre o &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;LIKE&lt;/code&gt; do PostgreSQL, chegou ao lugar certo, já que este post é totalmente dedicado a esse operador. Ao final do post, você vai ter aprendido:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;o que o &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;LIKE&lt;/code&gt; do PostgreSQL faz, e por que você gostaria de usá-lo&lt;/li&gt;
+  &lt;li&gt;como ele difere do operador &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;LIKE&lt;/code&gt; em diferentes bancos de dados&lt;/li&gt;
+  &lt;li&gt;como ele difere do operador &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ILIKE&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Mas só teoria sem prática iriam tornar esse post chato demais. Então, antes de encerrar, você vai ver exemplos do operador &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;LIKE&lt;/code&gt; na prática.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Pré-requisitos&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Se você quiser acompanhar a parte prática do post, você vai precisar de:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;instância funcional do PostgreSQL instalada na sua máquina&lt;/li&gt;
+  &lt;li&gt;conseguir se conectar a essa instância através de um cliente&lt;/li&gt;
+  &lt;li&gt;ter ao menos um pouco de experiência com o banco de dados PostgreSQL e com a linguagem SQL&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;LIKE do PostgreSQL: Fundamentos&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Com os pré-requisitos resolvidos, vamos começar cobrindo alguns fundamentos sobre o assunto de hoje.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;O Que É o &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;LIKE&lt;/code&gt; do PostgreSQL?&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;O &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;LIKE&lt;/code&gt; do PostgreSQL é a implementação, feita pelo PostgreSQL, do operador &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;LIKE&lt;/code&gt; da linguagem SQL. Você usa o LIKE quando quer encontrar linhas nas quais uma ou mais colunas textuais correspondem a um determinado padrão. Na introdução, dei um exemplo: achar alunos cujo sobrenome comece com uma determinada letra. Então, vamos ver uma query real que faz exatamente isso usando o &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;LIKE&lt;/code&gt; do PostgreSQL:&lt;/p&gt;
+
+&lt;div class=&quot;language-sql highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;SELECT&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;id&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;first_name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;last_name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;email&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;FROM&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;students&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;WHERE&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;last_name&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;LIKE&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;M%&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;A query acima recupera algumas colunas da tabela &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;students&lt;/code&gt;, mas apenas as linhas que atendem à condição: o valor da coluna &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;last_name&lt;/code&gt; precisa começar com a letra “M”. Tem alguns pontos interessantes neste primeiro exemplo:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Você usa o operador &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;LIKE&lt;/code&gt; na cláusula &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;WHERE&lt;/code&gt; de uma query&lt;/li&gt;
+  &lt;li&gt;Ele vai no mesmo lugar em que você colocaria qualquer operador de comparação, como “==”, “&amp;gt;”, “&amp;lt;”, e assim por diante&lt;/li&gt;
+  &lt;li&gt;O caractere de porcentagem (%) é usado como um wildcard para corresponder a qualquer quantidade de caracteres&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;E se você quisesse apenas os alunos cujo primeiro nome termina com “k”? Simples, basta trocar a letra e o wildcard de posição:&lt;/p&gt;
+
+&lt;div class=&quot;language-sql highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;SELECT&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;id&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;first_name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;last_name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;email&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;FROM&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;students&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;WHERE&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;first_name&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;LIKE&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;%k&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Outro exemplo: vamos buscar alunos cujo endereço de e-mail contenha a palavra “gmail”:&lt;/p&gt;
+
+&lt;div class=&quot;language-sql highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;SELECT&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;id&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;first_name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;last_name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;email&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;FROM&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;students&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;WHERE&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;email&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;LIKE&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;%gmail%&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Isso mesmo: se você quer buscar valores que contenham uma string, basta envolver a string com sinais de porcentagem (&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;%&lt;/code&gt;).&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Qual a Diferença Entre LIKE e ILIKE no PostgreSQL?&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Ao ler código PostgreSQL por aí, você pode encontrar queries que usam o operador &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ILIKE&lt;/code&gt; em vez do &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;LIKE&lt;/code&gt; e ficar confuso. A diferença é que o operador &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;LIKE&lt;/code&gt; diferencia maiúsculas de minúsculas (é &lt;em&gt;case sensitive&lt;/em&gt;). Já o operador &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ILIKE&lt;/code&gt; não diferencia (é &lt;em&gt;case insensitive&lt;/em&gt;) — daí o “i” no nome. Ele não distingue letras maiúsculas de minúsculas, e por isso você deveria usá-lo quando não se importa com a caixa das letras.&lt;/p&gt;
+
+&lt;p&gt;Um detalhe importante a se ter em mente: o operador &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ILIKE&lt;/code&gt; não existe no SQL ANSI; na verdade, é uma extensão específica do PostgreSQL. Isso significa que usar o ILIKE torna seu código SQL menos portável, caso você precise trocar de banco de dados no futuro.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;LIKE do PostgreSQL: Casos de Uso Práticos&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Tendo coberto o básico sobre o &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;LIKE&lt;/code&gt; do PostgreSQL, vamos agora ver vários exemplos de uso. Vamos começar preparando o banco de dados para os testes.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Preparando o Banco de Dados&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Usando seu cliente preferido, conecte-se à sua instância do PostgreSQL, garantindo que existe um banco de dados ao qual você pode se conectar para os testes.&lt;/p&gt;
+
+&lt;p&gt;Vamos começar criando uma tabela e inserindo algumas linhas nela:&lt;/p&gt;
+
+&lt;div class=&quot;language-sql highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;CREATE&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;TABLE&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;albums&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;id&lt;/span&gt;              &lt;span class=&quot;nb&quot;&gt;SERIAL&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;PRIMARY&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;KEY&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;title&lt;/span&gt;           &lt;span class=&quot;nb&quot;&gt;VARCHAR&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;250&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;NOT&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;NULL&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;artist&lt;/span&gt;          &lt;span class=&quot;nb&quot;&gt;VARCHAR&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;250&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;NOT&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;NULL&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;release_year&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;NOT&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;NULL&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;INSERT&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;INTO&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;albums&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;title&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;artist&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;release_year&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;VALUES&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&apos;Abbey Road&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;The Beatles&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1969&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;INSERT&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;INTO&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;albums&lt;/span&gt;  &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;title&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;artist&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;release_year&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;VALUES&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&apos;Construção&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;Chico Buarque&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1971&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;INSERT&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;INTO&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;albums&lt;/span&gt;  &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;title&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;artist&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;release_year&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;VALUES&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&apos;The Dark Side of the Moon&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;Pink Floyd&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1973&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;INSERT&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;INTO&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;albums&lt;/span&gt;  &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;title&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;artist&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;release_year&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;VALUES&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&apos;Reckless&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;Bryan Adams&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1984&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;INSERT&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;INTO&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;albums&lt;/span&gt;  &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;title&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;artist&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;release_year&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;VALUES&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&apos;Ryan Adams&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;Ryan Adams&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2014&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;Correspondendo a um Único Caractere&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Como você viu, a tabela agora contém álbuns tanto do Bryan quanto do Ryan Adams. Isso não é coincidência. Primeiro, use a seguinte query para recuperar álbuns dos dois cantores:&lt;/p&gt;
+
+&lt;div class=&quot;language-sql highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;SELECT&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;FROM&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;albums&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;WHERE&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;artist&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;LIKE&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;%yan%&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;A query acima corresponde a todos os artistas que contenham a string “yan” em qualquer parte do nome. Veja como fica o resultado:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; id |   title    |   artist    | release_year 
+----+------------+-------------+--------------
+  4 | Reckless   | Bryan Adams |         1984
+  5 | Ryan Adams | Ryan Adams  |         2014
+(2 rows)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;O operador &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;LIKE&lt;/code&gt; oferece um wildcard adicional, o caractere de sublinhado (_), que corresponde a um único caractere. Dessa forma, é possível reescrever a query de modo que apenas Ryan Adams seja retornado:&lt;/p&gt;
+
+&lt;div class=&quot;language-sql highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;SELECT&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;FROM&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;albums&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;WHERE&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;artist&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;LIKE&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;_yan%&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;E aqui, novamente, está o resultado:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; id |   title    |   artist   | release_year 
+----+------------+------------+--------------
+  5 | Ryan Adams | Ryan Adams |         2014
+(1 row)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;Correspondências Negativas&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Ao trabalhar com tabelas de banco de dados, muitas vezes você precisa recuperar dados que &lt;em&gt;não&lt;/em&gt; correspondam a um certo padrão. Para isso, você pode usar o operador &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;NOT LIKE&lt;/code&gt;. Por exemplo, vamos buscar apenas artistas cujo nome não comece com “The”:&lt;/p&gt;
+
+&lt;div class=&quot;language-sql highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;SELECT&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;FROM&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;albums&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;WHERE&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;artist&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;NOT&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;LIKE&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;The%&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Já que o único artista que começa com “The” é The Beatles, ele não será retornado pela query acima.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Correspondência Sem Diferenciar Maiúsculas de Minúsculas&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Como falei antes, o operador &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ILIKE&lt;/code&gt; é uma extensão especial do PostgreSQL para o &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;LIKE&lt;/code&gt; que faz correspondências sem diferenciar maiúsculas de minúsculas. Vamos ver isso na prática. Primeiro, vamos usar o operador &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;LIKE&lt;/code&gt; para obter todos os artistas que contenham um “A” maiúsculo:&lt;/p&gt;
+
+&lt;div class=&quot;language-sql highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;SELECT&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;FROM&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;albums&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;WHERE&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;artist&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;LIKE&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;%A%&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Apenas “Bryan Adams” e “Ryan Adams” são retornados, o que faz sentido:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; id |   title    |   artist    | release_year 
+----+------------+-------------+--------------
+  4 | Reckless   | Bryan Adams |         1984
+  5 | Ryan Adams | Ryan Adams  |         2014
+(2 rows)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Agora vamos substituir o operador &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;LIKE&lt;/code&gt; pelo &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ILIKE&lt;/code&gt; e rodar a query novamente:&lt;/p&gt;
+
+&lt;div class=&quot;language-sql highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;SELECT&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;FROM&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;albums&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;WHERE&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;artist&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;ILIKE&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;%A%&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; id |   title    |    artist     | release_year 
+----+------------+---------------+--------------
+  1 | Abbey Road | The Beatles   |         1969
+  2 | Construção | Chico Buarque |         1971
+  4 | Reckless   | Bryan Adams   |         1984
+  5 | Ryan Adams | Ryan Adams    |         2014
+(4 rows)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Agora, todos os artistas são retornados, exceto Pink Floyd.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Escapando os Wildcards&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Para este exemplo, vamos atualizar duas linhas:&lt;/p&gt;
+
+&lt;div class=&quot;language-sql highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;UPDATE&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;albums&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;SET&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;artist&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;The%Beatles&apos;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;WHERE&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;id&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;UPDATE&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;albums&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;SET&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;artist&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;Chico_Buarque&apos;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;WHERE&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;id&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Agora, digamos que queremos recuperar álbuns de artistas cujo nome contenha um sinal de porcentagem ou um sublinhado:&lt;/p&gt;
+
+&lt;div class=&quot;language-sql highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;SELECT&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;FROM&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;albums&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;WHERE&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;artist&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;LIKE&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;%%%&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;SELECT&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;FROM&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;albums&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;WHERE&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;artist&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;LIKE&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;%_%&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Como você provavelmente já imaginou, nenhuma das duas queries funciona: ambas retornam todas as linhas. Felizmente, existe uma forma de contornar esse problema: é possível escapar um wildcard para usá-lo como um caractere normal. Basta colocar uma barra invertida antes do caractere problemático:&lt;/p&gt;
+
+&lt;div class=&quot;language-sql highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;SELECT&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;FROM&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;albums&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;WHERE&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;artist&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;LIKE&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;%&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\%&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;%&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;E aqui está o resultado:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; id |   title    |    artist     | release_year 
+----+------------+---------------+--------------
+  1 | Abbey Road | The Beatles   |         1969
+(1 rows)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;O mesmo funcionaria para o caractere de sublinhado. Mas, antes de encerrar, vamos complicar as coisas só um pouco mais — porque sim.&lt;/p&gt;
+
+&lt;p&gt;Primeiro, vamos atualizar a linha do “Abbey Road” mais uma vez:&lt;/p&gt;
+
+&lt;div class=&quot;language-sql highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;UPDATE&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;albums&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;SET&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;artist&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;The&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\B&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;eatles&apos;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;WHERE&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;id&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Agora, para usar o LIKE e recuperar uma linha que contenha o caractere de barra invertida, você teria que escrever esta query:&lt;/p&gt;
+
+&lt;div class=&quot;language-sql highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;SELECT&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;FROM&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;albums&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;WHERE&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;artist&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;LIKE&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;%&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\\&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;%&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Você precisa escapar o caractere de escape. Não é tão terrível assim, mas talvez você queira escrever uma versão mais legível. Se for esse o caso, é possível escolher um caractere diferente como caractere de escape: basta usar a cláusula &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ESCAPE&lt;/code&gt;:&lt;/p&gt;
+
+&lt;div class=&quot;language-sql highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;SELECT&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;FROM&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;albums&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;WHERE&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;artist&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;LIKE&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;%$&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\%&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&apos;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;ESCAPE&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;$&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Com a cláusula &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ESCAPE&lt;/code&gt;, você pode escolher um caractere diferente para servir de escape. Dessa forma — pelo menos na minha opinião — a query resultante fica mais explícita quanto à forma como escapa o wildcard.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Conclusão: LIKE do PostgreSQL: Aprenda e Aproveite&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Neste post, você aprendeu sobre o operador LIKE no PostgreSQL: o que é, para que serve, e como funciona, através de vários exemplos. Como você viu, o funcionamento do operador é bem simples assim que você entende como os wildcards funcionam. Também percorremos alguns exemplos de uso, como correspondência a um único caractere e a realização de correspondências negativas.&lt;/p&gt;
+
+&lt;p&gt;Para onde ir agora? Para começar, continue aprendendo sobre correspondência de padrões no PostgreSQL. Aqui vão algumas sugestões de tópicos:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;SIMILAR TO&lt;/code&gt;, uma cláusula mais recente&lt;/li&gt;
+  &lt;li&gt;a função &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;substring()&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;a função &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;regexp_like()&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Obrigado pela leitura, até a próxima!&lt;/p&gt;
+</description>
+        <pubDate>Tue, 14 Jul 2026 00:00:00 +0000</pubDate>
+        <link>https://carlosschults.net/pt/guia-operador-like-postgresql</link>
+        <guid isPermaLink="true">https://carlosschults.net/pt/guia-operador-like-postgresql</guid>
+        
+        <category>databases</category>
+        
+        <category>postgresql</category>
+        
+        <category>sql</category>
+        
+        
+      </item>
     
       <item>
         <title>Construindo o git em Go do zero - Parte 2</title>
@@ -2178,910 +2418,6 @@ git checkout alt-history&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
         <guid isPermaLink="true">https://carlosschults.net/pt/git-detached-head</guid>
         
         <category>git</category>
-        
-        <category>tutorial</category>
-        
-        
-      </item>
-    
-      <item>
-        <title>[Tradução] Tudo o que você precisa saber sobre configuração e gerenciamento de segredos em .NET</title>
-        <description>&lt;p&gt;&lt;img src=&quot;https://res.cloudinary.com/dz5ppacuo/image/upload/v1513817072/csharp8-1037x438_skogpz.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;div class=&quot;callout callout-info&quot;&gt;
-  &lt;div class=&quot;callout-title&quot;&gt;
-    &lt;span class=&quot;callout-icon&quot;&gt;ℹ️&lt;/span&gt;
-    NOTA
-  &lt;/div&gt;
-  &lt;div class=&quot;callout-content&quot;&gt;
-    
-&lt;p&gt;Este post é uma tradução, cuja publicação foi autorizada pelo autor. Caso tenha interesse, &lt;a href=&quot;https://stenbrinke.nl/blog/configuration-and-secret-management-in-dotnet/&quot;&gt;leia o artigo original, em inglês.&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;Eu decidi não traduzir as imagens, pois achei que seria muito trabalhoso. Portanto, as figuras que você verá são as mesmas do artigo original, com as informações nelas em inglês.&lt;/p&gt;
-
-&lt;p&gt;Em respeito ao autor, procurei deixar o artigo o mais próximo possível do original: mantive &lt;em&gt;call to actions&lt;/em&gt; que o autor faz para suas palestras e conteúdos, e também mantive um pedido de contribução financeira ao final do artigo.&lt;/p&gt;
-
-&lt;p&gt;A partir do índice, inicia-se o artigo de autoria de Sander ten Brinke. Após a conclusão do artigo, eu volto com algumas palavras antes de finalizar. Boa leitura!&lt;/p&gt;
-
-
-  &lt;/div&gt;
-&lt;/div&gt;
-
-&lt;h2 id=&quot;índice&quot;&gt;Índice&lt;/h2&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;a href=&quot;#introdução&quot;&gt;Introdução&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;#configuração-no-net&quot;&gt;Configuração no .NET&lt;/a&gt;
-    &lt;ul&gt;
-      &lt;li&gt;&lt;a href=&quot;#o-básico&quot;&gt;O básico&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#acesso-a-dados-estruturados&quot;&gt;Acesso a dados estruturados&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#como-tudo-isso-funciona&quot;&gt;Como tudo isso funciona&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#tratando-a-configuração-como-código&quot;&gt;Tratando a configuração como código&lt;/a&gt;&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;#options-pattern&quot;&gt;options pattern&lt;/a&gt;
-    &lt;ul&gt;
-      &lt;li&gt;&lt;a href=&quot;#injeção-de-dependência&quot;&gt;Injeção de dependência&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#validação&quot;&gt;Validação&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#tempos-de-vida-da-configuração&quot;&gt;Tempos de vida da configuração&lt;/a&gt;&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;#gerenciamento-de-segredos-durante-o-desenvolvimento&quot;&gt;Gerenciamento de segredos durante o desenvolvimento&lt;/a&gt;
-    &lt;ul&gt;
-      &lt;li&gt;&lt;a href=&quot;#o-provedor-de-configuração-de-user-secrets&quot;&gt;O provedor de configuração de user secrets&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#usando-user-secrets&quot;&gt;Usando user secrets&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#configurando-um-projeto-que-usa-user-secrets&quot;&gt;Configurando um projeto que usa user-secrets&lt;/a&gt;&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;#meu-modelo-para-gerenciamento-de-configuração&quot;&gt;Meu modelo para gerenciamento de configuração&lt;/a&gt;
-    &lt;ul&gt;
-      &lt;li&gt;&lt;a href=&quot;#appsettingsjson&quot;&gt;appsettings.json&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#appsettingsdevelopmentjson&quot;&gt;appsettings.Development.json&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#user-secrets&quot;&gt;User Secrets&lt;/a&gt;&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;#usando-o-azure-para-armazenar-a-configuração&quot;&gt;Usando o Azure para armazenar a configuração&lt;/a&gt;
-    &lt;ul&gt;
-      &lt;li&gt;&lt;a href=&quot;#armazenamento-de-segredos-no-azure-key-vault&quot;&gt;Armazenamento de segredos no Azure Key Vault&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#conectando-se-ao-azure-com-identidades-gerenciadas&quot;&gt;Conectando-se ao Azure com identidades gerenciadas&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#armazenamento-da-configuração-na-configuração-de-aplicativo-do-azure&quot;&gt;Armazenamento da configuração na Configuração de Aplicativo do Azure&lt;/a&gt;&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;#finalizando&quot;&gt;Finalizando&lt;/a&gt;
-    &lt;ul&gt;
-      &lt;li&gt;&lt;a href=&quot;#links-para-a-demo&quot;&gt;Links para a demo&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#links-para-a-documentação-oficial&quot;&gt;Links para a documentação oficial&lt;/a&gt;&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;#carlos-de-volta&quot;&gt;Carlos de volta&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;div class=&quot;callout callout-info&quot;&gt;
-  &lt;div class=&quot;callout-title&quot;&gt;
-    &lt;span class=&quot;callout-icon&quot;&gt;ℹ️&lt;/span&gt;
-    Info
-  &lt;/div&gt;
-  &lt;div class=&quot;callout-content&quot;&gt;
-    
-&lt;p&gt;Este post é um complemento da minha palestra &lt;a href=&quot;https://sessionize.com/s/sander-ten-brinke/keep-it-secret-keep-it-safe-with-.net/48314&quot;&gt;Keep it secret, keep it safe with .NET&lt;/a&gt;! Se você não puder assistir a uma sessão dessa palestra, poderá ler este post em vez disso! Dessa forma, o maior número possível de pessoas poderá aprender sobre o sistema de configuração do .NET e como manter os segredos em segurança!&lt;/p&gt;
-
-&lt;p&gt;Minha palestra oferece algumas informações mais detalhadas, portanto, se quiser saber mais, dê uma olhada na minha página &lt;a href=&quot;https://stenbrinke.nl/speaking&quot;&gt;Speaking&lt;/a&gt; para ver quando e onde darei essa palestra novamente! Você também pode &lt;a href=&quot;https://stenbrinke.nl/about/#contact-details&quot;&gt;entrar em contato&lt;/a&gt; se quiser que eu dê essa palestra em seu evento!&lt;/p&gt;
-
-  &lt;/div&gt;
-&lt;/div&gt;
-
-&lt;h2 id=&quot;introdução&quot;&gt;Introdução&lt;/h2&gt;
-
-&lt;p&gt;Se você já escreve código há algum tempo, provavelmente já usou configuração de alguma forma. Pense em feature flags, configurações de log, configurações de autenticação etc. Talvez você tenha usado um arquivo de configuração com algumas configurações para o seu aplicativo ou talvez tenha usado variáveis de ambiente. Talvez você tenha usado ambos!&lt;/p&gt;
-
-&lt;p&gt;Também é provável que você tenha interagido com segredos, que também considero parte de um sistema de configuração. Pense em strings de conexão e chaves de API. Elas devem ser sempre seguras!&lt;/p&gt;
-
-&lt;p&gt;A configuração no .NET mudou radicalmente desde a introdução do .NET Core. Já se foi o tempo em que se usavam vários arquivos &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Web.config&lt;/code&gt; e agora temos um sistema muito mais flexível. No entanto, um sistema flexível também pode ser um sistema complexo. É por isso que eu quis criar uma palestra e uma publicação no blog em que você aprenderá como funciona o sistema de configuração do .NET e como usá-lo de forma otimizada. Você também aprenderá a manter seus segredos seguros, tanto localmente quanto em produção, usando o poder da nuvem do Azure!&lt;/p&gt;
-
-&lt;div class=&quot;callout callout-info&quot;&gt;
-  &lt;div class=&quot;callout-title&quot;&gt;
-    &lt;span class=&quot;callout-icon&quot;&gt;ℹ️&lt;/span&gt;
-    Info
-  &lt;/div&gt;
-  &lt;div class=&quot;callout-content&quot;&gt;
-    
-&lt;p&gt;Este post contém &lt;strong&gt;tudo&lt;/strong&gt; que você precisa saber sobre configuração e gerenciamento de segredos no .NET. Ela não aborda todos os detalhes, mas abrange tudo o que acredito que um desenvolvedor .NET tem que saber. Considere-o um guia de bolso útil que você pode usar ou enviar a outras pessoas quando elas tiverem dúvidas sobre configuração e gerenciamento de segredos no .NET.&lt;/p&gt;
-
-&lt;p&gt;Acho que esta post é muito útil porque são necessárias &lt;strong&gt;múltiplas horas&lt;/strong&gt; para &lt;em&gt;encontrar&lt;/em&gt; e ler completamente a documentação da Microsoft sobre esses tópicos. Se quiser saber mais, você encontrará links para a documentação oficial no final do post.&lt;/p&gt;
-
-  &lt;/div&gt;
-&lt;/div&gt;
-
-&lt;p&gt;Vamos começar!&lt;/p&gt;
-
-&lt;h2 id=&quot;configuração-no-net&quot;&gt;Configuração no .NET&lt;/h2&gt;
-
-&lt;p&gt;O sistema de configuração do .NET é muito flexível! Você pode usar vários provedores de configuração, sendo que cada um deles pode ter um formato de configuração diferente:&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/img/configuracao-dotnet/configuration-overview.webp&quot; alt=&quot;Uma imagem que mostra uma visão geral do sistema de configuração do .NET com a interface IConfiguration e vários provedores&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Uma visão geral do sistema de configuração do .NET.&lt;br /&gt;
-&lt;a href=&quot;https://learn.microsoft.com/dotnet/core/extensions/configuration?WT.mc_id=DT-MVP-5005050#concepts-and-abstractions&quot;&gt;Extraído da documentação oficial&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;Outras fontes podem ser arquivos como &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.xml&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.ini&lt;/code&gt; e muito mais. Você pode até mesmo conectar seu sistema de configuração à nuvem, o que faremos mais adiante!&lt;/p&gt;
-
-&lt;h3 id=&quot;o-básico&quot;&gt;O Básico&lt;/h3&gt;
-
-&lt;p&gt;Como você pode ver, toda a sua configuração pode ser acessada usando a interface &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;IConfiguration&lt;/code&gt;. Com isso, você pode recuperar seus valores de uma maneira fortemente tipada. Um exemplo:&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c#&quot; data-lang=&quot;c#&quot;&gt;&lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;IConfiguration&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Configuration&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;set&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-
-&lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;string&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;GetApiKey&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;c1&quot;&gt;// GetValue&amp;lt;&amp;gt; permite que você passe o tipo de retorno&lt;/span&gt;
-    &lt;span class=&quot;kt&quot;&gt;string&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;method1&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Configuration&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;GetValue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;(&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;“&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ApiKey&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;”&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; 
-
-    &lt;span class=&quot;c1&quot;&gt;// A variante do indexador sempre retorna uma string&lt;/span&gt;
-    &lt;span class=&quot;kt&quot;&gt;string&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;method2&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Configuration&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;“&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ApiKey&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;”&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt; 
-
-    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;method1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;Você perceberá que não estamos especificando qual provedor deve ser usado para recuperar a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ApiKey&lt;/code&gt;. Isso ocorre porque isso não deveria importar; a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;IConfiguration&lt;/code&gt; esconde toda essa complexidade de nós e, portanto, cria flexibilidade. O sistema de configuração decide qual provedor usar com base na ordem dos provedores. Falaremos mais sobre isso mais tarde!&lt;/p&gt;
-
-&lt;h3 id=&quot;acesso-a-dados-estruturados&quot;&gt;Acesso a dados estruturados&lt;/h3&gt;
-
-&lt;p&gt;Um recurso muito avançado do sistema de configuração do .NET é o fato de ele oferecer suporte a dados estruturados. Isso é muito útil porque permite que você agrupe valores de configuração relacionados. Todos os provedores oferecem suporte a dados estruturados, mas se você já trabalhou com um projeto ASP.NET Core, provavelmente reconhecerá o mais comum, que é &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;appsettings.json&lt;/code&gt;. O JSON a seguir é um exemplo de um arquivo desse tipo:&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;{
-  “Logging&quot;: {
-    “LogLevel&quot;: {
-      “Default” (Padrão): “Informações”,
-      “Microsoft.AspNetCore&quot;: “Warning”
-    }
-  },
-  “AllowedHosts&quot;: “*”,
-
-  “ConnectionStrings&quot;: {
-    “Banco de dados&quot;: “CONNECTIONSTRING_HERE”
-  },
-
-  “Features” (Recursos): {
-    “EnableNewUI&quot;: false
-  }
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Você pode imaginar o objeto raiz e as seções &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Logging&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ConnectionStrings&lt;/code&gt; e &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Features&lt;/code&gt; como “dados estruturados”.&lt;/p&gt;
-
-&lt;p&gt;Para interagir com essas seções no .NET, você pode usar o código a seguir.&lt;/p&gt;
-
-&lt;div class=&quot;callout callout-warning&quot;&gt;
-  &lt;div class=&quot;callout-title&quot;&gt;
-    &lt;span class=&quot;callout-icon&quot;&gt;⚠️&lt;/span&gt;
-    Aviso
-  &lt;/div&gt;
-  &lt;div class=&quot;callout-content&quot;&gt;
-    
-&lt;p&gt;O código a seguir não é a melhor maneira de interagir com dados estruturados! Falaremos sobre maneiras melhores (usando o padrão Options) &lt;a href=&quot;#options-pattern&quot;&gt;mais adiante&lt;/a&gt;.&lt;/p&gt;
-
-  &lt;/div&gt;
-&lt;/div&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c#&quot; data-lang=&quot;c#&quot;&gt;&lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;IConfiguration&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Configuration&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;set&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-
-&lt;span class=&quot;c1&quot;&gt;// ...&lt;/span&gt;
-
-&lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;IConfigurationSection&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;GetFeaturesSection&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;c1&quot;&gt;// GetSection retorna nulo quando a seção não pode ser encontrada&lt;/span&gt;
-    &lt;span class=&quot;kt&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;method1&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Configuration&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;GetSection&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;“&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Features&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;”&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-
-    &lt;span class=&quot;c1&quot;&gt;// GetRequiredSection dispara uma exceção quando a seção não pode ser encontrada.&lt;/span&gt;
-    &lt;span class=&quot;c1&quot;&gt;// SEMPRE prefira esse método ao GetSection para evitar bugs desagradáveis!&lt;/span&gt;
-    &lt;span class=&quot;kt&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;method2&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Configuration&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;GetRequiredSection&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;“&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Features&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;”&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-
-    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;method2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-
-&lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;bool&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;GetEnableNewUI&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Configuration&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;GetValue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;bool&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;(&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;“&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Features&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;EnableNewUI&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;”&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;A &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;IConfigurationSection&lt;/code&gt; fornece a mesma API que a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;IConfiguration&lt;/code&gt;, portanto, você pode chamar &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;featuresSection.GetValue&amp;lt;bool&amp;gt;(“EnableNewUI”)&lt;/code&gt; para obter o valor dessa seção. Também é possível acessar diretamente um valor de configuração que existe dentro de uma seção usando um &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;:&lt;/code&gt;, que pode ser visto em uso no método &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;GetEnableNewUI&lt;/code&gt;.&lt;/p&gt;
-
-&lt;div class=&quot;callout callout-info&quot;&gt;
-  &lt;div class=&quot;callout-title&quot;&gt;
-    &lt;span class=&quot;callout-icon&quot;&gt;ℹ️&lt;/span&gt;
-    Info
-  &lt;/div&gt;
-  &lt;div class=&quot;callout-content&quot;&gt;
-    
-&lt;p&gt;Os dados estruturados não se limitam aos arquivos JSON. Todos os provedores são compatíveis com eles, embora a sintaxe para especificar uma seção possa ser diferente. Por exemplo, para fornecer um valor para &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;EnableNewUI&lt;/code&gt; usando uma variável de ambiente, você terá que criar uma chamada &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Features__EnableNewUI&lt;/code&gt;.&lt;/p&gt;
-
-  &lt;/div&gt;
-&lt;/div&gt;
-
-&lt;h3 id=&quot;como-tudo-isso-funciona&quot;&gt;Como tudo isso funciona?&lt;/h3&gt;
-
-&lt;p&gt;Estamos usando &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;IConfiguration&lt;/code&gt; em alguns exemplos. Você deve estar se perguntando como tudo isso funciona nos bastidores; como criar uma instância de &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;IConfiguration&lt;/code&gt; e como configurá-la? Vamos dar uma olhada!&lt;/p&gt;
-
-&lt;p&gt;Para criar uma instância de &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;IConfiguration&lt;/code&gt;, você precisará usar a classe &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ConfigurationBuilder&lt;/code&gt; (ou outra classe que implemente &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;IConfigurationBuilder&lt;/code&gt;). Essa classe usa o padrão Builder para que você possa adicionar vários provedores. No final, você chama &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Build()&lt;/code&gt; e acaba com um &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;IConfigurationRoot&lt;/code&gt;. É a mesma coisa que &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;IConfiguration&lt;/code&gt;, mas também tem uma lista de todos os provedores que você adicionou. Você nunca deve usar o &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;IConfigurationRoot&lt;/code&gt; diretamente, pois não deve acessar os provedores por baixo do pano. Um exemplo:&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c#&quot; data-lang=&quot;c#&quot;&gt;&lt;span class=&quot;kt&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;builder&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;ConfigurationBuilder&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
-
-&lt;span class=&quot;n&quot;&gt;builder&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;AddJsonFile&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;“&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sharedsettings&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;json&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;”&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;builder&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;AddJsonFile&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;“&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;appsettings&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;json&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;”&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;builder&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;AddEnvironmentVariables&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
-&lt;span class=&quot;c1&quot;&gt;// E assim por diante...&lt;/span&gt;
-
-&lt;span class=&quot;n&quot;&gt;IConfigurationRoot&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;configuration&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;builder&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;Build&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;A ordem desses provedores é muito importante porque se trata de um sistema em camadas. Dê uma olhada na imagem a seguir:&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/img/configuracao-dotnet/configuration-providers-layers.webp&quot; alt=&quot;Uma imagem que mostra a importância da ordem dos provedores de configuração&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Uma visão geral da importância da ordem dos provedores de configuração.&lt;br /&gt;
-&lt;a href=&quot;https://www.manning.com/books/asp-net-core-in-action-second-edition&quot;&gt;ASP.NET Core in Action, Second Edition (Permissão concedida pelo autor Andrew Lock)&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;Imagine que &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;sharedsettings.json&lt;/code&gt; tenha um valor para todos os valores de configuração usados pelo aplicativo. O &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;appsettings.json&lt;/code&gt; e as &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Variáveis de ambiente&lt;/code&gt; contêm um subconjunto desses valores. Como o provedor para as variáveis de ambiente foi adicionado por último, ele tem a prioridade mais alta. Portanto, se você quiser recuperar um valor de configuração chamado &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ApiKey&lt;/code&gt;, o sistema examinará primeiro as variáveis de ambiente. Se ele existir, será retornado, mesmo que outros provedores também contenham um valor para &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ApiKey&lt;/code&gt;. No entanto, se as variáveis de ambiente não contiverem um valor para &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ApiKey&lt;/code&gt;, ele passará para o provedor que foi adicionado antes dele e pesquisará lá, e assim por diante.&lt;/p&gt;
-
-&lt;h4 id=&quot;os-valores-default&quot;&gt;Os valores default&lt;/h4&gt;
-
-&lt;p&gt;Talvez você esteja um pouco confuso neste ponto. Eu certamente estava quando aprendi sobre o &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;IConfigurationBuilder&lt;/code&gt; e a importância dessas camadas. Por quê? Bem, percebi que estava usando o &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;IConfiguration&lt;/code&gt; em muitos projetos, mas nunca tinha ouvido falar do &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;IConfigurationBuilder&lt;/code&gt; antes. Então, como eu poderia estar usando o &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;IConfiguration&lt;/code&gt;?&lt;/p&gt;
-
-&lt;p&gt;Isso funciona porque, se você trabalhar em um aplicativo .NET que &lt;a href=&quot;https://learn.microsoft.com/dotnet/core/extensions/generic-host?WT.mc_id=DT-MVP-5005050&quot;&gt;usa um Host&lt;/a&gt;, ele definirá todo um sistema de configuração para você por padrão! Por exemplo, &lt;a href=&quot;https://learn.microsoft.com/aspnet/core/fundamentals/host/generic-host?WT.mc_id=DT-MVP-5005050&quot;&gt;projetos ASP.NET Core&lt;/a&gt; e &lt;a href=&quot;https://learn.microsoft.com/dotnet/core/extensions/workers?WT.mc_id=DT-MVP-5005050#worker-service-template&quot;&gt;workers services&lt;/a&gt; usam um &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Host&lt;/code&gt;, portanto, na maioria dos projetos, isso será feito para você! Agora vamos dar uma olhada em como isso funciona.&lt;/p&gt;
-
-&lt;p&gt;Em um aplicativo ASP.NET Core padrão, o seguinte é configurado para você.&lt;/p&gt;
-
-&lt;table&gt;
-  &lt;thead&gt;
-    &lt;tr&gt;
-      &lt;th&gt;Provedor&lt;/th&gt;
-      &lt;th&gt;Exemplo&lt;/th&gt;
-      &lt;th&gt;Notas&lt;/th&gt;
-    &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;td&gt;appsettings.json&lt;/td&gt;
-      &lt;td&gt;{ “Key”: “default value” }&lt;/td&gt;
-      &lt;td&gt; &lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;appsettings.{ENVIRONMENT}.json&lt;/td&gt;
-      &lt;td&gt;{ “Key”: “development value” }&lt;/td&gt;
-      &lt;td&gt; &lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;user secrets (desenvolvimento)&lt;/td&gt;
-      &lt;td&gt;dotnet user-secrets set “key” “development value”&lt;/td&gt;
-      &lt;td&gt;Também pode ser definido em IDEs. Mais sobre isso posteriormente.&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Variáveis de ambiente&lt;/td&gt;
-      &lt;td&gt;Powershell: setx key “valor do ambiente” &lt;br /&gt; Bash: export key=‘valor do ambiente’&lt;/td&gt;
-      &lt;td&gt;Também pode ser definido em IDEs. Muito popular em implantações do Docker/Kubernetes.&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Argumentos da linha de comando&lt;/td&gt;
-      &lt;td&gt;dotnet run –key “important value”&lt;/td&gt;
-      &lt;td&gt;Também pode ser definido nos IDEs.&lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-
-&lt;p&gt;O item no topo tem a prioridade mais baixa. Portanto, se você chamar &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Configuration[“key”]&lt;/code&gt;, obterá como resultado &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;important value&lt;/code&gt;, mesmo que o User Secrets também forneça um valor.&lt;/p&gt;
-
-&lt;div class=&quot;callout callout-info&quot;&gt;
-  &lt;div class=&quot;callout-title&quot;&gt;
-    &lt;span class=&quot;callout-icon&quot;&gt;ℹ️&lt;/span&gt;
-    Info
-  &lt;/div&gt;
-  &lt;div class=&quot;callout-content&quot;&gt;
-    
-&lt;p&gt;O provedor User secrets só é adicionado quando o &lt;em&gt;Environment&lt;/em&gt; é definido como &lt;em&gt;Development&lt;/em&gt;. Os ambientes serão tratados a seguir. Os user secrets são tratados em profundidade &lt;a href=&quot;#user-secrets&quot;&gt;mais adiante&lt;/a&gt;.&lt;/p&gt;
-
-  &lt;/div&gt;
-&lt;/div&gt;
-
-&lt;p&gt;O Visual Studio (e outros IDEs, como o JetBrains Rider) oferecem suporte à configuração de variáveis de ambiente/argumentos de linha de comando em seu IDE quando você acessa as propriedades do projeto. No entanto, aconselho &lt;strong&gt;contra&lt;/strong&gt; o uso disso durante o desenvolvimento. Eu nunca uso variáveis de ambiente ou argumentos de linha de comando durante o desenvolvimento porque é mais difícil editá-los do que simplesmente abrir um arquivo. Armazená-los em &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;appsettings.Development.json&lt;/code&gt; (que será abordado a seguir) é mais conveniente para você e seus colegas.&lt;/p&gt;
-
-&lt;h4 id=&quot;configuração-e-ambientes&quot;&gt;Configuração e Ambientes&lt;/h4&gt;
-
-&lt;p&gt;O provedor &lt;em&gt;appsettings.{&lt;strong&gt;ENVIRONMENT&lt;/strong&gt;}.json&lt;/em&gt; é um pouco diferente dos outros provedores. Isso ocorre porque ele depende do &lt;a href=&quot;https://learn.microsoft.com/aspnet/core/fundamentals/environments?WT.mc_id=DT-MVP-5005050&quot;&gt;ambiente do aplicativo&lt;/a&gt;. O ambiente atual do aplicativo é lido a partir do valor da variável de ambiente &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;DOTNET_ENVIRONMENT&lt;/code&gt; ou &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ASPNETCORE_ENVIRONMENT&lt;/code&gt;. Se o seu projeto não for um projeto ASP.NET Core, o aplicativo verificará apenas &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;DOTNET_ENVIRONMENT&lt;/code&gt;. Os projetos ASP.NET Core retornam para &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;DOTNET_ENVIRONMENT&lt;/code&gt; quando &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ASPNETCORE_ENVIRONMENT&lt;/code&gt; não existe.&lt;/p&gt;
-
-&lt;p&gt;O ambiente será considerado como &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Production&lt;/code&gt; quando essas variáveis de ambiente não existirem.&lt;/p&gt;
-
-&lt;p&gt;Quando você cria um projeto ASP.NET Core, um arquivo chamado &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;launchSettings.json&lt;/code&gt; será criado na pasta &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Properties&lt;/code&gt;. Aqui, você pode ver que a variável de ambiente &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ASPNETCORE_ENVIRONMENT&lt;/code&gt; está definida como &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Development&lt;/code&gt;:&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;{
-  // Muitos outros detalhes foram removidos desse arquivo para fins de brevidade
-  “$schema&quot;: “https://json.schemastore.org/launchsettings.json”,
-  “profiles&quot;: {
-    “MY_PROJECT&quot;: {
-      “commandName&quot;: “MY_PROJECT”,
-      “applicationUrl&quot;: “https://localhost:7237;http://localhost:5292”,
-      “environmentVariables&quot;: {
-        “ASPNETCORE_ENVIRONMENT&quot;: “Development”
-      }
-    }
-  }
-}
-
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;O resultado do sistema de configuração trabalhando em conjunto com o ambiente do aplicativo resulta em um recurso muito poderoso, pois permite que você crie arquivos de configuração diferentes para cada ambiente.&lt;/p&gt;
-
-&lt;p&gt;Você pode armazenar valores padrão em &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;appsettings.json&lt;/code&gt; e substituí-los em &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;appsettings.Development.json&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;appsettings.Test.json&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;appsettings.Staging.json&lt;/code&gt; e &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;appsettings.Production.json&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;Por exemplo, digamos que você tenha terminado o novo design de uma página de checkout de uma loja virtual. Ele ainda precisa ser testado e revisado por outras pessoas em um ambiente de teste, mas ainda não deve entrar em produção. Esse parece ser um caso de uso perfeito para feature flags! Você poderia criar um feature flag chamado &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;EnableNewCheckoutUI&lt;/code&gt; e defini-lo como &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;false&lt;/code&gt; em &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;appsettings.json&lt;/code&gt; como o valor padrão. Em seguida, você pode substituir esses valores em &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;appsettings.Development.json&lt;/code&gt; e &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;appsettings.Test.json&lt;/code&gt; para que eles sejam ativados somente lá:&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;// appsettings.json
-{
-  “FeatureFlags&quot;: {
-    “EnableNewCheckoutUI&quot;: false
-  }
-}
-
-// appsettings.Development.json e appsettings.Test.json
-{
-  “FeatureFlags&quot;: {
-    “EnableNewCheckoutUI&quot;: true
-  }
-}
-
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Você não está limitado aos nomes de ambiente mencionados acima; eles são apenas os padrões que o .NET usa. Se quiser usar um nome diferente, configure a variável de ambiente &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ASPNETCORE_ENVIRONMENT&lt;/code&gt; com o nome de sua escolha e crie um arquivo &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;appsettings.ENV_NAME.json&lt;/code&gt; correspondente. A única outra coisa que você precisa fazer é garantir que o ambiente em que você executa seu aplicativo tenha &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ASPNETCORE_ENVIRONMENT&lt;/code&gt; ou &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;DOTNET_ENVIRONMENT&lt;/code&gt; definido com o valor correto.&lt;/p&gt;
-
-&lt;h3 id=&quot;tratando-a-configuração-como-código&quot;&gt;Tratando a Configuração Como Código&lt;/h3&gt;
-
-&lt;p&gt;Anteriormente, elogiei o sistema de configuração do .NET e o &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;IConfiguration&lt;/code&gt; por serem flexíveis e ricos em recursos. Falei sobre seu suporte a dados estruturados e sobre a recuperação de valores de uma hierarquia de configuração mais profunda. Mas você sabia que pode fazer muito mais com dados estruturados?&lt;/p&gt;
-
-&lt;p&gt;Digamos que nosso aplicativo se comunique com uma API externa usando HTTP. Para isso, precisamos de um &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ApiUrl&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ApiKey&lt;/code&gt; e talvez queiramos configurar um &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;TimeoutInMilliseconds&lt;/code&gt;. Do ponto de vista do código, talvez queiramos armazenar esses valores em uma classe (ou &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;record&lt;/code&gt;) porque eles pertencem um ao outro:&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c#&quot; data-lang=&quot;c#&quot;&gt;&lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;ExternalApiSettings&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;string&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ApiUrl&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;set&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;string&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ApiKey&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;set&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TimeoutInMilliseconds&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;set&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;Em seguida, teríamos uma classe &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ExternalApiClient&lt;/code&gt; que usa a configuração e a classe que acabamos de criar:&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c#&quot; data-lang=&quot;c#&quot;&gt;&lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;ExternalApiClient&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;readonly&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;IConfiguration&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;_configuration&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-
-    &lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Foo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;IConfiguration&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;configuration&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;_configuration&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;configuration&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-
-    &lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;CallExternalApi&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;IConfigurationSection&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;externalApiSettingsSection&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;_configuration&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;GetRequiredSection&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;“&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ExternalApiSettings&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;”&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-        
-        &lt;span class=&quot;c1&quot;&gt;// Método 1 (Get&amp;lt;TType&amp;gt;() obtém os valores dessa seção e os mapeia em uma nova instância da classe fornecida)&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;ExternalApiSettings&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;settings1&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;externalApiSettingsSection&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Get&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ExternalApiSettings&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;();&lt;/span&gt; 
-
-        &lt;span class=&quot;c1&quot;&gt;// Método 2 (Bind() espera uma instância existente de um tipo e mapeará os valores para essa instância existente)&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;ExternalApiSettings&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;settings2&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;_configuration&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;GetRequiredSection&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;“&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ExternalApiSettings&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;”&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;Bind&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;settings2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-
-        &lt;span class=&quot;c1&quot;&gt;// Faça algo com essas configurações aqui...&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;Isso parece bem legal, certo? Em vez de realizar 3 chamadas para obter cada propriedade de configuração relacionada à API individualmente, podemos mapeá-las em um objeto fortemente tipado. Agora podemos tratar nossa configuração como código! Poderíamos até criar métodos em nossa classe &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ExternalApiSettings&lt;/code&gt; para torná-la ainda mais poderosa!&lt;/p&gt;
-
-&lt;p&gt;No entanto, há algumas desvantagens importantes nessa abordagem.&lt;/p&gt;
-
-&lt;h4 id=&quot;desvantagens&quot;&gt;Desvantagens&lt;/h4&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;A primeira desvantagem é que o nosso &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ExternalApiClient&lt;/code&gt; requer uma instância de &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;IConfiguration&lt;/code&gt; para funcionar. Essa é uma dependência muito grande e um grande desperdício, considerando que ele usa apenas 3 valores de configuração! Além disso, essa classe agora pode acessar outros valores de configuração, como uma string de conexão a um banco de dados, configurações de registro, feature flags etc., mesmo que não precise dessas informações.&lt;/li&gt;
-  &lt;li&gt;A segunda desvantagem é que essa classe está violando o princípio da responsabilidade única. Ela não é responsável apenas por chamar a API externa, mas também por interagir com o sistema de configuração para poder chamar essa API externa.&lt;/li&gt;
-  &lt;li&gt;Como essa classe interage diretamente com o sistema de configuração, ela depende de sua estrutura e, portanto, está fortemente acoplada. Qualquer alteração na seção de configuração &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ExternalApiSettings&lt;/code&gt; (como o nome ou os nomes de seus filhos) causaria problemas em tempo de execução.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Então, o que podemos fazer em relação a isso? Reescrevê-la em Rust 🦀? Não, podemos usar o options pattern!&lt;/p&gt;
-
-&lt;h2 id=&quot;options-pattern&quot;&gt;Options Pattern&lt;/h2&gt;
-
-&lt;p&gt;O &lt;em&gt;options pattern&lt;/em&gt; (“padrão de opções”) permite que você faça um uso ainda melhor do sistema de configuração do .NET 🚀! Ele permite a você desacoplar seu aplicativo do sistema de configuração e adiciona muitos recursos poderosos a esse sistema, como:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Injeção de dependência&lt;/li&gt;
-  &lt;li&gt;Validação&lt;/li&gt;
-  &lt;li&gt;Diferentes tempos de vida de configuração&lt;/li&gt;
-  &lt;li&gt;E muito mais!&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Para começar a usar o options pattern de forma eficaz, é necessário criar classes/records das suas seções de configuração. Já fizemos isso no exemplo anterior, portanto, vamos continuar com ele:&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c#&quot; data-lang=&quot;c#&quot;&gt;&lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;ExternalApiSettings&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;string&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ApiUrl&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;set&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;string&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ApiKey&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;set&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TimeoutInMilliseconds&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;set&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;h3 id=&quot;injeção-de-dependência&quot;&gt;Injeção de dependência&lt;/h3&gt;
-
-&lt;p&gt;O options pattern funciona muito bem com a injeção de dependência! Para isso, basta registrar sua classe/record de opções na coleção de serviços. Dependendo do seu projeto, o ponto de entrada para isso pode ser o método &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Startup.cs -&amp;gt; ConfigureServices(IServiceCollection services)&lt;/code&gt; ou em algum lugar em seu &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Program.cs&lt;/code&gt;.&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c#&quot; data-lang=&quot;c#&quot;&gt;&lt;span class=&quot;n&quot;&gt;services&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Configure&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ExternalApiSettings&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;configuration&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// Passe em uma instância existente de IConfiguration&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;Isso adicionará uma instância de &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;IOptions&amp;lt;ExternalApiSettings&amp;gt;&lt;/code&gt; ao seu contêiner de injeção de dependência. Para ver os benefícios dessa abordagem, vamos dar uma olhada em como poderíamos melhorar nosso &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ExternalApiClient&lt;/code&gt; de antes:&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c#&quot; data-lang=&quot;c#&quot;&gt;&lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;ExternalApiClient&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;readonly&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ExternalApiSettings&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;_externalApiSettings&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-
-    &lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;ExternalApiClient&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;IOptions&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ExternalApiSettings&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;options&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;c1&quot;&gt;// Importante: o padrão Options é “preguiçoso”. Isso significa que as opções são mapeadas somente quando você as solicita chamando .Value!&lt;/span&gt;
-        &lt;span class=&quot;c1&quot;&gt;// Isso é feito apenas uma vez, portanto, você não precisa se preocupar com o desempenho.&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;_externalApiSettings&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;options&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Value&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-
-    &lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;CallExternalApi&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;c1&quot;&gt;// Faz algo com essas configurações aqui...&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;Isso eliminou todas as desvantagens de antes! Nosso &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ExternalApiClient&lt;/code&gt; não tem mais uma dependência do &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;IConfiguration&lt;/code&gt; e não está mais acoplado ao sistema de configuração. Ele também não precisa mais se preocupar com a estrutura do sistema de configuração.&lt;/p&gt;
-
-&lt;p&gt;Você pode argumentar que temos uma dependência indireta do sistema de configuração por causa da chamada &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.Configure&amp;lt;&amp;gt;(configuration)&lt;/code&gt; de antes, mas você não é obrigado a usar esse método para configurar suas opções. Você pode criar uma instância de &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;IOptions&amp;lt;T&amp;gt;&lt;/code&gt; usando &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Microsoft.Extensions.Options.Options.Create()&lt;/code&gt; se precisar criar uma instância manualmente, e pode passar quaisquer dados que desejar. Você pode até mesmo criar opções com base em outras dependências usando o método &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Configure&amp;lt;TDep1,...&amp;gt;()&lt;/code&gt; do &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;OptionsBuilder&lt;/code&gt;, que será discutido a seguir.&lt;/p&gt;
-
-&lt;div class=&quot;callout callout-info&quot;&gt;
-  &lt;div class=&quot;callout-title&quot;&gt;
-    &lt;span class=&quot;callout-icon&quot;&gt;ℹ️&lt;/span&gt;
-    Info
-  &lt;/div&gt;
-  &lt;div class=&quot;callout-content&quot;&gt;
-    
-&lt;p&gt;Talvez você se pergunte por que precisamos envolver nossa classe de configurações com uma interface &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;IOptions&amp;lt;&amp;gt;&lt;/code&gt;. Isso ocorre porque ela permite que você use alguns recursos mais avançados sobre os quais falaremos a seguir.&lt;/p&gt;
-
-  &lt;/div&gt;
-&lt;/div&gt;
-
-&lt;h3 id=&quot;validação&quot;&gt;Validação&lt;/h3&gt;
-
-&lt;p&gt;Meu recurso favorito do sistema de configuração do .NET é a facilidade com que é possível validar sua configuração! Acredito que essa seja uma das partes mais importantes de qualquer aplicativo, e não vejo que ela seja usada com frequência. O motivo pelo qual acredito que a configuração é uma das partes mais importantes de qualquer aplicativo é porque ela abriga definições muito importantes do seu aplicativo.&lt;/p&gt;
-
-&lt;p&gt;Um aplicativo configurado incorretamente pode ter resultados desastrosos. Na pior das hipóteses, imagine que o seu ambiente de teste esteja se conectando acidentalmente aos recursos do ambiente de produção. Agora imagine que você testaria uma função de exclusão em massa e acidentalmente excluiria todos os seus dados de produção. Isso seria um desastre!&lt;/p&gt;
-
-&lt;p&gt;É por isso que queremos validar nossa configuração. Se o nosso aplicativo for iniciado com um sistema de configuração incorreto, queremos sair imediatamente.&lt;/p&gt;
-
-&lt;p&gt;Então, como configuramos isso? É mais fácil do que você imagina. Eu gosto de usar &lt;a href=&quot;https://www.infoworld.com/article/3543302/how-to-use-data-annotations-in-c-sharp.html&quot;&gt;Data Annotations&lt;/a&gt; para minhas validações de opções quando não preciso de regras de validação complexas, portanto, vamos modificar nosso &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ExternalApiSettings&lt;/code&gt; desta forma:&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c#&quot; data-lang=&quot;c#&quot;&gt;&lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;ExternalApiSettings&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Required&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// Se o ApiUrl não estiver definido, a configuração é inválida&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;string&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ApiUrl&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;set&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-
-    &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Required&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// Se a ApiKey não for definida, a configuração será inválida&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;string&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ApiKey&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;set&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-
-    &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;Range&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_000_00&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)]&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// Se o TimeoutInMilliseconds não for definido (o padrão é 0) ou for maior que 100000, a configuração será inválida&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TimeoutInMilliseconds&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;set&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;Agora, vamos alterar a forma como registramos essas opções no contêiner de injeção de dependência:&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c#&quot; data-lang=&quot;c#&quot;&gt;&lt;span class=&quot;n&quot;&gt;services&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;AddOptions&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ExternalApiSettings&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;()&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;BindConfiguration&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;“&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ExternalApiSettings&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;”&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;ValidateDataAnnotations&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// Lança uma OptionsValidationException se a configuração for inválida&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;ValidateOnStart&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// Altamente recomendado!&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;Em vez de usar &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Configure&amp;lt;TType&amp;gt;(configuration)&lt;/code&gt;, agora usamos &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;AddOptions&amp;lt;TType&amp;gt;()&lt;/code&gt;. Isso retorna um &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;OptionsBuilder&lt;/code&gt; e nos permite usar alguns métodos poderosos.&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;O primeiro que usamos é o &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;BindConfiguration()&lt;/code&gt;. Esse método recupera o &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;IConfiguration&lt;/code&gt; do contêiner de injeção de dependência e vincula a seção que passamos. Isso é útil porque não precisamos mais passar manualmente nossa configuração.&lt;/li&gt;
-  &lt;li&gt;Em seguida, chamamos &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ValidateDataAnnotations()&lt;/code&gt;. Isso validará nossa seção de configuração com base nos atributos que definimos nas propriedades.
-    &lt;ol&gt;
-      &lt;li&gt;Observação: você precisa instalar o pacote nuget &lt;a href=&quot;https://www.nuget.org/packages/Microsoft.Extensions.Options.DataAnnotations&quot;&gt;Microsoft.Extensions.Options.DataAnnotations&lt;/a&gt; se não tiver esse método disponível.&lt;/li&gt;
-    &lt;/ol&gt;
-  &lt;/li&gt;
-  &lt;li&gt;Por fim, chamamos &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ValidateOnStart()&lt;/code&gt;. Essa etapa é &lt;strong&gt;muito&lt;/strong&gt; importante! Por padrão, suas opções só serão validadas quando você chamar &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.Value&lt;/code&gt; nelas em algum lugar, como em uma classe onde elas são injetadas. Isso significa que seu aplicativo NÃO lançaria um erro e sairia na inicialização quando sua configuração fosse inválida! O &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ValidateOnStart()&lt;/code&gt; validará sua configuração depois que o aplicativo terminar de se inicializar.&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;Você também pode validar seu código de muitas outras maneiras. Você pode usar a interface &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;IValidatableOptions&amp;lt;&amp;gt;&lt;/code&gt; para implementar uma lógica de validação complexa ou pode chamar &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Validate(Func&amp;lt;TOptions, bool&amp;gt; validation)&lt;/code&gt; para escrever uma lógica de validação personalizada como parte do construtor de opções. Você pode até mesmo &lt;a href=&quot;https://andrewlock.net/adding-validation-to-strongly-typed-configuration-objects-using-flentvalidation/&quot;&gt;integrá-lo ao FluentValidation&lt;/a&gt;!&lt;/p&gt;
-
-&lt;h3 id=&quot;tempos-de-vida-da-configuração&quot;&gt;Tempos de vida da configuração&lt;/h3&gt;
-
-&lt;p&gt;Por fim, gostaria de falar sobre o tempo de vida do padrão Options. O &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;IOptions&amp;lt;T&amp;gt;&lt;/code&gt; é um singleton. Isso significa que, se um de seus &lt;a href=&quot;https://learn.microsoft.com/dotnet/core/extensions/configuration-providers?WT.mc_id=DT-MVP-5005050#json-configuration-provider&quot;&gt;provedores de configuração for atualizado em tempo de execução&lt;/a&gt;, as opções não serão atualizadas. Isso ocorre porque as opções são mapeadas apenas uma vez quando você chama &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.Value&lt;/code&gt; sobre elas.&lt;/p&gt;
-
-&lt;p&gt;Isso pode ser considerado positivo, pois significa que seu aplicativo não mudará repentinamente de comportamento quando a configuração for alterada. No entanto, você também pode dizer que isso é ruim porque talvez não queira ter que fazer deploy ou reiniciar o aplicativo quando alterar a configuração. Nesse caso, é melhor usar &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;IOptionsSnapshot&amp;lt;T&amp;gt;&lt;/code&gt; ou &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;IOptionsMonitor&amp;lt;T&amp;gt;&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/img/configuracao-dotnet/options-lifetimes.webp&quot; alt=&quot;Visão geral dos recursos de IOptions, IOptionsSnapshot e IOptionsMonitor&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Visão geral dos recursos de IOptions, IOptionsSnapshot e IOptionsMonitor&lt;/p&gt;
-
-&lt;h4 id=&quot;ioptionssnapshot&quot;&gt;IOptionsSnapshot&lt;/h4&gt;
-
-&lt;p&gt;Em vez de injetar &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;IOptions&amp;lt;T&amp;gt;&lt;/code&gt; em uma de suas classes, você pode injetar &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;IOptionsSnapshot&amp;lt;T&amp;gt;&lt;/code&gt;. Isso recarregará esse tipo específico de opções a cada &lt;a href=&quot;https://learn.microsoft.com/dotnet/core/extensions/dependency-injection?WT.mc_id=DT-MVP-5005050#scoped&quot;&gt;scope&lt;/a&gt;. Um escopo no .NET é um termo abstrato. Um escopo pode ser uma solicitação HTTP, por exemplo. Portanto, para cada solicitação HTTP, ele recarregaria as opções e elas permaneceriam consistentes para toda a solicitação. Isso significa que, se você alterar sua configuração, ela só será atualizada em uma nova solicitação.&lt;/p&gt;
-
-&lt;div class=&quot;callout callout-warning&quot;&gt;
-  &lt;div class=&quot;callout-title&quot;&gt;
-    &lt;span class=&quot;callout-icon&quot;&gt;⚠️&lt;/span&gt;
-    Aviso
-  &lt;/div&gt;
-  &lt;div class=&quot;callout-content&quot;&gt;
-    
-&lt;p&gt;Usar &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;IOptionsSnapshot&amp;lt;T&amp;gt;&lt;/code&gt; pode causar &lt;a href=&quot;https://github.com/dotnet/runtime/issues/53793&quot;&gt;desempenho ruim.&lt;/a&gt;&lt;/p&gt;
-
-  &lt;/div&gt;
-&lt;/div&gt;
-
-&lt;h4 id=&quot;ioptionsmonitor&quot;&gt;IOptionsMonitor&lt;/h4&gt;
-
-&lt;p&gt;O &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;IOptionsMonitor&amp;lt;T&amp;gt;&lt;/code&gt; não funciona com escopos. Em vez disso, você precisa chamar &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.CurrentValue&lt;/code&gt; (em vez de &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.Value&lt;/code&gt;) para recuperar a versão atual. No entanto, é preciso ter cuidado com a forma como você acessa a sua configuração! Imagine um cenário em que sua configuração é alterada no meio de uma solicitação HTTP. Chamar &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.CurrentValue&lt;/code&gt; no início e no final de uma solicitação resultaria em valores diferentes, o que cria um risco de sincronização. Você pode registrar uma chamada de retorno usando &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;OnChange()&lt;/code&gt; para ser notificado sobre esses eventos.&lt;/p&gt;
-
-&lt;p&gt;Essa interface é mais útil em um cenário de trabalho em segundo plano que é instanciado apenas uma vez, mas que se beneficiaria da capacidade de lidar com alterações de configuração.&lt;/p&gt;
-
-&lt;h2 id=&quot;gerenciamento-de-segredos-durante-o-desenvolvimento&quot;&gt;Gerenciamento de segredos durante o desenvolvimento&lt;/h2&gt;
-
-&lt;p&gt;Se você vai tirar alguma conclusão dEste post, que seja a seguinte:&lt;/p&gt;
-
-&lt;div class=&quot;callout callout-error&quot;&gt;
-  &lt;div class=&quot;callout-title&quot;&gt;
-    &lt;span class=&quot;callout-icon&quot;&gt;❌&lt;/span&gt;
-    Importante
-  &lt;/div&gt;
-  &lt;div class=&quot;callout-content&quot;&gt;
-    
-&lt;p&gt;Nunca armazene segredos em seu repositório git! Considere o uso de uma ferramenta de verificação de código como &lt;a href=&quot;https://docs.github.com/en/enterprise-cloud@latest/get-started/learning-about-github/about-github-advanced-security&quot;&gt;GitHub Advanced Security&lt;/a&gt;, &lt;a href=&quot;https://azure.microsoft.com/products/devops/github-advanced-security?WT.mc_id=DT-MVP-5005050&quot;&gt;GitHub Advanced Security for Azure DevOps&lt;/a&gt; ou &lt;a href=&quot;https://www.gitguardian.com/&quot;&gt;GitGuardian&lt;/a&gt; para evitar que segredos sejam vazados.&lt;/p&gt;
-
-  &lt;/div&gt;
-&lt;/div&gt;
-
-&lt;p&gt;Se você armazenar segredos em seu repositório git e o repositório for comprometido, seus segredos também serão comprometidos. Acho que não preciso explicar por que isso é ruim. Então, como podemos evitar que isso aconteça com o .NET?&lt;/p&gt;
-
-&lt;p&gt;Usando o provedor de configuração de user secrets (segredos de usuário).&lt;/p&gt;
-
-&lt;h3 id=&quot;o-provedor-de-configuração-de-user-secrets&quot;&gt;O provedor de configuração de user secrets&lt;/h3&gt;
-
-&lt;p&gt;Mencionei o provedor de configuração de user secrets &lt;a href=&quot;#os-valores-default&quot;&gt;anteriormente&lt;/a&gt;. Esse provedor de configuração foi criado para desenvolvimento local &lt;em&gt;somente&lt;/em&gt;. Ele permite que você armazene segredos em seu computador local sem precisar se preocupar com o risco de eles serem versionados no repositório git, pois são armazenados em um local diferente:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Windows: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;%APPDATA%\Microsoft\UserSecrets\&amp;lt;user_secrets_id&amp;gt;\secrets.json&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;Mac e Linux: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;~/.microsoft/usersecrets/&amp;lt;user_secrets_id&amp;gt;/secrets.json&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Esse arquivo é muito semelhante ao provedor &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;appsettings.json&lt;/code&gt;. Basta inserir JSON nele e você poderá acessá-lo com o sistema de configuração do .NET. Quando seu aplicativo for iniciado e sua variável de ambiente &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ASPNETCORE_ENVIRONMENT&lt;/code&gt; ou &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;DOTNET_ENVIRONMENT&lt;/code&gt; estiver definida como &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Development&lt;/code&gt;, ele carregará automaticamente o provedor de configuração de user secrets &lt;em&gt;desde que seu projeto esteja configurado para usar esse provedor&lt;/em&gt;.&lt;/p&gt;
-
-&lt;div class=&quot;callout callout-warning&quot;&gt;
-  &lt;div class=&quot;callout-title&quot;&gt;
-    &lt;span class=&quot;callout-icon&quot;&gt;⚠️&lt;/span&gt;
-    Aviso
-  &lt;/div&gt;
-  &lt;div class=&quot;callout-content&quot;&gt;
-    
-&lt;p&gt;Mesmo que esse provedor tenha o nome “secret”, esteja avisado! O conteúdo do arquivo &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;secrets.json&lt;/code&gt; não é criptografado. Se você trabalha em um ambiente em que armazenar segredos na própria máquina é arriscado, considere usar &lt;a href=&quot;#using-the-key-vault-during-local-development&quot;&gt;um armazenamento de segredos externo como o Azure KeyVault durante o desenvolvimento&lt;/a&gt;.&lt;/p&gt;
-
-  &lt;/div&gt;
-&lt;/div&gt;
-
-&lt;p&gt;Esse provedor de configuração pode ser acessado usando a CLI ou seu IDE favorito. Talvez seja necessário instalar o pacote &lt;a href=&quot;https://www.nuget.org/packages/Microsoft.Extensions.Configuration.UserSecrets&quot;&gt;Microsoft.Extensions.Configuration.UserSecrets&lt;/a&gt; caso você não use um &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Host&lt;/code&gt; ou tenha uma configuração personalizada.&lt;/p&gt;
-
-&lt;h3 id=&quot;usando-user-secrets&quot;&gt;Usando User Secrets&lt;/h3&gt;
-
-&lt;h4 id=&quot;cli&quot;&gt;CLI&lt;/h4&gt;
-
-&lt;p&gt;Você pode usar o &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;dotnet&lt;/code&gt; cli para interagir com user-secrets abrindo um terminal no diretório em que reside o &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;*.csproj&lt;/code&gt; do seu projeto.&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# Necessário apenas quando as user-secrets ainda não foram inicializadas
-dotnet user-secrets init
-
-# Você pode usar dados estruturados usando dois pontos (:) para separar as chaves
-dotnet user-secrets set “ConnectionStrings:Database” “Data Source=...”
-dotnet user-secrets set “AdminPassword” “hunter2”
-# Outros comandos como “list”, “remove” e “clear” também estão disponíveis
-
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h4 id=&quot;visual-studio&quot;&gt;Visual Studio&lt;/h4&gt;
-
-&lt;p&gt;Clique com o botão direito do mouse em um projeto no Solution Explorer e selecione &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Manage User Secrets&lt;/code&gt;. Um arquivo &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;secrets.json&lt;/code&gt; será aberto, no qual você poderá inserir seus segredos.&lt;/p&gt;
-
-&lt;h4 id=&quot;visual-studio-code&quot;&gt;Visual Studio Code&lt;/h4&gt;
-
-&lt;p&gt;Instale a extensão &lt;a href=&quot;https://marketplace.visualstudio.com/items?itemName=adrianwilczynski.user-secrets&quot;&gt;.NET Core User Secrets Visual Studio Code&lt;/a&gt;. Em seguida, você pode clicar com o botão direito do mouse em um arquivo &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;*.csproj&lt;/code&gt; e selecionar &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Manage User Secrets&lt;/code&gt;. Um arquivo &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;secrets.json&lt;/code&gt; será aberto, no qual você poderá inserir seus segredos.&lt;/p&gt;
-
-&lt;h4 id=&quot;jetbrains-rider&quot;&gt;JetBrains Rider&lt;/h4&gt;
-
-&lt;p&gt;Clique com o botão direito do mouse em um projeto no Solution Explorer e selecione &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Tools&lt;/code&gt; &amp;gt; &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Manage User Secrets&lt;/code&gt;. Um arquivo &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;secrets.json&lt;/code&gt; será aberto, no qual você poderá inserir seus segredos.&lt;/p&gt;
-
-&lt;h3 id=&quot;configurando-um-projeto-que-usa-user-secrets&quot;&gt;Configurando um projeto que usa user-secrets&lt;/h3&gt;
-
-&lt;p&gt;Uma desvantagem de usar segredos de usuário durante o desenvolvimento é que, se o seu projeto exigir alguns segredos para ser executado, será necessário executar algumas etapas de configuração após a clonagem do projeto. Tenho duas recomendações para lidar com isso:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Você pode criar um script que recupere os segredos do seu local de armazenamento de segredos e, em seguida, armazene-os em user-secrets, canalizando esses valores para &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;dotnet user-secrets set&lt;/code&gt;. Agora você só precisa executar esse script uma vez após clonar o projeto e pronto!&lt;/li&gt;
-  &lt;li&gt;Como alternativa, recomendo atualizar seu &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;README.MD&lt;/code&gt; incluindo instruções de configuração que informem ao usuário quais user-secrets devem ser definidos e de onde obter esses valores. Sinta-se à vontade para criar um link para Este post se quiser explicar o que são user-secrets 😉.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;meu-modelo-para-gerenciamento-de-configuração&quot;&gt;Meu modelo para gerenciamento de configuração&lt;/h2&gt;
-
-&lt;p&gt;Agora que abordamos os conceitos básicos e o uso avançado do sistema de configuração do .NET e como incorporar o gerenciamento de segredos locais, gostaria de mostrar minha “configuração” para o gerenciamento de configuração em um projeto .NET. Quando crio um novo projeto .NET, uso a seguinte configuração:&lt;/p&gt;
-
-&lt;h3 id=&quot;appsettingsjson&quot;&gt;appsettings.json&lt;/h3&gt;
-
-&lt;p&gt;O sistema de configuração do .NET permite que você seja muito flexível com todos os diferentes provedores. Isso é ótimo, mas também pode causar confusão quando seu aplicativo estiver usando valores de configuração que você não esperava ou quando não conseguir descobrir de onde vem um valor de configuração específico.&lt;/p&gt;
-
-&lt;div class=&quot;callout callout-tip&quot;&gt;
-  &lt;div class=&quot;callout-title&quot;&gt;
-    &lt;span class=&quot;callout-icon&quot;&gt;💡&lt;/span&gt;
-    Dica
-  &lt;/div&gt;
-  &lt;div class=&quot;callout-content&quot;&gt;
-    
-&lt;p&gt;Use o método &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;IConfigurationRoot.GetDebugView()&lt;/code&gt; quando estiver tendo problemas com os valores de configuração. Para fazer isso, obtenha uma instância &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;IConfiguration&lt;/code&gt;, converta-a em &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;IConfigurationRoot&lt;/code&gt; e inspecione o resultado de &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;GetDebugView()&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;Para obter mais informações, consulte o &lt;a href=&quot;https://andrewlock.net/debugging-configuration-values-in-aspnetcore/#exposing-the-debug-view-in-your-application&quot;&gt;fantástico post de Andrew Lock&lt;/a&gt; sobre isso.&lt;/p&gt;
-
-  &lt;/div&gt;
-&lt;/div&gt;
-
-&lt;p&gt;Eu uso &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;appsettings.json&lt;/code&gt; para armazenar um modelo de todos os valores de configuração que meu projeto usa e de onde os valores são recuperados. Esse arquivo também pode conter valores reais quando o arquivo &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;appsettings.json&lt;/code&gt; é o único provedor para esse valor de configuração. Gosto muito dessa configuração porque ela me permite ver todos os valores de configuração que meu projeto usa em um só lugar.&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;{
-  “Logging&quot;: {
-    “LogLevel&quot;: {
-      “Default” (Padrão): “Informações”,
-      “Microsoft.AspNetCore&quot;: “Warning”
-    }
-  },
-
-  “ConnectionStrings&quot;: {
-    “Database”: “&amp;lt;from-azure-keyvault&amp;gt;” // O Azure Key Vault será discutido na próxima seção
-  },
-
-  “ExternalApiSettings&quot;: {
-    “ApiUrl&quot;: “&amp;lt;from-environment-variables&amp;gt;”,
-    “ApiKey&quot;: “&amp;lt;from-azure-keyvault&amp;gt;”,
-    “TimeoutInMilliseconds&quot;: 5000
-  }
-}
-
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h3 id=&quot;appsettingsdevelopmentjson&quot;&gt;appsettings.Development.json&lt;/h3&gt;
-
-&lt;p&gt;A seguir, temos o arquivo &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;appsettings.Development.json&lt;/code&gt;. Esse arquivo pode conter valores de configuração que substituem os valores do &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;appsettings.json&lt;/code&gt;, como configurações de registro. Além disso, esse arquivo &lt;strong&gt;nunca&lt;/strong&gt; deve conter segredos! Em vez disso, ele faz referência ao provedor de configuração de user secrets. Isso torna menos provável que as pessoas insiram segredos nesse arquivo, pois elas são levadas a usar o provedor de configuração de user secrets.&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;{
-  “Logging&quot;: {
-    “LogLevel&quot;: {
-      “Default”: “Debug”, // As configurações de log são 100% de preferência pessoal, fique à vontade para usar o que quiser
-      “Microsoft.AspNetCore&quot;: “Warning”
-    }
-  },
-
-  “ConnectionStrings&quot;: {
-    “Database”: “&amp;lt;from-user-secrets&amp;gt;” // Cada desenvolvedor pode usar sua própria string de conexão de banco de dados local
-  },
-
-  “ExternalApiSettings&quot;: {
-    “ApiUrl&quot;: “dev.externalapi.example.com”,
-    “ApiKey&quot;: “&amp;lt;from-user-secrets&amp;gt;”
-    // Não forneço um valor para TimeoutInMilliseconds porque não tenho problemas com o valor de appsettings.json
-  }
-}
-
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h3 id=&quot;user-secrets&quot;&gt;User Secrets&lt;/h3&gt;
-
-&lt;p&gt;Por fim, uso o provedor de configuração user secrets para armazenar segredos locais &lt;em&gt;e&lt;/em&gt; substituir a configuração não secreta que não quero enviar para o repositório git, como alterar as configurações de log no caso de precisar me aprofundar em um bug. Se eu alterasse esses valores de configuração no arquivo &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;appsettings.Development.json&lt;/code&gt;, teria que me lembrar de reverter essas alterações antes de fazer o commit do meu código. Ao usar o provedor de configuração de user secrets, não preciso me preocupar com isso.&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;{
-  “Logging&quot;: {
-    “LogLevel&quot;: {
-      “Microsoft.AspNetCore&quot;: “Information”
-    }
-  },
-
-  “ConnectionStrings&quot;: {
-    “Database”: “Data Source=...”
-  },
-
-  “ExternalApiSettings&quot;: {
-    “ApiKey&quot;: “abc123def456ghi7”
-  }
-}
-
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;div class=&quot;callout callout-question&quot;&gt;
-  &lt;div class=&quot;callout-title&quot;&gt;
-    &lt;span class=&quot;callout-icon&quot;&gt;❓&lt;/span&gt;
-    Pergunta
-  &lt;/div&gt;
-  &lt;div class=&quot;callout-content&quot;&gt;
-    
-&lt;p&gt;Como é a sua configuração? O que você acha da minha? Deixe sua opinião nos comentários abaixo!&lt;/p&gt;
-
-  &lt;/div&gt;
-&lt;/div&gt;
-
-&lt;h2 id=&quot;usando-o-azure-para-armazenar-a-configuração&quot;&gt;Usando o Azure para armazenar a configuração&lt;/h2&gt;
-
-&lt;p&gt;Agora que sabemos como armazenar a configuração e os segredos localmente, é hora de falar sobre a execução de seus aplicativos em ambientes reais. Há muitas maneiras diferentes de configurar a configuração e o gerenciamento de segredos para ambientes não locais, portanto, tudo se resume a conhecer as vantagens e desvantagens dessas abordagens e escolher o que funciona melhor para você. Neste post, você aprenderá a usar o Azure para armazenar sua configuração e seus segredos com segurança.&lt;/p&gt;
-
-&lt;div class=&quot;callout callout-info&quot;&gt;
-  &lt;div class=&quot;callout-title&quot;&gt;
-    &lt;span class=&quot;callout-icon&quot;&gt;ℹ️&lt;/span&gt;
-    Info
-  &lt;/div&gt;
-  &lt;div class=&quot;callout-content&quot;&gt;
-    
-&lt;p&gt;Embora esta seção seja sobre o Azure, os conceitos também se aplicam a outros provedores de nuvem. O equivalente do Azure App Configuration no AWS é chamado de &lt;a href=&quot;https://docs.aws.amazon.com/systems-manager/latest/userguide/systems-manager-parameter-store.html&quot;&gt;AWS Systems Manager Parameter Store&lt;/a&gt;. O Azure Key Vault tem um equivalente no AWS chamado &lt;a href=&quot;https://aws.amazon.com/secrets-manager/&quot;&gt;AWS Secrets Manager&lt;/a&gt; e o equivalente do Google é chamado &lt;a href=&quot;https://cloud.google.com/secret-manager&quot;&gt;Google Secret Manager&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;Se quiser hospedar seu gerenciamento de segredos por conta própria, dê uma olhada em &lt;a href=&quot;https://www.vaultproject.io/&quot;&gt;Hashicorp Vault&lt;/a&gt;.&lt;/p&gt;
-
-
-  &lt;/div&gt;
-&lt;/div&gt;
-
-&lt;h3 id=&quot;armazenamento-de-segredos-no-azure-key-vault&quot;&gt;Armazenamento de segredos no Azure Key Vault&lt;/h3&gt;
-
-&lt;p&gt;Como dissemos anteriormente, não é possível usar o provedor de configuração User Secrets em ambientes não locais. Portanto, temos que encontrar uma maneira diferente de armazenar nossos segredos quando estivermos implantando nossos aplicativos. O &lt;a href=&quot;https://azure.microsoft.com/services/key-vault/?WT.mc_id=DT-MVP-5005050&quot;&gt;Azure Key Vault&lt;/a&gt; é um ótimo serviço para armazenar segredos, chaves e certificados de forma barata, fácil e segura.&lt;/p&gt;
-
-&lt;p&gt;No início deste post, mencionei que é possível conectar o sistema de configuração do .NET à nuvem, o que &lt;a href=&quot;https://learn.microsoft.com/aspnet/core/security/key-vault-configuration?WT.mc_id=DT-MVP-5005050&quot;&gt;é possível com o Key Vault&lt;/a&gt;. Essa é uma ótima abordagem para o gerenciamento de segredos porque você pode simplesmente tratar o Key Vault como um provedor de configuração e não precisa mais fazer coisas complicadas no pipeline de lançamento.&lt;/p&gt;
-
-&lt;p&gt;Para adicioná-lo como um provedor de configuração, instale os pacotes &lt;a href=&quot;https://www.nuget.org/packages/Azure.Extensions.AspNetCore.Configuration.Secrets&quot;&gt;Azure.Extensions.AspNetCore.Configuration.Secrets&lt;/a&gt; e &lt;a href=&quot;https://www.nuget.org/packages/Azure.Identity&quot;&gt;Azure.Identity&lt;/a&gt;. Em seguida, você só precisará adicionar algumas linhas de código ao seu &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Program.cs&lt;/code&gt; quando criar uma API mínima, por exemplo:&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c#&quot; data-lang=&quot;c#&quot;&gt;&lt;span class=&quot;k&quot;&gt;using&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;Azure.Identity&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-
-&lt;span class=&quot;kt&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;builder&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;WebApplication&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;CreateBuilder&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;args&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-
-&lt;span class=&quot;n&quot;&gt;builder&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Host&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;ConfigureAppConfiguration&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;context&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;config&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(!&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;context&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;HostingEnvironment&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;IsDevelopment&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;())&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;kt&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;keyVaultUrl&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Uri&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;context&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Configuration&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;GetValue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;(&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;“&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;KeyVaultUrl&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;”&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;));&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;config&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;AddAzureKeyVault&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;keyVaultUrl&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;ManagedIdentityCredential&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;());&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// Há outras opções de credenciais disponíveis. As Managed Identities serão abordadas em breve!&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;O Key Vault agora é adicionado como o provedor final e, portanto, tem &lt;a href=&quot;#os-valores-default&quot;&gt;a prioridade mais alta&lt;/a&gt;. Portanto, mesmo que outros provedores tenham um valor configurado para um segredo, o Key Vault será usado em seu lugar!&lt;/p&gt;
-
-&lt;div class=&quot;callout callout-info&quot;&gt;
-  &lt;div class=&quot;callout-title&quot;&gt;
-    &lt;span class=&quot;callout-icon&quot;&gt;ℹ️&lt;/span&gt;
-    Info
-  &lt;/div&gt;
-  &lt;div class=&quot;callout-content&quot;&gt;
-    
-&lt;p&gt;Os segredos estruturados devem ser armazenados no Key Vault com 2 traços (&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;--&lt;/code&gt;) em vez de 2 sublinhados ou dois pontos devido a limitações de nomenclatura. Por exemplo, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ExternalApiSettings--ApiKey&lt;/code&gt; em vez de &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ExternalApiSettings:ApiKey&lt;/code&gt; ou &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ExternalApiSettings__ApiKey&lt;/code&gt;.&lt;/p&gt;
-
-  &lt;/div&gt;
-&lt;/div&gt;
-
-&lt;h4 id=&quot;usando-o-key-vault-durante-o-desenvolvimento-local&quot;&gt;Usando o Key Vault durante o desenvolvimento local&lt;/h4&gt;
-
-&lt;p&gt;Anteriormente neste post, mencionei brevemente que você pode estar em um cenário em que não é possível armazenar segredos em seu computador por motivos de segurança, por exemplo. Nesse caso, usar o Key Vault durante o desenvolvimento local resolveria esse problema. Você pode pegar o exemplo de código da seção anterior e modificá-lo da seguinte forma:&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c#&quot; data-lang=&quot;c#&quot;&gt;&lt;span class=&quot;k&quot;&gt;using&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;Azure.Identity&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-
-&lt;span class=&quot;kt&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;builder&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;WebApplication&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;CreateBuilder&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;args&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-
-&lt;span class=&quot;n&quot;&gt;builder&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Host&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;ConfigureAppConfiguration&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;context&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;config&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;kt&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;keyVaultUrl&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Uri&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;context&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Configuration&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;GetValue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;(&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;“&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;KeyVaultUrl&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;”&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;));&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;config&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;AddAzureKeyVault&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;keyVaultUrl&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;DefaultAzureCredential&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;());&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// Esses tipos de credenciais serão abordados a seguir!&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;Agora, seu aplicativo sempre se conectará ao Key Vault, mesmo durante o desenvolvimento. O resultado é que você não precisa mais armazenar segredos em seu computador, pois eles são sempre recuperados do Key Vault. Uma desvantagem dessa abordagem é que você sempre precisa de uma conexão com a Internet para se conectar à nuvem!&lt;/p&gt;
-
-&lt;div class=&quot;callout callout-info&quot;&gt;
-  &lt;div class=&quot;callout-title&quot;&gt;
-    &lt;span class=&quot;callout-icon&quot;&gt;ℹ️&lt;/span&gt;
-    Info
-  &lt;/div&gt;
-  &lt;div class=&quot;callout-content&quot;&gt;
-    
-&lt;p&gt;Devido aos benefícios que essa solução traz, considere o uso dessa abordagem mesmo em cenários em que o armazenamento de segredos localmente seria aceitável. Um grande benefício dessa abordagem é que você pode simplesmente clonar um projeto e, desde que tenha as permissões corretas, pode executá-lo sem precisar configurar nenhum segredo em sua máquina, pois eles são simplesmente recuperados da nuvem!&lt;/p&gt;
-
-  &lt;/div&gt;
-&lt;/div&gt;
-
-&lt;h3 id=&quot;conectando-se-ao-azure-com-identidades-gerenciadas&quot;&gt;Conectando-se ao Azure com identidades gerenciadas&lt;/h3&gt;
-
-&lt;p&gt;Nos exemplos de código anteriores, você viu alguns tipos estranhos de credenciais: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ManagedIdentityCredential&lt;/code&gt; e &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;DefaultAzureCredential&lt;/code&gt;. Antes de discutirmos isso, considere o seguinte:&lt;/p&gt;
-
-&lt;p&gt;Queremos nos conectar a um provedor de armazenamento seguro de segredos para obter segredos com os quais executar nosso aplicativo. Para nos conectarmos a esse provedor, precisaremos passar algumas credenciais para que o provedor possa autorizar nossa solicitação. &lt;strong&gt;Mas essas credenciais também são segredos, então onde as armazenamos&lt;/strong&gt;? Poderíamos armazená-las em outro provedor de configuração, mas isso não anula todo o propósito de ter um provedor secreto? Se essas credenciais vazassem, alguém poderia acessar nossos segredos de qualquer forma! &lt;strong&gt;Para resumir, estamos lidando com um problema de galinha e ovo&lt;/strong&gt;.&lt;/p&gt;
-
-&lt;p&gt;Felizmente, algumas pessoas inteligentes da Microsoft descobriram isso! Para o desenvolvimento local, você pode usar o &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;DefaultAzureCredential&lt;/code&gt; para se comunicar com os serviços do Azure. Esse tipo de credencial tentará se autenticar &lt;a href=&quot;https://learn.microsoft.com/dotnet/api/overview/azure/identity-readme?WT.mc_id=DT-MVP-5005050#defaultazurecredential&quot;&gt;usando vários métodos&lt;/a&gt;, como a conta da Microsoft com a qual você está conectado ao seu IDE, suas credenciais da CLI do Azure (&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;az&lt;/code&gt;) e muito mais.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/img/configuracao-dotnet/azure-identity.webp&quot; alt=&quot;Uma visão geral de como a Identidade do Azure funciona&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;A Identidade do Azure usa vários métodos para autenticar a conta do Azure de um desenvolvedor.&lt;/p&gt;
-
-&lt;p&gt;Para ambientes de produção, a Microsoft recomenda &lt;a href=&quot;https://docs.microsoft.com/azure/active-directory/managed-identities-azure-resources/overview&quot;&gt;Managed Identities&lt;/a&gt; para &lt;a href=&quot;https://learn.microsoft.com/dotnet/azure/sdk/authentication/?WT.mc_id=DT-MVP-5005050&quot;&gt;autenticar com recursos do Azure&lt;/a&gt;. As identidades gerenciadas são um recurso do Microsoft Entra (anteriormente conhecido como Azure Active Directory) que permite criar uma identidade para seu aplicativo no Microsoft Entra. Essa identidade pode ser usada para autenticação em outros serviços do Azure, como o Key Vault. A vantagem dessa abordagem é que você não precisa mais armazenar nenhuma credencial no aplicativo, pois a identidade é gerenciada pelo Azure AD.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/img/configuracao-dotnet/azure-managed-identities.webp&quot; alt=&quot;Um diagrama de como as Identidades Gerenciadas funcionam.&amp;lt;/br&amp;gt;&quot; /&gt;&lt;/p&gt;
-
-&lt;div class=&quot;callout callout-info&quot;&gt;
-  &lt;div class=&quot;callout-title&quot;&gt;
-    &lt;span class=&quot;callout-icon&quot;&gt;ℹ️&lt;/span&gt;
-    Info
-  &lt;/div&gt;
-  &lt;div class=&quot;callout-content&quot;&gt;
-    
-&lt;p&gt;As Managed Identities podem ser bastante difíceis de entender em um primeiro momento. Dê uma olhada na parte inferior do post para ver alguns links com mais informações sobre Managed Identities.&lt;/p&gt;
-
-  &lt;/div&gt;
-&lt;/div&gt;
-
-&lt;h3 id=&quot;armazenamento-da-configuração-na-configuração-de-aplicativo-do-azure&quot;&gt;Armazenamento da configuração na Configuração de Aplicativo do Azure&lt;/h3&gt;
-
-&lt;p&gt;Por último, mas não menos importante, quero falar sobre a oferta de nuvem do Azure para gerenciamento de &lt;em&gt;configuração&lt;/em&gt;. Enquanto o Azure Key Vault abrange o gerenciamento de segredos, o &lt;a href=&quot;https://azure.microsoft.com/products/app-configuration/?WT.mc_id=DT-MVP-5005050&quot;&gt;Azure App configuration&lt;/a&gt; é uma oferta de SaaS que o ajudará a gerenciar sua configuração. Esses dois serviços funcionam muito bem juntos quando você vincula o Azure App Configuration ao Azure Key Vault. Se optar por usar esse serviço, você só precisará adicionar o &lt;a href=&quot;https://learn.microsoft.com/azure/azure-app-configuration/quickstart-aspnet-core-app?WT.mc_id=DT-MVP-5005050&quot;&gt;Azure App Configuration como um provedor de configuração&lt;/a&gt; e, em seguida, poderá usar o sistema de configuração do .NET para acessar todas as suas configurações E segredos da nuvem!&lt;/p&gt;
-
-&lt;p&gt;Ele também tem muitos outros recursos, portanto, vale a pena dar uma olhada!&lt;/p&gt;
-
-&lt;div class=&quot;callout callout-info&quot;&gt;
-  &lt;div class=&quot;callout-title&quot;&gt;
-    &lt;span class=&quot;callout-icon&quot;&gt;ℹ️&lt;/span&gt;
-    Info
-  &lt;/div&gt;
-  &lt;div class=&quot;callout-content&quot;&gt;
-    
-&lt;p&gt;Considere a possibilidade de usar &lt;a href=&quot;https://learn.microsoft.com/pt-br/azure/azure-app-configuration/howto-integrate-azure-managed-service-identity?WT.mc_id=DT-MVP-5005050&amp;amp;pivots=framework-dotnet&quot;&gt;identidades gerenciadas para acessar a Configuração de Aplicativos&lt;/a&gt; para aumentar a segurança!&lt;/p&gt;
-
-
-  &lt;/div&gt;
-&lt;/div&gt;
-
-&lt;h2 id=&quot;finalizando&quot;&gt;Finalizando&lt;/h2&gt;
-
-&lt;p&gt;Você chegou até o fim! Este post levou muito tempo para ser escrito, e estou feliz por finalmente ter sido concluído! Abaixo, você encontrará mais informações se quiser saber mais sobre os conceitos que abordei neste post. Se você tiver alguma dúvida, fique à vontade para deixar um comentário abaixo. Se quiser saber quando e onde darei a versão de palestra deste post, confira minha página &lt;a href=&quot;https://stenbrinke.nl/speaking&quot;&gt;Speaking&lt;/a&gt;.&lt;/p&gt;
-
-&lt;h3 id=&quot;links-para-a-demo&quot;&gt;Links para a demo&lt;/h3&gt;
-
-&lt;p&gt;Mencionei que o post é um complemento de uma de minhas sessões. Essa sessão contém várias demonstrações que mostram os conceitos discutidos nEste post. Você pode encontrar as demonstrações &lt;a href=&quot;https://github.com/sander1095/secure-secret-storage-with-asp-net-core/&quot;&gt;aqui&lt;/a&gt;.&lt;/p&gt;
-
-&lt;h3 id=&quot;links-para-a-documentação-oficial&quot;&gt;Links para a documentação oficial&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;a href=&quot;https://learn.microsoft.com/dotnet/core/extensions/configuration?WT.mc_id=DT-MVP-5005050&quot;&gt;Configuração&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://learn.microsoft.com/aspnet/core/fundamentals/configuration?WT.mc_id=DT-MVP-5005050&quot;&gt;Configuração (especificações do ASP.NET Core)&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://learn.microsoft.com/aspnet/core/fundamentals/configuration/options?WT.mc_id=DT-MVP-5005050&quot;&gt;options pattern&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://docs.microsoft.com/aspnet/core/security/app-secrets&quot;&gt;user secrets&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://azure.microsoft.com/en-us/products/key-vault/?WT.mc_id=DT-MVP-5005050&quot;&gt;Azure KeyVault&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://devblogs.microsoft.com/devops/demystifying-service-principals-managed-identities/?WT.mc_id=DT-MVP-5005050&quot;&gt;Mais informações sobre Managed Identities&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;hr /&gt;
-
-&lt;p&gt;Você gostou deste post? &lt;a href=&quot;https://ko-fi.com/stenbrinke&quot;&gt;&lt;img src=&quot;https://stenbrinke.nl/images/kofi_button_blue.webp&quot; alt=&quot;Faça uma doção para o autor original em https://ko-fi.com/stenbrinke.nl&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;carlos-de-volta&quot;&gt;Carlos de volta&lt;/h2&gt;
-
-&lt;p&gt;Carlos Schults de volta aqui. Espero que tenham gostado bastante do post, e sugiro que o coloquem nos favoritos para ser um recurso útil de consulta toda vez que surgir alguma dúvida referente ao gerenciamento de secrets e configuração.&lt;/p&gt;
-
-&lt;p&gt;Agradeço a Sander ten Brinke, autor do artigo original, que gentilmente me autorizou a traduzí-lo. O &lt;a href=&quot;https://stenbrinke.nl/&quot;&gt;blog dele&lt;/a&gt; é fantástico, tem muitos artigos extremamente bem escritos sobre diversos tópicos relacionados a .NET. Para quem sabe inglês, recomendo fortemente a visita.&lt;/p&gt;
-
-&lt;p&gt;Gostaria de agradecer também a &lt;a href=&quot;https://andrewlock.net/about/&quot;&gt;Andrew Lock&lt;/a&gt;, o autor do livro &lt;a href=&quot;https://www.manning.com/books/asp-net-core-in-action-third-edition&quot;&gt;ASP.NET Core in Action&lt;/a&gt;, por ter concedido autorização para reproduzir uma imagem de seu livro.&lt;/p&gt;
-
-&lt;p&gt;A você que leu o artigo - todo ou apenas uma parte — deixo também um agradecimento e um pedido: me dê seu feedback. É extremamente importante saber se as pessoas gostam desse tipo de conteúdo, pois me motiva a continuar produzindo.&lt;/p&gt;
-
-&lt;p&gt;Até a próxima!&lt;/p&gt;
-</description>
-        <pubDate>Tue, 23 Jul 2024 00:00:00 +0000</pubDate>
-        <link>https://carlosschults.net/pt/configuracao-dotnet</link>
-        <guid isPermaLink="true">https://carlosschults.net/pt/configuracao-dotnet</guid>
-        
-        <category>csharp</category>
-        
-        <category>dotnet</category>
-        
-        <category>configuracao</category>
-        
-        <category>traducoes</category>
         
         <category>tutorial</category>
         

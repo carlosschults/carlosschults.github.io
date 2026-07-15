@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>PostgreSQL LIKE Operator: A Detailed Guide | carlos schults / blog</title>
+  <link rel="apple-touch-icon" sizes="57x57" href="/img/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/img/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/img/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/img/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/img/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/img/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/img/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/img/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"  href="/img/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/img/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon-16x16.png">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="description" content="      ℹ️    Info        Editorial note: I originally wrote this post for the CoderPad blog.  You can check out the original here, at their site.  When using ...">
+  
+  <!-- Twitter card -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:creator" content="@carlosschults">
+  <meta name="twitter:site" content="@carlosschults">
+  <meta name="twitter:domain" content="carlosschults.net">
+  <meta name="twitter:title" content="PostgreSQL LIKE Operator: A Detailed Guide">
+  <meta name="twitter:description" content="      ℹ️    Info        Editorial note: I originally wrote this post for the CoderPad blog.  You can check out the original here, at their site.  When using ...">
+
+   <!-- Facebook meta -->
+  
+  
+  <meta property="og:title" content="PostgreSQL LIKE Operator: A Detailed Guide">
+  <meta property="og:site_name" content="Carlos Schults / Blog" />
+  <meta property="og:locale" content="en_US">  
+  <meta property="og:type" content="article" />
+  
+  <meta property="og:article:published_time" content="2026-07-14T00:00:00+00:00" />  
+  <meta property="og:article:author" content="Carlos Schults" />
+  
+  <meta property="og:article:tag" content="databases" />
+  <meta property="og:article:tag" content="postgresql" />
+  <meta property="og:article:tag" content="sql" />
+  <meta property="og:article:tag" content="tutorial" />    
+  
+  <meta property="og:url" content="https://carlosschults.net/en/postgresql-like-operator-guide"/>
+  <meta property="og:description" content="      ℹ️    Info        Editorial note: I originally wrote this post for the CoderPad blog.  You can check out the original here, at their site.  When using ...">
+  <link rel="stylesheet" href="/css/main.css">  
+  
+  <link rel="canonical" href="https://coderpad.io/blog/development/postgresql-like-operator-a-detailed-guide/">
+   
+  
+  <link rel="alternate" hreflang="en" href="/en/postgresql-like-operator-guide" />
+  <link rel="alternate" hreflang="pt" href="/pt/guia-operador-like-postgresql" />
+  
+  <link rel="alternate" type="application/rss+xml" title="carlos schults / blog" href="https://carlosschults.net/feed.xml">
+</head>
+
+  <body>
+    <header class="site-header">
+  <div class="wrapper">    
+    <a class="site-title" href="/">carlos schults / blog</a>
+    
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg viewBox="0 0 18 15">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+
+      <div class="trigger">        
+          
+          <a class="page-link" href="/footprints/">Dev Footprints</a>
+          <a class="page-link" href="/readings/">Readings</a>
+          <a class="page-link" href="/about/">About</a>
+		      <a class="page-link" href="/search/">Search</a>
+                  
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+<div class="wrapper" style="text-align: right; line-height: 2em">
+  
+   <a href="/en/postgresql-like-operator-guide" class="en">en</a>  <a href="/pt/guia-operador-like-postgresql" class="pt">pt</a> 
+
+  
+  
+</div>
+
+
+    <div class="page-content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">    
+    <h2 class="postTitle" itemprop="headline">PostgreSQL LIKE Operator: A Detailed Guide</h2>
+    <p class="post-meta">   
+    <time datetime="2026-07-14T00:00:00+00:00" itemprop="datePublished">Jul 14, 2026
+    </time> • <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">Carlos Schults</span></span>
+  <span class="tags" itemprop="keywords"> • Tags: <a href="/tag/databases">databases </a> <a href="/tag/postgresql">postgresql </a> <a href="/tag/sql">sql </a> <a href="/tag/tutorial">tutorial </a> </span>
+  </p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    
+<div class="callout callout-info">
+  <div class="callout-title">
+    <span class="callout-icon">ℹ️</span>
+    Info
+  </div>
+  <div class="callout-content">
+    
+<p><em>Editorial note: I originally wrote this post for the CoderPad blog.  You can <a href="https://coderpad.io/blog/development/postgresql-like-operator-a-detailed-guide/">check out the original here, at their site</a>.</em></p>
+
+  </div>
+</div>
+
+<p>When using databases, searching for values that match a given pattern is a familiar necessity. You might want to retrieve all students whose last name starts with a given letter or update all products whose ids include a particular string. If you’re a PostgreSQL user, you will use the PostgreSQL <code class="language-plaintext highlighter-rouge">LIKE</code> operator for that.</p>
+
+<p>If you want to learn more about PostgreSQL <code class="language-plaintext highlighter-rouge">LIKE</code>, you’ve come to the right place, since this post is all about this operator. By the end of the post, you’ll have learned:</p>
+
+<ul>
+  <li>what PostgreSQL <code class="language-plaintext highlighter-rouge">LIKE</code> does, and why you’d want to use it</li>
+  <li>how it differs from the <code class="language-plaintext highlighter-rouge">LIKE</code> operators in different database engines</li>
+  <li>how it differs from the <code class="language-plaintext highlighter-rouge">ILIKE</code> operator</li>
+</ul>
+
+<p>To paraphrase that famous movie, though, only theory and no practice make this a dull post. So, before wrapping up, we’ll walk you through several examples of the <code class="language-plaintext highlighter-rouge">LIKE</code> operator in practice.</p>
+
+<p><strong>Requirements</strong></p>
+
+<p>If you want to follow along with the practical portion of the post, keep in mind that the post assumes the following:</p>
+
+<ul>
+  <li>there is a functional instance of PostgreSQL installed on your machine</li>
+  <li>you can connect to the said instance through a client</li>
+  <li>you have at least a bit of experience with the PostgreSQL database and the SQL language</li>
+</ul>
+
+<p><strong>PostgreSQL <code class="language-plaintext highlighter-rouge">LIKE</code>: The Fundamentals</strong></p>
+
+<p>With the requirements out of the way, let’s start by covering some fundamentals about today’s topic.</p>
+
+<p><strong>What Is PostgreSQL <code class="language-plaintext highlighter-rouge">LIKE</code>?</strong></p>
+
+<p>PostgreSQL <code class="language-plaintext highlighter-rouge">LIKE</code> is PostgreSQL’s implementation of the <code class="language-plaintext highlighter-rouge">LIKE</code> operator from the SQL language. You use LIKE when you want to retrieve rows in which one or more of their textual columns match a given pattern. In the introduction, I gave an example: retrieving students whose last name starts with a given letter. So, let’s see a real query that does just that using PostgreSQL <code class="language-plaintext highlighter-rouge">LIKE</code>:</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="n">id</span><span class="p">,</span> <span class="n">first_name</span><span class="p">,</span> <span class="n">last_name</span><span class="p">,</span> <span class="n">email</span> <span class="k">FROM</span> <span class="n">students</span> <span class="k">WHERE</span> <span class="n">last_name</span> <span class="k">LIKE</span> <span class="s1">'M%'</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>The query above retrieves some columns from the <code class="language-plaintext highlighter-rouge">students</code> table, but only the rows which match the condition: the value from the <code class="language-plaintext highlighter-rouge">last_name</code> column has to start with the letter “M”. There are some interesting points to notice from this first example:</p>
+
+<ul>
+  <li>You use the <code class="language-plaintext highlighter-rouge">LIKE</code> operator in the <code class="language-plaintext highlighter-rouge">WHERE</code> clause of a query</li>
+  <li>It goes on the same spot you’d put any comparison operator such as “==”, “&gt;”, “&lt;”, and so on</li>
+  <li>The percentage character (%) is used as a wildcard to match any number of characters</li>
+</ul>
+
+<p>What if you wanted only students whose first name ended with a “k”? Simple, just swap the letter and the wildcard:</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="n">id</span><span class="p">,</span> <span class="n">first_name</span><span class="p">,</span> <span class="n">last_name</span><span class="p">,</span> <span class="n">email</span> <span class="k">FROM</span> <span class="n">students</span> <span class="k">WHERE</span> <span class="n">first_name</span> <span class="k">LIKE</span> <span class="s1">'%k'</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>Another example: let’s match students whose email addresses contain the word “gmail”:</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="n">id</span><span class="p">,</span> <span class="n">first_name</span><span class="p">,</span> <span class="n">last_name</span><span class="p">,</span> <span class="n">email</span> <span class="k">FROM</span> <span class="n">students</span> <span class="k">WHERE</span> <span class="n">email</span> <span class="k">LIKE</span> <span class="s1">'%gmail%'</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>That’s right: if you want to match values that contain a given string, you surround the string with percentage signs (<code class="language-plaintext highlighter-rouge">%</code>).</p>
+
+<p><strong>What Is the Difference Between LIKE and ILIKE in Postgresql?</strong></p>
+
+<p>When reviewing PostgreSQL code in the wild, you might encounter queries that use the <code class="language-plaintext highlighter-rouge">ILIKE</code> operator instead of <code class="language-plaintext highlighter-rouge">LIKE</code> and get confused. The difference is that the <code class="language-plaintext highlighter-rouge">LIKE</code> operator is case sensitive—i.e. it distinguishes between lowercase and uppercase letters. On the other hand, the <code class="language-plaintext highlighter-rouge">ILIKE</code> operator is case <em>insensitive</em>—hence the i. It does not distinguish between upper and lowercase letters, and therefore you should use it when you don’t care about the case.</p>
+
+<p>An important thing to keep in mind: the <code class="language-plaintext highlighter-rouge">ILIKE</code> operator doesn’t exist in ANSI SQL; instead, it’s a specific extension of PostgreSQL. That means that employing ILIKE makes your SQL code less portable, in case you have the need to change your database engine.</p>
+
+<p><strong>PostgreSQL Like: Practical Use Cases</strong></p>
+
+<p>Having covered the basics of PostgreSQL <code class="language-plaintext highlighter-rouge">LIKE</code>, let’s now see several usage examples. We’ll begin by preparing the database for the tests.</p>
+
+<p><strong>Preparing the Database</strong></p>
+
+<p>Using your preferred client, connect to your PostgreSQL instance, making sure there’s a database you can connect to for the tests.</p>
+
+<p>Let’s start by creating a table and inserting some rows into it:</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">albums</span> <span class="p">(</span>
+  <span class="n">id</span>              <span class="nb">SERIAL</span> <span class="k">PRIMARY</span> <span class="k">KEY</span><span class="p">,</span>
+  <span class="n">title</span>           <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">250</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span>
+  <span class="n">artist</span>          <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">250</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span>
+  <span class="n">release_year</span> <span class="nb">int</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">);</span>
+
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">albums</span> <span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="n">artist</span><span class="p">,</span> <span class="n">release_year</span><span class="p">)</span> <span class="k">VALUES</span><span class="p">(</span><span class="s1">'Abbey Road'</span><span class="p">,</span> <span class="s1">'The Beatles'</span><span class="p">,</span> <span class="mi">1969</span><span class="p">);</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">albums</span>  <span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="n">artist</span><span class="p">,</span> <span class="n">release_year</span><span class="p">)</span> <span class="k">VALUES</span><span class="p">(</span><span class="s1">'Construção'</span><span class="p">,</span> <span class="s1">'Chico Buarque'</span><span class="p">,</span> <span class="mi">1971</span><span class="p">);</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">albums</span>  <span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="n">artist</span><span class="p">,</span> <span class="n">release_year</span><span class="p">)</span> <span class="k">VALUES</span><span class="p">(</span><span class="s1">'The Dark Side of the Moon'</span><span class="p">,</span> <span class="s1">'Pink Floyd'</span><span class="p">,</span> <span class="mi">1973</span><span class="p">);</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">albums</span>  <span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="n">artist</span><span class="p">,</span> <span class="n">release_year</span><span class="p">)</span> <span class="k">VALUES</span><span class="p">(</span><span class="s1">'Reckless'</span><span class="p">,</span> <span class="s1">'Bryan Adams'</span><span class="p">,</span> <span class="mi">1984</span><span class="p">);</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">albums</span>  <span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="n">artist</span><span class="p">,</span> <span class="n">release_year</span><span class="p">)</span> <span class="k">VALUES</span><span class="p">(</span><span class="s1">'Ryan Adams'</span><span class="p">,</span> <span class="s1">'Ryan Adams'</span><span class="p">,</span> <span class="mi">2014</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p><strong>Matching a Single Character</strong></p>
+
+<p>As you’ve seen, the table now contains albums by both Bryan and Ryan Adams. That’s not by coincidence. First, use the following query to retrieve albums by the two singers:</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">albums</span> <span class="k">WHERE</span> <span class="n">artist</span> <span class="k">LIKE</span> <span class="s1">'%yan%'</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>The query above matches all artists which contain the string “yan” anywhere in their name. Here’s what the result looks like to me:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> id |   title    |   artist    | release_year 
+----+------------+-------------+--------------
+  4 | Reckless   | Bryan Adams |         1984
+  5 | Ryan Adams | Ryan Adams  |         2014
+(2 rows)
+</code></pre></div></div>
+
+<p>The <code class="language-plaintext highlighter-rouge">LIKE</code> operator offers an additional wildcard, the underscore character (_) which matches a single character. That way, it’s possible to rewrite the query in such a way that only Ryan Adams is returned:</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">albums</span> <span class="k">WHERE</span> <span class="n">artist</span> <span class="k">LIKE</span> <span class="s1">'_yan%'</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>And here, again, is the result:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> id |   title    |   artist   | release_year 
+----+------------+------------+--------------
+  5 | Ryan Adams | Ryan Adams |         2014
+(1 row)
+</code></pre></div></div>
+
+<p><strong>Negative Matches</strong></p>
+
+<p>When working with database tables, you often need to retrieve data that doesn’t match a given pattern. For that, you can use the <code class="language-plaintext highlighter-rouge">NOT LIKE</code> operator. For instance, let’s get only artists that don’t start with “The”:</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">albums</span> <span class="k">WHERE</span> <span class="n">artist</span> <span class="k">NOT</span> <span class="k">LIKE</span> <span class="s1">'The%'</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>Since the only artist starting with “The” are The Beatles, they won’t be fetched by the query above.</p>
+
+<p><strong>Matching Without Case Sensitivity</strong></p>
+
+<p>As mentioned earlier, the <code class="language-plaintext highlighter-rouge">ILIKE</code> operator is a special PostgreSQL extension to <code class="language-plaintext highlighter-rouge">LIKE</code> that matches in a case-insensitive way. Let’s see that in practice. First, let’s use the <code class="language-plaintext highlighter-rouge">LIKE</code> operator to get all artists which contain an uppercase “A”:</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">albums</span> <span class="k">WHERE</span> <span class="n">artist</span> <span class="k">LIKE</span> <span class="s1">'%A%'</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>Only “Bryan Adams” and “Ryan Adams” are returned, which makes sense:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> id |   title    |   artist    | release_year 
+----+------------+-------------+--------------
+  4 | Reckless   | Bryan Adams |         1984
+  5 | Ryan Adams | Ryan Adams  |         2014
+(2 rows)
+</code></pre></div></div>
+
+<p>Let’s now replace the <code class="language-plaintext highlighter-rouge">LIKE</code> operator with the <code class="language-plaintext highlighter-rouge">ILIKE</code> one and rerun the query:</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">albums</span> <span class="k">WHERE</span> <span class="n">artist</span> <span class="k">ILIKE</span> <span class="s1">'%A%'</span><span class="p">;</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> id |   title    |    artist     | release_year 
+----+------------+---------------+--------------
+  1 | Abbey Road | The Beatles   |         1969
+  2 | Construção | Chico Buarque |         1971
+  4 | Reckless   | Bryan Adams   |         1984
+  5 | Ryan Adams | Ryan Adams    |         2014
+(4 rows)
+</code></pre></div></div>
+
+<p>Now, all artists are returned, except for Pink Floyd.</p>
+
+<p><strong>Escaping the WildCards</strong></p>
+
+<p>For this example, let’s update two rows:</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">UPDATE</span> <span class="n">albums</span> <span class="k">SET</span> <span class="n">artist</span> <span class="o">=</span> <span class="s1">'The%Beatles'</span> <span class="k">WHERE</span> <span class="n">id</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+
+<span class="k">UPDATE</span> <span class="n">albums</span> <span class="k">SET</span> <span class="n">artist</span> <span class="o">=</span> <span class="s1">'Chico_Buarque'</span> <span class="k">WHERE</span> <span class="n">id</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>Now, let’s say we want to retrieve albums from artists whose name contains a percentage sign or an underscore:</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">albums</span> <span class="k">WHERE</span> <span class="n">artist</span> <span class="k">LIKE</span> <span class="s1">'%%%'</span><span class="p">;</span>
+
+<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">albums</span> <span class="k">WHERE</span> <span class="n">artist</span> <span class="k">LIKE</span> <span class="s1">'%_%'</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>As you’ve probably imagined, both queries don’t work: they return all rows. Fortunately, there’s a way around this problem: it’s possible to escape a wildcard so we can use it as a normal character. You simply put a backslash before the offending character:</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">albums</span> <span class="k">WHERE</span> <span class="n">artist</span> <span class="k">LIKE</span> <span class="s1">'%</span><span class="se">\%</span><span class="s1">%'</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>And here’s the result:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> id |   title    |    artist     | release_year 
+----+------------+---------------+--------------
+  1 | Abbey Road | The Beatles   |         1969
+(1 rows)
+</code></pre></div></div>
+
+<p>The same would work for the underscore character. But before wrapping up, let’s complicate things just a bit more—because, why not?</p>
+
+<p>First, let’s update the “Abbey Road” row once more:</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">UPDATE</span> <span class="n">albums</span> <span class="k">SET</span> <span class="n">artist</span> <span class="o">=</span> <span class="s1">'The</span><span class="se">\B</span><span class="s1">eatles'</span> <span class="k">WHERE</span> <span class="n">id</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>Now, in order to use LIKE to retrieve a row containing the backslash character, you’d have to write this query:</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">albums</span> <span class="k">WHERE</span> <span class="n">artist</span> <span class="k">LIKE</span> <span class="s1">'%</span><span class="se">\\</span><span class="s1">%'</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>You have to escape the escape character. It’s not that terrible, but you might want to write a more readable version. If that’s the case, it’s possible to choose a different character as the escape character: just use the <code class="language-plaintext highlighter-rouge">ESCAPE</code> clause:</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">albums</span> <span class="k">WHERE</span> <span class="n">artist</span> <span class="k">LIKE</span> <span class="s1">'%$</span><span class="se">\%</span><span class="s1">'</span> <span class="k">ESCAPE</span> <span class="s1">'$'</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>With the <code class="language-plaintext highlighter-rouge">ESCAPE</code> clause, you can choose a different character as the escape character. That way—at least in my opinion—the resulting query is more explicit in the way it escapes the wildcard.</p>
+
+<p><strong>Conclusion: PostgreSQL LIKE: Learn It, Leverage It</strong></p>
+
+<p>In this post, you’ve learned about the LIKE operator in PostgreSQL: what it is, what’s used for, and how it works along several examples. As you’ve seen, the operator’s working is quite easy once you understand how the wildcards work. We’ve also walked you through some usage examples, like matching against a single character and performing negative matches.</p>
+
+<p>Where should you go now?  For starters, continue to learn about pattern matching on PostgreSQL. Here are some topic suggestions for you:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">SIMILAR TO</code>, a more recent clause</li>
+  <li>the <code class="language-plaintext highlighter-rouge">substring()</code> function</li>
+  <li>the <code class="language-plaintext highlighter-rouge">regexp_like()</code> function</li>
+</ul>
+
+<p>Thanks for reading, and until next time!</p>
+
+    
+    
+      
+    
+    
+        Found a typo or mistake in the post? <a href="http://github.com/carlosschults/carlosschults.github.io/edit/master/_posts/2026-07-14-postgres-like.md">Suggest edit</a>
+        
+    
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+                    
+            <a rel="previous" class="previous" href="/en/building-git-in-go-part2">&larr; Building git in Go From Scratch - Part 2 </a>
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+      
+    <div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+        // Store these for reloads
+        window.disqus_identifier = window.location.pathname;
+        window.disqus_url = window.location.href;
+        
+        // Set initial theme - match it with the site's theme
+        const currentTheme = document.body.getAttribute('data-theme') || 'light';
+        this.page.theme = currentTheme === 'dark' ? 'dark' : 'light';
+    };
+    
+    (function() {
+        var d = document, s = d.createElement('script');
+        s.src = '//carlosschultsblog.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>    
+  </div>
+
+</article>
+
+      </div>
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">         
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-2">
+        <ul class="social-media-list">
+          
+          <li>
+            <a href="https://github.com/carlosschults"><span class="icon icon--github"><svg viewBox="0 0 16 16"><path fill="#828282" d="M7.999,0.431c-4.285,0-7.76,3.474-7.76,7.761 c0,3.428,2.223,6.337,5.307,7.363c0.388,0.071,0.53-0.168,0.53-0.374c0-0.184-0.007-0.672-0.01-1.32 c-2.159,0.469-2.614-1.04-2.614-1.04c-0.353-0.896-0.862-1.135-0.862-1.135c-0.705-0.481,0.053-0.472,0.053-0.472 c0.779,0.055,1.189,0.8,1.189,0.8c0.692,1.186,1.816,0.843,2.258,0.645c0.071-0.502,0.271-0.843,0.493-1.037 C4.86,11.425,3.049,10.76,3.049,7.786c0-0.847,0.302-1.54,0.799-2.082C3.768,5.507,3.501,4.718,3.924,3.65 c0,0,0.652-0.209,2.134,0.796C6.677,4.273,7.34,4.187,8,4.184c0.659,0.003,1.323,0.089,1.943,0.261 c1.482-1.004,2.132-0.796,2.132-0.796c0.423,1.068,0.157,1.857,0.077,2.054c0.497,0.542,0.798,1.235,0.798,2.082 c0,2.981-1.814,3.637-3.543,3.829c0.279,0.24,0.527,0.713,0.527,1.437c0,1.037-0.01,1.874-0.01,2.129 c0,0.208,0.14,0.449,0.534,0.373c3.081-1.028,5.302-3.935,5.302-7.362C15.76,3.906,12.285,0.431,7.999,0.431z"/></svg>
+</span><span class="username">carlosschults</span></a>
+
+          </li>
+          
+
+          
+          <li>
+            <a href="https://twitter.com/carlosschults"><span class="icon icon--twitter"><svg viewBox="0 0 16 16"><path fill="#828282" d="M15.969,3.058c-0.586,0.26-1.217,0.436-1.878,0.515c0.675-0.405,1.194-1.045,1.438-1.809c-0.632,0.375-1.332,0.647-2.076,0.793c-0.596-0.636-1.446-1.033-2.387-1.033c-1.806,0-3.27,1.464-3.27,3.27 c0,0.256,0.029,0.506,0.085,0.745C5.163,5.404,2.753,4.102,1.14,2.124C0.859,2.607,0.698,3.168,0.698,3.767 c0,1.134,0.577,2.135,1.455,2.722C1.616,6.472,1.112,6.325,0.671,6.08c0,0.014,0,0.027,0,0.041c0,1.584,1.127,2.906,2.623,3.206 C3.02,9.402,2.731,9.442,2.433,9.442c-0.211,0-0.416-0.021-0.615-0.059c0.416,1.299,1.624,2.245,3.055,2.271 c-1.119,0.877-2.529,1.4-4.061,1.4c-0.264,0-0.524-0.015-0.78-0.046c1.447,0.928,3.166,1.469,5.013,1.469 c6.015,0,9.304-4.983,9.304-9.304c0-0.142-0.003-0.283-0.009-0.423C14.976,4.29,15.531,3.714,15.969,3.058z"/></svg>
+</span><span class="username">carlosschults</span></a>
+
+          </li>
+          
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-3">
+        <p>Articles on software development and technology.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+
+    <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-92788641-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+    <script src="/js/dark-mode.js"></script>
+    <script src="/js/copy-code.js"></script>
+  </body>
+
+</html>

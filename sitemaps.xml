@@ -3,6 +3,34 @@
   
     
       <url>
+        <loc>/en/postgresql-like-operator-guide</loc>
+        
+        
+          <xhtml:link rel="alternate" hreflang="en" href="/en/postgresql-like-operator-guide" />
+        
+          <xhtml:link rel="alternate" hreflang="pt" href="/pt/guia-operador-like-postgresql" />
+        
+        <lastmod>2026-07-14T00:00:00+00:00</lastmod>
+        <changefreq>weekly</changefreq>
+      </url>
+    
+  
+    
+      <url>
+        <loc>/pt/guia-operador-like-postgresql</loc>
+        
+        
+          <xhtml:link rel="alternate" hreflang="en" href="/en/postgresql-like-operator-guide" />
+        
+          <xhtml:link rel="alternate" hreflang="pt" href="/pt/guia-operador-like-postgresql" />
+        
+        <lastmod>2026-07-14T00:00:00+00:00</lastmod>
+        <changefreq>weekly</changefreq>
+      </url>
+    
+  
+    
+      <url>
         <loc>/pt/construindo-git-em-go-parte2</loc>
         
         
@@ -2698,6 +2726,45 @@
   
     
       <url>
+        <loc>/tag/databases/</loc>
+        
+        
+          <xhtml:link rel="alternate" hreflang="en" href="/tag/databases/" />
+        
+          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/databases/" />
+        
+        <changefreq>weekly</changefreq>
+      </url>
+    
+  
+    
+      <url>
+        <loc>/tag/postgresql/</loc>
+        
+        
+          <xhtml:link rel="alternate" hreflang="en" href="/tag/postgresql/" />
+        
+          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/postgresql/" />
+        
+        <changefreq>weekly</changefreq>
+      </url>
+    
+  
+    
+      <url>
+        <loc>/tag/sql/</loc>
+        
+        
+          <xhtml:link rel="alternate" hreflang="en" href="/tag/sql/" />
+        
+          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/sql/" />
+        
+        <changefreq>weekly</changefreq>
+      </url>
+    
+  
+    
+      <url>
         <loc>/tag_ptbr/blog/</loc>
         
         
@@ -3978,6 +4045,45 @@
           <xhtml:link rel="alternate" hreflang="en" href="/tag/rant/" />
         
           <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/rant/" />
+        
+        <changefreq>weekly</changefreq>
+      </url>
+    
+  
+    
+      <url>
+        <loc>/tag_ptbr/databases/</loc>
+        
+        
+          <xhtml:link rel="alternate" hreflang="en" href="/tag/databases/" />
+        
+          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/databases/" />
+        
+        <changefreq>weekly</changefreq>
+      </url>
+    
+  
+    
+      <url>
+        <loc>/tag_ptbr/postgresql/</loc>
+        
+        
+          <xhtml:link rel="alternate" hreflang="en" href="/tag/postgresql/" />
+        
+          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/postgresql/" />
+        
+        <changefreq>weekly</changefreq>
+      </url>
+    
+  
+    
+      <url>
+        <loc>/tag_ptbr/sql/</loc>
+        
+        
+          <xhtml:link rel="alternate" hreflang="en" href="/tag/sql/" />
+        
+          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/sql/" />
         
         <changefreq>weekly</changefreq>
       </url>

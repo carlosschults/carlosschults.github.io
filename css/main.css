@@ -411,4 +411,22 @@ td { border: 1px solid #000000; transition: border-color 0.3s ease; }
 
 body[data-theme="dark"] .theme-toggle { border-color: #404040; background: #242424; color: #e0e0e0; }
 
+div.highlighter-rouge, figure.highlight { position: relative; }
+
+div.highlighter-rouge .copy-code-button, figure.highlight .copy-code-button { position: absolute; top: 0.4rem; right: 0.4rem; display: flex; align-items: center; padding: 0.3rem; border: 1px solid #e8e8e8; border-radius: 4px; background: #fdfdfd; color: #828282; cursor: pointer; opacity: 0; transition: opacity 0.2s ease, color 0.2s ease; }
+
+div.highlighter-rouge .copy-code-button.copied, figure.highlight .copy-code-button.copied { color: #2e9e4f; opacity: 1; }
+
+div.highlighter-rouge .copy-code-button:hover, figure.highlight .copy-code-button:hover { color: #111; }
+
+body[data-theme="dark"] div.highlighter-rouge .copy-code-button, body[data-theme="dark"] figure.highlight .copy-code-button { border-color: #404040; background: #2a2a2a; color: #a0a0a0; }
+
+body[data-theme="dark"] div.highlighter-rouge .copy-code-button.copied, body[data-theme="dark"] figure.highlight .copy-code-button.copied { color: #5fd57f; }
+
+body[data-theme="dark"] div.highlighter-rouge .copy-code-button:hover, body[data-theme="dark"] figure.highlight .copy-code-button:hover { color: #e0e0e0; }
+
+div.highlighter-rouge:hover .copy-code-button, figure.highlight:hover .copy-code-button { opacity: 1; }
+
+@media (hover: none) { div.highlighter-rouge .copy-code-button, figure.highlight .copy-code-button { opacity: 1; } }
+
 /*# sourceMappingURL=main.css.map */

@@ -5,10 +5,254 @@
     <description>Articles on software development and technology.</description>
     <link>https://carlosschults.net/</link>
     <atom:link href="https://carlosschults.net/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Fri, 03 Jul 2026 17:34:25 +0000</pubDate>
-    <lastBuildDate>Fri, 03 Jul 2026 17:34:25 +0000</lastBuildDate>
+    <pubDate>Wed, 15 Jul 2026 10:58:17 +0000</pubDate>
+    <lastBuildDate>Wed, 15 Jul 2026 10:58:17 +0000</lastBuildDate>
     <generator>Jekyll v4.3.1</generator>
     
+    
+      <item>
+        <title>PostgreSQL LIKE Operator: A Detailed Guide</title>
+        <description>
+&lt;div class=&quot;callout callout-info&quot;&gt;
+  &lt;div class=&quot;callout-title&quot;&gt;
+    &lt;span class=&quot;callout-icon&quot;&gt;ℹ️&lt;/span&gt;
+    Info
+  &lt;/div&gt;
+  &lt;div class=&quot;callout-content&quot;&gt;
+    
+&lt;p&gt;&lt;em&gt;Editorial note: I originally wrote this post for the CoderPad blog.  You can &lt;a href=&quot;https://coderpad.io/blog/development/postgresql-like-operator-a-detailed-guide/&quot;&gt;check out the original here, at their site&lt;/a&gt;.&lt;/em&gt;&lt;/p&gt;
+
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;p&gt;When using databases, searching for values that match a given pattern is a familiar necessity. You might want to retrieve all students whose last name starts with a given letter or update all products whose ids include a particular string. If you’re a PostgreSQL user, you will use the PostgreSQL &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;LIKE&lt;/code&gt; operator for that.&lt;/p&gt;
+
+&lt;p&gt;If you want to learn more about PostgreSQL &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;LIKE&lt;/code&gt;, you’ve come to the right place, since this post is all about this operator. By the end of the post, you’ll have learned:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;what PostgreSQL &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;LIKE&lt;/code&gt; does, and why you’d want to use it&lt;/li&gt;
+  &lt;li&gt;how it differs from the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;LIKE&lt;/code&gt; operators in different database engines&lt;/li&gt;
+  &lt;li&gt;how it differs from the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ILIKE&lt;/code&gt; operator&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;To paraphrase that famous movie, though, only theory and no practice make this a dull post. So, before wrapping up, we’ll walk you through several examples of the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;LIKE&lt;/code&gt; operator in practice.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Requirements&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;If you want to follow along with the practical portion of the post, keep in mind that the post assumes the following:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;there is a functional instance of PostgreSQL installed on your machine&lt;/li&gt;
+  &lt;li&gt;you can connect to the said instance through a client&lt;/li&gt;
+  &lt;li&gt;you have at least a bit of experience with the PostgreSQL database and the SQL language&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;PostgreSQL &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;LIKE&lt;/code&gt;: The Fundamentals&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;With the requirements out of the way, let’s start by covering some fundamentals about today’s topic.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;What Is PostgreSQL &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;LIKE&lt;/code&gt;?&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;PostgreSQL &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;LIKE&lt;/code&gt; is PostgreSQL’s implementation of the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;LIKE&lt;/code&gt; operator from the SQL language. You use LIKE when you want to retrieve rows in which one or more of their textual columns match a given pattern. In the introduction, I gave an example: retrieving students whose last name starts with a given letter. So, let’s see a real query that does just that using PostgreSQL &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;LIKE&lt;/code&gt;:&lt;/p&gt;
+
+&lt;div class=&quot;language-sql highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;SELECT&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;id&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;first_name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;last_name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;email&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;FROM&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;students&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;WHERE&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;last_name&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;LIKE&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;M%&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;The query above retrieves some columns from the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;students&lt;/code&gt; table, but only the rows which match the condition: the value from the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;last_name&lt;/code&gt; column has to start with the letter “M”. There are some interesting points to notice from this first example:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;You use the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;LIKE&lt;/code&gt; operator in the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;WHERE&lt;/code&gt; clause of a query&lt;/li&gt;
+  &lt;li&gt;It goes on the same spot you’d put any comparison operator such as “==”, “&amp;gt;”, “&amp;lt;”, and so on&lt;/li&gt;
+  &lt;li&gt;The percentage character (%) is used as a wildcard to match any number of characters&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;What if you wanted only students whose first name ended with a “k”? Simple, just swap the letter and the wildcard:&lt;/p&gt;
+
+&lt;div class=&quot;language-sql highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;SELECT&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;id&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;first_name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;last_name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;email&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;FROM&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;students&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;WHERE&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;first_name&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;LIKE&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;%k&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Another example: let’s match students whose email addresses contain the word “gmail”:&lt;/p&gt;
+
+&lt;div class=&quot;language-sql highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;SELECT&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;id&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;first_name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;last_name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;email&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;FROM&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;students&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;WHERE&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;email&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;LIKE&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;%gmail%&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;That’s right: if you want to match values that contain a given string, you surround the string with percentage signs (&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;%&lt;/code&gt;).&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;What Is the Difference Between LIKE and ILIKE in Postgresql?&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;When reviewing PostgreSQL code in the wild, you might encounter queries that use the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ILIKE&lt;/code&gt; operator instead of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;LIKE&lt;/code&gt; and get confused. The difference is that the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;LIKE&lt;/code&gt; operator is case sensitive—i.e. it distinguishes between lowercase and uppercase letters. On the other hand, the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ILIKE&lt;/code&gt; operator is case &lt;em&gt;insensitive&lt;/em&gt;—hence the i. It does not distinguish between upper and lowercase letters, and therefore you should use it when you don’t care about the case.&lt;/p&gt;
+
+&lt;p&gt;An important thing to keep in mind: the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ILIKE&lt;/code&gt; operator doesn’t exist in ANSI SQL; instead, it’s a specific extension of PostgreSQL. That means that employing ILIKE makes your SQL code less portable, in case you have the need to change your database engine.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;PostgreSQL Like: Practical Use Cases&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Having covered the basics of PostgreSQL &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;LIKE&lt;/code&gt;, let’s now see several usage examples. We’ll begin by preparing the database for the tests.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Preparing the Database&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Using your preferred client, connect to your PostgreSQL instance, making sure there’s a database you can connect to for the tests.&lt;/p&gt;
+
+&lt;p&gt;Let’s start by creating a table and inserting some rows into it:&lt;/p&gt;
+
+&lt;div class=&quot;language-sql highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;CREATE&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;TABLE&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;albums&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;id&lt;/span&gt;              &lt;span class=&quot;nb&quot;&gt;SERIAL&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;PRIMARY&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;KEY&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;title&lt;/span&gt;           &lt;span class=&quot;nb&quot;&gt;VARCHAR&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;250&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;NOT&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;NULL&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;artist&lt;/span&gt;          &lt;span class=&quot;nb&quot;&gt;VARCHAR&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;250&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;NOT&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;NULL&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;release_year&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;NOT&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;NULL&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;INSERT&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;INTO&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;albums&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;title&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;artist&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;release_year&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;VALUES&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&apos;Abbey Road&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;The Beatles&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1969&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;INSERT&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;INTO&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;albums&lt;/span&gt;  &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;title&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;artist&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;release_year&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;VALUES&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&apos;Construção&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;Chico Buarque&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1971&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;INSERT&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;INTO&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;albums&lt;/span&gt;  &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;title&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;artist&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;release_year&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;VALUES&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&apos;The Dark Side of the Moon&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;Pink Floyd&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1973&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;INSERT&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;INTO&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;albums&lt;/span&gt;  &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;title&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;artist&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;release_year&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;VALUES&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&apos;Reckless&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;Bryan Adams&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1984&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;INSERT&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;INTO&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;albums&lt;/span&gt;  &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;title&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;artist&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;release_year&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;VALUES&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&apos;Ryan Adams&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;Ryan Adams&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2014&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;Matching a Single Character&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;As you’ve seen, the table now contains albums by both Bryan and Ryan Adams. That’s not by coincidence. First, use the following query to retrieve albums by the two singers:&lt;/p&gt;
+
+&lt;div class=&quot;language-sql highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;SELECT&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;FROM&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;albums&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;WHERE&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;artist&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;LIKE&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;%yan%&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;The query above matches all artists which contain the string “yan” anywhere in their name. Here’s what the result looks like to me:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; id |   title    |   artist    | release_year 
+----+------------+-------------+--------------
+  4 | Reckless   | Bryan Adams |         1984
+  5 | Ryan Adams | Ryan Adams  |         2014
+(2 rows)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;The &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;LIKE&lt;/code&gt; operator offers an additional wildcard, the underscore character (_) which matches a single character. That way, it’s possible to rewrite the query in such a way that only Ryan Adams is returned:&lt;/p&gt;
+
+&lt;div class=&quot;language-sql highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;SELECT&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;FROM&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;albums&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;WHERE&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;artist&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;LIKE&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;_yan%&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;And here, again, is the result:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; id |   title    |   artist   | release_year 
+----+------------+------------+--------------
+  5 | Ryan Adams | Ryan Adams |         2014
+(1 row)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;Negative Matches&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;When working with database tables, you often need to retrieve data that doesn’t match a given pattern. For that, you can use the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;NOT LIKE&lt;/code&gt; operator. For instance, let’s get only artists that don’t start with “The”:&lt;/p&gt;
+
+&lt;div class=&quot;language-sql highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;SELECT&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;FROM&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;albums&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;WHERE&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;artist&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;NOT&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;LIKE&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;The%&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Since the only artist starting with “The” are The Beatles, they won’t be fetched by the query above.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Matching Without Case Sensitivity&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;As mentioned earlier, the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ILIKE&lt;/code&gt; operator is a special PostgreSQL extension to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;LIKE&lt;/code&gt; that matches in a case-insensitive way. Let’s see that in practice. First, let’s use the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;LIKE&lt;/code&gt; operator to get all artists which contain an uppercase “A”:&lt;/p&gt;
+
+&lt;div class=&quot;language-sql highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;SELECT&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;FROM&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;albums&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;WHERE&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;artist&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;LIKE&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;%A%&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Only “Bryan Adams” and “Ryan Adams” are returned, which makes sense:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; id |   title    |   artist    | release_year 
+----+------------+-------------+--------------
+  4 | Reckless   | Bryan Adams |         1984
+  5 | Ryan Adams | Ryan Adams  |         2014
+(2 rows)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Let’s now replace the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;LIKE&lt;/code&gt; operator with the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ILIKE&lt;/code&gt; one and rerun the query:&lt;/p&gt;
+
+&lt;div class=&quot;language-sql highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;SELECT&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;FROM&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;albums&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;WHERE&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;artist&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;ILIKE&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;%A%&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; id |   title    |    artist     | release_year 
+----+------------+---------------+--------------
+  1 | Abbey Road | The Beatles   |         1969
+  2 | Construção | Chico Buarque |         1971
+  4 | Reckless   | Bryan Adams   |         1984
+  5 | Ryan Adams | Ryan Adams    |         2014
+(4 rows)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Now, all artists are returned, except for Pink Floyd.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Escaping the WildCards&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;For this example, let’s update two rows:&lt;/p&gt;
+
+&lt;div class=&quot;language-sql highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;UPDATE&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;albums&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;SET&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;artist&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;The%Beatles&apos;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;WHERE&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;id&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;UPDATE&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;albums&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;SET&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;artist&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;Chico_Buarque&apos;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;WHERE&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;id&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Now, let’s say we want to retrieve albums from artists whose name contains a percentage sign or an underscore:&lt;/p&gt;
+
+&lt;div class=&quot;language-sql highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;SELECT&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;FROM&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;albums&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;WHERE&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;artist&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;LIKE&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;%%%&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;SELECT&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;FROM&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;albums&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;WHERE&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;artist&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;LIKE&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;%_%&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;As you’ve probably imagined, both queries don’t work: they return all rows. Fortunately, there’s a way around this problem: it’s possible to escape a wildcard so we can use it as a normal character. You simply put a backslash before the offending character:&lt;/p&gt;
+
+&lt;div class=&quot;language-sql highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;SELECT&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;FROM&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;albums&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;WHERE&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;artist&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;LIKE&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;%&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\%&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;%&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;And here’s the result:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; id |   title    |    artist     | release_year 
+----+------------+---------------+--------------
+  1 | Abbey Road | The Beatles   |         1969
+(1 rows)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;The same would work for the underscore character. But before wrapping up, let’s complicate things just a bit more—because, why not?&lt;/p&gt;
+
+&lt;p&gt;First, let’s update the “Abbey Road” row once more:&lt;/p&gt;
+
+&lt;div class=&quot;language-sql highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;UPDATE&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;albums&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;SET&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;artist&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;The&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\B&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;eatles&apos;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;WHERE&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;id&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Now, in order to use LIKE to retrieve a row containing the backslash character, you’d have to write this query:&lt;/p&gt;
+
+&lt;div class=&quot;language-sql highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;SELECT&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;FROM&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;albums&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;WHERE&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;artist&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;LIKE&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;%&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\\&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;%&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;You have to escape the escape character. It’s not that terrible, but you might want to write a more readable version. If that’s the case, it’s possible to choose a different character as the escape character: just use the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ESCAPE&lt;/code&gt; clause:&lt;/p&gt;
+
+&lt;div class=&quot;language-sql highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;SELECT&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;FROM&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;albums&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;WHERE&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;artist&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;LIKE&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;%$&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\%&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&apos;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;ESCAPE&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;$&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;With the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ESCAPE&lt;/code&gt; clause, you can choose a different character as the escape character. That way—at least in my opinion—the resulting query is more explicit in the way it escapes the wildcard.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Conclusion: PostgreSQL LIKE: Learn It, Leverage It&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;In this post, you’ve learned about the LIKE operator in PostgreSQL: what it is, what’s used for, and how it works along several examples. As you’ve seen, the operator’s working is quite easy once you understand how the wildcards work. We’ve also walked you through some usage examples, like matching against a single character and performing negative matches.&lt;/p&gt;
+
+&lt;p&gt;Where should you go now?  For starters, continue to learn about pattern matching on PostgreSQL. Here are some topic suggestions for you:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;SIMILAR TO&lt;/code&gt;, a more recent clause&lt;/li&gt;
+  &lt;li&gt;the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;substring()&lt;/code&gt; function&lt;/li&gt;
+  &lt;li&gt;the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;regexp_like()&lt;/code&gt; function&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Thanks for reading, and until next time!&lt;/p&gt;
+</description>
+        <pubDate>Tue, 14 Jul 2026 00:00:00 +0000</pubDate>
+        <link>https://carlosschults.net/en/postgresql-like-operator-guide</link>
+        <guid isPermaLink="true">https://carlosschults.net/en/postgresql-like-operator-guide</guid>
+        
+        <category>databases</category>
+        
+        <category>postgresql</category>
+        
+        <category>sql</category>
+        
+        <category>tutorial</category>
+        
+        
+      </item>
     
       <item>
         <title>Building git in Go From Scratch - Part 2</title>
@@ -2178,274 +2422,6 @@ git checkout alt-history&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
         <guid isPermaLink="true">https://carlosschults.net/en/git-detached-head</guid>
         
         <category>git</category>
-        
-        <category>tutorial</category>
-        
-        
-      </item>
-    
-      <item>
-        <title>C# Regex: How Regular Expressions Work in C#, With Examples</title>
-        <description>&lt;p&gt;&lt;img src=&quot;https://res.cloudinary.com/dz5ppacuo/image/upload/v1513817072/csharp8-1037x438_skogpz.jpg&quot; alt=&quot;&quot; /&gt;
-&lt;em&gt;Editorial note: I originally wrote this post for the Stackify blog.  You can &lt;a href=&quot;https://stackify.com/c-regex-how-regular-expressions-work-in-c-with-examples/&quot;&gt;check out the original here, at their site&lt;/a&gt;.&lt;/em&gt;&lt;/p&gt;
-
-&lt;p&gt;Text manipulation is one of the most common tasks in programming with virtually all major programming languages usually supporting regex (regular expression) via their standard libraries. C# is no exception, so today we bring you a C# regex guide.&lt;/p&gt;
-
-&lt;p&gt;You’ll learn what regexes are, why you’d want to use them and how to get started in a comprehensive, approachable manner. That way, you can start using regular expressions to solve real problems ASAP.&lt;/p&gt;
-
-&lt;p&gt;Buckle up for your regex learning journey, starting now!&lt;/p&gt;
-
-&lt;h2 id=&quot;what-is-regex&quot;&gt;What Is Regex?&lt;/h2&gt;
-&lt;p&gt;A regular expression (regex) is an expression containing one or many characters that expresses a given pattern in text. If that sounds a little vague, an example will help. Consider a date in the following format:&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;28-JUL-2023
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Using a regex, we can express that format like this:&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[0-9]{2}-[A-Z]{3}-[0-9]{4}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Note that the regular expression above expresses a pattern with:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;two numeric digits followed by a hyphen&lt;/li&gt;
-  &lt;li&gt;three upper-case letters followed by a hyphen&lt;/li&gt;
-  &lt;li&gt;four more numbers&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;You’ll learn more about what each part of a regex means in a minute. For now, just bear in mind that the regex above doesn’t &lt;em&gt;know&lt;/em&gt; anything about dates. It just happens that we were able to devise a regular expression that matches the pattern or shape of the date. All of the following match with that regex, even though they’re not valid dates:&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;32-ABC-7894
-30-FEV-1978
-00-AAA-9999
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h2 id=&quot;is-there-regex-in-c&quot;&gt;Is There Regex in C#?&lt;/h2&gt;
-
-&lt;p&gt;Yes, of course. But that doesn’t come from the language itself. Instead, regex support comes from &lt;a href=&quot;https://learn.microsoft.com/en-us/dotnet/standard/class-library-overview&quot;&gt;.NET’s BCL (Base Class Library),&lt;/a&gt; which is essentially C#’s standard library.&lt;/p&gt;
-
-&lt;h2 id=&quot;why-use-regex-in-c&quot;&gt;Why Use Regex In C#?&lt;/h2&gt;
-
-&lt;p&gt;As you’ve seen, regex is something to use to express a pattern that can match a given text. &lt;/p&gt;
-
-&lt;p&gt;In practice, all uses of regex in C# or other languages boil down to three reasons: validation, manipulation and extraction.&lt;/p&gt;
-
-&lt;h3 id=&quot;validation&quot;&gt;Validation&lt;/h3&gt;
-
-&lt;p&gt;An incredibly common use case for regex is data validation. For instance, let’s say you have a web form and want to ensure a certain field only accepts inputs in a specific format. How to solve that? Regex comes to the rescue.&lt;/p&gt;
-
-&lt;h3 id=&quot;manipulation&quot;&gt;Manipulation&lt;/h3&gt;
-
-&lt;p&gt;Sometimes you need to change information within text. Let’s go back to the previous example. Imagine for compliance reasons you need to remove all phone numbers from this body of text and replace them with the word “REDACTED.” Again, regexes would be a perfect fit for this situation.&lt;/p&gt;
-
-&lt;p&gt;Interestingly, programming languages are not alone in using regular expressions to solve problems. Even text editors such as Notepad++ offer find-and-replace features powered by regexes.&lt;/p&gt;
-
-&lt;h3 id=&quot;extraction&quot;&gt;Extraction&lt;/h3&gt;
-
-&lt;p&gt;Let’s say you have considerable amounts of text. This text contains telephone numbers that you need to extract. You know the format of those numbers and the fact that they’re inside the text, but that’s the extent of your knowledge.&lt;/p&gt;
-
-&lt;p&gt;How would you go about extracting that information? A neat C# regex would certainly come in handy in that situation.&lt;/p&gt;
-
-&lt;h2 id=&quot;how-to-use-regex-in-c-getting-started-in-practice&quot;&gt;How to Use Regex In C#: Getting Started in Practice&lt;/h2&gt;
-
-&lt;p&gt;C# is an &lt;a href=&quot;https://stackify.com/oop-concepts-c-sharp/&quot;&gt;OOP language&lt;/a&gt;, so it shouldn’t be a surprise that you’ll use a class for your C# regex work. More specifically, the class I’m talking about is appropriately called Regex and resides in the System.Text.RegularExpressions namespace&lt;strong&gt;.&lt;/strong&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;c-regex-a-validation-example&quot;&gt;C# Regex: A Validation Example&lt;/h3&gt;
-
-&lt;p&gt;Let’s start with a simple validation example on how to use regex to validate whether several strings match a given pattern. The first step is to add the following &lt;strong&gt;using&lt;/strong&gt; statement to your code:&lt;/p&gt;
-
-&lt;p&gt;using System.Text.RegularExpressions;&lt;/p&gt;
-
-&lt;p&gt;Now, let’s create an array of strings and populate it with some values:&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c#&quot; data-lang=&quot;c#&quot;&gt;&lt;span class=&quot;kt&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;candidates&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[]&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;s&quot;&gt;&quot;28-JUL-2023&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-    &lt;span class=&quot;s&quot;&gt;&quot;whatever&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-    &lt;span class=&quot;s&quot;&gt;&quot;89-ABC-1234&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-    &lt;span class=&quot;s&quot;&gt;&quot;11-JUN-2022&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-    &lt;span class=&quot;s&quot;&gt;&quot;11-JUN-2022, a date plus other stuff&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-    &lt;span class=&quot;s&quot;&gt;&quot;This is certainly not a date&quot;&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;Finally, we’ll loop through the values and use the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;IsMatch&lt;/code&gt; static method from the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Regex&lt;/code&gt; class to verify which of the strings matches our desired pattern:&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c#&quot; data-lang=&quot;c#&quot;&gt;&lt;span class=&quot;kt&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pattern&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;[0-9]{2}-[A-Z]{3}-[0-9]{4}&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;foreach&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;c&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;candidates&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Regex&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;IsMatch&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pattern&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;Console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;WriteLine&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;$&quot;The string &apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos; matches the pattern &apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pattern&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;Before going further, let’s break down the pattern piece by piece:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;strong&gt;[0-9]{2}:&lt;/strong&gt; The first part means “Match exactly two characters, that must be digits from 0 to 9.”&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;-:&lt;/strong&gt; This character matches exactly a hyphen.&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;[A-Z]{3}:&lt;/strong&gt; Here, the expression says, “Let’s match exactly three characters, which can be any of the letters from A to Z.”&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;-:&lt;/strong&gt; This matches another hyphen&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;[0-9]{4}:&lt;/strong&gt; This should be easy to understand by now, right? Exactly four numbers.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Now, let’s run the code and see what we get:&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;The string &apos;28-JUL-2023&apos; matches the pattern &apos;[0-9]{2}-[A-Z]{3}-[0-9]{4}&apos;
-The string &apos;89-ABC-1234&apos; matches the pattern &apos;[0-9]{2}-[A-Z]{3}-[0-9]{4}&apos;
-The string &apos;11-JUN-2022&apos; matches the pattern &apos;[0-9]{2}-[A-Z]{3}-[0-9]{4}&apos;
-The string &apos;11-JUN-2022, a date plus other stuff&apos; matches the pattern &apos;[0-9]{2}-[A-Z]{3}-[0-9]{4}&apos;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;The first three results probably didn’t surprise you. I even include something that’s not a date but matches the pattern we’re using in order to really drive home the point that regular expressions are about patterns and shapes and not about any semantics of the data we’re looking for.&lt;/p&gt;
-
-&lt;p&gt;However, the fourth result might’ve surprised you. The text indeed starts with data that matches the pattern we’re looking for, but then it has some additional text. And even then, this string matched!&lt;/p&gt;
-
-&lt;p&gt;The explanation for this behavior is simple, and it’s spelled out for us in the &lt;a href=&quot;https://learn.microsoft.com/en-us/dotnet/api/system.text.regularexpressions.regex.ismatch?view=net-7.0#system-text-regularexpressions-regex-ismatch(system-string-system-string)&quot;&gt;summary&lt;/a&gt; for the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;IsMatch&lt;/code&gt; method:&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Indicates whether the specified regular expression finds a match in the specified input string.
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;The regular expression indeed found a match in the specified input string (“11-JUN-2022, a date plus other stuff”), and that’s why it was considered a match.&lt;/p&gt;
-
-&lt;p&gt;But what if we wanted an exact match? In that case, you’d have to change the pattern, adding a circumflex accent (“^”) to the star of the pattern and a dollar sign (“$”) to its end. In other words, here’s how the pattern should look now:&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c#&quot; data-lang=&quot;c#&quot;&gt;&lt;span class=&quot;kt&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pattern&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;^[0-9]{2}-[A-Z]{3}-[0-9]{4}$&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;If we run the code now, it displays only the strings that are an exact match with the pattern:&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;The string &apos;28-JUL-2023&apos; matches the pattern &apos;^[0-9]{2}-[A-Z]{3}-[0-9]{4}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h3 id=&quot;c-regex-a-manipulation-example&quot;&gt;C# Regex: A Manipulation Example&lt;/h3&gt;
-
-&lt;p&gt;Consider you have a body of text containing sensible user data. Due to privacy/compliance concerns, you want to redact those data points. Luckily for you, it’s quite easy to use a regex for that. &lt;/p&gt;
-
-&lt;p&gt;Let’s start by creating an array containing names and phone numbers for fictitious people:&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c#&quot; data-lang=&quot;c#&quot;&gt;&lt;span class=&quot;kt&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;contacts&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[]&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;s&quot;&gt;&quot;Emily Johnson,(555) 123-4567&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-    &lt;span class=&quot;s&quot;&gt;&quot;Benjamin Williams,(555) 987-6543&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-    &lt;span class=&quot;s&quot;&gt;&quot;Olivia Davis,(555) 222-3333&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-    &lt;span class=&quot;s&quot;&gt;&quot;Alexander Smith,(555) 444-5555&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-    &lt;span class=&quot;s&quot;&gt;&quot;Sophia Brown,(555) 777-8888&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-    &lt;span class=&quot;s&quot;&gt;&quot;William Anderson,(555) 111-2222&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-    &lt;span class=&quot;s&quot;&gt;&quot;Ava Martinez,(555) 666-7777&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-    &lt;span class=&quot;s&quot;&gt;&quot;James Thompson,(555) 888-9999&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-    &lt;span class=&quot;s&quot;&gt;&quot;Isabella Wilson,(555) 333-4444&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-    &lt;span class=&quot;s&quot;&gt;&quot;Michael Taylor,(555) 777-1111&quot;&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;Then, let’s create the pattern to match the phone numbers:&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c#&quot; data-lang=&quot;c#&quot;&gt;&lt;span class=&quot;kt&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pattern&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;@&quot;\([0-9]{3}\)\s[0-9]{3}-[0-9]{4}&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;The pattern above is a bit more involved than the ones we used earlier, but it’s still simple. There are a couple of new elements, though:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;strong&gt;The backward slash (\):&lt;/strong&gt; We need it here in order to escape the opening and closing parenthesis, which is a character with meaning in a regular expression. In this instance, we actually do want to match a “(” character, so we need to escape it.&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;The \s character:&lt;/strong&gt; matches a single space.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Finally, let’s loop through this array and, for each item, use the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Regex.Replace&lt;/code&gt; method to generate a new string in which the phone number is replaced by all zeroes:&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c#&quot; data-lang=&quot;c#&quot;&gt;&lt;span class=&quot;k&quot;&gt;foreach&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;contact&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;contacts&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;Console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;WriteLine&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;Regex&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;Replace&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;contact&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pattern&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;(000) 000-0000&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;));&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;Using the Replace static method is easy. Though it has several overloads, the one we use just takes three arguments:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;the input string&lt;/li&gt;
-  &lt;li&gt;the pattern you want to match&lt;/li&gt;
-  &lt;li&gt;the replacement string&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;After running the code, here’s the output we get:&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Emily Johnson,(000) 000-0000
-Benjamin Williams,(000) 000-0000
-Olivia Davis,(000) 000-0000
-Alexander Smith,(000) 000-0000
-Sophia Brown,(000) 000-0000
-William Anderson,(000) 000-0000
-Ava Martinez,(000) 000-0000
-James Thompson,(000) 000-0000
-Isabella Wilson,(000) 000-0000
-Michael Taylor,(000) 000-0000
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h3 id=&quot;c-regex-an-extraction-example&quot;&gt;C# Regex: An Extraction Example&lt;/h3&gt;
-
-&lt;p&gt;For our last example, let’s extract data from a string using a regular expression. Let’s start by converting the array from the previous example into a single string:&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c#&quot; data-lang=&quot;c#&quot;&gt;&lt;span class=&quot;kt&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;contacts&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;
-    &lt;span class=&quot;s&quot;&gt;&quot;Emily Johnson+(555) 123-4567&quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;+&lt;/span&gt;
-    &lt;span class=&quot;s&quot;&gt;&quot;\nBenjamin Williams+(555) 987-6543&quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;+&lt;/span&gt;
-    &lt;span class=&quot;s&quot;&gt;&quot;\nOlivia Davis+(555) 222-3333&quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;+&lt;/span&gt;
-    &lt;span class=&quot;s&quot;&gt;&quot;\nAlexander Smith+(555) 444-5555&quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;+&lt;/span&gt;
-    &lt;span class=&quot;s&quot;&gt;&quot;\nSophia Brown+(555) 777-8888&quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;+&lt;/span&gt;
-    &lt;span class=&quot;s&quot;&gt;&quot;\nWilliam Anderson+(555) 111-2222&quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;+&lt;/span&gt;
-    &lt;span class=&quot;s&quot;&gt;&quot;\nAva Martinez+(555) 666-7777&quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;+&lt;/span&gt;
-    &lt;span class=&quot;s&quot;&gt;&quot;\nJames Thompson+(555) 888-9999&quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;+&lt;/span&gt;
-    &lt;span class=&quot;s&quot;&gt;&quot;\nIsabella Wilson+(555) 333-4444&quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;+&lt;/span&gt;
-    &lt;span class=&quot;s&quot;&gt;&quot;\nMichael Taylor+(555) 777-1111&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;Then, we define the pattern again (same one) and use the Matches static method to get all of the matches from the string:&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c#&quot; data-lang=&quot;c#&quot;&gt;&lt;span class=&quot;kt&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pattern&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;@&quot;\([0-9]{3}\)\s[0-9]{3}-[0-9]{4}&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;MatchCollection&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;matches&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Regex&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;Matches&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;contacts&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pattern&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;The &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;MatchCollection&lt;/code&gt; class holds all of the strings that matched the pattern we gave to the method. This object is enumerable, so we can loop over it with a foreach:&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c#&quot; data-lang=&quot;c#&quot;&gt;&lt;span class=&quot;n&quot;&gt;Console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;WriteLine&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Here are the extracted phone numbers:&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;foreach&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Match&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;match&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;matches&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;Console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;WriteLine&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;match&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Value&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;And, finally, our results: &lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c#&quot; data-lang=&quot;c#&quot;&gt;&lt;span class=&quot;n&quot;&gt;Here&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;are&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;the&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;extracted&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;phone&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;numbers&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;555&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;123&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;4567&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;555&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;987&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;6543&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;555&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;222&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;3333&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;555&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;444&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;5555&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;555&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;777&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;8888&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;555&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;111&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;2222&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;555&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;666&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;7777&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;555&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;888&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;9999&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;555&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;333&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;4444&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;555&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;777&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1111&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;h2 id=&quot;c-regex-an-indispensable-tool&quot;&gt;C# Regex: An Indispensable Tool&lt;/h2&gt;
-
-&lt;p&gt;As we said in the intro, text manipulation is a staple of programming, and regular expressions make this task easier. In this C# regex guide, you’ve learned what regular expressions are, their most common usage scenarios and how to get started with regular expressions in C#.&lt;/p&gt;
-
-&lt;p&gt;Before departing, a few tips:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Experiment more with the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Regex&lt;/code&gt; class. It offers plenty of features, and the methods we’ve used today have many overloads with useful capabilities.&lt;/li&gt;
-  &lt;li&gt;Learn more and practice writing regular expressions. &lt;a href=&quot;https://regexr.com/&quot;&gt;Here’s a great site&lt;/a&gt; you can use.&lt;/li&gt;
-  &lt;li&gt;Educate yourself on the performance considerations of C# regex. For instance, read this &lt;a href=&quot;https://learn.microsoft.com/en-us/dotnet/standard/base-types/compilation-and-reuse-in-regular-expressions?redirectedfrom=MSDN&quot;&gt;Microsoft article on the compilation and reuse of regular expressions&lt;/a&gt;.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Finally, if you want to learn more about C# in general, you’re in the right place. The Stackify blog is full of useful resources. As a suggestion, take a look at &lt;a href=&quot;https://stackify.com/unit-test-frameworks-csharp/&quot;&gt;the pros and cons of the top 3 unit test frameworks for C#&lt;/a&gt;, &lt;a href=&quot;https://stackify.com/csharp-catch-all-exceptions/&quot;&gt;how to catch exceptions and find application errors in C#&lt;/a&gt;, and &lt;a href=&quot;https://stackify.com/what-is-c-reflection/&quot;&gt;how C# reflection works&lt;/a&gt; next.&lt;/p&gt;
-
-&lt;p&gt;Thanks for reading!&lt;/p&gt;
-</description>
-        <pubDate>Tue, 07 May 2024 00:00:00 +0000</pubDate>
-        <link>https://carlosschults.net/en/csharp-regex</link>
-        <guid isPermaLink="true">https://carlosschults.net/en/csharp-regex</guid>
-        
-        <category>csharp</category>
-        
-        <category>regex</category>
-        
-        <category>regular_expressions</category>
         
         <category>tutorial</category>
         
