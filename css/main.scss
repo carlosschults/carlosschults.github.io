@@ -74,3 +74,59 @@ $on-laptop:        800px;
         color: $text-color-dark;
     }
 }
+
+// Copy-to-clipboard button on code blocks
+div.highlighter-rouge,
+figure.highlight {
+    position: relative;
+
+    .copy-code-button {
+        position: absolute;
+        top: 0.4rem;
+        right: 0.4rem;
+        display: flex;
+        align-items: center;
+        padding: 0.3rem;
+        border: 1px solid $grey-color-light;
+        border-radius: 4px;
+        background: $background-color;
+        color: $grey-color;
+        cursor: pointer;
+        opacity: 0;
+        transition: opacity 0.2s ease, color 0.2s ease;
+
+        &.copied {
+            color: #2e9e4f;
+            opacity: 1;
+        }
+
+        &:hover {
+            color: $text-color;
+        }
+
+        body[data-theme="dark"] & {
+            border-color: $border-color-dark;
+            background: $code-background-dark;
+            color: $grey-color-dark-theme;
+
+            &.copied {
+                color: #5fd57f;
+            }
+
+            &:hover {
+                color: $text-color-dark;
+            }
+        }
+    }
+
+    &:hover .copy-code-button {
+        opacity: 1;
+    }
+
+    // On touch devices there's no hover, so keep the button visible
+    @media (hover: none) {
+        .copy-code-button {
+            opacity: 1;
+        }
+    }
+}
