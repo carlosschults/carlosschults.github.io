@@ -41,7 +41,8 @@ layout: default
         {% if current_post_index == next_post_index %}	    
             <a rel="next" class="next" href="{{ post.url }}">{{ post.title }} &rarr;</a>
         {% endif %}        
-    {% endfor %}  
+    {% endfor %}
+    {% include related-posts.html %}
     <div id="disqus_thread"></div>
 <script>
     var disqus_config = function () {
