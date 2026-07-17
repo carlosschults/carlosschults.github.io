@@ -7,8 +7,8 @@ author: Carlos Schults
 permalink: /pt/metodos-privados-code-smell/
 img: https://res.cloudinary.com/dz5ppacuo/image/upload/v1485700794/capa-min_no1cci.jpg
 tags:
-- code smell
-- boas práticas
+- code-smell
+- boas-praticas
 - orientacao-a-objetos
 ---
 

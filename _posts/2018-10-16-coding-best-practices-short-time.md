@@ -10,7 +10,7 @@ canonical: https://blog.submain.com/coding-best-practices-short-time/
 img: https://res.cloudinary.com/dz5ppacuo/image/upload/v1539703469/coding-best-practices-1038x437_ugnhab.jpg
 tags:
 - csharp
-- best practices
+- best-practices
 ---
 
 ![](https://res.cloudinary.com/dz5ppacuo/image/upload/v1539703469/coding-best-practices-1038x437_ugnhab.jpg)

@@ -9,7 +9,9 @@ img: https://res.cloudinary.com/dz5ppacuo/image/upload/v1440517439/share1038x437
 tags:
 - blog
 - compartilhar
-- primeiro post
+- primeiro-post
+- carreira
+- opiniao
 ---
 
 ![](https://res.cloudinary.com/dz5ppacuo/image/upload/v1440517439/share1038x437_mshqwf.jpg)

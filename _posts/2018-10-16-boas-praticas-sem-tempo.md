@@ -9,7 +9,7 @@ permalink: /pt/boas-praticas-sem-tempo/
 img: https://res.cloudinary.com/dz5ppacuo/image/upload/v1539703469/coding-best-practices-1038x437_ugnhab.jpg
 tags:
 - csharp
-- boas praticas
+- boas-praticas
 ---
 
 ![](https://res.cloudinary.com/dz5ppacuo/image/upload/v1539703469/coding-best-practices-1038x437_ugnhab.jpg)

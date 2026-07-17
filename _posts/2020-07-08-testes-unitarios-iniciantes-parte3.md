@@ -13,7 +13,6 @@ tags:
 - testes-de-software
 - testes-unitarios
 - testes-automatizados
-- csharp
 - metodologias-ageis
 - serie-testes-unitarios
 ---

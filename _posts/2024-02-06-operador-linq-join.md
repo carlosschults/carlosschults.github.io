@@ -12,6 +12,7 @@ tags:
 - csharp
 - linq
 - dotnet
+- tutorial
 ---
 
 ![](https://res.cloudinary.com/dz5ppacuo/image/upload/v1617641333/reduce-cyclomatic-complexity/reduce-cyclomatic-complexity-1038x437.jpg)

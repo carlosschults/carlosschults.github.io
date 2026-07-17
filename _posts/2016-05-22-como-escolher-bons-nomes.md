@@ -7,7 +7,8 @@ layout: post
 author: Carlos Schults
 img: https://res.cloudinary.com/dz5ppacuo/image/upload/v1462225938/baby-name-min_nosetz.png
 tags:
-- boas práticas
+- boas-praticas
+- legibilidade
 ---
 
 ![](https://res.cloudinary.com/dz5ppacuo/image/upload/v1462225938/baby-name-min_nosetz.png)

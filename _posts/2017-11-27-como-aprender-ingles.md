@@ -6,9 +6,9 @@ author: Carlos Schults
 ref: aprender-ingles1
 permalink: /pt/como-aprender-ingles-parte-1
 img: https://res.cloudinary.com/dz5ppacuo/image/upload/v1511826279/como-aprender-ingles-1038x437-min_cw47uj.jpg
-tags: 
-- boas práticas
-- inglês
+tags:
+- boas-praticas
+- ingles
 ---
 
 ![](https://res.cloudinary.com/dz5ppacuo/image/upload/v1511826279/como-aprender-ingles-1038x437-min_cw47uj.jpg)

@@ -9,7 +9,7 @@ permalink: /en/learning-mistakes
 img: /img/software-developer-learning-mistakes/cover.webp
 tags:
 - opinion
-- carreer
+- career
 ---
 
 ![]({{ page.img }})

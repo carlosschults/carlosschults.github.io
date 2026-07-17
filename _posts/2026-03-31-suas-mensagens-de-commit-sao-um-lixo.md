@@ -10,6 +10,8 @@ tags:
 - tutorial
 - git
 - rant
+- controle-de-versao
+- boas-praticas
 ---
 
 Suas mensagens de commit são um lixo. Na melhor das hipóteses, elas são inúteis. Mas geralmente, elas são piores do que nada.

@@ -10,7 +10,7 @@ canonical: https://blog.submain.com/csharp-functional-programming/
 img: https://res.cloudinary.com/dz5ppacuo/image/upload/v1548200356/Untitled_xfahmy.jpg
 tags:
 - csharp
-- best practices
+- best-practices
 - functional-programming
 ---
 

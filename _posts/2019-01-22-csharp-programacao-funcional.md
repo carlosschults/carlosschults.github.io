@@ -9,8 +9,8 @@ permalink: /pt/programacao-funcional-csharp/
 img: https://res.cloudinary.com/dz5ppacuo/image/upload/v1548200356/Untitled_xfahmy.jpg
 tags:
 - csharp
-- boas praticas
-- programacao funcional
+- boas-praticas
+- programacao-funcional
 ---
 
 ![](https://res.cloudinary.com/dz5ppacuo/image/upload/v1548200356/Untitled_xfahmy.jpg)

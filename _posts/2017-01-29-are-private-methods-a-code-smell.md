@@ -7,8 +7,8 @@ author: Carlos Schults
 permalink: /en/are-private-methods-a-code-smell/
 img: https://res.cloudinary.com/dz5ppacuo/image/upload/v1485700794/capa-min_no1cci.jpg
 tags:
-- code smell
-- best practices
+- code-smell
+- best-practices
 - oop
 ---
 

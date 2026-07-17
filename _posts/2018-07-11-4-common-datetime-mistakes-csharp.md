@@ -10,7 +10,7 @@ canonical: https://blog.submain.com/4-common-datetime-mistakes-c-avoid/
 img: https://res.cloudinary.com/dz5ppacuo/image/upload/v1531165684/4-datetime-mistakes-1038x437_nm6csc.jpg
 tags:
 - csharp
-- best practices
+- best-practices
 - time
 ---
 

@@ -1,4 +1,4 @@
-﻿---
+---
 title: "Fazendo Seu Histórico Git Ficar Bonitão Com Amend e Rebase"
 ref: git-beautiful-history
 lang: pt
@@ -9,6 +9,8 @@ permalink: /pt/git-historico-bonito/
 img: https://res.cloudinary.com/dz5ppacuo/image/upload/v1673926044/git-beautiful-history/git-beautiful-history-cover.png
 tags:
 - git
+- controle-de-versao
+- tutorial
 ---
 
 ![]({{ page.img }})

@@ -11,6 +11,7 @@ tags:
 - git
 - go
 - go-gitter
+- version-control-system
 ---
 
 Welcome back to my journey of building git from scratch in Go, in order to learn more about both. If you don't know what

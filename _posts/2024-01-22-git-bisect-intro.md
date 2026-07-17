@@ -9,6 +9,9 @@ permalink: /git-bisect-intro/
 img: https://res.cloudinary.com/dz5ppacuo/image/upload/v1673926044/git-beautiful-history/git-beautiful-history-cover.png
 tags:
 - git
+- version-control-system
+- tutorial
+- beginners
 ---
 
 ![]({{ page.img }})

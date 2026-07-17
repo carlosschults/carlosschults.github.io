@@ -10,9 +10,10 @@ canonical: https://blog.submain.com/sharpen-saw/
 img: https://res.cloudinary.com/dz5ppacuo/image/upload/v1592314350/sharpen-the-saw-1038x437_z9ermr.jpg
 tags:
 - engenharia-de-software
-- boas-práticas
-- programação
+- boas-praticas
+- programacao
 - carreira
+- opiniao
 ---
 
 ![](https://res.cloudinary.com/dz5ppacuo/image/upload/v1592314350/sharpen-the-saw-1038x437_z9ermr.jpg)

@@ -8,7 +8,7 @@ description: Neste artigo, trago uma lista dos mais importantes erros de aprendi
 permalink: /pt/erros-aprendizados
 img: /img/software-developer-learning-mistakes/cover.webp
 tags:
-- opinião
+- opiniao
 - carreira
 ---
 

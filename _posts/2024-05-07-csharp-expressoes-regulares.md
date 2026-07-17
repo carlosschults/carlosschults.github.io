@@ -11,7 +11,6 @@ img: https://res.cloudinary.com/dz5ppacuo/image/upload/v1513817072/csharp8-1037x
 tags:
 - csharp
 - regex
-- expressoes_regulares
 - tutorial
 ---
 

@@ -10,7 +10,7 @@ tags:
 - csharp
 - beginners
 - oop
-- type system
+- type-system
 ---
 
 ![](https://res.cloudinary.com/dz5ppacuo/image/upload/v1466341001/csharp-min_buiizq.png)

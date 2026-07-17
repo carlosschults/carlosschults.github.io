@@ -8,9 +8,9 @@ permalink: /pt/tipos-de-comentarios-a-evitar/
 img: https://res.cloudinary.com/dz5ppacuo/image/upload/v1488499558/comments-1038x437.jpg
 tags:
 - code-smell
-- boas-práticas
+- boas-praticas
 - iniciantes
-- comentários
+- comentarios
 ---
 
 ![](https://res.cloudinary.com/dz5ppacuo/image/upload/v1488499558/comments-1038x437.jpg)

@@ -8,8 +8,10 @@ img: /img/what-are-breaking-changes/cover.jpg
 description: "Aprenda o conceito de breaking changes em software: o que são, por que importam e o que fazer sobre elas"
 permalink: /pt/o-que-sao-breaking-changes
 tags:
-- de_a_a_z
-- breaking_changes
+- de-a-a-z
+- breaking-changes
+- engenharia-de-software
+- boas-praticas
 ---
 
 ![]({{ page.img }})

@@ -8,8 +8,10 @@ img: /img/what-are-breaking-changes/cover.jpg
 description: "Learn the concept of breaking changes in software: what they are, why they matter and what to do about them"
 permalink: /en/what-are-breaking-changes
 tags:
-- from_a_to_z
-- breaking_changes
+- from-a-to-z
+- breaking-changes
+- software-engineering
+- best-practices
 ---
 
 ![]({{ page.img }})

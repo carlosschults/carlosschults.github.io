@@ -11,6 +11,7 @@ tags:
 - git
 - go
 - go-gitter
+- controle-de-versao
 ---
 
 Recentemente comecei a trabalhar no meu projeto mais novo: construir o git em Go, do zero. *Qual é o sentido disso?*, você pode estar se perguntando.

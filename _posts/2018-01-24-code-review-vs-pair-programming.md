@@ -9,9 +9,9 @@ permalink: /en/code-review-vs-pair-programming/
 canonical: https://blog.submain.com/code-review-vs-pair-programming-2/
 img: https://res.cloudinary.com/dz5ppacuo/image/upload/v1516470435/code-review-vs-pair-programming1038x437_w99q2t.jpg
 tags:
-- pair programming
-- best practices
-- code review
+- pair-programming
+- best-practices
+- code-review
 - agile
 ---
 

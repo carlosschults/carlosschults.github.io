@@ -8,7 +8,8 @@ permalink: /pt/resenha-livro-programador-pragmatico/
 img: https://res.cloudinary.com/dz5ppacuo/image/upload/v1457998345/the-pragmatic-programmer-review-min_tulprt.png
 tags:
 - livros
-- metodologias ágeis
+- metodologias-ageis
+- boas-praticas
 ---
 ![](https://res.cloudinary.com/dz5ppacuo/image/upload/v1457998345/the-pragmatic-programmer-review-min_tulprt.png)
 Se eu tivesse que escolher apenas um livro como leitura obrigatória de todo programador, eu escolheria "O Programador Pragmático". Sem hesitar um segundo. Esse livro é simplesmente muito bom.

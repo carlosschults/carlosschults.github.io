@@ -9,7 +9,8 @@ permalink: /pt/melhorar-experiencia-desenvolvedor
 canonical: 
 tags:
 - devex
-- opinion
+- opiniao
+- carreira
 ---
 
 {% capture content %}

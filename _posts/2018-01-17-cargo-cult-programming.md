@@ -10,8 +10,8 @@ canonical: https://blog.ndepend.com/cargo-cult-programming/
 img: https://res.cloudinary.com/dz5ppacuo/image/upload/v1516152067/cargo-cult-programming-1037x438_spoxet.jpg
 tags:
 - csharp
-- best practices
-- cargo cult programming
+- best-practices
+- cargo-cult-programming
 ---
 
 ![](https://res.cloudinary.com/dz5ppacuo/image/upload/v1516152067/cargo-cult-programming-1037x438_spoxet.jpg)

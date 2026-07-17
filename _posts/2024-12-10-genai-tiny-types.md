@@ -9,9 +9,9 @@ permalink: /en/genai-tiny-types
 img: https://res.cloudinary.com/dz5ppacuo/image/upload/v1466341001/csharp-min_buiizq.png
 tags:
 - csharp
-- ia
-- boas-praticas
-- modelagem-de-software
+- ai
+- best-practices
+- software-design
 ---
 
 ![]({{ page.img }})

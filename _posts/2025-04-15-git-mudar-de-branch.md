@@ -10,6 +10,7 @@ img: https://res.cloudinary.com/dz5ppacuo/image/upload/v1673926044/git-beautiful
 tags:
 - git
 - tutorial
+- controle-de-versao
 ---
 
 ![]({{ page.img }})

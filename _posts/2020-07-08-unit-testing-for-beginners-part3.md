@@ -12,7 +12,7 @@ tags:
 - beginners
 - unit-testing
 - unit-testing-series
-- automated-tests
+- automated-testing
 - csharp
 - agile
 ---

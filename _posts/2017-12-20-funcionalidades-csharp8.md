@@ -8,6 +8,8 @@ permalink: /pt/funcionalidades-csharp8/
 img: https://res.cloudinary.com/dz5ppacuo/image/upload/v1513817072/csharp8-1037x438_skogpz.jpg
 tags:
 - csharp
+- funcionalidades-da-linguagem
+- iniciantes
 ---
 
 ![](https://res.cloudinary.com/dz5ppacuo/image/upload/v1513817072/csharp8-1037x438_skogpz.jpg)

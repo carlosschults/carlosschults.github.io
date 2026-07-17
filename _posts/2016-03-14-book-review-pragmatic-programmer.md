@@ -7,8 +7,9 @@ author: Carlos Schults
 permalink: /en/book-review-pragmatic-programmer/
 img: https://res.cloudinary.com/dz5ppacuo/image/upload/v1457998345/the-pragmatic-programmer-review-min_tulprt.png
 tags:
-- book review
+- book-review
 - agile
+- best-practices
 ---
 ![](https://res.cloudinary.com/dz5ppacuo/image/upload/v1457998345/the-pragmatic-programmer-review-min_tulprt.png)
 If I had to choose one book, just one book, to elect as the number one must-read to every programmer, I'd choose "The Pragmatic Programmer". It's a no-brainer. It's just that good. 

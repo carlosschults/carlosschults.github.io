@@ -9,6 +9,7 @@ img: https://res.cloudinary.com/dz5ppacuo/image/upload/v1490471059/escrevendo-co
 tags:
 - traducoes
 - boas-praticas
+- legibilidade
 ---
 
 ![](https://res.cloudinary.com/dz5ppacuo/image/upload/v1490471059/escrevendo-codigo-bom-1038x437_e4oy0i.jpg)

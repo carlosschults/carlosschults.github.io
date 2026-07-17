@@ -1,4 +1,4 @@
-﻿---
+---
 title: "Make Your Git History Look Beautiful Using Amend and Rebase"
 ref: git-beautiful-history
 lang: en
@@ -10,6 +10,8 @@ img: https://res.cloudinary.com/dz5ppacuo/image/upload/v1673926044/git-beautiful
 tags:
 - best-practices
 - git
+- version-control-system
+- tutorial
 ---
 
 ![]({{ page.img }})

@@ -7,11 +7,11 @@ layout: post
 author: Carlos Schults
 img: https://res.cloudinary.com/dz5ppacuo/image/upload/v1462111255/balance-min_qkdhxx.png
 tags:
-- traduções
-- metodologias ágeis
-- integração contínua
-- testes de software
-- testes automatizados
+- traducoes
+- metodologias-ageis
+- integracao-continua
+- testes-de-software
+- testes-automatizados
 ---
 
 ![](https://res.cloudinary.com/dz5ppacuo/image/upload/v1462111255/balance-min_qkdhxx.png)

@@ -9,6 +9,7 @@ img: https://res.cloudinary.com/dz5ppacuo/image/upload/v1489452722/charp7-featur
 tags:
 - csharp
 - iniciantes
+- funcionalidades-da-linguagem
 ---
 
 

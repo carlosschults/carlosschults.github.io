@@ -8,6 +8,8 @@ permalink: /pt/blogs-desenvolvimento-portugues/
 img: https://res.cloudinary.com/dz5ppacuo/image/upload/v1486838693/capa-min_gdaepw.jpg
 tags:
 - recomendacoes
+- carreira
+- opiniao
 ---
 
 ![](https://res.cloudinary.com/dz5ppacuo/image/upload/v1486838693/capa-min_gdaepw.jpg)

@@ -10,6 +10,8 @@ tags:
 - tutorial
 - git
 - rant
+- version-control-system
+- best-practices
 ---
 
 Your commit messages suck. They are, at best, useless. At worse, they are harmful and misleading.

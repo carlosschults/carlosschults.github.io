@@ -9,7 +9,9 @@ img: https://res.cloudinary.com/dz5ppacuo/image/upload/v1440517439/share1038x437
 tags:
 - blogging
 - sharing
-- first post
+- first-post
+- career
+- opinion
 ---
 ![](https://res.cloudinary.com/dz5ppacuo/image/upload/v1440517439/share1038x437_mshqwf.jpg)
 Share what you learn. Write a blog post. Answer a question on Stack Overflow. Open-source your code. Create content! In our industry, this advice shows up very often, in all colours and shapes. And rightly so, I'd say. How many hours have you saved thanks to someone else's post on their blog? Or to a well-crafted answer on Stack Overflow?

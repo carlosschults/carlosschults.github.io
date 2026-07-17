@@ -9,7 +9,7 @@ permalink: /pt/4-erros-comuns-datetime-csharp/
 img: https://res.cloudinary.com/dz5ppacuo/image/upload/v1531165684/4-datetime-mistakes-1038x437_nm6csc.jpg
 tags:
 - csharp
-- boas praticas
+- boas-praticas
 - tempo
 ---
 

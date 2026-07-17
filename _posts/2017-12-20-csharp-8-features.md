@@ -9,6 +9,8 @@ canonical: https://blog.ndepend.com/c-8-0-features-glimpse-future/
 img: https://res.cloudinary.com/dz5ppacuo/image/upload/v1513817072/csharp8-1037x438_skogpz.jpg
 tags:
 - csharp
+- language-features
+- beginners
 ---
 
 ![](https://res.cloudinary.com/dz5ppacuo/image/upload/v1513817072/csharp8-1037x438_skogpz.jpg)

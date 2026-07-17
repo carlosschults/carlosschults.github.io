@@ -12,7 +12,8 @@ tags:
 - software-engineering
 - best-practices
 - programming
-- career-advice
+- career
+- opinion
 ---
 
 ![](https://res.cloudinary.com/dz5ppacuo/image/upload/v1592314350/sharpen-the-saw-1038x437_z9ermr.jpg)

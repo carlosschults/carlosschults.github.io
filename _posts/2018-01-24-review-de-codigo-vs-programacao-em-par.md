@@ -8,10 +8,10 @@ description: Revisão de código e programação em par são iguais? Vamos desco
 permalink: /pt/revisao-codigo-vs-programacao-em-par/
 img: https://res.cloudinary.com/dz5ppacuo/image/upload/v1516470435/code-review-vs-pair-programming1038x437_w99q2t.jpg
 tags:
-- programacao em par
-- boas praticas
-- revisao de codigo
-- metodologias ageis
+- programacao-em-par
+- boas-praticas
+- revisao-de-codigo
+- metodologias-ageis
 ---
 
 ![](https://res.cloudinary.com/dz5ppacuo/image/upload/v1516470435/code-review-vs-pair-programming1038x437_w99q2t.jpg)

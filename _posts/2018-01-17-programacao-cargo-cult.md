@@ -9,8 +9,8 @@ permalink: /pt/cargo-cult-programming/
 img: https://res.cloudinary.com/dz5ppacuo/image/upload/v1516152067/cargo-cult-programming-1037x438_spoxet.jpg
 tags:
 - csharp
-- boas praticas
-- programacao cargo cult
+- boas-praticas
+- programacao-cargo-cult
 ---
 
 ![](https://res.cloudinary.com/dz5ppacuo/image/upload/v1516152067/cargo-cult-programming-1037x438_spoxet.jpg)

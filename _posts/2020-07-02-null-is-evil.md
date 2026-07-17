@@ -13,7 +13,6 @@ tags:
 - best-practices
 - programming
 - csharp
-- null
 ---
 
 ![](https://res.cloudinary.com/dz5ppacuo/image/upload/v1593715153/null-evill-1068x437_ztikwf.jpg)
