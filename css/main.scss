@@ -4,33 +4,35 @@
 @charset "utf-8";
 
 // Our variables
-$base-font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-$base-font-size:   16px;
+$base-font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+$base-font-size:   18px;
 $base-font-weight: 400;
-$small-font-size:  $base-font-size * 0.875;
-$base-line-height: 1.5;
+$heading-font-weight: 600;
+$small-font-size:  15px;
+$base-line-height: 1.65;
 
 $spacing-unit:     30px;
 
 // Light mode colors
-$text-color:       #111;
+$text-color:       #1f2933;
 $background-color: #fdfdfd;
-$brand-color:      #2a7ae2;
+$brand-color:      #2563eb;
 
 $grey-color:       #828282;
 $grey-color-light: lighten($grey-color, 40%);
 $grey-color-dark:  darken($grey-color, 25%);
+$code-background:  #f6f8fa;
 
-// Dark mode colors
-$text-color-dark:  #e0e0e0;
-$background-color-dark: #242424;
-$brand-color-dark: #66b3ff;
-$grey-color-dark-theme: #a0a0a0;
-$border-color-dark: #404040;
-$code-background-dark: #2a2a2a;
+// Dark mode colors (navy/slate)
+$text-color-dark:  #e2e8f0;
+$background-color-dark: #0f172a;
+$brand-color-dark: #6ea8fe;
+$grey-color-dark-theme: #94a3b8;
+$border-color-dark: #2e3d57;
+$code-background-dark: #1e293b;
 
 // Width of the content area
-$content-width:    800px;
+$content-width:    760px;
 $on-palm:          600px;
 $on-laptop:        800px;
 

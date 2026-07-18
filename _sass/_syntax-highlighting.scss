@@ -7,14 +7,14 @@
   transition: background-color 0.3s ease;
 
   .highlighter-rouge & {
-      background: #eef;
+      background: $code-background;
   }
 
   [data-theme="dark"] & {
-      background: #2d2d2d;
+      background: $code-background-dark;
 
       .highlighter-rouge & {
-          background: #2d2d2d;
+          background: $code-background-dark;
       }
   }
 

@@ -11,8 +11,11 @@ permalink: /pt/
   
     {% for year in posts_by_year %}
       <h2>{{ year.name }}</h2>
-      {% for post in year.items %}      
-        <li><a href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a> | {{ post.date | date: '%b %d' }}</li>
+      {% for post in year.items %}
+        <li>
+          <a class="post-item-title" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
+          <p class="post-item-meta">{{ post.date | date: '%d/%m' }}{% if post.description %} — {{ post.description }}{% endif %}</p>
+        </li>
       {% endfor %}
     {% endfor %}
   </ul>
