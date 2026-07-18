@@ -49,7 +49,8 @@
   <meta property="og:article:author" content="Carlos Schults" />
   
   <meta property="og:article:tag" content="devex" />
-  <meta property="og:article:tag" content="opinion" />    
+  <meta property="og:article:tag" content="opinion" />
+  <meta property="og:article:tag" content="career" />    
   
   <meta property="og:url" content="https://carlosschults.net/en/improve-developer-experience"/>
   <meta property="og:description" content="      ℹ️    NOTE        I originally wrote this post for Nimbus. You can read the original at their site.  What’s Developer Experience? Why Should You Care?I...">
@@ -110,7 +111,7 @@
     <p class="post-meta">   
     <time datetime="2025-07-08T00:00:00+00:00" itemprop="datePublished">Jul 8, 2025
     </time> • <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">Carlos Schults</span></span>
-  <span class="tags" itemprop="keywords"> • Tags: <a href="/tag/devex">devex </a> <a href="/tag/opinion">opinion </a> </span>
+  <span class="tags" itemprop="keywords"> • Tags: <a href="/tag/devex">devex </a> <a href="/tag/opinion">opinion </a> <a href="/tag/career">career </a> </span>
   </p>
   </header>
 
@@ -527,25 +528,55 @@
         
         
                 
-      
+    
+    
+
+
+
+
+<aside class="related-posts">
+  <h3>Related posts</h3>
+  <ul>
+    
+    
+    <li><a href="/en/learning-mistakes">Learning Mistakes to Avoid As a Software Developer</a></li>
+    
+    
+    <li><a href="/en/sharpen-the-saw/">Sharpen the Saw: 4 Quick Tips for Your Dev Team</a></li>
+    
+    
+    <li><a href="/en/share-what-you-learn/">Share what you learn</a></li>
+    
+  </ul>
+</aside>
+
+
     <div id="disqus_thread"></div>
 <script>
     var disqus_config = function () {
-        // Store these for reloads
-        window.disqus_identifier = window.location.pathname;
-        window.disqus_url = window.location.href;
-        
-        // Set initial theme - match it with the site's theme
-        const currentTheme = document.body.getAttribute('data-theme') || 'light';
-        this.page.theme = currentTheme === 'dark' ? 'dark' : 'light';
+        this.page.identifier = window.location.pathname;
+        this.page.url = window.location.href;
+        this.language = 'en';
     };
-    
-    (function() {
-        var d = document, s = d.createElement('script');
-        s.src = '//carlosschultsblog.disqus.com/embed.js';
-        s.setAttribute('data-timestamp', +new Date());
-        (d.head || d.body).appendChild(s);
-    })();
+
+    // Disqus picks its light/dark scheme from the page's computed colors
+    // at embed time, so it must load only after dark-mode.js has applied
+    // the theme AND the 0.3s color transition (_base.scss) has finished,
+    // or it samples the wrong colors.
+    function loadDisqus() {
+        setTimeout(function () {
+            var d = document, s = d.createElement('script');
+            s.src = '//carlosschultsblog.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        }, 400);
+    }
+
+    if (document.readyState === 'complete') {
+        loadDisqus();
+    } else {
+        window.addEventListener('load', loadDisqus);
+    }
 </script>
 <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>    
   </div>

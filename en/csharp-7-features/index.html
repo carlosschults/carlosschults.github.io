@@ -49,7 +49,8 @@
   <meta property="og:article:author" content="Carlos Schults" />
   
   <meta property="og:article:tag" content="csharp" />
-  <meta property="og:article:tag" content="beginners" />    
+  <meta property="og:article:tag" content="beginners" />
+  <meta property="og:article:tag" content="language-features" />    
   
   <meta property="og:url" content="https://carlosschults.net/en/csharp-7-features/"/>
   <meta property="og:description" content="C# 7 is finally among us. Time to check out some of its features.">
@@ -110,7 +111,7 @@
     <p class="post-meta">   
     <time datetime="2017-03-13T00:00:00+00:00" itemprop="datePublished">Mar 13, 2017
     </time> • <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">Carlos Schults</span></span>
-  <span class="tags" itemprop="keywords"> • Tags: <a href="/tag/csharp">csharp </a> <a href="/tag/beginners">beginners </a> </span>
+  <span class="tags" itemprop="keywords"> • Tags: <a href="/tag/csharp">csharp </a> <a href="/tag/beginners">beginners </a> <a href="/tag/language-features">language-features </a> </span>
   </p>
   </header>
 
@@ -495,25 +496,55 @@
         
         
                 
-      
+    
+    
+
+
+
+
+<aside class="related-posts">
+  <h3>Related posts</h3>
+  <ul>
+    
+    
+    <li><a href="/en/csharp-8-features/">C# 8.0 Features: A Glimpse of the Future</a></li>
+    
+    
+    <li><a href="/en/csharp-7-features-part-2/">C# 7 Features Worth Knowing - Part 2</a></li>
+    
+    
+    <li><a href="/en/csharp-unit-testing-intro-tdd/">C# Unit Testing: Getting Started With TDD</a></li>
+    
+  </ul>
+</aside>
+
+
     <div id="disqus_thread"></div>
 <script>
     var disqus_config = function () {
-        // Store these for reloads
-        window.disqus_identifier = window.location.pathname;
-        window.disqus_url = window.location.href;
-        
-        // Set initial theme - match it with the site's theme
-        const currentTheme = document.body.getAttribute('data-theme') || 'light';
-        this.page.theme = currentTheme === 'dark' ? 'dark' : 'light';
+        this.page.identifier = window.location.pathname;
+        this.page.url = window.location.href;
+        this.language = 'en';
     };
-    
-    (function() {
-        var d = document, s = d.createElement('script');
-        s.src = '//carlosschultsblog.disqus.com/embed.js';
-        s.setAttribute('data-timestamp', +new Date());
-        (d.head || d.body).appendChild(s);
-    })();
+
+    // Disqus picks its light/dark scheme from the page's computed colors
+    // at embed time, so it must load only after dark-mode.js has applied
+    // the theme AND the 0.3s color transition (_base.scss) has finished,
+    // or it samples the wrong colors.
+    function loadDisqus() {
+        setTimeout(function () {
+            var d = document, s = d.createElement('script');
+            s.src = '//carlosschultsblog.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        }, 400);
+    }
+
+    if (document.readyState === 'complete') {
+        loadDisqus();
+    } else {
+        window.addEventListener('load', loadDisqus);
+    }
 </script>
 <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>    
   </div>

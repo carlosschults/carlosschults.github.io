@@ -29,6 +29,16 @@ function initDarkMode() {
         themeToggle.innerHTML = newTheme === 'dark' ? sunIcon : moonIcon;
         document.body.setAttribute('data-theme', newTheme);
         localStorage.setItem('theme', newTheme);
+
+        // Disqus detects light/dark from the page colors only when it
+        // (re)embeds, so force a reload after the theme changes. The
+        // body colors transition over 0.3s (_base.scss), so wait for
+        // that to finish or Disqus samples the old theme's colors.
+        if (window.DISQUS) {
+            setTimeout(function () {
+                window.DISQUS.reset({ reload: true });
+            }, 400);
+        }
     });
 }
 

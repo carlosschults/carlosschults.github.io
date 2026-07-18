@@ -50,7 +50,9 @@
   
   <meta property="og:article:tag" content="blogging" />
   <meta property="og:article:tag" content="sharing" />
-  <meta property="og:article:tag" content="first post" />    
+  <meta property="og:article:tag" content="first-post" />
+  <meta property="og:article:tag" content="career" />
+  <meta property="og:article:tag" content="opinion" />    
   
   <meta property="og:url" content="https://carlosschults.net/en/share-what-you-learn/"/>
   <meta property="og:description" content="Share what you learn. Write a blog post. Answer a question on Stack Overflow. Open-source your code. Create content! In our industry, this advice shows up ve...">
@@ -111,7 +113,7 @@
     <p class="post-meta">   
     <time datetime="2015-08-25T00:00:00+00:00" itemprop="datePublished">Aug 25, 2015
     </time> • <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">Carlos Schults</span></span>
-  <span class="tags" itemprop="keywords"> • Tags: <a href="/tag/blogging">blogging </a> <a href="/tag/sharing">sharing </a> <a href="/tag/first post">first post </a> </span>
+  <span class="tags" itemprop="keywords"> • Tags: <a href="/tag/blogging">blogging </a> <a href="/tag/sharing">sharing </a> <a href="/tag/first-post">first-post </a> <a href="/tag/career">career </a> <a href="/tag/opinion">opinion </a> </span>
   </p>
   </header>
 
@@ -450,25 +452,55 @@ Share what you learn. Write a blog post. Answer a question on Stack Overflow. Op
         
         
                 
-      
+    
+    
+
+
+
+
+<aside class="related-posts">
+  <h3>Related posts</h3>
+  <ul>
+    
+    
+    <li><a href="/en/improve-developer-experience">How to Improve Developer Experience: 7 Things to Change</a></li>
+    
+    
+    <li><a href="/en/learning-mistakes">Learning Mistakes to Avoid As a Software Developer</a></li>
+    
+    
+    <li><a href="/en/sharpen-the-saw/">Sharpen the Saw: 4 Quick Tips for Your Dev Team</a></li>
+    
+  </ul>
+</aside>
+
+
     <div id="disqus_thread"></div>
 <script>
     var disqus_config = function () {
-        // Store these for reloads
-        window.disqus_identifier = window.location.pathname;
-        window.disqus_url = window.location.href;
-        
-        // Set initial theme - match it with the site's theme
-        const currentTheme = document.body.getAttribute('data-theme') || 'light';
-        this.page.theme = currentTheme === 'dark' ? 'dark' : 'light';
+        this.page.identifier = window.location.pathname;
+        this.page.url = window.location.href;
+        this.language = 'en';
     };
-    
-    (function() {
-        var d = document, s = d.createElement('script');
-        s.src = '//carlosschultsblog.disqus.com/embed.js';
-        s.setAttribute('data-timestamp', +new Date());
-        (d.head || d.body).appendChild(s);
-    })();
+
+    // Disqus picks its light/dark scheme from the page's computed colors
+    // at embed time, so it must load only after dark-mode.js has applied
+    // the theme AND the 0.3s color transition (_base.scss) has finished,
+    // or it samples the wrong colors.
+    function loadDisqus() {
+        setTimeout(function () {
+            var d = document, s = d.createElement('script');
+            s.src = '//carlosschultsblog.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        }, 400);
+    }
+
+    if (document.readyState === 'complete') {
+        loadDisqus();
+    } else {
+        window.addEventListener('load', loadDisqus);
+    }
 </script>
 <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>    
   </div>

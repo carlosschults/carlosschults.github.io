@@ -46,7 +46,9 @@
   
   <meta property="og:article:tag" content="tutorial" />
   <meta property="og:article:tag" content="git" />
-  <meta property="og:article:tag" content="rant" />    
+  <meta property="og:article:tag" content="rant" />
+  <meta property="og:article:tag" content="controle-de-versao" />
+  <meta property="og:article:tag" content="boas-praticas" />    
   
   <meta property="og:url" content="https://carlosschults.net/pt/suas-mensagens-de-commit-sao-um-lixo"/>
   <meta property="og:description" content="Suas mensagens de commit são um lixo. Na melhor das hipóteses, elas são inúteis. Mas geralmente, elas são piores do que nada.Eu não digo isso pra ser babaca....">
@@ -105,7 +107,7 @@
     <p class="post-meta">   
     <time datetime="2026-03-31T00:00:00+00:00" itemprop="datePublished">31/03/2026
     </time> • <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">Carlos Schults</span></span>
-  <span class="tags" itemprop="keywords"> • Tags: <a href="/tag_ptbr/tutorial">tutorial </a> <a href="/tag_ptbr/git">git </a> <a href="/tag_ptbr/rant">rant </a> </span>
+  <span class="tags" itemprop="keywords"> • Tags: <a href="/tag_ptbr/tutorial">tutorial </a> <a href="/tag_ptbr/git">git </a> <a href="/tag_ptbr/rant">rant </a> <a href="/tag_ptbr/controle-de-versao">controle-de-versao </a> <a href="/tag_ptbr/boas-praticas">boas-praticas </a> </span>
   </p>
   </header>
 
@@ -787,25 +789,55 @@ Follow these rules:
         
         
                 
-      
+    
+    
+
+
+
+
+<aside class="related-posts">
+  <h3>Posts relacionados</h3>
+  <ul>
+    
+    
+    <li><a href="/pt/git-switch-branch">Git Switch Branch: Tudo o Que Você Precisa Saber</a></li>
+    
+    
+    <li><a href="/pt/git-detached-head">Erro 'Git Detached Head': O Que Significa e Como Resolver</a></li>
+    
+    
+    <li><a href="/pt/git-criar-branch">Git Criar Branch: 4 Maneiras Diferentes</a></li>
+    
+  </ul>
+</aside>
+
+
     <div id="disqus_thread"></div>
 <script>
     var disqus_config = function () {
-        // Store these for reloads
-        window.disqus_identifier = window.location.pathname;
-        window.disqus_url = window.location.href;
-        
-        // Set initial theme - match it with the site's theme
-        const currentTheme = document.body.getAttribute('data-theme') || 'light';
-        this.page.theme = currentTheme === 'dark' ? 'dark' : 'light';
+        this.page.identifier = window.location.pathname;
+        this.page.url = window.location.href;
+        this.language = 'pt_BR';
     };
-    
-    (function() {
-        var d = document, s = d.createElement('script');
-        s.src = '//carlosschultsblog.disqus.com/embed.js';
-        s.setAttribute('data-timestamp', +new Date());
-        (d.head || d.body).appendChild(s);
-    })();
+
+    // Disqus picks its light/dark scheme from the page's computed colors
+    // at embed time, so it must load only after dark-mode.js has applied
+    // the theme AND the 0.3s color transition (_base.scss) has finished,
+    // or it samples the wrong colors.
+    function loadDisqus() {
+        setTimeout(function () {
+            var d = document, s = d.createElement('script');
+            s.src = '//carlosschultsblog.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        }, 400);
+    }
+
+    if (document.readyState === 'complete') {
+        loadDisqus();
+    } else {
+        window.addEventListener('load', loadDisqus);
+    }
 </script>
 <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>    
   </div>

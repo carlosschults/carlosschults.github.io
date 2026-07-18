@@ -1465,12 +1465,38 @@
   
     
       <url>
-        <loc>/tag/primeiro%20post/</loc>
+        <loc>/tag/primeiro-post/</loc>
         
         
-          <xhtml:link rel="alternate" hreflang="en" href="/tag/primeiro%20post/" />
+          <xhtml:link rel="alternate" hreflang="en" href="/tag/primeiro-post/" />
         
-          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/primeiro%20post/" />
+          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/primeiro-post/" />
+        
+        <changefreq>weekly</changefreq>
+      </url>
+    
+  
+    
+      <url>
+        <loc>/tag/carreira/</loc>
+        
+        
+          <xhtml:link rel="alternate" hreflang="en" href="/tag/carreira/" />
+        
+          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/carreira/" />
+        
+        <changefreq>weekly</changefreq>
+      </url>
+    
+  
+    
+      <url>
+        <loc>/tag/opiniao/</loc>
+        
+        
+          <xhtml:link rel="alternate" hreflang="en" href="/tag/opiniao/" />
+        
+          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/opiniao/" />
         
         <changefreq>weekly</changefreq>
       </url>
@@ -1504,12 +1530,38 @@
   
     
       <url>
-        <loc>/tag/first%20post/</loc>
+        <loc>/tag/first-post/</loc>
         
         
-          <xhtml:link rel="alternate" hreflang="en" href="/tag/first%20post/" />
+          <xhtml:link rel="alternate" hreflang="en" href="/tag/first-post/" />
         
-          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/first%20post/" />
+          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/first-post/" />
+        
+        <changefreq>weekly</changefreq>
+      </url>
+    
+  
+    
+      <url>
+        <loc>/tag/career/</loc>
+        
+        
+          <xhtml:link rel="alternate" hreflang="en" href="/tag/career/" />
+        
+          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/career/" />
+        
+        <changefreq>weekly</changefreq>
+      </url>
+    
+  
+    
+      <url>
+        <loc>/tag/opinion/</loc>
+        
+        
+          <xhtml:link rel="alternate" hreflang="en" href="/tag/opinion/" />
+        
+          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/opinion/" />
         
         <changefreq>weekly</changefreq>
       </url>
@@ -1595,12 +1647,12 @@
   
     
       <url>
-        <loc>/tag/type%20system/</loc>
+        <loc>/tag/type-system/</loc>
         
         
-          <xhtml:link rel="alternate" hreflang="en" href="/tag/type%20system/" />
+          <xhtml:link rel="alternate" hreflang="en" href="/tag/type-system/" />
         
-          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/type%20system/" />
+          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/type-system/" />
         
         <changefreq>weekly</changefreq>
       </url>
@@ -1608,12 +1660,12 @@
   
     
       <url>
-        <loc>/tag/book%20review/</loc>
+        <loc>/tag/book-review/</loc>
         
         
-          <xhtml:link rel="alternate" hreflang="en" href="/tag/book%20review/" />
+          <xhtml:link rel="alternate" hreflang="en" href="/tag/book-review/" />
         
-          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/book%20review/" />
+          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/book-review/" />
         
         <changefreq>weekly</changefreq>
       </url>
@@ -1634,6 +1686,19 @@
   
     
       <url>
+        <loc>/tag/best-practices/</loc>
+        
+        
+          <xhtml:link rel="alternate" hreflang="en" href="/tag/best-practices/" />
+        
+          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/best-practices/" />
+        
+        <changefreq>weekly</changefreq>
+      </url>
+    
+  
+    
+      <url>
         <loc>/tag/livros/</loc>
         
         
@@ -1647,12 +1712,12 @@
   
     
       <url>
-        <loc>/tag/metodologias%20%C3%A1geis/</loc>
+        <loc>/tag/metodologias-ageis/</loc>
         
         
-          <xhtml:link rel="alternate" hreflang="en" href="/tag/metodologias%20%C3%A1geis/" />
+          <xhtml:link rel="alternate" hreflang="en" href="/tag/metodologias-ageis/" />
         
-          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/metodologias%20%C3%A1geis/" />
+          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/metodologias-ageis/" />
         
         <changefreq>weekly</changefreq>
       </url>
@@ -1725,19 +1790,6 @@
   
     
       <url>
-        <loc>/tag/metodologias-ageis/</loc>
-        
-        
-          <xhtml:link rel="alternate" hreflang="en" href="/tag/metodologias-ageis/" />
-        
-          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/metodologias-ageis/" />
-        
-        <changefreq>weekly</changefreq>
-      </url>
-    
-  
-    
-      <url>
         <loc>/tag/serie-testes-unitarios/</loc>
         
         
@@ -1790,25 +1842,12 @@
   
     
       <url>
-        <loc>/tag/automated-tests/</loc>
+        <loc>/tag/automated-testing/</loc>
         
         
-          <xhtml:link rel="alternate" hreflang="en" href="/tag/automated-tests/" />
+          <xhtml:link rel="alternate" hreflang="en" href="/tag/automated-testing/" />
         
-          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/automated-tests/" />
-        
-        <changefreq>weekly</changefreq>
-      </url>
-    
-  
-    
-      <url>
-        <loc>/tag/tradu%C3%A7%C3%B5es/</loc>
-        
-        
-          <xhtml:link rel="alternate" hreflang="en" href="/tag/tradu%C3%A7%C3%B5es/" />
-        
-          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/tradu%C3%A7%C3%B5es/" />
+          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/automated-testing/" />
         
         <changefreq>weekly</changefreq>
       </url>
@@ -1816,25 +1855,12 @@
   
     
       <url>
-        <loc>/tag/integra%C3%A7%C3%A3o%20cont%C3%ADnua/</loc>
+        <loc>/tag/traducoes/</loc>
         
         
-          <xhtml:link rel="alternate" hreflang="en" href="/tag/integra%C3%A7%C3%A3o%20cont%C3%ADnua/" />
+          <xhtml:link rel="alternate" hreflang="en" href="/tag/traducoes/" />
         
-          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/integra%C3%A7%C3%A3o%20cont%C3%ADnua/" />
-        
-        <changefreq>weekly</changefreq>
-      </url>
-    
-  
-    
-      <url>
-        <loc>/tag/testes%20de%20software/</loc>
-        
-        
-          <xhtml:link rel="alternate" hreflang="en" href="/tag/testes%20de%20software/" />
-        
-          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/testes%20de%20software/" />
+          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/traducoes/" />
         
         <changefreq>weekly</changefreq>
       </url>
@@ -1842,25 +1868,12 @@
   
     
       <url>
-        <loc>/tag/testes%20automatizados/</loc>
+        <loc>/tag/integracao-continua/</loc>
         
         
-          <xhtml:link rel="alternate" hreflang="en" href="/tag/testes%20automatizados/" />
+          <xhtml:link rel="alternate" hreflang="en" href="/tag/integracao-continua/" />
         
-          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/testes%20automatizados/" />
-        
-        <changefreq>weekly</changefreq>
-      </url>
-    
-  
-    
-      <url>
-        <loc>/tag/boas%20pr%C3%A1ticas/</loc>
-        
-        
-          <xhtml:link rel="alternate" hreflang="en" href="/tag/boas%20pr%C3%A1ticas/" />
-        
-          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/boas%20pr%C3%A1ticas/" />
+          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/integracao-continua/" />
         
         <changefreq>weekly</changefreq>
       </url>
@@ -1868,25 +1881,12 @@
   
     
       <url>
-        <loc>/tag/best%20practices/</loc>
+        <loc>/tag/legibilidade/</loc>
         
         
-          <xhtml:link rel="alternate" hreflang="en" href="/tag/best%20practices/" />
+          <xhtml:link rel="alternate" hreflang="en" href="/tag/legibilidade/" />
         
-          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/best%20practices/" />
-        
-        <changefreq>weekly</changefreq>
-      </url>
-    
-  
-    
-      <url>
-        <loc>/tag/code%20smell/</loc>
-        
-        
-          <xhtml:link rel="alternate" hreflang="en" href="/tag/code%20smell/" />
-        
-          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/code%20smell/" />
+          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/legibilidade/" />
         
         <changefreq>weekly</changefreq>
       </url>
@@ -1894,12 +1894,12 @@
   
     
       <url>
-        <loc>/tag/recomendacoes/</loc>
+        <loc>/tag/readability/</loc>
         
         
-          <xhtml:link rel="alternate" hreflang="en" href="/tag/recomendacoes/" />
+          <xhtml:link rel="alternate" hreflang="en" href="/tag/readability/" />
         
-          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/recomendacoes/" />
+          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/readability/" />
         
         <changefreq>weekly</changefreq>
       </url>
@@ -1920,25 +1920,12 @@
   
     
       <url>
-        <loc>/tag/boas-pr%C3%A1ticas/</loc>
+        <loc>/tag/recomendacoes/</loc>
         
         
-          <xhtml:link rel="alternate" hreflang="en" href="/tag/boas-pr%C3%A1ticas/" />
+          <xhtml:link rel="alternate" hreflang="en" href="/tag/recomendacoes/" />
         
-          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/boas-pr%C3%A1ticas/" />
-        
-        <changefreq>weekly</changefreq>
-      </url>
-    
-  
-    
-      <url>
-        <loc>/tag/coment%C3%A1rios/</loc>
-        
-        
-          <xhtml:link rel="alternate" hreflang="en" href="/tag/coment%C3%A1rios/" />
-        
-          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/coment%C3%A1rios/" />
+          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/recomendacoes/" />
         
         <changefreq>weekly</changefreq>
       </url>
@@ -1946,12 +1933,12 @@
   
     
       <url>
-        <loc>/tag/best-practices/</loc>
+        <loc>/tag/comentarios/</loc>
         
         
-          <xhtml:link rel="alternate" hreflang="en" href="/tag/best-practices/" />
+          <xhtml:link rel="alternate" hreflang="en" href="/tag/comentarios/" />
         
-          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/best-practices/" />
+          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/comentarios/" />
         
         <changefreq>weekly</changefreq>
       </url>
@@ -1972,12 +1959,25 @@
   
     
       <url>
-        <loc>/tag/traducoes/</loc>
+        <loc>/tag/language-features/</loc>
         
         
-          <xhtml:link rel="alternate" hreflang="en" href="/tag/traducoes/" />
+          <xhtml:link rel="alternate" hreflang="en" href="/tag/language-features/" />
         
-          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/traducoes/" />
+          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/language-features/" />
+        
+        <changefreq>weekly</changefreq>
+      </url>
+    
+  
+    
+      <url>
+        <loc>/tag/funcionalidades-da-linguagem/</loc>
+        
+        
+          <xhtml:link rel="alternate" hreflang="en" href="/tag/funcionalidades-da-linguagem/" />
+        
+          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/funcionalidades-da-linguagem/" />
         
         <changefreq>weekly</changefreq>
       </url>
@@ -2050,25 +2050,12 @@
   
     
       <url>
-        <loc>/tag/ingl%C3%AAs/</loc>
+        <loc>/tag/cargo-cult-programming/</loc>
         
         
-          <xhtml:link rel="alternate" hreflang="en" href="/tag/ingl%C3%AAs/" />
+          <xhtml:link rel="alternate" hreflang="en" href="/tag/cargo-cult-programming/" />
         
-          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/ingl%C3%AAs/" />
-        
-        <changefreq>weekly</changefreq>
-      </url>
-    
-  
-    
-      <url>
-        <loc>/tag/cargo%20cult%20programming/</loc>
-        
-        
-          <xhtml:link rel="alternate" hreflang="en" href="/tag/cargo%20cult%20programming/" />
-        
-          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/cargo%20cult%20programming/" />
+          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/cargo-cult-programming/" />
         
         <changefreq>weekly</changefreq>
       </url>
@@ -2076,25 +2063,12 @@
   
     
       <url>
-        <loc>/tag/boas%20praticas/</loc>
+        <loc>/tag/programacao-cargo-cult/</loc>
         
         
-          <xhtml:link rel="alternate" hreflang="en" href="/tag/boas%20praticas/" />
+          <xhtml:link rel="alternate" hreflang="en" href="/tag/programacao-cargo-cult/" />
         
-          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/boas%20praticas/" />
-        
-        <changefreq>weekly</changefreq>
-      </url>
-    
-  
-    
-      <url>
-        <loc>/tag/programacao%20cargo%20cult/</loc>
-        
-        
-          <xhtml:link rel="alternate" hreflang="en" href="/tag/programacao%20cargo%20cult/" />
-        
-          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/programacao%20cargo%20cult/" />
+          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/programacao-cargo-cult/" />
         
         <changefreq>weekly</changefreq>
       </url>
@@ -2102,25 +2076,12 @@
   
     
       <url>
-        <loc>/tag/pair%20programming/</loc>
+        <loc>/tag/pair-programming/</loc>
         
         
-          <xhtml:link rel="alternate" hreflang="en" href="/tag/pair%20programming/" />
+          <xhtml:link rel="alternate" hreflang="en" href="/tag/pair-programming/" />
         
-          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/pair%20programming/" />
-        
-        <changefreq>weekly</changefreq>
-      </url>
-    
-  
-    
-      <url>
-        <loc>/tag/code%20review/</loc>
-        
-        
-          <xhtml:link rel="alternate" hreflang="en" href="/tag/code%20review/" />
-        
-          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/code%20review/" />
+          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/pair-programming/" />
         
         <changefreq>weekly</changefreq>
       </url>
@@ -2128,25 +2089,12 @@
   
     
       <url>
-        <loc>/tag/programacao%20em%20par/</loc>
+        <loc>/tag/code-review/</loc>
         
         
-          <xhtml:link rel="alternate" hreflang="en" href="/tag/programacao%20em%20par/" />
+          <xhtml:link rel="alternate" hreflang="en" href="/tag/code-review/" />
         
-          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/programacao%20em%20par/" />
-        
-        <changefreq>weekly</changefreq>
-      </url>
-    
-  
-    
-      <url>
-        <loc>/tag/revisao%20de%20codigo/</loc>
-        
-        
-          <xhtml:link rel="alternate" hreflang="en" href="/tag/revisao%20de%20codigo/" />
-        
-          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/revisao%20de%20codigo/" />
+          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/code-review/" />
         
         <changefreq>weekly</changefreq>
       </url>
@@ -2154,12 +2102,25 @@
   
     
       <url>
-        <loc>/tag/metodologias%20ageis/</loc>
+        <loc>/tag/programacao-em-par/</loc>
         
         
-          <xhtml:link rel="alternate" hreflang="en" href="/tag/metodologias%20ageis/" />
+          <xhtml:link rel="alternate" hreflang="en" href="/tag/programacao-em-par/" />
         
-          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/metodologias%20ageis/" />
+          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/programacao-em-par/" />
+        
+        <changefreq>weekly</changefreq>
+      </url>
+    
+  
+    
+      <url>
+        <loc>/tag/revisao-de-codigo/</loc>
+        
+        
+          <xhtml:link rel="alternate" hreflang="en" href="/tag/revisao-de-codigo/" />
+        
+          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/revisao-de-codigo/" />
         
         <changefreq>weekly</changefreq>
       </url>
@@ -2245,12 +2206,12 @@
   
     
       <url>
-        <loc>/tag/programacao%20funcional/</loc>
+        <loc>/tag/programacao-funcional/</loc>
         
         
-          <xhtml:link rel="alternate" hreflang="en" href="/tag/programacao%20funcional/" />
+          <xhtml:link rel="alternate" hreflang="en" href="/tag/programacao-funcional/" />
         
-          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/programacao%20funcional/" />
+          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/programacao-funcional/" />
         
         <changefreq>weekly</changefreq>
       </url>
@@ -2271,25 +2232,12 @@
   
     
       <url>
-        <loc>/tag/programa%C3%A7%C3%A3o/</loc>
+        <loc>/tag/programacao/</loc>
         
         
-          <xhtml:link rel="alternate" hreflang="en" href="/tag/programa%C3%A7%C3%A3o/" />
+          <xhtml:link rel="alternate" hreflang="en" href="/tag/programacao/" />
         
-          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/programa%C3%A7%C3%A3o/" />
-        
-        <changefreq>weekly</changefreq>
-      </url>
-    
-  
-    
-      <url>
-        <loc>/tag/carreira/</loc>
-        
-        
-          <xhtml:link rel="alternate" hreflang="en" href="/tag/carreira/" />
-        
-          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/carreira/" />
+          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/programacao/" />
         
         <changefreq>weekly</changefreq>
       </url>
@@ -2316,45 +2264,6 @@
           <xhtml:link rel="alternate" hreflang="en" href="/tag/programming/" />
         
           <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/programming/" />
-        
-        <changefreq>weekly</changefreq>
-      </url>
-    
-  
-    
-      <url>
-        <loc>/tag/career-advice/</loc>
-        
-        
-          <xhtml:link rel="alternate" hreflang="en" href="/tag/career-advice/" />
-        
-          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/career-advice/" />
-        
-        <changefreq>weekly</changefreq>
-      </url>
-    
-  
-    
-      <url>
-        <loc>/tag/programacao/</loc>
-        
-        
-          <xhtml:link rel="alternate" hreflang="en" href="/tag/programacao/" />
-        
-          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/programacao/" />
-        
-        <changefreq>weekly</changefreq>
-      </url>
-    
-  
-    
-      <url>
-        <loc>/tag/automated-testing/</loc>
-        
-        
-          <xhtml:link rel="alternate" hreflang="en" href="/tag/automated-testing/" />
-        
-          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/automated-testing/" />
         
         <changefreq>weekly</changefreq>
       </url>
@@ -2427,25 +2336,12 @@
   
     
       <url>
-        <loc>/tag/legibilidade/</loc>
+        <loc>/tag/tutorial/</loc>
         
         
-          <xhtml:link rel="alternate" hreflang="en" href="/tag/legibilidade/" />
+          <xhtml:link rel="alternate" hreflang="en" href="/tag/tutorial/" />
         
-          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/legibilidade/" />
-        
-        <changefreq>weekly</changefreq>
-      </url>
-    
-  
-    
-      <url>
-        <loc>/tag/readability/</loc>
-        
-        
-          <xhtml:link rel="alternate" hreflang="en" href="/tag/readability/" />
-        
-          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/readability/" />
+          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/tutorial/" />
         
         <changefreq>weekly</changefreq>
       </url>
@@ -2479,51 +2375,12 @@
   
     
       <url>
-        <loc>/tag/tutorial/</loc>
-        
-        
-          <xhtml:link rel="alternate" hreflang="en" href="/tag/tutorial/" />
-        
-          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/tutorial/" />
-        
-        <changefreq>weekly</changefreq>
-      </url>
-    
-  
-    
-      <url>
         <loc>/tag/regex/</loc>
         
         
           <xhtml:link rel="alternate" hreflang="en" href="/tag/regex/" />
         
           <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/regex/" />
-        
-        <changefreq>weekly</changefreq>
-      </url>
-    
-  
-    
-      <url>
-        <loc>/tag/expressoes_regulares/</loc>
-        
-        
-          <xhtml:link rel="alternate" hreflang="en" href="/tag/expressoes_regulares/" />
-        
-          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/expressoes_regulares/" />
-        
-        <changefreq>weekly</changefreq>
-      </url>
-    
-  
-    
-      <url>
-        <loc>/tag/regular_expressions/</loc>
-        
-        
-          <xhtml:link rel="alternate" hreflang="en" href="/tag/regular_expressions/" />
-        
-          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/regular_expressions/" />
         
         <changefreq>weekly</changefreq>
       </url>
@@ -2544,38 +2401,12 @@
   
     
       <url>
-        <loc>/tag/opini%C3%A3o/</loc>
+        <loc>/tag/ai/</loc>
         
         
-          <xhtml:link rel="alternate" hreflang="en" href="/tag/opini%C3%A3o/" />
+          <xhtml:link rel="alternate" hreflang="en" href="/tag/ai/" />
         
-          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/opini%C3%A3o/" />
-        
-        <changefreq>weekly</changefreq>
-      </url>
-    
-  
-    
-      <url>
-        <loc>/tag/opinion/</loc>
-        
-        
-          <xhtml:link rel="alternate" hreflang="en" href="/tag/opinion/" />
-        
-          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/opinion/" />
-        
-        <changefreq>weekly</changefreq>
-      </url>
-    
-  
-    
-      <url>
-        <loc>/tag/carreer/</loc>
-        
-        
-          <xhtml:link rel="alternate" hreflang="en" href="/tag/carreer/" />
-        
-          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/carreer/" />
+          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/ai/" />
         
         <changefreq>weekly</changefreq>
       </url>
@@ -2596,19 +2427,6 @@
   
     
       <url>
-        <loc>/tag/ai/</loc>
-        
-        
-          <xhtml:link rel="alternate" hreflang="en" href="/tag/ai/" />
-        
-          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/ai/" />
-        
-        <changefreq>weekly</changefreq>
-      </url>
-    
-  
-    
-      <url>
         <loc>/tag/devex/</loc>
         
         
@@ -2622,25 +2440,12 @@
   
     
       <url>
-        <loc>/tag/de_a_a_z/</loc>
+        <loc>/tag/de-a-a-z/</loc>
         
         
-          <xhtml:link rel="alternate" hreflang="en" href="/tag/de_a_a_z/" />
+          <xhtml:link rel="alternate" hreflang="en" href="/tag/de-a-a-z/" />
         
-          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/de_a_a_z/" />
-        
-        <changefreq>weekly</changefreq>
-      </url>
-    
-  
-    
-      <url>
-        <loc>/tag/breaking_changes/</loc>
-        
-        
-          <xhtml:link rel="alternate" hreflang="en" href="/tag/breaking_changes/" />
-        
-          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/breaking_changes/" />
+          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/de-a-a-z/" />
         
         <changefreq>weekly</changefreq>
       </url>
@@ -2648,12 +2453,25 @@
   
     
       <url>
-        <loc>/tag/from_a_to_z/</loc>
+        <loc>/tag/breaking-changes/</loc>
         
         
-          <xhtml:link rel="alternate" hreflang="en" href="/tag/from_a_to_z/" />
+          <xhtml:link rel="alternate" hreflang="en" href="/tag/breaking-changes/" />
         
-          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/from_a_to_z/" />
+          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/breaking-changes/" />
+        
+        <changefreq>weekly</changefreq>
+      </url>
+    
+  
+    
+      <url>
+        <loc>/tag/from-a-to-z/</loc>
+        
+        
+          <xhtml:link rel="alternate" hreflang="en" href="/tag/from-a-to-z/" />
+        
+          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/from-a-to-z/" />
         
         <changefreq>weekly</changefreq>
       </url>
@@ -2791,12 +2609,38 @@
   
     
       <url>
-        <loc>/tag_ptbr/primeiro%20post/</loc>
+        <loc>/tag_ptbr/primeiro-post/</loc>
         
         
-          <xhtml:link rel="alternate" hreflang="en" href="/tag/primeiro%20post/" />
+          <xhtml:link rel="alternate" hreflang="en" href="/tag/primeiro-post/" />
         
-          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/primeiro%20post/" />
+          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/primeiro-post/" />
+        
+        <changefreq>weekly</changefreq>
+      </url>
+    
+  
+    
+      <url>
+        <loc>/tag_ptbr/carreira/</loc>
+        
+        
+          <xhtml:link rel="alternate" hreflang="en" href="/tag/carreira/" />
+        
+          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/carreira/" />
+        
+        <changefreq>weekly</changefreq>
+      </url>
+    
+  
+    
+      <url>
+        <loc>/tag_ptbr/opiniao/</loc>
+        
+        
+          <xhtml:link rel="alternate" hreflang="en" href="/tag/opiniao/" />
+        
+          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/opiniao/" />
         
         <changefreq>weekly</changefreq>
       </url>
@@ -2830,12 +2674,38 @@
   
     
       <url>
-        <loc>/tag_ptbr/first%20post/</loc>
+        <loc>/tag_ptbr/first-post/</loc>
         
         
-          <xhtml:link rel="alternate" hreflang="en" href="/tag/first%20post/" />
+          <xhtml:link rel="alternate" hreflang="en" href="/tag/first-post/" />
         
-          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/first%20post/" />
+          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/first-post/" />
+        
+        <changefreq>weekly</changefreq>
+      </url>
+    
+  
+    
+      <url>
+        <loc>/tag_ptbr/career/</loc>
+        
+        
+          <xhtml:link rel="alternate" hreflang="en" href="/tag/career/" />
+        
+          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/career/" />
+        
+        <changefreq>weekly</changefreq>
+      </url>
+    
+  
+    
+      <url>
+        <loc>/tag_ptbr/opinion/</loc>
+        
+        
+          <xhtml:link rel="alternate" hreflang="en" href="/tag/opinion/" />
+        
+          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/opinion/" />
         
         <changefreq>weekly</changefreq>
       </url>
@@ -2921,12 +2791,12 @@
   
     
       <url>
-        <loc>/tag_ptbr/type%20system/</loc>
+        <loc>/tag_ptbr/type-system/</loc>
         
         
-          <xhtml:link rel="alternate" hreflang="en" href="/tag/type%20system/" />
+          <xhtml:link rel="alternate" hreflang="en" href="/tag/type-system/" />
         
-          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/type%20system/" />
+          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/type-system/" />
         
         <changefreq>weekly</changefreq>
       </url>
@@ -2934,12 +2804,12 @@
   
     
       <url>
-        <loc>/tag_ptbr/book%20review/</loc>
+        <loc>/tag_ptbr/book-review/</loc>
         
         
-          <xhtml:link rel="alternate" hreflang="en" href="/tag/book%20review/" />
+          <xhtml:link rel="alternate" hreflang="en" href="/tag/book-review/" />
         
-          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/book%20review/" />
+          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/book-review/" />
         
         <changefreq>weekly</changefreq>
       </url>
@@ -2960,6 +2830,19 @@
   
     
       <url>
+        <loc>/tag_ptbr/best-practices/</loc>
+        
+        
+          <xhtml:link rel="alternate" hreflang="en" href="/tag/best-practices/" />
+        
+          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/best-practices/" />
+        
+        <changefreq>weekly</changefreq>
+      </url>
+    
+  
+    
+      <url>
         <loc>/tag_ptbr/livros/</loc>
         
         
@@ -2973,12 +2856,12 @@
   
     
       <url>
-        <loc>/tag_ptbr/metodologias%20%C3%A1geis/</loc>
+        <loc>/tag_ptbr/metodologias-ageis/</loc>
         
         
-          <xhtml:link rel="alternate" hreflang="en" href="/tag/metodologias%20%C3%A1geis/" />
+          <xhtml:link rel="alternate" hreflang="en" href="/tag/metodologias-ageis/" />
         
-          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/metodologias%20%C3%A1geis/" />
+          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/metodologias-ageis/" />
         
         <changefreq>weekly</changefreq>
       </url>
@@ -3051,19 +2934,6 @@
   
     
       <url>
-        <loc>/tag_ptbr/metodologias-ageis/</loc>
-        
-        
-          <xhtml:link rel="alternate" hreflang="en" href="/tag/metodologias-ageis/" />
-        
-          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/metodologias-ageis/" />
-        
-        <changefreq>weekly</changefreq>
-      </url>
-    
-  
-    
-      <url>
         <loc>/tag_ptbr/serie-testes-unitarios/</loc>
         
         
@@ -3116,25 +2986,12 @@
   
     
       <url>
-        <loc>/tag_ptbr/automated-tests/</loc>
+        <loc>/tag_ptbr/automated-testing/</loc>
         
         
-          <xhtml:link rel="alternate" hreflang="en" href="/tag/automated-tests/" />
+          <xhtml:link rel="alternate" hreflang="en" href="/tag/automated-testing/" />
         
-          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/automated-tests/" />
-        
-        <changefreq>weekly</changefreq>
-      </url>
-    
-  
-    
-      <url>
-        <loc>/tag_ptbr/tradu%C3%A7%C3%B5es/</loc>
-        
-        
-          <xhtml:link rel="alternate" hreflang="en" href="/tag/tradu%C3%A7%C3%B5es/" />
-        
-          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/tradu%C3%A7%C3%B5es/" />
+          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/automated-testing/" />
         
         <changefreq>weekly</changefreq>
       </url>
@@ -3142,25 +2999,12 @@
   
     
       <url>
-        <loc>/tag_ptbr/integra%C3%A7%C3%A3o%20cont%C3%ADnua/</loc>
+        <loc>/tag_ptbr/traducoes/</loc>
         
         
-          <xhtml:link rel="alternate" hreflang="en" href="/tag/integra%C3%A7%C3%A3o%20cont%C3%ADnua/" />
+          <xhtml:link rel="alternate" hreflang="en" href="/tag/traducoes/" />
         
-          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/integra%C3%A7%C3%A3o%20cont%C3%ADnua/" />
-        
-        <changefreq>weekly</changefreq>
-      </url>
-    
-  
-    
-      <url>
-        <loc>/tag_ptbr/testes%20de%20software/</loc>
-        
-        
-          <xhtml:link rel="alternate" hreflang="en" href="/tag/testes%20de%20software/" />
-        
-          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/testes%20de%20software/" />
+          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/traducoes/" />
         
         <changefreq>weekly</changefreq>
       </url>
@@ -3168,25 +3012,12 @@
   
     
       <url>
-        <loc>/tag_ptbr/testes%20automatizados/</loc>
+        <loc>/tag_ptbr/integracao-continua/</loc>
         
         
-          <xhtml:link rel="alternate" hreflang="en" href="/tag/testes%20automatizados/" />
+          <xhtml:link rel="alternate" hreflang="en" href="/tag/integracao-continua/" />
         
-          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/testes%20automatizados/" />
-        
-        <changefreq>weekly</changefreq>
-      </url>
-    
-  
-    
-      <url>
-        <loc>/tag_ptbr/boas%20pr%C3%A1ticas/</loc>
-        
-        
-          <xhtml:link rel="alternate" hreflang="en" href="/tag/boas%20pr%C3%A1ticas/" />
-        
-          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/boas%20pr%C3%A1ticas/" />
+          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/integracao-continua/" />
         
         <changefreq>weekly</changefreq>
       </url>
@@ -3194,25 +3025,12 @@
   
     
       <url>
-        <loc>/tag_ptbr/best%20practices/</loc>
+        <loc>/tag_ptbr/legibilidade/</loc>
         
         
-          <xhtml:link rel="alternate" hreflang="en" href="/tag/best%20practices/" />
+          <xhtml:link rel="alternate" hreflang="en" href="/tag/legibilidade/" />
         
-          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/best%20practices/" />
-        
-        <changefreq>weekly</changefreq>
-      </url>
-    
-  
-    
-      <url>
-        <loc>/tag_ptbr/code%20smell/</loc>
-        
-        
-          <xhtml:link rel="alternate" hreflang="en" href="/tag/code%20smell/" />
-        
-          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/code%20smell/" />
+          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/legibilidade/" />
         
         <changefreq>weekly</changefreq>
       </url>
@@ -3220,12 +3038,12 @@
   
     
       <url>
-        <loc>/tag_ptbr/recomendacoes/</loc>
+        <loc>/tag_ptbr/readability/</loc>
         
         
-          <xhtml:link rel="alternate" hreflang="en" href="/tag/recomendacoes/" />
+          <xhtml:link rel="alternate" hreflang="en" href="/tag/readability/" />
         
-          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/recomendacoes/" />
+          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/readability/" />
         
         <changefreq>weekly</changefreq>
       </url>
@@ -3246,25 +3064,12 @@
   
     
       <url>
-        <loc>/tag_ptbr/boas-pr%C3%A1ticas/</loc>
+        <loc>/tag_ptbr/recomendacoes/</loc>
         
         
-          <xhtml:link rel="alternate" hreflang="en" href="/tag/boas-pr%C3%A1ticas/" />
+          <xhtml:link rel="alternate" hreflang="en" href="/tag/recomendacoes/" />
         
-          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/boas-pr%C3%A1ticas/" />
-        
-        <changefreq>weekly</changefreq>
-      </url>
-    
-  
-    
-      <url>
-        <loc>/tag_ptbr/coment%C3%A1rios/</loc>
-        
-        
-          <xhtml:link rel="alternate" hreflang="en" href="/tag/coment%C3%A1rios/" />
-        
-          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/coment%C3%A1rios/" />
+          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/recomendacoes/" />
         
         <changefreq>weekly</changefreq>
       </url>
@@ -3272,12 +3077,12 @@
   
     
       <url>
-        <loc>/tag_ptbr/best-practices/</loc>
+        <loc>/tag_ptbr/comentarios/</loc>
         
         
-          <xhtml:link rel="alternate" hreflang="en" href="/tag/best-practices/" />
+          <xhtml:link rel="alternate" hreflang="en" href="/tag/comentarios/" />
         
-          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/best-practices/" />
+          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/comentarios/" />
         
         <changefreq>weekly</changefreq>
       </url>
@@ -3298,12 +3103,25 @@
   
     
       <url>
-        <loc>/tag_ptbr/traducoes/</loc>
+        <loc>/tag_ptbr/language-features/</loc>
         
         
-          <xhtml:link rel="alternate" hreflang="en" href="/tag/traducoes/" />
+          <xhtml:link rel="alternate" hreflang="en" href="/tag/language-features/" />
         
-          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/traducoes/" />
+          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/language-features/" />
+        
+        <changefreq>weekly</changefreq>
+      </url>
+    
+  
+    
+      <url>
+        <loc>/tag_ptbr/funcionalidades-da-linguagem/</loc>
+        
+        
+          <xhtml:link rel="alternate" hreflang="en" href="/tag/funcionalidades-da-linguagem/" />
+        
+          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/funcionalidades-da-linguagem/" />
         
         <changefreq>weekly</changefreq>
       </url>
@@ -3376,25 +3194,12 @@
   
     
       <url>
-        <loc>/tag_ptbr/ingl%C3%AAs/</loc>
+        <loc>/tag_ptbr/cargo-cult-programming/</loc>
         
         
-          <xhtml:link rel="alternate" hreflang="en" href="/tag/ingl%C3%AAs/" />
+          <xhtml:link rel="alternate" hreflang="en" href="/tag/cargo-cult-programming/" />
         
-          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/ingl%C3%AAs/" />
-        
-        <changefreq>weekly</changefreq>
-      </url>
-    
-  
-    
-      <url>
-        <loc>/tag_ptbr/cargo%20cult%20programming/</loc>
-        
-        
-          <xhtml:link rel="alternate" hreflang="en" href="/tag/cargo%20cult%20programming/" />
-        
-          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/cargo%20cult%20programming/" />
+          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/cargo-cult-programming/" />
         
         <changefreq>weekly</changefreq>
       </url>
@@ -3402,25 +3207,12 @@
   
     
       <url>
-        <loc>/tag_ptbr/boas%20praticas/</loc>
+        <loc>/tag_ptbr/programacao-cargo-cult/</loc>
         
         
-          <xhtml:link rel="alternate" hreflang="en" href="/tag/boas%20praticas/" />
+          <xhtml:link rel="alternate" hreflang="en" href="/tag/programacao-cargo-cult/" />
         
-          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/boas%20praticas/" />
-        
-        <changefreq>weekly</changefreq>
-      </url>
-    
-  
-    
-      <url>
-        <loc>/tag_ptbr/programacao%20cargo%20cult/</loc>
-        
-        
-          <xhtml:link rel="alternate" hreflang="en" href="/tag/programacao%20cargo%20cult/" />
-        
-          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/programacao%20cargo%20cult/" />
+          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/programacao-cargo-cult/" />
         
         <changefreq>weekly</changefreq>
       </url>
@@ -3428,25 +3220,12 @@
   
     
       <url>
-        <loc>/tag_ptbr/pair%20programming/</loc>
+        <loc>/tag_ptbr/pair-programming/</loc>
         
         
-          <xhtml:link rel="alternate" hreflang="en" href="/tag/pair%20programming/" />
+          <xhtml:link rel="alternate" hreflang="en" href="/tag/pair-programming/" />
         
-          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/pair%20programming/" />
-        
-        <changefreq>weekly</changefreq>
-      </url>
-    
-  
-    
-      <url>
-        <loc>/tag_ptbr/code%20review/</loc>
-        
-        
-          <xhtml:link rel="alternate" hreflang="en" href="/tag/code%20review/" />
-        
-          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/code%20review/" />
+          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/pair-programming/" />
         
         <changefreq>weekly</changefreq>
       </url>
@@ -3454,25 +3233,12 @@
   
     
       <url>
-        <loc>/tag_ptbr/programacao%20em%20par/</loc>
+        <loc>/tag_ptbr/code-review/</loc>
         
         
-          <xhtml:link rel="alternate" hreflang="en" href="/tag/programacao%20em%20par/" />
+          <xhtml:link rel="alternate" hreflang="en" href="/tag/code-review/" />
         
-          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/programacao%20em%20par/" />
-        
-        <changefreq>weekly</changefreq>
-      </url>
-    
-  
-    
-      <url>
-        <loc>/tag_ptbr/revisao%20de%20codigo/</loc>
-        
-        
-          <xhtml:link rel="alternate" hreflang="en" href="/tag/revisao%20de%20codigo/" />
-        
-          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/revisao%20de%20codigo/" />
+          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/code-review/" />
         
         <changefreq>weekly</changefreq>
       </url>
@@ -3480,12 +3246,25 @@
   
     
       <url>
-        <loc>/tag_ptbr/metodologias%20ageis/</loc>
+        <loc>/tag_ptbr/programacao-em-par/</loc>
         
         
-          <xhtml:link rel="alternate" hreflang="en" href="/tag/metodologias%20ageis/" />
+          <xhtml:link rel="alternate" hreflang="en" href="/tag/programacao-em-par/" />
         
-          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/metodologias%20ageis/" />
+          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/programacao-em-par/" />
+        
+        <changefreq>weekly</changefreq>
+      </url>
+    
+  
+    
+      <url>
+        <loc>/tag_ptbr/revisao-de-codigo/</loc>
+        
+        
+          <xhtml:link rel="alternate" hreflang="en" href="/tag/revisao-de-codigo/" />
+        
+          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/revisao-de-codigo/" />
         
         <changefreq>weekly</changefreq>
       </url>
@@ -3571,12 +3350,12 @@
   
     
       <url>
-        <loc>/tag_ptbr/programacao%20funcional/</loc>
+        <loc>/tag_ptbr/programacao-funcional/</loc>
         
         
-          <xhtml:link rel="alternate" hreflang="en" href="/tag/programacao%20funcional/" />
+          <xhtml:link rel="alternate" hreflang="en" href="/tag/programacao-funcional/" />
         
-          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/programacao%20funcional/" />
+          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/programacao-funcional/" />
         
         <changefreq>weekly</changefreq>
       </url>
@@ -3597,25 +3376,12 @@
   
     
       <url>
-        <loc>/tag_ptbr/programa%C3%A7%C3%A3o/</loc>
+        <loc>/tag_ptbr/programacao/</loc>
         
         
-          <xhtml:link rel="alternate" hreflang="en" href="/tag/programa%C3%A7%C3%A3o/" />
+          <xhtml:link rel="alternate" hreflang="en" href="/tag/programacao/" />
         
-          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/programa%C3%A7%C3%A3o/" />
-        
-        <changefreq>weekly</changefreq>
-      </url>
-    
-  
-    
-      <url>
-        <loc>/tag_ptbr/carreira/</loc>
-        
-        
-          <xhtml:link rel="alternate" hreflang="en" href="/tag/carreira/" />
-        
-          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/carreira/" />
+          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/programacao/" />
         
         <changefreq>weekly</changefreq>
       </url>
@@ -3642,45 +3408,6 @@
           <xhtml:link rel="alternate" hreflang="en" href="/tag/programming/" />
         
           <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/programming/" />
-        
-        <changefreq>weekly</changefreq>
-      </url>
-    
-  
-    
-      <url>
-        <loc>/tag_ptbr/career-advice/</loc>
-        
-        
-          <xhtml:link rel="alternate" hreflang="en" href="/tag/career-advice/" />
-        
-          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/career-advice/" />
-        
-        <changefreq>weekly</changefreq>
-      </url>
-    
-  
-    
-      <url>
-        <loc>/tag_ptbr/programacao/</loc>
-        
-        
-          <xhtml:link rel="alternate" hreflang="en" href="/tag/programacao/" />
-        
-          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/programacao/" />
-        
-        <changefreq>weekly</changefreq>
-      </url>
-    
-  
-    
-      <url>
-        <loc>/tag_ptbr/automated-testing/</loc>
-        
-        
-          <xhtml:link rel="alternate" hreflang="en" href="/tag/automated-testing/" />
-        
-          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/automated-testing/" />
         
         <changefreq>weekly</changefreq>
       </url>
@@ -3753,25 +3480,12 @@
   
     
       <url>
-        <loc>/tag_ptbr/legibilidade/</loc>
+        <loc>/tag_ptbr/tutorial/</loc>
         
         
-          <xhtml:link rel="alternate" hreflang="en" href="/tag/legibilidade/" />
+          <xhtml:link rel="alternate" hreflang="en" href="/tag/tutorial/" />
         
-          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/legibilidade/" />
-        
-        <changefreq>weekly</changefreq>
-      </url>
-    
-  
-    
-      <url>
-        <loc>/tag_ptbr/readability/</loc>
-        
-        
-          <xhtml:link rel="alternate" hreflang="en" href="/tag/readability/" />
-        
-          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/readability/" />
+          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/tutorial/" />
         
         <changefreq>weekly</changefreq>
       </url>
@@ -3805,51 +3519,12 @@
   
     
       <url>
-        <loc>/tag_ptbr/tutorial/</loc>
-        
-        
-          <xhtml:link rel="alternate" hreflang="en" href="/tag/tutorial/" />
-        
-          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/tutorial/" />
-        
-        <changefreq>weekly</changefreq>
-      </url>
-    
-  
-    
-      <url>
         <loc>/tag_ptbr/regex/</loc>
         
         
           <xhtml:link rel="alternate" hreflang="en" href="/tag/regex/" />
         
           <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/regex/" />
-        
-        <changefreq>weekly</changefreq>
-      </url>
-    
-  
-    
-      <url>
-        <loc>/tag_ptbr/expressoes_regulares/</loc>
-        
-        
-          <xhtml:link rel="alternate" hreflang="en" href="/tag/expressoes_regulares/" />
-        
-          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/expressoes_regulares/" />
-        
-        <changefreq>weekly</changefreq>
-      </url>
-    
-  
-    
-      <url>
-        <loc>/tag_ptbr/regular_expressions/</loc>
-        
-        
-          <xhtml:link rel="alternate" hreflang="en" href="/tag/regular_expressions/" />
-        
-          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/regular_expressions/" />
         
         <changefreq>weekly</changefreq>
       </url>
@@ -3870,38 +3545,12 @@
   
     
       <url>
-        <loc>/tag_ptbr/opini%C3%A3o/</loc>
+        <loc>/tag_ptbr/ai/</loc>
         
         
-          <xhtml:link rel="alternate" hreflang="en" href="/tag/opini%C3%A3o/" />
+          <xhtml:link rel="alternate" hreflang="en" href="/tag/ai/" />
         
-          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/opini%C3%A3o/" />
-        
-        <changefreq>weekly</changefreq>
-      </url>
-    
-  
-    
-      <url>
-        <loc>/tag_ptbr/opinion/</loc>
-        
-        
-          <xhtml:link rel="alternate" hreflang="en" href="/tag/opinion/" />
-        
-          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/opinion/" />
-        
-        <changefreq>weekly</changefreq>
-      </url>
-    
-  
-    
-      <url>
-        <loc>/tag_ptbr/carreer/</loc>
-        
-        
-          <xhtml:link rel="alternate" hreflang="en" href="/tag/carreer/" />
-        
-          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/carreer/" />
+          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/ai/" />
         
         <changefreq>weekly</changefreq>
       </url>
@@ -3922,19 +3571,6 @@
   
     
       <url>
-        <loc>/tag_ptbr/ai/</loc>
-        
-        
-          <xhtml:link rel="alternate" hreflang="en" href="/tag/ai/" />
-        
-          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/ai/" />
-        
-        <changefreq>weekly</changefreq>
-      </url>
-    
-  
-    
-      <url>
         <loc>/tag_ptbr/devex/</loc>
         
         
@@ -3948,25 +3584,12 @@
   
     
       <url>
-        <loc>/tag_ptbr/de_a_a_z/</loc>
+        <loc>/tag_ptbr/de-a-a-z/</loc>
         
         
-          <xhtml:link rel="alternate" hreflang="en" href="/tag/de_a_a_z/" />
+          <xhtml:link rel="alternate" hreflang="en" href="/tag/de-a-a-z/" />
         
-          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/de_a_a_z/" />
-        
-        <changefreq>weekly</changefreq>
-      </url>
-    
-  
-    
-      <url>
-        <loc>/tag_ptbr/breaking_changes/</loc>
-        
-        
-          <xhtml:link rel="alternate" hreflang="en" href="/tag/breaking_changes/" />
-        
-          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/breaking_changes/" />
+          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/de-a-a-z/" />
         
         <changefreq>weekly</changefreq>
       </url>
@@ -3974,12 +3597,25 @@
   
     
       <url>
-        <loc>/tag_ptbr/from_a_to_z/</loc>
+        <loc>/tag_ptbr/breaking-changes/</loc>
         
         
-          <xhtml:link rel="alternate" hreflang="en" href="/tag/from_a_to_z/" />
+          <xhtml:link rel="alternate" hreflang="en" href="/tag/breaking-changes/" />
         
-          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/from_a_to_z/" />
+          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/breaking-changes/" />
+        
+        <changefreq>weekly</changefreq>
+      </url>
+    
+  
+    
+      <url>
+        <loc>/tag_ptbr/from-a-to-z/</loc>
+        
+        
+          <xhtml:link rel="alternate" hreflang="en" href="/tag/from-a-to-z/" />
+        
+          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/from-a-to-z/" />
         
         <changefreq>weekly</changefreq>
       </url>

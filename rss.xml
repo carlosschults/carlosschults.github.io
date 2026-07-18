@@ -5,8 +5,8 @@
     <description>Artigos sobre desenvolvimento de software e tecnologia.</description>
     <link>https://carlosschults.net/</link>
     <atom:link href="https://carlosschults.net/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Wed, 15 Jul 2026 10:58:17 +0000</pubDate>
-    <lastBuildDate>Wed, 15 Jul 2026 10:58:17 +0000</lastBuildDate>
+    <pubDate>Sat, 18 Jul 2026 12:38:45 +0000</pubDate>
+    <lastBuildDate>Sat, 18 Jul 2026 12:38:45 +0000</lastBuildDate>
     <generator>Jekyll v4.3.1</generator>
     
     
@@ -522,6 +522,8 @@ ggt cat-file &lt;span class=&quot;nt&quot;&gt;-p&lt;/span&gt; 45b983be36b73c0788
         
         <category>go-gitter</category>
         
+        <category>controle-de-versao</category>
+        
         
       </item>
     
@@ -873,6 +875,10 @@ Follow these rules:
         
         <category>rant</category>
         
+        <category>controle-de-versao</category>
+        
+        <category>boas-praticas</category>
+        
         
       </item>
     
@@ -961,6 +967,8 @@ Já vinculei ao repositório, mas aqui está novamente, caso você tenha perdido
         <category>go</category>
         
         <category>go-gitter</category>
+        
+        <category>controle-de-versao</category>
         
         
       </item>
@@ -1161,9 +1169,13 @@ Vamos começar?&lt;/p&gt;
         <link>https://carlosschults.net/pt/o-que-sao-breaking-changes</link>
         <guid isPermaLink="true">https://carlosschults.net/pt/o-que-sao-breaking-changes</guid>
         
-        <category>de_a_a_z</category>
+        <category>de-a-a-z</category>
         
-        <category>breaking_changes</category>
+        <category>breaking-changes</category>
+        
+        <category>engenharia-de-software</category>
+        
+        <category>boas-praticas</category>
         
         
       </item>
@@ -1296,7 +1308,9 @@ Vamos começar?&lt;/p&gt;
         
         <category>devex</category>
         
-        <category>opinion</category>
+        <category>opiniao</category>
+        
+        <category>carreira</category>
         
         
       </item>
@@ -1495,6 +1509,8 @@ git switch &lt;span class=&quot;nt&quot;&gt;-c&lt;/span&gt; slow-test origin/slo
         <category>git</category>
         
         <category>tutorial</category>
+        
+        <category>controle-de-versao</category>
         
         
       </item>
@@ -1825,11 +1841,11 @@ tipo personalizado:&lt;/p&gt;
         
         <category>csharp</category>
         
-        <category>ai</category>
+        <category>ia</category>
         
-        <category>software-design</category>
+        <category>boas-praticas</category>
         
-        <category>best-practices</category>
+        <category>modelagem-de-software</category>
         
         
       </item>
@@ -2225,7 +2241,7 @@ Foto de &lt;a href=&quot;https://unsplash.com/pt-br/@francisco_legarreta?utm_con
         <link>https://carlosschults.net/pt/erros-aprendizados</link>
         <guid isPermaLink="true">https://carlosschults.net/pt/erros-aprendizados</guid>
         
-        <category>opinião</category>
+        <category>opiniao</category>
         
         <category>carreira</category>
         
@@ -2420,6 +2436,8 @@ git checkout alt-history&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
         <category>git</category>
         
         <category>tutorial</category>
+        
+        <category>controle-de-versao</category>
         
         
       </item>

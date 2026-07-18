@@ -5,8 +5,8 @@
     <description>Articles on software development and technology.</description>
     <link>https://carlosschults.net/</link>
     <atom:link href="https://carlosschults.net/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Wed, 15 Jul 2026 10:58:17 +0000</pubDate>
-    <lastBuildDate>Wed, 15 Jul 2026 10:58:17 +0000</lastBuildDate>
+    <pubDate>Sat, 18 Jul 2026 12:38:45 +0000</pubDate>
+    <lastBuildDate>Sat, 18 Jul 2026 12:38:45 +0000</lastBuildDate>
     <generator>Jekyll v4.3.1</generator>
     
     
@@ -517,6 +517,8 @@ ggt cat-file &lt;span class=&quot;nt&quot;&gt;-p&lt;/span&gt; 45b983be36b73c0788
         
         <category>go-gitter</category>
         
+        <category>version-control-system</category>
+        
         
       </item>
     
@@ -834,6 +836,10 @@ Follow these rules:
         
         <category>rant</category>
         
+        <category>version-control-system</category>
+        
+        <category>best-practices</category>
+        
         
       </item>
     
@@ -920,6 +926,8 @@ I’ve already linked to the repository, but here it is again, in case you’ve 
         <category>go</category>
         
         <category>go-gitter</category>
+        
+        <category>version-control-system</category>
         
         
       </item>
@@ -1121,9 +1129,13 @@ Photo by &lt;a href=&quot;https://unsplash.com/@denisolvr?utm_content=creditCopy
         <link>https://carlosschults.net/en/what-are-breaking-changes</link>
         <guid isPermaLink="true">https://carlosschults.net/en/what-are-breaking-changes</guid>
         
-        <category>from_a_to_z</category>
+        <category>from-a-to-z</category>
         
-        <category>breaking_changes</category>
+        <category>breaking-changes</category>
+        
+        <category>software-engineering</category>
+        
+        <category>best-practices</category>
         
         
       </item>
@@ -1257,6 +1269,8 @@ Photo by &lt;a href=&quot;https://unsplash.com/@denisolvr?utm_content=creditCopy
         <category>devex</category>
         
         <category>opinion</category>
+        
+        <category>career</category>
         
         
       </item>
@@ -1455,6 +1469,8 @@ git switch &lt;span class=&quot;nt&quot;&gt;-c&lt;/span&gt; slow-test origin/slo
         <category>git</category>
         
         <category>tutorial</category>
+        
+        <category>version-control-system</category>
         
         
       </item>
@@ -1828,11 +1844,11 @@ custom type:&lt;/p&gt;
         
         <category>csharp</category>
         
-        <category>ia</category>
+        <category>ai</category>
         
-        <category>boas-praticas</category>
+        <category>best-practices</category>
         
-        <category>modelagem-de-software</category>
+        <category>software-design</category>
         
         
       </item>
@@ -2230,7 +2246,7 @@ Photo by &lt;a href=&quot;https://unsplash.com/@francisco_legarreta?utm_content=
         
         <category>opinion</category>
         
-        <category>carreer</category>
+        <category>career</category>
         
         
       </item>
@@ -2424,6 +2440,8 @@ git checkout alt-history&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
         <category>git</category>
         
         <category>tutorial</category>
+        
+        <category>version-control-system</category>
         
         
       </item>

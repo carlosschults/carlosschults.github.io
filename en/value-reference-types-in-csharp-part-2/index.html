@@ -51,7 +51,7 @@
   <meta property="og:article:tag" content="csharp" />
   <meta property="og:article:tag" content="beginners" />
   <meta property="og:article:tag" content="oop" />
-  <meta property="og:article:tag" content="type system" />    
+  <meta property="og:article:tag" content="type-system" />    
   
   <meta property="og:url" content="https://carlosschults.net/en/value-reference-types-in-csharp-part-2/"/>
   <meta property="og:description" content="“Why is not allowed to assign null to a DateTime?” Again and again, this question keeps showing up on StackOverflow and similar sites. Different phrasing, ma...">
@@ -112,7 +112,7 @@
     <p class="post-meta">   
     <time datetime="2016-06-19T00:00:00+00:00" itemprop="datePublished">Jun 19, 2016
     </time> • <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">Carlos Schults</span></span>
-  <span class="tags" itemprop="keywords"> • Tags: <a href="/tag/csharp">csharp </a> <a href="/tag/beginners">beginners </a> <a href="/tag/oop">oop </a> <a href="/tag/type system">type system </a> </span>
+  <span class="tags" itemprop="keywords"> • Tags: <a href="/tag/csharp">csharp </a> <a href="/tag/beginners">beginners </a> <a href="/tag/oop">oop </a> <a href="/tag/type-system">type-system </a> </span>
   </p>
   </header>
 
@@ -480,25 +480,55 @@ are horrible, not to mention the fact that you’d have to check the flag every 
         
         
                 
-      
+    
+    
+
+
+
+
+<aside class="related-posts">
+  <h3>Related posts</h3>
+  <ul>
+    
+    
+    <li><a href="/en/value-reference-types-in-csharp/">Value and reference types in C#</a></li>
+    
+    
+    <li><a href="/en/csharp-unit-testing-intro-tdd/">C# Unit Testing: Getting Started With TDD</a></li>
+    
+    
+    <li><a href="/en/value-objects-tool/">Value Objects: A Tool for Self-Documented Code and Fewer Errors</a></li>
+    
+  </ul>
+</aside>
+
+
     <div id="disqus_thread"></div>
 <script>
     var disqus_config = function () {
-        // Store these for reloads
-        window.disqus_identifier = window.location.pathname;
-        window.disqus_url = window.location.href;
-        
-        // Set initial theme - match it with the site's theme
-        const currentTheme = document.body.getAttribute('data-theme') || 'light';
-        this.page.theme = currentTheme === 'dark' ? 'dark' : 'light';
+        this.page.identifier = window.location.pathname;
+        this.page.url = window.location.href;
+        this.language = 'en';
     };
-    
-    (function() {
-        var d = document, s = d.createElement('script');
-        s.src = '//carlosschultsblog.disqus.com/embed.js';
-        s.setAttribute('data-timestamp', +new Date());
-        (d.head || d.body).appendChild(s);
-    })();
+
+    // Disqus picks its light/dark scheme from the page's computed colors
+    // at embed time, so it must load only after dark-mode.js has applied
+    // the theme AND the 0.3s color transition (_base.scss) has finished,
+    // or it samples the wrong colors.
+    function loadDisqus() {
+        setTimeout(function () {
+            var d = document, s = d.createElement('script');
+            s.src = '//carlosschultsblog.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        }, 400);
+    }
+
+    if (document.readyState === 'complete') {
+        loadDisqus();
+    } else {
+        window.addEventListener('load', loadDisqus);
+    }
 </script>
 <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>    
   </div>

@@ -48,8 +48,8 @@
   <meta property="og:article:published_time" content="2017-01-29T00:00:00+00:00" />  
   <meta property="og:article:author" content="Carlos Schults" />
   
-  <meta property="og:article:tag" content="code smell" />
-  <meta property="og:article:tag" content="best practices" />
+  <meta property="og:article:tag" content="code-smell" />
+  <meta property="og:article:tag" content="best-practices" />
   <meta property="og:article:tag" content="oop" />    
   
   <meta property="og:url" content="https://carlosschults.net/en/are-private-methods-a-code-smell/"/>
@@ -111,7 +111,7 @@
     <p class="post-meta">   
     <time datetime="2017-01-29T00:00:00+00:00" itemprop="datePublished">Jan 29, 2017
     </time> • <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">Carlos Schults</span></span>
-  <span class="tags" itemprop="keywords"> • Tags: <a href="/tag/code smell">code smell </a> <a href="/tag/best practices">best practices </a> <a href="/tag/oop">oop </a> </span>
+  <span class="tags" itemprop="keywords"> • Tags: <a href="/tag/code-smell">code-smell </a> <a href="/tag/best-practices">best-practices </a> <a href="/tag/oop">oop </a> </span>
   </p>
   </header>
 
@@ -586,25 +586,52 @@
         
         
                 
-      
+    
+    
+
+
+
+
+<aside class="related-posts">
+  <h3>Related posts</h3>
+  <ul>
+    
+    
+    <li><a href="/en/value-objects-tool/">Value Objects: A Tool for Self-Documented Code and Fewer Errors</a></li>
+    
+    
+    <li><a href="/en/types-of-comments-to-avoid/">Learn which types of comments should be avoided</a></li>
+    
+  </ul>
+</aside>
+
+
     <div id="disqus_thread"></div>
 <script>
     var disqus_config = function () {
-        // Store these for reloads
-        window.disqus_identifier = window.location.pathname;
-        window.disqus_url = window.location.href;
-        
-        // Set initial theme - match it with the site's theme
-        const currentTheme = document.body.getAttribute('data-theme') || 'light';
-        this.page.theme = currentTheme === 'dark' ? 'dark' : 'light';
+        this.page.identifier = window.location.pathname;
+        this.page.url = window.location.href;
+        this.language = 'en';
     };
-    
-    (function() {
-        var d = document, s = d.createElement('script');
-        s.src = '//carlosschultsblog.disqus.com/embed.js';
-        s.setAttribute('data-timestamp', +new Date());
-        (d.head || d.body).appendChild(s);
-    })();
+
+    // Disqus picks its light/dark scheme from the page's computed colors
+    // at embed time, so it must load only after dark-mode.js has applied
+    // the theme AND the 0.3s color transition (_base.scss) has finished,
+    // or it samples the wrong colors.
+    function loadDisqus() {
+        setTimeout(function () {
+            var d = document, s = d.createElement('script');
+            s.src = '//carlosschultsblog.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        }, 400);
+    }
+
+    if (document.readyState === 'complete') {
+        loadDisqus();
+    } else {
+        window.addEventListener('load', loadDisqus);
+    }
 </script>
 <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>    
   </div>
