@@ -67,6 +67,15 @@
 </head>
 
   <body>
+    <script>
+      // Apply the theme before first paint to avoid a flash of the
+      // wrong theme (and the load-time color transition).
+      (function () {
+        var theme = localStorage.getItem('theme') ||
+          (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        document.body.setAttribute('data-theme', theme);
+      })();
+    </script>
     <header class="site-header">
   <div class="wrapper">    
     <a class="site-title" href="/">carlos schults / blog</a>
@@ -94,7 +103,7 @@
 
 </header>
 
-<div class="wrapper" style="text-align: right; line-height: 2em">
+<div class="wrapper lang-switcher">
   
    <a href="/en/value-reference-types-in-csharp-part-2/" class="en">en</a>  <a href="/pt/tipos-valor-referencia-em-csharp-parte-2/" class="pt">pt</a> 
 

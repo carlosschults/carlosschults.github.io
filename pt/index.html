@@ -55,6 +55,15 @@
 </head>
 
   <body>
+    <script>
+      // Apply the theme before first paint to avoid a flash of the
+      // wrong theme (and the load-time color transition).
+      (function () {
+        var theme = localStorage.getItem('theme') ||
+          (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        document.body.setAttribute('data-theme', theme);
+      })();
+    </script>
     <header class="site-header">
   <div class="wrapper">    
     <a class="site-title" href="/pt/">carlos schults / blog</a>
@@ -80,7 +89,7 @@
 
 </header>
 
-<div class="wrapper" style="text-align: right; line-height: 2em">
+<div class="wrapper lang-switcher">
   
   
 
@@ -97,130 +106,271 @@
   
     
       <h2>2026</h2>
-            
-        <li><a href="/pt/guia-operador-like-postgresql">Operador LIKE do PostgreSQL: Um Guia Detalhado</a> | Jul 14</li>
-            
-        <li><a href="/pt/construindo-git-em-go-parte2">Construindo o git em Go do zero - Parte 2</a> | May 29</li>
-            
-        <li><a href="/pt/suas-mensagens-de-commit-sao-um-lixo">Suas Mensagens de Commit São Um Lixo. Vou Te Ajudar a Melhorar</a> | Mar 31</li>
-            
-        <li><a href="/pt/implementando-git-em-go">Implementando o git em Go do Zero: Unindo o Útil ao...Agradável?</a> | Mar 09</li>
+      
+        <li>
+          <a class="post-item-title" href="/pt/guia-operador-like-postgresql">Operador LIKE do PostgreSQL: Um Guia Detalhado</a>
+          <p class="post-item-meta">14/07 — Um guia detalhado sobre o operador LIKE do PostgreSQL, cobrindo como ele funciona, em que difere do ILIKE, e exemplos práticos incluindo wildcards, buscas negativas e escape de caracteres.</p>
+        </li>
+      
+        <li>
+          <a class="post-item-title" href="/pt/construindo-git-em-go-parte2">Construindo o git em Go do zero - Parte 2</a>
+          <p class="post-item-meta">29/05 — Esta é minha segunda atualização sobre a jornada de construir o git</p>
+        </li>
+      
+        <li>
+          <a class="post-item-title" href="/pt/suas-mensagens-de-commit-sao-um-lixo">Suas Mensagens de Commit São Um Lixo. Vou Te Ajudar a Melhorar</a>
+          <p class="post-item-meta">31/03 — Seu eu do futuro odeia suas mensagens de commit. Vamos mudar isso!</p>
+        </li>
+      
+        <li>
+          <a class="post-item-title" href="/pt/implementando-git-em-go">Implementando o git em Go do Zero: Unindo o Útil ao...Agradável?</a>
+          <p class="post-item-meta">09/03 — Estou construindo o Git em Go para aprender os dois. Bora acompanhar?</p>
+        </li>
       
     
       <h2>2025</h2>
-            
-        <li><a href="/pt/o-que-sao-breaking-changes">O Que São Breaking Changes?</a> | Sep 26</li>
-            
-        <li><a href="/pt/melhorar-experiencia-desenvolvedor">Como Melhorar a Experiência do Desenvolvedor: 7 Coisas Para Mudar</a> | Jul 08</li>
-            
-        <li><a href="/pt/git-switch-branch">Git Switch Branch: Tudo o Que Você Precisa Saber</a> | Apr 15</li>
+      
+        <li>
+          <a class="post-item-title" href="/pt/o-que-sao-breaking-changes">O Que São Breaking Changes?</a>
+          <p class="post-item-meta">26/09 — Aprenda o conceito de breaking changes em software: o que são, por que importam e o que fazer sobre elas</p>
+        </li>
+      
+        <li>
+          <a class="post-item-title" href="/pt/melhorar-experiencia-desenvolvedor">Como Melhorar a Experiência do Desenvolvedor: 7 Coisas Para Mudar</a>
+          <p class="post-item-meta">08/07 — Aprenda o que é experiência do desenvolvedor e como melhorá-la na sua organização</p>
+        </li>
+      
+        <li>
+          <a class="post-item-title" href="/pt/git-switch-branch">Git Switch Branch: Tudo o Que Você Precisa Saber</a>
+          <p class="post-item-meta">15/04 — Aprenda como mudar de branch no Git de forma fácil e segura, incluindo como branches funcionam, como criá-las e como fazer checkout de branches remotas.</p>
+        </li>
       
     
       <h2>2024</h2>
-            
-        <li><a href="/pt-br/genai-tiny-types">C# Type Safe: Como a IA Generativa Torna os Tiny-Types Viáveis</a> | Dec 10</li>
-            
-        <li><a href="/pt/erros-aprendizados">Erros de Aprendizado Para Se Evitar Como Desenvolvedor de Software</a> | Oct 22</li>
-            
-        <li><a href="/pt/git-detached-head">Erro 'Git Detached Head': O Que Significa e Como Resolver</a> | Sep 16</li>
-            
-        <li><a href="/pt/configuracao-dotnet">[Tradução] Tudo o que você precisa saber sobre configuração e gerenciamento de segredos em .NET</a> | Jul 23</li>
-            
-        <li><a href="/pt/csharp-expressoes-regulares">C# Regex: Como Expressões Regulares Funcionam em C#, Com Exemplos</a> | May 07</li>
-            
-        <li><a href="/pt/git-criar-branch">Git Criar Branch: 4 Maneiras Diferentes</a> | Feb 21</li>
-            
-        <li><a href="/pt/operador-linq-join">Operador 'Join' do LINQ: Um Tutorial Completo</a> | Feb 06</li>
-            
-        <li><a href="/pt/git-bisect-intro/">Git Bisect: Uma Introdução Para Iniciantes</a> | Jan 22</li>
+      
+        <li>
+          <a class="post-item-title" href="/pt-br/genai-tiny-types">C# Type Safe: Como a IA Generativa Torna os Tiny-Types Viáveis</a>
+          <p class="post-item-meta">10/12 — Tiny types é uma técnica de design poderosa, raramente utilizada. Veja como os LLMs podem mudar isso.</p>
+        </li>
+      
+        <li>
+          <a class="post-item-title" href="/pt/erros-aprendizados">Erros de Aprendizado Para Se Evitar Como Desenvolvedor de Software</a>
+          <p class="post-item-meta">22/10 — Neste artigo, trago uma lista dos mais importantes erros de aprendizado para se evitar como dev</p>
+        </li>
+      
+        <li>
+          <a class="post-item-title" href="/pt/git-detached-head">Erro 'Git Detached Head': O Que Significa e Como Resolver</a>
+          <p class="post-item-meta">16/09 — O Que a mensagem "git detached head" signigica e como resolver? Aprenda nesse post</p>
+        </li>
+      
+        <li>
+          <a class="post-item-title" href="/pt/configuracao-dotnet">[Tradução] Tudo o que você precisa saber sobre configuração e gerenciamento de segredos em .NET</a>
+          <p class="post-item-meta">23/07 — Um guia abrangente sobre configuração em .NET de autoria de Sander ten Brinke</p>
+        </li>
+      
+        <li>
+          <a class="post-item-title" href="/pt/csharp-expressoes-regulares">C# Regex: Como Expressões Regulares Funcionam em C#, Com Exemplos</a>
+          <p class="post-item-meta">07/05 — Neste post, você aprenderá o básico das expressões regulares em C#</p>
+        </li>
+      
+        <li>
+          <a class="post-item-title" href="/pt/git-criar-branch">Git Criar Branch: 4 Maneiras Diferentes</a>
+          <p class="post-item-meta">21/02 — Neste post, você vai aprender as diferentes maneiras de se criar um branch no Git</p>
+        </li>
+      
+        <li>
+          <a class="post-item-title" href="/pt/operador-linq-join">Operador 'Join' do LINQ: Um Tutorial Completo</a>
+          <p class="post-item-meta">06/02 — LINQ oferece uma maneira fluente, intuitiva e consistente de consultar conjuntos de dados. Aprenda como fazer joins em LINQ neste guia.</p>
+        </li>
+      
+        <li>
+          <a class="post-item-title" href="/pt/git-bisect-intro/">Git Bisect: Uma Introdução Para Iniciantes</a>
+          <p class="post-item-meta">22/01 — Neste post, você vai aprender um comando git muito útil para seu dia-a-dia.</p>
+        </li>
       
     
       <h2>2023</h2>
-            
-        <li><a href="/pt/cinco-niveis-codigo-legivel">Os Cinco Níveis de Código Legível</a> | Oct 18</li>
-            
-        <li><a href="/pt/git-historico-bonito/">Fazendo Seu Histórico Git Ficar Bonitão Com Amend e Rebase</a> | Jan 17</li>
+      
+        <li>
+          <a class="post-item-title" href="/pt/cinco-niveis-codigo-legivel">Os Cinco Níveis de Código Legível</a>
+          <p class="post-item-meta">18/10 — Neste post, eu proponho um modelo para avaliação de legibilidade de código.</p>
+        </li>
+      
+        <li>
+          <a class="post-item-title" href="/pt/git-historico-bonito/">Fazendo Seu Histórico Git Ficar Bonitão Com Amend e Rebase</a>
+          <p class="post-item-meta">17/01 — Aprenda como reescrever seu histórico no Git usando rebase e amend</p>
+        </li>
       
     
       <h2>2021</h2>
-            
-        <li><a href="/pt/reduzir-complexidade-ciclomatica/">Como Reduzir a Complexidade Ciclomática: Um Guia Completo</a> | Apr 05</li>
+      
+        <li>
+          <a class="post-item-title" href="/pt/reduzir-complexidade-ciclomatica/">Como Reduzir a Complexidade Ciclomática: Um Guia Completo</a>
+          <p class="post-item-meta">05/04 — Aprenda como reduzir a complexidade ciclomática de seu código de maneira prática.</p>
+        </li>
       
     
       <h2>2020</h2>
-            
-        <li><a href="/pt/testes-de-mutacao/">Testes de Mutação: O Que São e Como Tornam A Cobertura de Código Relevante</a> | Jul 23</li>
-            
-        <li><a href="/pt/testes-unitarios-csharp-intro-tdd/">Testes Unitários em C#: Iniciando Com TDD</a> | Jul 08</li>
-            
-        <li><a href="/pt/null-problematico">Null É Ruim. Qual A Melhor Alternativa? Null.</a> | Jul 02</li>
-            
-        <li><a href="/pt/afiando-a-serra/">Afiando a Serra: 4 Dicas Rápidas Para Sua Equipe</a> | Jun 16</li>
+      
+        <li>
+          <a class="post-item-title" href="/pt/testes-de-mutacao/">Testes de Mutação: O Que São e Como Tornam A Cobertura de Código Relevante</a>
+          <p class="post-item-meta">23/07 — Aprenda como testes de mutação podem ajudar você a tornar cobertura de código em uma métrica útil, garantindo a qualidade dos seus testes de unidade.</p>
+        </li>
+      
+        <li>
+          <a class="post-item-title" href="/pt/testes-unitarios-csharp-intro-tdd/">Testes Unitários em C#: Iniciando Com TDD</a>
+          <p class="post-item-meta">08/07 — Você provavelmente já ouviu falar de TDD. Neste post, aprenda como começar a usar essa técnica na prática.</p>
+        </li>
+      
+        <li>
+          <a class="post-item-title" href="/pt/null-problematico">Null É Ruim. Qual A Melhor Alternativa? Null.</a>
+          <p class="post-item-meta">02/07 — Muitas pessoas consideram null um erro nas linguagens de programação. Qual é a melhor alternativa?</p>
+        </li>
+      
+        <li>
+          <a class="post-item-title" href="/pt/afiando-a-serra/">Afiando a Serra: 4 Dicas Rápidas Para Sua Equipe</a>
+          <p class="post-item-meta">16/06 — Veja quatro dicas rápidas para sua equipe de desenvolvimento melhorar suas habilidades e criar mais valor.</p>
+        </li>
       
     
       <h2>2019</h2>
-            
-        <li><a href="/pt/programacao-funcional-csharp/">Programação Funcional em C#: Mapeando, Filtrando e Reduzindo Em Busca de Código Limpo</a> | Jan 22</li>
+      
+        <li>
+          <a class="post-item-title" href="/pt/programacao-funcional-csharp/">Programação Funcional em C#: Mapeando, Filtrando e Reduzindo Em Busca de Código Limpo</a>
+          <p class="post-item-meta">22/01 — Neste post você vai aprender como usar o estilo funcoinal pode melhorar seu código em C#</p>
+        </li>
       
     
       <h2>2018</h2>
-            
-        <li><a href="/pt/value-objects-ferramenta/">Value Objects: Uma Técnica Para Código Auto-Documentado E Menos Erros</a> | Oct 24</li>
-            
-        <li><a href="/pt/boas-praticas-sem-tempo/">Boas Práticas De Programação Para Os Apressados</a> | Oct 16</li>
-            
-        <li><a href="/pt/4-erros-comuns-datetime-csharp/">4 Erros Comuns Com Data e Hora no C# — E como evitá-los</a> | Jul 11</li>
-            
-        <li><a href="/pt/revisao-codigo-vs-programacao-em-par/">Revisão de Código vs Programação em Par: Qual a sua equipe deve escolher?</a> | Jan 24</li>
-            
-        <li><a href="/pt/cargo-cult-programming/">Programação Cargo Cult É A Arte de Programar Por Coincidência</a> | Jan 17</li>
+      
+        <li>
+          <a class="post-item-title" href="/pt/value-objects-ferramenta/">Value Objects: Uma Técnica Para Código Auto-Documentado E Menos Erros</a>
+          <p class="post-item-meta">24/10 — If you employ value objects in your code, you can make it easier to read and maintain. Learn about this technique in today's post.</p>
+        </li>
+      
+        <li>
+          <a class="post-item-title" href="/pt/boas-praticas-sem-tempo/">Boas Práticas De Programação Para Os Apressados</a>
+          <p class="post-item-meta">16/10 — No post de hoje eu falo de algumas boas práticas de programação que podem aumentar a qualidade da sua aplicação em pouco tempo.</p>
+        </li>
+      
+        <li>
+          <a class="post-item-title" href="/pt/4-erros-comuns-datetime-csharp/">4 Erros Comuns Com Data e Hora no C# — E como evitá-los</a>
+          <p class="post-item-meta">11/07 — Neste post eu mostro quatro erros que programadores C# cometem com frequência ao lidar com tempo, e também ensino como se livrar deles.</p>
+        </li>
+      
+        <li>
+          <a class="post-item-title" href="/pt/revisao-codigo-vs-programacao-em-par/">Revisão de Código vs Programação em Par: Qual a sua equipe deve escolher?</a>
+          <p class="post-item-meta">24/01 — Revisão de código e programação em par são iguais? Vamos descobrir no post de hoje.</p>
+        </li>
+      
+        <li>
+          <a class="post-item-title" href="/pt/cargo-cult-programming/">Programação Cargo Cult É A Arte de Programar Por Coincidência</a>
+          <p class="post-item-meta">17/01 — Já ouviu falar de programação cargo cult? No post de hoje eu vou mostrar o que é isso e porque você deveria se preocupar.</p>
+        </li>
       
     
       <h2>2017</h2>
-            
-        <li><a href="/pt/funcionalidades-csharp8/">Funcionalidades do C# 8.0: Um Vislumbre do Futuro</a> | Dec 20</li>
-            
-        <li><a href="/pt/como-aprender-ingles-parte-2">Como aprender inglês: Um guia para desenvolvedores, Parte 2</a> | Dec 05</li>
-            
-        <li><a href="/pt/como-aprender-ingles-parte-1">Como aprender inglês: Um guia para desenvolvedores</a> | Nov 27</li>
-            
-        <li><a href="/pt/testes-unitarios-iniciantes-parte-2">Testes Unitários Para Iniciantes - Parte 2</a> | Aug 08</li>
-            
-        <li><a href="/pt/funcionalidades-csharp-7-parte-2">Funcionalidades do C# 7 que vale a pena conhecer - Parte 2</a> | Jun 05</li>
-            
-        <li><a href="/pt/basicos-do-git-usuarios-tfvc">Introdução ao Git para usuários de TFS/TFVC</a> | Apr 04</li>
-            
-        <li><a href="/pt/escrevendo-codigo-bom/">Escrevendo código bom: como reduzir a carga cognitiva do seu código</a> | Mar 25</li>
-            
-        <li><a href="/pt/funcionalidades-csharp-7/">Funcionalidades do C# 7 que vale a pena conhecer - Parte 1</a> | Mar 13</li>
-            
-        <li><a href="/pt/tipos-de-comentarios-a-evitar/">Aprenda quais tipos de comentários devem ser evitados</a> | Mar 02</li>
-            
-        <li><a href="/pt/blogs-desenvolvimento-portugues/">Blogs em português sobre desenvolvimento de software que você deveria seguir!</a> | Feb 11</li>
-            
-        <li><a href="/pt/metodos-privados-code-smell/">Métodos privados são um 'Code Smell'?</a> | Jan 29</li>
+      
+        <li>
+          <a class="post-item-title" href="/pt/funcionalidades-csharp8/">Funcionalidades do C# 8.0: Um Vislumbre do Futuro</a>
+          <p class="post-item-meta">20/12</p>
+        </li>
+      
+        <li>
+          <a class="post-item-title" href="/pt/como-aprender-ingles-parte-2">Como aprender inglês: Um guia para desenvolvedores, Parte 2</a>
+          <p class="post-item-meta">05/12</p>
+        </li>
+      
+        <li>
+          <a class="post-item-title" href="/pt/como-aprender-ingles-parte-1">Como aprender inglês: Um guia para desenvolvedores</a>
+          <p class="post-item-meta">27/11</p>
+        </li>
+      
+        <li>
+          <a class="post-item-title" href="/pt/testes-unitarios-iniciantes-parte-2">Testes Unitários Para Iniciantes - Parte 2</a>
+          <p class="post-item-meta">08/08</p>
+        </li>
+      
+        <li>
+          <a class="post-item-title" href="/pt/funcionalidades-csharp-7-parte-2">Funcionalidades do C# 7 que vale a pena conhecer - Parte 2</a>
+          <p class="post-item-meta">05/06</p>
+        </li>
+      
+        <li>
+          <a class="post-item-title" href="/pt/basicos-do-git-usuarios-tfvc">Introdução ao Git para usuários de TFS/TFVC</a>
+          <p class="post-item-meta">04/04</p>
+        </li>
+      
+        <li>
+          <a class="post-item-title" href="/pt/escrevendo-codigo-bom/">Escrevendo código bom: como reduzir a carga cognitiva do seu código</a>
+          <p class="post-item-meta">25/03</p>
+        </li>
+      
+        <li>
+          <a class="post-item-title" href="/pt/funcionalidades-csharp-7/">Funcionalidades do C# 7 que vale a pena conhecer - Parte 1</a>
+          <p class="post-item-meta">13/03</p>
+        </li>
+      
+        <li>
+          <a class="post-item-title" href="/pt/tipos-de-comentarios-a-evitar/">Aprenda quais tipos de comentários devem ser evitados</a>
+          <p class="post-item-meta">02/03</p>
+        </li>
+      
+        <li>
+          <a class="post-item-title" href="/pt/blogs-desenvolvimento-portugues/">Blogs em português sobre desenvolvimento de software que você deveria seguir!</a>
+          <p class="post-item-meta">11/02</p>
+        </li>
+      
+        <li>
+          <a class="post-item-title" href="/pt/metodos-privados-code-smell/">Métodos privados são um 'Code Smell'?</a>
+          <p class="post-item-meta">29/01</p>
+        </li>
       
     
       <h2>2016</h2>
-            
-        <li><a href="/pt/tipos-valor-referencia-em-csharp-parte-2/">Tipos de valor e referência em C#, Parte 2 - Por que DateTime não pode ser nulo?</a> | Jun 19</li>
-            
-        <li><a href="/pt/como-escolher-bons-nomes/">Dez dicas para lhe ajudar a escolher bons nomes</a> | May 22</li>
-            
-        <li><a href="/pt/traducao-fases-estabilizacao/">Fases de Estabilização</a> | May 02</li>
-            
-        <li><a href="/pt/testes-unitarios-iniciantes-parte1">Testes unitários para iniciantes - Parte 1</a> | Apr 09</li>
-            
-        <li><a href="/pt/programar-portugues-ou-ingles/">Programar em português ou inglês? That's the question!</a> | Mar 29</li>
-            
-        <li><a href="/pt/resenha-livro-programador-pragmatico/">Resenha de Livro: O Programador Pragmático</a> | Mar 14</li>
-            
-        <li><a href="/pt/tipos-valor-referencia-em-csharp/">Tipos de valor e referência em C#</a> | Jan 30</li>
+      
+        <li>
+          <a class="post-item-title" href="/pt/tipos-valor-referencia-em-csharp-parte-2/">Tipos de valor e referência em C#, Parte 2 - Por que DateTime não pode ser nulo?</a>
+          <p class="post-item-meta">19/06</p>
+        </li>
+      
+        <li>
+          <a class="post-item-title" href="/pt/como-escolher-bons-nomes/">Dez dicas para lhe ajudar a escolher bons nomes</a>
+          <p class="post-item-meta">22/05</p>
+        </li>
+      
+        <li>
+          <a class="post-item-title" href="/pt/traducao-fases-estabilizacao/">Fases de Estabilização</a>
+          <p class="post-item-meta">02/05</p>
+        </li>
+      
+        <li>
+          <a class="post-item-title" href="/pt/testes-unitarios-iniciantes-parte1">Testes unitários para iniciantes - Parte 1</a>
+          <p class="post-item-meta">09/04</p>
+        </li>
+      
+        <li>
+          <a class="post-item-title" href="/pt/programar-portugues-ou-ingles/">Programar em português ou inglês? That's the question!</a>
+          <p class="post-item-meta">29/03 — Ao programar, devemos usar inglês ou português para nomear classes, funções e variáveis? Aprenda a resposta neste post.</p>
+        </li>
+      
+        <li>
+          <a class="post-item-title" href="/pt/resenha-livro-programador-pragmatico/">Resenha de Livro: O Programador Pragmático</a>
+          <p class="post-item-meta">14/03</p>
+        </li>
+      
+        <li>
+          <a class="post-item-title" href="/pt/tipos-valor-referencia-em-csharp/">Tipos de valor e referência em C#</a>
+          <p class="post-item-meta">30/01</p>
+        </li>
       
     
       <h2>2015</h2>
-            
-        <li><a href="/pt/compartilhe-o-que-voce-aprende/">Compartilhe o que você aprende</a> | Aug 25</li>
+      
+        <li>
+          <a class="post-item-title" href="/pt/compartilhe-o-que-voce-aprende/">Compartilhe o que você aprende</a>
+          <p class="post-item-meta">25/08</p>
+        </li>
       
     
   </ul>
