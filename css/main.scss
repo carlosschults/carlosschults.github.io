@@ -75,6 +75,11 @@ $on-laptop:        800px;
         background: $background-color-dark;
         color: $text-color-dark;
     }
+
+    @include media-query($on-palm) {
+        top: 10px;
+        right: 65px;
+    }
 }
 
 // Copy-to-clipboard button on code blocks
