@@ -1243,6 +1243,19 @@
   
     
       <url>
+        <loc>/archive/</loc>
+        
+        
+          <xhtml:link rel="alternate" hreflang="en" href="/archive/" />
+        
+          <xhtml:link rel="alternate" hreflang="pt" href="/pt/arquivo/" />
+        
+        <changefreq>weekly</changefreq>
+      </url>
+    
+  
+    
+      <url>
         <loc>/busca/</loc>
         
         
@@ -1322,6 +1335,19 @@
           <xhtml:link rel="alternate" hreflang="" href="/sitemaps.xml" />
         
           <xhtml:link rel="alternate" hreflang="" href="/css/main.css.map" />
+        
+        <changefreq>weekly</changefreq>
+      </url>
+    
+  
+    
+      <url>
+        <loc>/pt/arquivo/</loc>
+        
+        
+          <xhtml:link rel="alternate" hreflang="en" href="/archive/" />
+        
+          <xhtml:link rel="alternate" hreflang="pt" href="/pt/arquivo/" />
         
         <changefreq>weekly</changefreq>
       </url>
