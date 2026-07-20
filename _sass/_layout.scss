@@ -152,6 +152,103 @@
 }
 
 /**
+ * Homepage hero
+ */
+.home-hero {
+    text-align: center;
+    padding: $spacing-unit 0 $spacing-unit * 1.5;
+
+    .avatar {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        object-fit: cover;
+        display: block;
+        margin: 0 auto ($spacing-unit / 2);
+        border: 3px solid $grey-color-light;
+        transition: border-color 0.3s ease;
+
+        [data-theme="dark"] & { border-color: $border-color-dark; }
+    }
+
+    .hero-name {
+        font-size: 2rem;
+        font-weight: 700;
+        margin-bottom: $spacing-unit / 4;
+
+        [data-theme="dark"] & { color: $text-color-dark; }
+    }
+
+    .hero-bio {
+        font-size: 1.05rem;
+        color: $grey-color;
+        max-width: 520px;
+        margin: 0 auto ($spacing-unit / 2);
+        line-height: 1.6;
+
+        [data-theme="dark"] & { color: $grey-color-dark-theme; }
+    }
+}
+
+.social-icons {
+    display: flex;
+    justify-content: center;
+    gap: 1.2rem;
+    margin-top: $spacing-unit / 3;
+
+    a {
+        color: $grey-color;
+        display: flex;
+        align-items: center;
+        transition: color 0.2s ease;
+
+        &:hover { color: $brand-color; text-decoration: none; }
+
+        [data-theme="dark"] & { color: $grey-color-dark-theme; }
+        [data-theme="dark"] &:hover { color: $brand-color-dark; }
+
+        svg { width: 26px; height: 26px; }
+    }
+}
+
+.home-section-heading {
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin-top: $spacing-unit;
+    margin-bottom: $spacing-unit / 3;
+    border-bottom: 1px solid $grey-color-light;
+    padding-bottom: $spacing-unit / 4;
+
+    [data-theme="dark"] & {
+        color: $text-color-dark;
+        border-bottom-color: $border-color-dark;
+    }
+}
+
+.post-list.flat {
+    li {
+        display: flex;
+        align-items: baseline;
+        gap: 1rem;
+        margin-bottom: $spacing-unit / 3;
+
+        .post-item-date {
+            font-size: $small-font-size;
+            color: $grey-color;
+            white-space: nowrap;
+            min-width: 95px;
+
+            [data-theme="dark"] & { color: $grey-color-dark-theme; }
+        }
+    }
+}
+
+.archive-link {
+    margin-top: $spacing-unit / 2;
+    font-size: $small-font-size;
+}
+
+/**
  * Site footer
  */
 .site-footer {

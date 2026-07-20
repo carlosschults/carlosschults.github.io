@@ -1,0 +1,23 @@
+---
+layout: default
+title: Arquivo
+permalink: /pt/arquivo/
+lang: pt
+ref: archive
+---
+
+<div class="home">
+  <h1 class="post-title">Todos os Posts</h1>
+  <ul class="post-list">
+    {% assign posts_by_year = site.posts | where:"lang", page.lang | group_by_exp: "post", "post.date | date: '%Y'" %}
+    {% for year in posts_by_year %}
+      <h2>{{ year.name }}</h2>
+      {% for post in year.items %}
+        <li>
+          <a class="post-item-title" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
+          <p class="post-item-meta">{{ post.date | date: '%d/%m' }}{% if post.description %} &mdash; {{ post.description }}{% endif %}</p>
+        </li>
+      {% endfor %}
+    {% endfor %}
+  </ul>
+</div>
