@@ -43,7 +43,7 @@ Pode parecer loucura que um programador comece a trabalhar numa tarefa que não 
 
 ### ...Escrever é Difícil
 
-Como Phil Karlton disse uma vez, [só existem duas coisas difíceis em ciência da computação](https://martinfowler.com/bliki/TwoHardThings.html), e dar nome às coisas é uma delas.
+Como Phil Karlton disse uma vez[^1], [só existem duas coisas difíceis em ciência da computação](https://martinfowler.com/bliki/TwoHardThings.html), e dar nome às coisas é uma delas.
 
 Se você parar pra pensar, "dar nome às coisas" é uma forma de escrever. Um subconjunto da escrita, digamos assim. Então sim, escrever mensagens de commit é difícil porque escrever, em geral, é difícil.
 
@@ -177,7 +177,7 @@ Se necessário, adicione mais informações, como:
 
 ### ...Seguir a Regra do 50/72
 
-A regra do 50/72 é o mais próximo que temos de um padrão quando se trata de mensagens de commit. Foi [proposta pela primeira vez por Tim Pope](https://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html) e funciona assim:
+A regra do 50/72 é o mais próximo que temos de um padrão quando se trata de mensagens de commit. Foi [proposta pela primeira vez por Tim Pope](https://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html)[^2] e funciona assim:
 
 - Comece com um resumo, com a primeira letra maiúscula, com no máximo 50 caracteres
 - Adicione uma linha em branco
@@ -221,7 +221,7 @@ Você não precisa esperar estar "pronto" pra commitar. Pelo contrário, você d
 
 Assim, se cometer erros e precisar descartar algum trabalho, você vai reverter apenas alguns minutos de trabalho em vez de horas. Você também tem esses checkpoints pra voltar caso a luz caia ou algo do tipo.
 
-Por exemplo, quem pratica TDD (desenvolvimento orientado a testes) frequentemente commita toda vez que chega na fase verde. Ou seja, toda vez que os testes passam.
+Por exemplo, quem pratica TDD (desenvolvimento orientado a testes)[^3] frequentemente commita toda vez que chega na fase verde. Ou seja, toda vez que os testes passam.
 
 Também é uma boa ideia manter todos os seus commits limpos. Com isso quero dizer que todos os seus commits, quando aplicados, devem deixar o projeto em um estado onde ele builda com sucesso e todos os testes passam. Isso facilita para você ou outra pessoa usar o [git bisect no futuro pra encontrar onde um bug foi introduzido](/pt/git-bisect-intro/).
 
@@ -349,3 +349,7 @@ Sim, é difícil. Pode ser frustrante. Pode parecer uma perda de tempo ficar 10,
 Mas eu garanto: anos depois, quando você estiver investigando um incidente crítico em produção e se deparar com ótimas mensagens de commit que oferecem insights valiosos sobre o porquê de algumas mudanças terem sido feitas... você vai ficar feliz por ter feito isso.
 
 Obrigado por ler.
+
+[^1]: Phil Karlton foi engenheiro principal na Netscape nos anos 90. A formulação exata da frase varia dependendo da fonte — Martin Fowler tem [uma boa nota sobre sua origem](https://martinfowler.com/bliki/TwoHardThings.html).
+[^2]: Tim Pope é um desenvolvedor open source prolífico, muito conhecido na comunidade Vim por plugins como vim-fugitive (integração com Git) e vim-surround. Seu post de 2008 sobre mensagens de commit continua sendo uma das referências mais citadas sobre o assunto.
+[^3]: O ciclo do TDD é: escrever um teste que falha (vermelho), escrever o mínimo de código para fazê-lo passar (verde), depois limpar o código sem quebrar nada (refatorar). Commitar a cada fase verde gera um histórico granular, sempre funcional, que você pode percorrer com confiança usando o git bisect.

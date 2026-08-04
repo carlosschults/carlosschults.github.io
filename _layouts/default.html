@@ -27,6 +27,9 @@
     {% include analytics.html %}
     <script src="{{ '/js/dark-mode.js' | relative_url }}"></script>
     <script src="{{ '/js/copy-code.js' | relative_url }}"></script>
+    {% if page.layout == 'post' %}
+    <script src="{{ '/js/post-enhancements.js' | relative_url }}"></script>
+    {% endif %}
   </body>
 
 </html>

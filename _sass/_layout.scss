@@ -442,6 +442,10 @@
         text-align: right;
     }
 
+    h2, h3, h4 {
+        scroll-margin-top: 72px;
+    }
+
     h2 {
         font-size: 32px;
 
@@ -470,5 +474,137 @@
         h2, h3, h4 {
             color: $text-color-dark;
         }
+    }
+
+    h2, h3, h4 {
+        &:hover .heading-anchor { opacity: 1; }
+    }
+}
+
+// Heading anchors
+.heading-anchor {
+    opacity: 0;
+    margin-left: 0.45em;
+    color: $grey-color;
+    text-decoration: none;
+    transition: opacity 0.15s ease, color 0.15s ease;
+    user-select: none;
+    vertical-align: middle;
+    display: inline-flex;
+    align-items: center;
+
+    svg { display: block; }
+
+    &:hover {
+        color: $brand-color;
+        text-decoration: none;
+    }
+
+    [data-theme="dark"] & {
+        color: $grey-color-dark-theme;
+        &:hover { color: $brand-color-dark; }
+    }
+}
+
+// Back to top button
+.back-to-top {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: $brand-color;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+    line-height: 1;
+    cursor: pointer;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease, background 0.2s ease, transform 0.2s ease;
+    z-index: 990;
+    border: none;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+
+    &.visible {
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+    &:hover {
+        background: darken($brand-color, 10%);
+        transform: translateY(-2px);
+    }
+
+    [data-theme="dark"] & {
+        background: $brand-color-dark;
+        color: $background-color-dark;
+
+        &:hover { background: lighten($brand-color-dark, 8%); }
+    }
+}
+
+// Footnote popup
+.footnote-popup {
+    position: absolute;
+    z-index: 600;
+    max-width: 340px;
+    padding: 0.75rem 1rem;
+    background: $background-color;
+    border: 1px solid $grey-color-light;
+    border-radius: 8px;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.14);
+    font-size: $small-font-size;
+    line-height: 1.55;
+    transition: background 0.3s ease, border-color 0.3s ease;
+
+    p:last-child { margin-bottom: 0; }
+
+    a.reversefootnote { display: none; }
+
+    .footnote-popup-close {
+        float: right;
+        margin-left: 0.6em;
+        cursor: pointer;
+        color: $grey-color;
+        font-size: 1.1rem;
+        line-height: 1;
+        transition: color 0.15s ease;
+
+        &:hover { color: $text-color; }
+    }
+
+    [data-theme="dark"] & {
+        background: lighten($background-color-dark, 4%);
+        border-color: $border-color-dark;
+        color: $text-color-dark;
+        box-shadow: 0 4px 18px rgba(0, 0, 0, 0.45);
+
+        .footnote-popup-close {
+            color: $grey-color-dark-theme;
+            &:hover { color: $text-color-dark; }
+        }
+    }
+}
+
+// Footnotes section at bottom of post
+.footnotes {
+    margin-top: 2.5rem;
+    padding-top: 1.2rem;
+    border-top: 1px solid $grey-color-light;
+    font-size: $small-font-size;
+    color: $grey-color;
+    transition: border-color 0.3s ease, color 0.3s ease;
+
+    ol { margin-left: 1.5rem; }
+
+    li { margin-bottom: 0.4rem; }
+
+    [data-theme="dark"] & {
+        border-top-color: $border-color-dark;
+        color: $grey-color-dark-theme;
     }
 }

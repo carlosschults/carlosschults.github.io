@@ -40,7 +40,7 @@ Great commit messages and great documentation in general should focus on the *wh
 It may seem crazy that a programmer would start working on a task he or she doesn't fully understand. But I know I have, and bet you have too. Of course, how are you supposed to explain the why behind a change when even you don't fully grasp it?
 
 ### ...Writing Is Hard
-As Phil Karlton once put, [there are only two hard things in computer science](https://martinfowler.com/bliki/TwoHardThings.html), and naming things is one of them.
+As Phil Karlton once put[^1], [there are only two hard things in computer science](https://martinfowler.com/bliki/TwoHardThings.html), and naming things is one of them.
 
 If you think about it, "naming things" is a form of writing. A subset of writing, if you will. So, yeah, writing commit messages is hard because writing, in general, is hard.
 
@@ -149,7 +149,7 @@ If necessary, add more information, such as:
 - reference links for the solution you employed (for instance, a link to a Stack Overflow answer)
 
 ### ...Follow the 50/72 Rule
-The 50/72 rule is the closest we have to a standard when it comes to commit messages. It was [first proposed by Tim Pope](https://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html) and it goes like this:
+The 50/72 rule is the closest we have to a standard when it comes to commit messages. It was [first proposed by Tim Pope](https://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html)[^2] and it goes like this:
 
 - Start with a summary, capitalized, and make it 50 characters long at the most
 - Add a blank line
@@ -191,7 +191,7 @@ You don't have to wait until you're "done" to commit. Instead, you should commit
 
 That way, if you make mistakes and needs to throw some work away, you just revert a few minutes' worth of work instead of hours. You also have those checkpoints you can go back to, should the power went off or something.
 
-For instance, people who practice TDD (test-drive development) often commit every time they reach the green phase. In other words, every time they make the tests pass.
+For instance, people who practice TDD (test-driven development)[^3] often commit every time they reach the green phase. In other words, every time they make the tests pass.
 
 It's also a good idea to leave all your commits clean. By that I mean, all of your commits, when applied, should leave your project in a state where it builds successfully and all tests pass. That makes it easier for you or someone else to use [git bisect in the future to find where a bug was introduced](/git-bisect-intro/).
 
@@ -315,3 +315,7 @@ Yeah, that's hard. It might be frustrating. It might feel a waste of time spendi
 But I guarantee you: years from now, when you're investigating a critical production issue and then you've come across some great commit messages that offer valuable insights into why some changes were made...you're going to be happy you did.
 
 Thanks for reading.
+
+[^1]: Phil Karlton was a principal engineer at Netscape in the 1990s. The exact wording of the quote varies depending on the source — Martin Fowler has [a good note on its provenance](https://martinfowler.com/bliki/TwoHardThings.html).
+[^2]: Tim Pope is a prolific open-source developer best known in the Vim community for plugins like vim-fugitive (Git integration) and vim-surround. His 2008 blog post on commit messages remains one of the most-cited references on the topic.
+[^3]: The TDD cycle is: write a failing test (red), write the minimum code to make it pass (green), then clean up the code without breaking anything (refactor). Committing after each green phase gives you a granular, always-passing history you can bisect with confidence.

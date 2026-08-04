@@ -36,11 +36,11 @@ Se você quiser acompanhar a parte prática do post, você vai precisar de:
 - conseguir se conectar a essa instância através de um cliente
 - ter ao menos um pouco de experiência com o banco de dados PostgreSQL e com a linguagem SQL
 
-**LIKE do PostgreSQL: Fundamentos**
+## LIKE do PostgreSQL: Fundamentos
 
 Com os pré-requisitos resolvidos, vamos começar cobrindo alguns fundamentos sobre o assunto de hoje.
 
-**O Que É o `LIKE` do PostgreSQL?**
+### O Que É o `LIKE` do PostgreSQL?
 
 O `LIKE` do PostgreSQL é a implementação, feita pelo PostgreSQL, do operador `LIKE` da linguagem SQL. Você usa o LIKE quando quer encontrar linhas nas quais uma ou mais colunas textuais correspondem a um determinado padrão. Na introdução, dei um exemplo: achar alunos cujo sobrenome comece com uma determinada letra. Então, vamos ver uma query real que faz exatamente isso usando o `LIKE` do PostgreSQL:
 
@@ -68,17 +68,17 @@ SELECT id, first_name, last_name, email FROM students WHERE email LIKE '%gmail%'
 
 Isso mesmo: se você quer buscar valores que contenham uma string, basta envolver a string com sinais de porcentagem (`%`).
 
-**Qual a Diferença Entre LIKE e ILIKE no PostgreSQL?**
+### Qual a Diferença Entre LIKE e ILIKE no PostgreSQL?
 
 Ao ler código PostgreSQL por aí, você pode encontrar queries que usam o operador `ILIKE` em vez do `LIKE` e ficar confuso. A diferença é que o operador `LIKE` diferencia maiúsculas de minúsculas (é *case sensitive*). Já o operador `ILIKE` não diferencia (é *case insensitive*) — daí o "i" no nome. Ele não distingue letras maiúsculas de minúsculas, e por isso você deveria usá-lo quando não se importa com a caixa das letras.
 
 Um detalhe importante a se ter em mente: o operador `ILIKE` não existe no SQL ANSI; na verdade, é uma extensão específica do PostgreSQL. Isso significa que usar o ILIKE torna seu código SQL menos portável, caso você precise trocar de banco de dados no futuro.
 
-**LIKE do PostgreSQL: Casos de Uso Práticos**
+## LIKE do PostgreSQL: Casos de Uso Práticos
 
 Tendo coberto o básico sobre o `LIKE` do PostgreSQL, vamos agora ver vários exemplos de uso. Vamos começar preparando o banco de dados para os testes.
 
-**Preparando o Banco de Dados**
+### Preparando o Banco de Dados
 
 Usando seu cliente preferido, conecte-se à sua instância do PostgreSQL, garantindo que existe um banco de dados ao qual você pode se conectar para os testes.
 
@@ -98,7 +98,7 @@ INSERT INTO albums  (title, artist, release_year) VALUES('Reckless', 'Bryan Adam
 INSERT INTO albums  (title, artist, release_year) VALUES('Ryan Adams', 'Ryan Adams', 2014);
 ```
 
-**Correspondendo a um Único Caractere**
+### Correspondendo a um Único Caractere
 
 Como você viu, a tabela agora contém álbuns tanto do Bryan quanto do Ryan Adams. Isso não é coincidência. Primeiro, use a seguinte query para recuperar álbuns dos dois cantores:
 
@@ -131,7 +131,7 @@ E aqui, novamente, está o resultado:
 (1 row)
 ```
 
-**Correspondências Negativas**
+### Correspondências Negativas
 
 Ao trabalhar com tabelas de banco de dados, muitas vezes você precisa recuperar dados que *não* correspondam a um certo padrão. Para isso, você pode usar o operador `NOT LIKE`. Por exemplo, vamos buscar apenas artistas cujo nome não comece com "The":
 
@@ -141,7 +141,7 @@ SELECT * FROM albums WHERE artist NOT LIKE 'The%';
 
 Já que o único artista que começa com "The" é The Beatles, ele não será retornado pela query acima.
 
-**Correspondência Sem Diferenciar Maiúsculas de Minúsculas**
+### Correspondência Sem Diferenciar Maiúsculas de Minúsculas
 
 Como falei antes, o operador `ILIKE` é uma extensão especial do PostgreSQL para o `LIKE` que faz correspondências sem diferenciar maiúsculas de minúsculas. Vamos ver isso na prática. Primeiro, vamos usar o operador `LIKE` para obter todos os artistas que contenham um "A" maiúsculo:
 
@@ -177,7 +177,7 @@ SELECT * FROM albums WHERE artist ILIKE '%A%';
 
 Agora, todos os artistas são retornados, exceto Pink Floyd.
 
-**Escapando os Wildcards**
+### Escapando os Wildcards
 
 Para este exemplo, vamos atualizar duas linhas:
 
@@ -230,7 +230,7 @@ SELECT * FROM albums WHERE artist LIKE '%$\%' ESCAPE '$';
 
 Com a cláusula `ESCAPE`, você pode escolher um caractere diferente para servir de escape. Dessa forma — pelo menos na minha opinião — a query resultante fica mais explícita quanto à forma como escapa o wildcard.
 
-**Conclusão: LIKE do PostgreSQL: Aprenda e Aproveite**
+## Conclusão: LIKE do PostgreSQL — Aprenda e Aproveite
 
 Neste post, você aprendeu sobre o operador LIKE no PostgreSQL: o que é, para que serve, e como funciona, através de vários exemplos. Como você viu, o funcionamento do operador é bem simples assim que você entende como os wildcards funcionam. Também percorremos alguns exemplos de uso, como correspondência a um único caractere e a realização de correspondências negativas.
 

@@ -37,11 +37,11 @@ If you want to follow along with the practical portion of the post, keep in mind
 - you can connect to the said instance through a client
 - you have at least a bit of experience with the PostgreSQL database and the SQL language
 
-**PostgreSQL `LIKE`: The Fundamentals**
+## PostgreSQL `LIKE`: The Fundamentals
 
 With the requirements out of the way, let's start by covering some fundamentals about today's topic.
 
-**What Is PostgreSQL `LIKE`?**
+### What Is PostgreSQL `LIKE`?
 
 PostgreSQL `LIKE` is PostgreSQL's implementation of the `LIKE` operator from the SQL language. You use LIKE when you want to retrieve rows in which one or more of their textual columns match a given pattern. In the introduction, I gave an example: retrieving students whose last name starts with a given letter. So, let's see a real query that does just that using PostgreSQL `LIKE`:
 
@@ -69,17 +69,17 @@ SELECT id, first_name, last_name, email FROM students WHERE email LIKE '%gmail%'
 
 That's right: if you want to match values that contain a given string, you surround the string with percentage signs (`%`).
 
-**What Is the Difference Between LIKE and ILIKE in Postgresql?**
+### What Is the Difference Between LIKE and ILIKE in PostgreSQL?
 
 When reviewing PostgreSQL code in the wild, you might encounter queries that use the `ILIKE` operator instead of `LIKE` and get confused. The difference is that the `LIKE` operator is case sensitive—i.e. it distinguishes between lowercase and uppercase letters. On the other hand, the `ILIKE` operator is case _insensitive_—hence the i. It does not distinguish between upper and lowercase letters, and therefore you should use it when you don't care about the case.
 
 An important thing to keep in mind: the `ILIKE` operator doesn't exist in ANSI SQL; instead, it's a specific extension of PostgreSQL. That means that employing ILIKE makes your SQL code less portable, in case you have the need to change your database engine.
 
-**PostgreSQL Like: Practical Use Cases**
+## PostgreSQL LIKE: Practical Use Cases
 
 Having covered the basics of PostgreSQL `LIKE`, let's now see several usage examples. We'll begin by preparing the database for the tests.
 
-**Preparing the Database**
+### Preparing the Database
 
 Using your preferred client, connect to your PostgreSQL instance, making sure there's a database you can connect to for the tests.
 
@@ -99,7 +99,7 @@ INSERT INTO albums  (title, artist, release_year) VALUES('Reckless', 'Bryan Adam
 INSERT INTO albums  (title, artist, release_year) VALUES('Ryan Adams', 'Ryan Adams', 2014);
 ```
 
-**Matching a Single Character**
+### Matching a Single Character
 
 As you've seen, the table now contains albums by both Bryan and Ryan Adams. That's not by coincidence. First, use the following query to retrieve albums by the two singers:
 
@@ -132,7 +132,7 @@ And here, again, is the result:
 (1 row)
 ```
 
-**Negative Matches**
+### Negative Matches
 
 When working with database tables, you often need to retrieve data that doesn't match a given pattern. For that, you can use the `NOT LIKE` operator. For instance, let's get only artists that don't start with "The":
 
@@ -142,7 +142,7 @@ SELECT * FROM albums WHERE artist NOT LIKE 'The%';
 
 Since the only artist starting with "The" are The Beatles, they won't be fetched by the query above.
 
-**Matching Without Case Sensitivity**
+### Matching Without Case Sensitivity
 
 As mentioned earlier, the `ILIKE` operator is a special PostgreSQL extension to `LIKE` that matches in a case-insensitive way. Let's see that in practice. First, let's use the `LIKE` operator to get all artists which contain an uppercase "A":
 
@@ -178,7 +178,7 @@ SELECT * FROM albums WHERE artist ILIKE '%A%';
 
 Now, all artists are returned, except for Pink Floyd.
 
-**Escaping the WildCards**
+### Escaping the Wildcards
 
 For this example, let's update two rows:
 
@@ -233,7 +233,7 @@ SELECT * FROM albums WHERE artist LIKE '%$\%' ESCAPE '$';
 
 With the `ESCAPE` clause, you can choose a different character as the escape character. That way—at least in my opinion—the resulting query is more explicit in the way it escapes the wildcard.   
 
-**Conclusion: PostgreSQL LIKE: Learn It, Leverage It**
+## Conclusion: PostgreSQL LIKE — Learn It, Leverage It
 
 In this post, you've learned about the LIKE operator in PostgreSQL: what it is, what's used for, and how it works along several examples. As you've seen, the operator's working is quite easy once you understand how the wildcards work. We've also walked you through some usage examples, like matching against a single character and performing negative matches.
 
