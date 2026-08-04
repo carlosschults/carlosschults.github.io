@@ -123,12 +123,12 @@
   </header>
 
   <div class="post-content" itemprop="articleBody">
+    
     <p><img src="https://res.cloudinary.com/dz5ppacuo/image/upload/v1490471059/escrevendo-codigo-bom-1038x437_e4oy0i.jpg" alt="" /></p>
 
 <p><strong>NOTA</strong>: O artigo a seguir foi originalmente escrito por <a href="https://chrismm.com/">Christian Maioli M.</a>, que gentilmente me autorizou a fazer esta tradução. Caso seja do seu interesse, <a href="https://chrismm.com/blog/writing-good-code-reduce-the-cognitive-load/">confira o artigo original</a>.</p>
 
-<!--more-->
-<hr />
+<!--more--><hr />
 <p></p>
 
 <p>Baixo número de bugs, boa performance, facilidade de modificação. Código bem feito gera alto impacto, e talvez seja a maior razão por trás da existência do famoso desenvolvedor “10x”. E ainda assim, apesar de sua importância, código bom escapa a novos desenvolvedores. A literatura nessa área geralmente consistente de coleções de dicas desconexas. Como um novo desenvolvedor vai simplesmente memorizar isso tudo?  “<a href="https://www.amazon.com/Code-Complete-Practical-Handbook-Construction/dp/0735619670/ref=as_li_ss_tl?ie=UTF8&amp;linkCode=ll1&amp;tag=chrimaiospo06-20&amp;linkId=6aabd46b91da513d86257af2c05b6585">Code Complete</a>“, o maior expoente nesta matéria, é um livro de 960 páginas!</p>
@@ -136,8 +136,14 @@
 <p><strong>Eu acredito que é possível construir um framework mental simples que pode ser usado com qualquer linguagem ou biblioteca e que vai resultar em código de boa qualidade por padrão.</strong> Há cinco conceitos principais sobre os quais vou falar aqui. Basta mantê-los em mente e escrever código de boa qualidade será moleza.</p>
 
 <p>Update: Mia Li fez a gentileza de disponibilizar uma tradução deste artigo para o Chinês <a href="https://www.inside.com.tw/2016/07/05/writing-good-code-how-to-reduce-the-cognitive-load-of-your-code">aqui</a>.</p>
-
-<h2 id="mantenha-suas-peculiaridades-pessoais-de-fora">Mantenha suas peculiaridades pessoais de fora</h2>
+<h2 id="mantenha-suas-peculiaridades-pessoais-de-fora">
+  
+  
+    Mantenha suas peculiaridades pessoais de fora <a href="#mantenha-suas-peculiaridades-pessoais-de-fora" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>Você lê um artigo que explode a sua mente com truques novos. Agora você vai escrever código “esperto” e todos os seus colegas ficarão impressionados.</p>
 
@@ -151,8 +157,14 @@ Tradução do comentário: Isso era útil na linguagem C para evitar escrever ac
 <p>&nbsp;</p>
 
 <p>Não codifique “do seu jeito”. Apenas siga a padronização de código. Este tipo de coisa é um problema já resolvido. Torne seu código previsível e fácil de ler codificando da maneira que as pessoas esperam.</p>
-
-<h2 id="dividir-para-conquistar">Dividir para conquistar</h2>
+<h2 id="dividir-para-conquistar">
+  
+  
+    Dividir para conquistar <a href="#dividir-para-conquistar" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>Código complexo frequentemente pode ser clarificado por meio da modularização, e existem mais maneiras de se fazer isso do que apenas criando mais funções. Gravar o resultado de longas condicionais em uma variável ou duas é uma grande maneira de modularizar sem o overhead de chamar uma função. Isso irá inclusive lhe permitir compô-las em condicionais maiores, ou reutilizar o resultado em algum outro lugar.</p>
 
@@ -165,8 +177,14 @@ Tradução do comentário: Isso pode ser uma boa maneira para modularizar sem o 
 <p>&nbsp;</p>
 
 <p>TDD, além de trazer seus próprios benefícios quando feito corretamente, tem feitos com que as pessoas apliquem certos princípios que anteriormente não eram tão populares. Código sem estado era desprezado como lento e desnecessário (ver: maior parte de código antigo em C/C++), e agora todos estão falando sobre funções puras. Mesmo que você não use TDD, você deveria aprender seus princípios. Trabalhar sob novos paradigmas transformará você em um desenvolvedor resiliente.</p>
-
-<h2 id="torne-seu-código-discreto-e-processável">Torne seu código discreto e processável</h2>
+<h2 id="torne-seu-código-discreto-e-processável">
+  
+  
+    Torne seu código discreto e processável <a href="#torne-seu-código-discreto-e-processável" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>Seu computador e suas ferramentas podem sofrer tanto quanto você para lidar com seu código, e existe alguma correlação entre o número de pré-processadores e mutações você precisa aplicar e o quão bagunçado o seu código é.</p>
 
@@ -183,8 +201,14 @@ Tradução do comentário: Uso de string mágicas fará com que seja impossível
 <p>&nbsp;</p>
 
 <p>Outra maneira de manter a parte “integrada” da sua IDE relevante é evitar código mágico. A maioria das linguagens disponibilizam maneiras para que você escreva código mais dinâmico. Abusar tais features utilizando strings mágicas, índices de arrays mágicos e funcionalidades de templates customizados irá resultar em uma base de código mais desconectada. Geralmente qualquer feature que apenas um humano sabe o significado vai levar você para essa caminho, e é uma estrada difícil de se escapar, porque se a sua IDE não entende o código, quaisquer funcionalidades de refatoração que possua serão inúteis quando você quiser mudar para uma arquitetura mais estática.</p>
-
-<h2 id="torne-seu-código-legível">Torne seu código legível</h2>
+<h2 id="torne-seu-código-legível">
+  
+  
+    Torne seu código legível <a href="#torne-seu-código-legível" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>Trabalhe no sentido de ter uma arquitetura previsível. Seus colegas de time terão mais facilidade em localizar as coisas, e isso vai reduzir bastante o tempo necessário para concluir as tarefas. <strong>Assim que vocês estiverem de acordo sobre uma estrutura arquitetural geral para seu projeto, torne óbvia a localização dos principais elementos.</strong> Usa MVC? Coloque models, views e controllers em suas próprias pastas, não três níveis abaixo ou espalhados em vários lugares.</p>
 
@@ -195,8 +219,14 @@ Tradução do comentário: Uso de string mágicas fará com que seja impossível
 <p><img src="https://res.cloudinary.com/dz5ppacuo/image/upload/v1490470570/image_3_vdvcrz.png" alt="" /></p>
 <figcaption>Código real de um makefile que escrevi. Desenvolvedores juniores não conseguem lidar com o uso excessivo de novas ferramentas.</figcaption>
 <p>&nbsp;</p>
-
-<h2 id="torne-seu-código-fácil-de-digerir">Torne seu código fácil de digerir</h2>
+<h2 id="torne-seu-código-fácil-de-digerir">
+  
+  
+    Torne seu código fácil de digerir <a href="#torne-seu-código-fácil-de-digerir" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>Se você chegou até aqui, eu tenho boas notícias: esta é provavelmente a parte mais importante. A escolha de bons nomes é sabidamente um dos maiores problemas no desenvolvimento de software. Ferramentas de build provavelmente não vão causar nenhuma melhora aqui, e a razão é que computadores não podem realmente saber o raciocínio que houve por trás de uma solução.</p>
 
@@ -209,8 +239,14 @@ Tradução do comentário: Uso de string mágicas fará com que seja impossível
 <p>Tradução do comentário: Use nomes que transmitam propósito, não tome vantagem da linguagem apenas para parecer inteligente</p>
 
 <p>Finalmente, sempre há algo a ser dito sobre manter a complexidade ciclomática baixa. Isso significa manter o número de ramificações condicionais tão baixo quanto for possível. Cada ramificação adicional não apenas adiciona mais indentação e prejudica a legibilidade, mas, mais importante que isso, aumenta o número de elementos aos quais você precisa estar atento.</p>
-
-<h2 id="conclusão-e-mais-leituras">Conclusão e mais leituras</h2>
+<h2 id="conclusão-e-mais-leituras">
+  
+  
+    Conclusão e mais leituras <a href="#conclusão-e-mais-leituras" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>Estes são cinco conceitos simples e abrangentes, e o meu objetivo aqui foi tornar seu aprendizado mais fácil ao lhe dar caixas nas quais colocar todas as suas ideias sobre organização de código.</p>
 
@@ -631,6 +667,9 @@ Tradução do comentário: Uso de string mágicas fará com que seja impossível
 
     <script src="/js/dark-mode.js"></script>
     <script src="/js/copy-code.js"></script>
+    
+    <script src="/js/post-enhancements.js"></script>
+    
   </body>
 
 </html>

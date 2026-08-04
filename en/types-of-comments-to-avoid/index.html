@@ -127,6 +127,7 @@
   </header>
 
   <div class="post-content" itemprop="articleBody">
+    
     <p><img src="https://res.cloudinary.com/dz5ppacuo/image/upload/v1488499558/comments-1038x437.jpg" alt="" /></p>
 
 <p>Spoiler Alert: You should avoid most of them.
@@ -139,8 +140,14 @@
 <p>After getting my degree and finding a job, things started to change. I was being exposed to <em>real code</em>; I was reading books, articles and blog posts written by influential people in our industry.</p>
 
 <p>These experiences shaped my current vision.</p>
-
-<h2 id="the-dangers-of-bad-documentation">The dangers of bad documentation</h2>
+<h2 id="the-dangers-of-bad-documentation">
+  
+  
+    The dangers of bad documentation <a href="#the-dangers-of-bad-documentation" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>Comments are just another form of documentation. And make no mistake: documentation is a good thing - <em>when done correctly and in the right amount</em>.</p>
 
@@ -149,16 +156,28 @@
 <p>Many types of documentation can be problematic. It is very common for the documentation to lose synchronization with what it is documenting, which is worse than not having any documentation in the first place.</p>
 
 <p>This is one of the problems that comments suffer from, but it is far from being the only one.</p>
-
-<h3 id="commented-out-code">Commented-out Code</h3>
+<h3 id="commented-out-code">
+  
+  
+    Commented-out Code <a href="#commented-out-code" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>Let’s start with the most obvious one, which is commented-out code. Some developers, when fixing a bug, for example, choose to comment the offending code out, rather than delete it.</p>
 
 <p><strong>Don’t do this!</strong></p>
 
 <p>Commented-out code does no good to anyone. It’s just waste. Rely on your version control system. It will remember the changes you made if you needed to revert them in the future.</p>
-
-<h3 id="changelog-comments">‘Changelog’ Comments</h3>
+<h3 id="changelog-comments">
+  
+  
+    ‘Changelog’ Comments <a href="#changelog-comments" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>This category of bad comments is similar to the previous category, which is caused by a lack of trust in your version control system.</p>
 
@@ -169,16 +188,28 @@
 <p>Comments like this are just doing the same work as your VCS already does, but in a clumsy and error-prone way.</p>
 
 <p>Do not write these types of comments. Use <a href="https://git-scm.com/">git</a> and be happy.</p>
-
-<h3 id="redundant-comments">Redundant Comments</h3>
+<h3 id="redundant-comments">
+  
+  
+    Redundant Comments <a href="#redundant-comments" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>This type of bad comment is very easy to detect and very easy to fix. Consider the following code:</p>
 
 <script src="https://gist.github.com/carlosschults/d22bf34fcd542e605a31476c46cfb315.js"></script>
 
 <p>I think we can all agree that these comments are useless. The code is perfectly clear without them, therefore, they should be removed.</p>
-
-<h3 id="comments-at-the-end-of-blocks">Comments at the end of blocks</h3>
+<h3 id="comments-at-the-end-of-blocks">
+  
+  
+    Comments at the end of blocks <a href="#comments-at-the-end-of-blocks" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>You’ve probably seen code like this before:</p>
 
@@ -189,14 +220,26 @@
 <p>If you need a comment for this reason, that indicates that your method is too long and you have too many levels of indentation.</p>
 
 <p>Remember the Principle of Single Responsibility: each method should do only one thing. Divide your method into small ones and the need for such comments disappears.</p>
-
-<h3 id="comments-that-delimit-sections-inside-methods">Comments that delimit sections inside methods</h3>
+<h3 id="comments-that-delimit-sections-inside-methods">
+  
+  
+    Comments that delimit sections inside methods <a href="#comments-that-delimit-sections-inside-methods" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>This one is similar to the previous one. If you have several sections inside a method, each one of them with an explaining comment on top, then you’re probably violating the Single Responsibility Principle.</p>
 
 <p>Remove each section to its own method, use the comment text as the name for the new method, and then delete the comments.</p>
-
-<h3 id="out-of-date-comments">Out of date comments</h3>
+<h3 id="out-of-date-comments">
+  
+  
+    Out of date comments <a href="#out-of-date-comments" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>Here’s a common scenario:</p>
 
@@ -209,8 +252,14 @@
 <p>Now what you get? Comments that lie!</p>
 
 <p><strong>Documentation that spread lies is worse than no documentation at all.</strong> It’s a source of confusion for developers, and a fertile ground for bugs. When you spot an out-of-date comment, don’t think twice: delete it right away, or rewrite it to be accurate. But most of the time you shouldn’t keep the comment. See next topic for why.</p>
-
-<h3 id="comments-created-due-to-lack-of-expressiveness-in-the-code">Comments created due to lack of expressiveness in the code</h3>
+<h3 id="comments-created-due-to-lack-of-expressiveness-in-the-code">
+  
+  
+    Comments created due to lack of expressiveness in the code <a href="#comments-created-due-to-lack-of-expressiveness-in-the-code" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>Consider the following code:</p>
 
@@ -223,8 +272,14 @@
 <p>In the new code, we’ve extracted the concept of being eligible for blood donation in a new property. The rules for blood donation eligibility are now consolidated in a single place; should they ever change, the amount of work required to update them will be minimal.</p>
 
 <p>And we get the nice collateral benefit of readability: the new if statement reads almost like natural language.</p>
-
-<h2 id="conclusion">Conclusion</h2>
+<h2 id="conclusion">
+  
+  
+    Conclusion <a href="#conclusion" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>As we’ve seen, there are several types of bad comments you should be weary of. They are often signs that there may be something wrong with your code. Maybe your methods are too long. Maybe <a href="https://carlosschults.net/en/how-to-choose-good-names/">you didn’t pick good names for your variables</a>.</p>
 
@@ -233,8 +288,14 @@
 <p>Not all comments are bad, though. In a future post, I’ll write about situations in which comments can be valuable.</p>
 
 <p>See you later!</p>
-
-<h2 id="read-more">Read More</h2>
+<h2 id="read-more">
+  
+  
+    Read More <a href="#read-more" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <ul>
   <li><a href="https://butunclebob.com/ArticleS.TimOttinger.ApologizeIncode">Apologies In Code, by Robert C. Martin</a></li>
@@ -605,6 +666,9 @@
 
     <script src="/js/dark-mode.js"></script>
     <script src="/js/copy-code.js"></script>
+    
+    <script src="/js/post-enhancements.js"></script>
+    
   </body>
 
 </html>

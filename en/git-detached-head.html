@@ -126,6 +126,7 @@
   </header>
 
   <div class="post-content" itemprop="articleBody">
+    
     <p><img src="https://res.cloudinary.com/dz5ppacuo/image/upload/v1673926044/git-beautiful-history/git-beautiful-history-cover.png" alt="" /></p>
 
 <div class="callout callout-info">
@@ -139,8 +140,14 @@
 
   </div>
 </div>
-
-<h1 id="table-of-contents">Table of Contents</h1>
+<h1 id="table-of-contents">
+  
+  
+    Table of Contents
+  
+  
+</h1>
+    
 
 <ol>
   <li><a href="#introduction">Introduction</a></li>
@@ -161,16 +168,28 @@
   <li><a href="#getting-rid-of-the-git-detached-head-message">Getting Rid of the “Git Detached HEAD” Message</a></li>
   <li><a href="#git-detached-head-less-scary-than-it-sounds">Conclusion</a></li>
 </ol>
-
-<h2 id="introduction">Introduction</h2>
+<h2 id="introduction">
+  
+  
+    Introduction <a href="#introduction" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>Newcomers to Git often get confused with some of the messages that the <a href="https://www.atlassian.com/git/tutorials/what-is-version-control">VCS tool</a> throws at them. The “You are in ‘detached HEAD’ state” one is certainly one of the weirdest. After coming across this message, most people start furiously Googling “git detached HEAD,” “git detached HEAD fix,” or similar terms, looking for anything that might be of help. If that’s your case, you’ve come to the right place.</p>
 
 <p>Here’s the first thing you should know: <em>you haven’t done anything wrong</em>. Your repo isn’t broken or anything like that. The expression “Detached HEAD” might sound somewhat bizarre, but it’s a perfectly valid repository state in Git. Sure, it’s not the <em>normal</em> state, which would be—you’ve guessed it!—when HEAD is attached. The second thing you need to know is that going back to normal is super easy. If you just want to do that and get on with your day, go to the <a href="#how-do-i-fix-a-detached-head-in-git">“How Do I Fix a Detached Head in Git?”</a> section of this post to see how it’s done.</p>
 
 <p>But if you want to know more—and I guess you do—stick around and we’ll help you. What does HEAD mean in Git? What does it mean for it to be attached or detached? These are the kind of questions we’ll answer in this post. By the end of it, you’ll have a better understanding of Git’s fundamentals, and detached HEADs will never trouble you again. Let’s dig in.</p>
-
-<h2 id="git-detached-head-reproducing-the-problem">Git Detached HEAD: Reproducing the “Problem”</h2>
+<h2 id="git-detached-head-reproducing-the-problem">
+  
+  
+    Git Detached HEAD: Reproducing the “Problem” <a href="#git-detached-head-reproducing-the-problem" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>Let’s start with a quick demo showing how to reach the detached HEAD state. We’ll create a repository and add some commits to it:</p>
 
@@ -194,8 +213,14 @@ git commit <span class="nt">-m</span> <span class="s2">"Create second file"</spa
 <p>Let’s say that, for testing purposes, we need to see how things were at the time of the second commit. How would we do that? As it turns out, we can check out a commit the same way we’d check out branches. Remember, branches are just names for commits. So, based on the example output above, we’d run <strong>git checkout 87ec91d</strong>. Keep in mind that if you’re following along by executing these commands on your own system, the hash for your commits will be different from those in the example. Use the log command to find it.</p>
 
 <p>After running the command, we get the “You are in ‘detached HEAD’ state[…]” message. Before we go on, make sure you keep this in mind: you get to the detached HEAD state by checking out a commit directly.</p>
-
-<h2 id="what-is-a-head-in-git">What Is a HEAD in Git?</h2>
+<h2 id="what-is-a-head-in-git">
+  
+  
+    What Is a HEAD in Git? <a href="#what-is-a-head-in-git" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>What does HEAD mean in Git? To understand that, we have to take a step back and talk fundamentals.</p>
 
@@ -204,8 +229,14 @@ git commit <span class="nt">-m</span> <span class="s2">"Create second file"</spa
 <p>HEAD is another important type of reference. The purpose of HEAD is to keep track of the current point in a Git repo. In other words, HEAD answers the question, “Where am I right now?”</p>
 
 <p>For instance, when you use the <strong>log</strong> command, how does Git know which commit it should start displaying results from? HEAD provides the answer. When you create a new commit, its parent is indicated by where HEAD currently points to.</p>
-
-<h3 id="are-you-in-detached-head-state">Are you in ‘detached HEAD’ state?</h3>
+<h3 id="are-you-in-detached-head-state">
+  
+  
+    Are you in ‘detached HEAD’ state? <a href="#are-you-in-detached-head-state" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>You’ve just seen that HEAD in Git is only the name of a reference that indicates the current point in a repository. So, what does it mean for it to be attached or detached?</p>
 
@@ -218,8 +249,14 @@ git commit <span class="nt">-m</span> <span class="s2">"Create second file"</spa
 <img src="/img/git-detached-head/image4.png" alt="" /></p>
 
 <p>This is the detached HEAD state; HEAD is pointing directly to a commit instead of a branch.</p>
-
-<h3 id="benefits-of-a-git-detached-head">Benefits of a Git Detached HEAD</h3>
+<h3 id="benefits-of-a-git-detached-head">
+  
+  
+    Benefits of a Git Detached HEAD <a href="#benefits-of-a-git-detached-head" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>Are there good reasons for you to be in the detached HEAD state? You bet there are!</p>
 
@@ -248,12 +285,24 @@ git commit <span class="nt">-a</span> <span class="nt">-m</span> <span class="s2
 <img src="/img/git-detached-head/image6.png" alt="" /></p>
 
 <p>What should you do if you want to keep those changes? And what should you do if you want to discard them? That’s what we’ll see next.</p>
-
-<h2 id="how-do-i-fix-a-detached-head-in-git">How Do I Fix a Detached HEAD in Git?</h2>
+<h2 id="how-do-i-fix-a-detached-head-in-git">
+  
+  
+    How Do I Fix a Detached HEAD in Git? <a href="#how-do-i-fix-a-detached-head-in-git" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>You can’t fix what isn’t broken. As I’ve said before, a detached HEAD is a valid state in Git. It’s not a problem. But you may still want to know how to get back to normal, and that depends on why you’re in this situation in the first place.</p>
-
-<h3 id="scenario-1-im-here-by-accident">Scenario #1: I’m Here by Accident</h3>
+<h3 id="scenario-1-im-here-by-accident">
+  
+  
+    Scenario #1: I’m Here by Accident <a href="#scenario-1-im-here-by-accident" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>If you’ve reached the detached HEAD state by accident—that is to say, you didn’t mean to check out a commit—going back is easy. Just check out the branch you were in before:</p>
 
@@ -262,12 +311,24 @@ git commit <span class="nt">-a</span> <span class="nt">-m</span> <span class="s2
 <p>If you’re using Git 2.23.0 or newer, you can also use <strong>switch</strong> instead of <strong>checkout</strong>:</p>
 
 <figure class="highlight"><pre><code class="language-bash" data-lang="bash">git switch &lt;branch-name&gt;</code></pre></figure>
-
-<h3 id="scenario-2-ive-made-experimental-changes-and-i-want-to-discard-them">Scenario #2: I’ve Made Experimental Changes and I Want to Discard Them</h3>
+<h3 id="scenario-2-ive-made-experimental-changes-and-i-want-to-discard-them">
+  
+  
+    Scenario #2: I’ve Made Experimental Changes and I Want to Discard Them <a href="#scenario-2-ive-made-experimental-changes-and-i-want-to-discard-them" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>You’ve entered the detached HEAD state and made a few commits. The experiment went nowhere, and you’ll no longer work on it. What do you do? You just do the same as in the previous scenario: go back to your original branch. The changes you made while in the alternate timeline won’t have any impact on your current branch.</p>
-
-<h3 id="scenario-3-ive-made-experimental-changes-and-i-want-to-keep-them">Scenario #3: I’ve Made Experimental Changes and I Want to Keep Them</h3>
+<h3 id="scenario-3-ive-made-experimental-changes-and-i-want-to-keep-them">
+  
+  
+    Scenario #3: I’ve Made Experimental Changes and I Want to Keep Them <a href="#scenario-3-ive-made-experimental-changes-and-i-want-to-keep-them" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>If you want to keep changes made with a detached HEAD, just <a href="https://www.cloudbees.com/blog/git-create-branch">create a new branch</a> and switch to it. You can create it right after arriving at a detached HEAD or after creating one or more commits. The result is the same. The only restriction is that you should do it before returning to your normal branch.</p>
 
@@ -281,16 +342,28 @@ git checkout alt-history</code></pre></figure>
 
 <p>We could just run <strong>git branch alt-history</strong>, and we’d be all set. That’s the new—and final—version of our diagram:
 <img src="/img/git-detached-head/image1.png" alt="" /></p>
-
-<h2 id="getting-rid-of-the-git-detached-head-message">Getting Rid of the “Git Detached HEAD” Message</h2>
+<h2 id="getting-rid-of-the-git-detached-head-message">
+  
+  
+    Getting Rid of the “Git Detached HEAD” Message <a href="#getting-rid-of-the-git-detached-head-message" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>Before wrapping up, let’s share a final quick tip. Now that you understand everything about detached HEAD in Git and know that it’s not that big of a deal, seeing that message every time you check out a commit might become tiring. Fortunately, there’s a way to not see the warning anymore. Just run the following command:</p>
 
 <figure class="highlight"><pre><code class="language-bash" data-lang="bash">git config advice.detached <span class="nb">head false</span></code></pre></figure>
 
 <p>Easy, right? You can also use the <strong>–global</strong> modifier if you want the change to apply to every repository and not only the current one.</p>
-
-<h2 id="git-detached-head-less-scary-than-it-sounds">Git Detached HEAD: Less Scary Than It Sounds</h2>
+<h2 id="git-detached-head-less-scary-than-it-sounds">
+  
+  
+    Git Detached HEAD: Less Scary Than It Sounds <a href="#git-detached-head-less-scary-than-it-sounds" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>A message talking about heads not being attached doesn’t sound like your routine software error message, right? Well, it’s not an error message.</p>
 
@@ -675,6 +748,9 @@ git checkout alt-history</code></pre></figure>
 
     <script src="/js/dark-mode.js"></script>
     <script src="/js/copy-code.js"></script>
+    
+    <script src="/js/post-enhancements.js"></script>
+    
   </body>
 
 </html>

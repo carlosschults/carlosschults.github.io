@@ -125,6 +125,7 @@
   </header>
 
   <div class="post-content" itemprop="articleBody">
+    
     <p><img src="https://res.cloudinary.com/dz5ppacuo/image/upload/v1466341001/csharp-min_buiizq.png" alt="" /></p>
 
 <p>“Por que uma variável DateTime não pode receber <code class="language-plaintext highlighter-rouge">null</code>?” Esta é uma pergunta que vive aparecendo no <em>StackOverflow</em> e site similares. Às vezes escrita de modo um pouco diferente, às vezes com um tipo diferente, mas no fundo é a mesma dúvida. O que é natural, se você considerar que provavelmente milhares de pessoas entram na área a cada ano.
@@ -137,8 +138,14 @@
 <p>Em algum momento os projetistas do C# tiveram que tomar essa decisão. Eles deliberadamente decidiram que tipos de valor não poderiam receber <code class="language-plaintext highlighter-rouge">null</code>. Será que tem alguma coisa que naturalmente impede isso? Talvez tenha algo a ver com a pilha e a heap?</p>
 
 <p>Eu acho que antes de tentarmos responder essas questões, seria interessar voltar um passo e pensar um pouco sobre outra questão.</p>
-
-<h2 id="o-que-exatamente-é-null">O que exatamente é null?</h2>
+<h2 id="o-que-exatamente-é-null">
+  
+  
+    O que exatamente é null? <a href="#o-que-exatamente-é-null" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>Você provavelmente pensa em <code class="language-plaintext highlighter-rouge">null</code> como uma maneira de representar uma informação que está faltando. Algo desconhecido, ausente ou irrelevante. Talvez um dado que não está onde deveria <em>ainda</em>, mas talvez esteja no futuro.</p>
 
@@ -151,8 +158,14 @@
 <p>É claro, tudo isso são detalhes de implementação. Isso poderia ter sido implementado de maneiras diferentes, ou seja, não é tão relevante assim pra gente agora. O que você realmente precisa entender é que você <strong>precisa de algo para representar nada</strong>. É necessário algum tipo de valor especial que significa “esse valor está faltando” ou “esse valor é desconhecido”.</p>
 
 <p>Quando você entende isso, fica mais fácil enxergar qual é o problema com tipos de valor.</p>
-
-<h2 id="como-você-representaria-null-para-um-tipo-de-valor">Como você representaria null para um tipo de valor?</h2>
+<h2 id="como-você-representaria-null-para-um-tipo-de-valor">
+  
+  
+    Como você representaria null para um tipo de valor? <a href="#como-você-representaria-null-para-um-tipo-de-valor" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>Para entender qual é a dificuldade em fazer um tipo de valor ser nulo, você precisa considerar que tipos de valor geralmente têm um intervalo de valores possíveis que eles são capazes de representar.</p>
 
@@ -194,8 +207,14 @@ are horrible, not to mention the fact that you’d have to check the flag every 
 </blockquote>
 
 <p>Então, não há nada <strong>em princípio</strong> que impede que tipos de valor recebem nulo. É que seria tão complicado que os projetistas da linguagem decidiram que os benefícios de fazer isso não superam os custos.</p>
-
-<h2 id="mas-eu-realmente-preciso-de-um-tipo-de-valor-nulável-e-agora">Mas eu realmente preciso de um tipo de valor nulável. E agora?</h2>
+<h2 id="mas-eu-realmente-preciso-de-um-tipo-de-valor-nulável-e-agora">
+  
+  
+    Mas eu realmente preciso de um tipo de valor nulável. E agora? <a href="#mas-eu-realmente-preciso-de-um-tipo-de-valor-nulável-e-agora" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>Agora você entende as complicações envolvidas em representar <code class="language-plaintext highlighter-rouge">null</code> para um tipo de valor, e porque os projetistas do C# decidiram contra permitir isso. Mas, e se você realmente precisa fazer isso? Um cenário comum é quando você busca dados de um banco de dados relacional. O que é possível ser feito?</p>
 
@@ -623,6 +642,9 @@ are horrible, not to mention the fact that you’d have to check the flag every 
 
     <script src="/js/dark-mode.js"></script>
     <script src="/js/copy-code.js"></script>
+    
+    <script src="/js/post-enhancements.js"></script>
+    
   </body>
 
 </html>

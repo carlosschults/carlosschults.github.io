@@ -126,6 +126,7 @@
   </header>
 
   <div class="post-content" itemprop="articleBody">
+    
     <p><img src="https://res.cloudinary.com/dz5ppacuo/image/upload/v1673926044/git-beautiful-history/git-beautiful-history-cover.png" alt="" /></p>
 
 <div class="callout callout-info">
@@ -146,16 +147,28 @@
 <p>In Git, the opposite is often true: branching is so cheap that most people do it a lot. People often get confused when trying to manage their branches. This post attempts to clear up some of that confusion by offering a guide on how to successfully git switch branch in an easy and safe way. Before we get there, though, we start with some basics, explaining what branches actually are in Git, how they work and how you create them.</p>
 
 <p>Before wrapping up, we share a bonus tip, covering how to check out remote branches. Let’s get started!</p>
-
-<h2 id="how-do-git-branches-work">How Do Git Branches Work?</h2>
+<h2 id="how-do-git-branches-work">
+  
+  
+    How Do Git Branches Work? <a href="#how-do-git-branches-work" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>How do branches work in Git? The first thing you need to know is that a repository in Git is made up of <strong>objects</strong> and <strong>references</strong>. The main types of objects in a Git repository are commits. References point to other references or to objects. The main types of references are—you’ve guessed it—branches.</p>
 
 <p>Objects in Git are immutable. You can’t change a commit in any way or move its position in history. There are commands that appear to change things, but they actually create new commits. References, on the other hand, change a lot. For instance, when you create a new commit, the current branch reference is updated to point to it.</p>
 
 <p>When you create a new branch, all that happens is that a new reference is created pointing to a commit. That’s why it’s so cheap and fast to create branches in Git. Speaking of which…</p>
-
-<h2 id="how-do-i-create-a-new-branch">How Do I Create a New Branch?</h2>
+<h2 id="how-do-i-create-a-new-branch">
+  
+  
+    How Do I Create a New Branch? <a href="#how-do-i-create-a-new-branch" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>We already have a whole post explaining how <a href="/en/git-create-branch/">you can create a branch in Git</a>, covering the four mains ways to do that.</p>
 
@@ -198,12 +211,24 @@ git commit <span class="nt">-m</span> <span class="s2">"Create fourth file"</spa
 <p>In the next section, we’ll show how you can git switch branch, and then you’ll be able to see for yourself how that new branch doesn’t contain the fourth commit. For now, take a look at the visual representation of the current state of our repo:</p>
 
 <p><img src="/img/git-switch-branch/img3.webp" alt="" /></p>
-
-<h2 id="how-do-you-switch-branches">How Do You Switch Branches?</h2>
+<h2 id="how-do-you-switch-branches">
+  
+  
+    How Do You Switch Branches? <a href="#how-do-you-switch-branches" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>For most of Git’s history, the checkout command was used for that. While you can still use it, version 2.23 of Git added the switch command (as well as the restore command) in an attempt to have more specific commands for some of the many tasks the checkout command is used for.</p>
-
-<h3 id="how-do-i-use-git-checkout">How Do I Use Git Checkout?</h3>
+<h3 id="how-do-i-use-git-checkout">
+  
+  
+    How Do I Use Git Checkout? <a href="#how-do-i-use-git-checkout" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>The older, more well-know way of switching branches in Git is by using the <code class="language-plaintext highlighter-rouge">checkout</code> command. Following our example, if we wanted to change to the “example” branch, we’d just have to run:</p>
 
@@ -232,8 +257,14 @@ git checkout new
 <p>Checkout doesn’t work only with branches, though. You can also checkout commits directly. Why would you want to do so?</p>
 
 <p>Well, taking a look at how the project was some amount of time ago is often useful, particularly for testing purposes. But there’s more. Checking out a commit puts your repository in a state called <a href="/en/git-detached-head">“detached HEAD”</a> which allows you to create experimental changes, adding commits that you can then choose to keep or throw away.</p>
-
-<h3 id="what-is-git-switch">What Is Git Switch?</h3>
+<h3 id="what-is-git-switch">
+  
+  
+    What Is Git Switch? <a href="#what-is-git-switch" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>For the most part of Git’s lifetime, the <code class="language-plaintext highlighter-rouge">checkout</code> command was the only one you’d use for switching branches. The problem is that this command also does other things, <a href="https://redfin.engineering/two-commits-that-wrecked-the-user-experience-of-git-f0075b77eab1">which can lead to confusion, especially among new users</a>.</p>
 
@@ -260,8 +291,14 @@ git checkout new
 </code></pre></div></div>
 
 <p>Is using the new command worth it? Well, I’ll probably keep using <code class="language-plaintext highlighter-rouge">git checkout</code>, as long as they don’t change it, mainly because of muscle memory. But when teaching Git to beginners? Then I’ll definitely use the <code class="language-plaintext highlighter-rouge">switch</code> command. It has a name that’s more closely related to the task it does and, therefore, it’s more memorable.</p>
-
-<h3 id="how-do-i-switch-to-a-remote-branch">How Do I Switch to a Remote Branch?</h3>
+<h3 id="how-do-i-switch-to-a-remote-branch">
+  
+  
+    How Do I Switch to a Remote Branch? <a href="#how-do-i-switch-to-a-remote-branch" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>Before wrapping up, we share a final tip: how to switch to remote branches?</p>
 
@@ -302,8 +339,14 @@ git switch <span class="nt">-c</span> slow-test origin/slow-test
 </code></pre></div></div>
 
 <p>and the result would have been the same. That works because when you try to check out a branch and Git doesn’t find a branch with that name, it tries to match it with a remote branch from one of your remotes. If it can successfully match it, things just work.</p>
-
-<h2 id="git-branches-use-in-moderation">Git Branches: Use in Moderation</h2>
+<h2 id="git-branches-use-in-moderation">
+  
+  
+    Git Branches: Use in Moderation <a href="#git-branches-use-in-moderation" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>In this post, we’ve shown you how to switch branches in Git. But we went further than that: we’ve explained what branches are and how they work. Hopefully, by now, you’re more comfortable creating and using branches in Git.</p>
 
@@ -680,6 +723,9 @@ git switch <span class="nt">-c</span> slow-test origin/slow-test
 
     <script src="/js/dark-mode.js"></script>
     <script src="/js/copy-code.js"></script>
+    
+    <script src="/js/post-enhancements.js"></script>
+    
   </body>
 
 </html>

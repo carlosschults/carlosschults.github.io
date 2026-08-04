@@ -125,6 +125,7 @@
   </header>
 
   <div class="post-content" itemprop="articleBody">
+    
     <p><img src="https://res.cloudinary.com/dz5ppacuo/image/upload/v1513817072/csharp8-1037x438_skogpz.jpg" alt="" /></p>
 
 <div class="callout callout-info">
@@ -145,8 +146,14 @@
 
   </div>
 </div>
-
-<h2 id="índice">Índice</h2>
+<h2 id="índice">
+  
+  
+    Índice <a href="#índice" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <ul>
   <li><a href="#introdução">Introdução</a></li>
@@ -208,8 +215,14 @@
 
   </div>
 </div>
-
-<h2 id="introdução">Introdução</h2>
+<h2 id="introdução">
+  
+  
+    Introdução <a href="#introdução" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>Se você já escreve código há algum tempo, provavelmente já usou configuração de alguma forma. Pense em feature flags, configurações de log, configurações de autenticação etc. Talvez você tenha usado um arquivo de configuração com algumas configurações para o seu aplicativo ou talvez tenha usado variáveis de ambiente. Talvez você tenha usado ambos!</p>
 
@@ -232,8 +245,14 @@
 </div>
 
 <p>Vamos começar!</p>
-
-<h2 id="configuração-no-net">Configuração no .NET</h2>
+<h2 id="configuração-no-net">
+  
+  
+    Configuração no .NET <a href="#configuração-no-net" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>O sistema de configuração do .NET é muito flexível! Você pode usar vários provedores de configuração, sendo que cada um deles pode ter um formato de configuração diferente:</p>
 
@@ -243,8 +262,14 @@
 <a href="https://learn.microsoft.com/dotnet/core/extensions/configuration?WT.mc_id=DT-MVP-5005050#concepts-and-abstractions">Extraído da documentação oficial</a></p>
 
 <p>Outras fontes podem ser arquivos como <code class="language-plaintext highlighter-rouge">.xml</code>, <code class="language-plaintext highlighter-rouge">.ini</code> e muito mais. Você pode até mesmo conectar seu sistema de configuração à nuvem, o que faremos mais adiante!</p>
-
-<h3 id="o-básico">O Básico</h3>
+<h3 id="o-básico">
+  
+  
+    O Básico <a href="#o-básico" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>Como você pode ver, toda a sua configuração pode ser acessada usando a interface <code class="language-plaintext highlighter-rouge">IConfiguration</code>. Com isso, você pode recuperar seus valores de uma maneira fortemente tipada. Um exemplo:</p>
 
@@ -262,8 +287,14 @@
 <span class="p">}</span></code></pre></figure>
 
 <p>Você perceberá que não estamos especificando qual provedor deve ser usado para recuperar a <code class="language-plaintext highlighter-rouge">ApiKey</code>. Isso ocorre porque isso não deveria importar; a <code class="language-plaintext highlighter-rouge">IConfiguration</code> esconde toda essa complexidade de nós e, portanto, cria flexibilidade. O sistema de configuração decide qual provedor usar com base na ordem dos provedores. Falaremos mais sobre isso mais tarde!</p>
-
-<h3 id="acesso-a-dados-estruturados">Acesso a dados estruturados</h3>
+<h3 id="acesso-a-dados-estruturados">
+  
+  
+    Acesso a dados estruturados <a href="#acesso-a-dados-estruturados" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>Um recurso muito avançado do sistema de configuração do .NET é o fato de ele oferecer suporte a dados estruturados. Isso é muito útil porque permite que você agrupe valores de configuração relacionados. Todos os provedores oferecem suporte a dados estruturados, mas se você já trabalhou com um projeto ASP.NET Core, provavelmente reconhecerá o mais comum, que é <code class="language-plaintext highlighter-rouge">appsettings.json</code>. O JSON a seguir é um exemplo de um arquivo desse tipo:</p>
 
@@ -336,8 +367,14 @@
 
   </div>
 </div>
-
-<h3 id="como-tudo-isso-funciona">Como tudo isso funciona?</h3>
+<h3 id="como-tudo-isso-funciona">
+  
+  
+    Como tudo isso funciona? <a href="#como-tudo-isso-funciona" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>Estamos usando <code class="language-plaintext highlighter-rouge">IConfiguration</code> em alguns exemplos. Você deve estar se perguntando como tudo isso funciona nos bastidores; como criar uma instância de <code class="language-plaintext highlighter-rouge">IConfiguration</code> e como configurá-la? Vamos dar uma olhada!</p>
 
@@ -360,8 +397,14 @@
 <a href="https://www.manning.com/books/asp-net-core-in-action-second-edition">ASP.NET Core in Action, Second Edition (Permissão concedida pelo autor Andrew Lock)</a></p>
 
 <p>Imagine que <code class="language-plaintext highlighter-rouge">sharedsettings.json</code> tenha um valor para todos os valores de configuração usados pelo aplicativo. O <code class="language-plaintext highlighter-rouge">appsettings.json</code> e as <code class="language-plaintext highlighter-rouge">Variáveis de ambiente</code> contêm um subconjunto desses valores. Como o provedor para as variáveis de ambiente foi adicionado por último, ele tem a prioridade mais alta. Portanto, se você quiser recuperar um valor de configuração chamado <code class="language-plaintext highlighter-rouge">ApiKey</code>, o sistema examinará primeiro as variáveis de ambiente. Se ele existir, será retornado, mesmo que outros provedores também contenham um valor para <code class="language-plaintext highlighter-rouge">ApiKey</code>. No entanto, se as variáveis de ambiente não contiverem um valor para <code class="language-plaintext highlighter-rouge">ApiKey</code>, ele passará para o provedor que foi adicionado antes dele e pesquisará lá, e assim por diante.</p>
-
-<h4 id="os-valores-default">Os valores default</h4>
+<h4 id="os-valores-default">
+  
+  
+    Os valores default <a href="#os-valores-default" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h4>
+    
 
 <p>Talvez você esteja um pouco confuso neste ponto. Eu certamente estava quando aprendi sobre o <code class="language-plaintext highlighter-rouge">IConfigurationBuilder</code> e a importância dessas camadas. Por quê? Bem, percebi que estava usando o <code class="language-plaintext highlighter-rouge">IConfiguration</code> em muitos projetos, mas nunca tinha ouvido falar do <code class="language-plaintext highlighter-rouge">IConfigurationBuilder</code> antes. Então, como eu poderia estar usando o <code class="language-plaintext highlighter-rouge">IConfiguration</code>?</p>
 
@@ -421,8 +464,14 @@
 </div>
 
 <p>O Visual Studio (e outros IDEs, como o JetBrains Rider) oferecem suporte à configuração de variáveis de ambiente/argumentos de linha de comando em seu IDE quando você acessa as propriedades do projeto. No entanto, aconselho <strong>contra</strong> o uso disso durante o desenvolvimento. Eu nunca uso variáveis de ambiente ou argumentos de linha de comando durante o desenvolvimento porque é mais difícil editá-los do que simplesmente abrir um arquivo. Armazená-los em <code class="language-plaintext highlighter-rouge">appsettings.Development.json</code> (que será abordado a seguir) é mais conveniente para você e seus colegas.</p>
-
-<h4 id="configuração-e-ambientes">Configuração e Ambientes</h4>
+<h4 id="configuração-e-ambientes">
+  
+  
+    Configuração e Ambientes <a href="#configuração-e-ambientes" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h4>
+    
 
 <p>O provedor <em>appsettings.{<strong>ENVIRONMENT</strong>}.json</em> é um pouco diferente dos outros provedores. Isso ocorre porque ele depende do <a href="https://learn.microsoft.com/aspnet/core/fundamentals/environments?WT.mc_id=DT-MVP-5005050">ambiente do aplicativo</a>. O ambiente atual do aplicativo é lido a partir do valor da variável de ambiente <code class="language-plaintext highlighter-rouge">DOTNET_ENVIRONMENT</code> ou <code class="language-plaintext highlighter-rouge">ASPNETCORE_ENVIRONMENT</code>. Se o seu projeto não for um projeto ASP.NET Core, o aplicativo verificará apenas <code class="language-plaintext highlighter-rouge">DOTNET_ENVIRONMENT</code>. Os projetos ASP.NET Core retornam para <code class="language-plaintext highlighter-rouge">DOTNET_ENVIRONMENT</code> quando <code class="language-plaintext highlighter-rouge">ASPNETCORE_ENVIRONMENT</code> não existe.</p>
 
@@ -469,8 +518,14 @@
 </code></pre></div></div>
 
 <p>Você não está limitado aos nomes de ambiente mencionados acima; eles são apenas os padrões que o .NET usa. Se quiser usar um nome diferente, configure a variável de ambiente <code class="language-plaintext highlighter-rouge">ASPNETCORE_ENVIRONMENT</code> com o nome de sua escolha e crie um arquivo <code class="language-plaintext highlighter-rouge">appsettings.ENV_NAME.json</code> correspondente. A única outra coisa que você precisa fazer é garantir que o ambiente em que você executa seu aplicativo tenha <code class="language-plaintext highlighter-rouge">ASPNETCORE_ENVIRONMENT</code> ou <code class="language-plaintext highlighter-rouge">DOTNET_ENVIRONMENT</code> definido com o valor correto.</p>
-
-<h3 id="tratando-a-configuração-como-código">Tratando a Configuração Como Código</h3>
+<h3 id="tratando-a-configuração-como-código">
+  
+  
+    Tratando a Configuração Como Código <a href="#tratando-a-configuração-como-código" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>Anteriormente, elogiei o sistema de configuração do .NET e o <code class="language-plaintext highlighter-rouge">IConfiguration</code> por serem flexíveis e ricos em recursos. Falei sobre seu suporte a dados estruturados e sobre a recuperação de valores de uma hierarquia de configuração mais profunda. Mas você sabia que pode fazer muito mais com dados estruturados?</p>
 
@@ -512,8 +567,14 @@
 <p>Isso parece bem legal, certo? Em vez de realizar 3 chamadas para obter cada propriedade de configuração relacionada à API individualmente, podemos mapeá-las em um objeto fortemente tipado. Agora podemos tratar nossa configuração como código! Poderíamos até criar métodos em nossa classe <code class="language-plaintext highlighter-rouge">ExternalApiSettings</code> para torná-la ainda mais poderosa!</p>
 
 <p>No entanto, há algumas desvantagens importantes nessa abordagem.</p>
-
-<h4 id="desvantagens">Desvantagens</h4>
+<h4 id="desvantagens">
+  
+  
+    Desvantagens <a href="#desvantagens" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h4>
+    
 
 <ul>
   <li>A primeira desvantagem é que o nosso <code class="language-plaintext highlighter-rouge">ExternalApiClient</code> requer uma instância de <code class="language-plaintext highlighter-rouge">IConfiguration</code> para funcionar. Essa é uma dependência muito grande e um grande desperdício, considerando que ele usa apenas 3 valores de configuração! Além disso, essa classe agora pode acessar outros valores de configuração, como uma string de conexão a um banco de dados, configurações de registro, feature flags etc., mesmo que não precise dessas informações.</li>
@@ -522,8 +583,14 @@
 </ul>
 
 <p>Então, o que podemos fazer em relação a isso? Reescrevê-la em Rust 🦀? Não, podemos usar o options pattern!</p>
-
-<h2 id="options-pattern">Options Pattern</h2>
+<h2 id="options-pattern">
+  
+  
+    Options Pattern <a href="#options-pattern" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>O <em>options pattern</em> (“padrão de opções”) permite que você faça um uso ainda melhor do sistema de configuração do .NET 🚀! Ele permite a você desacoplar seu aplicativo do sistema de configuração e adiciona muitos recursos poderosos a esse sistema, como:</p>
 
@@ -542,8 +609,14 @@
     <span class="k">public</span> <span class="kt">string</span> <span class="n">ApiKey</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
     <span class="k">public</span> <span class="kt">int</span> <span class="n">TimeoutInMilliseconds</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
 <span class="p">}</span></code></pre></figure>
-
-<h3 id="injeção-de-dependência">Injeção de dependência</h3>
+<h3 id="injeção-de-dependência">
+  
+  
+    Injeção de dependência <a href="#injeção-de-dependência" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>O options pattern funciona muito bem com a injeção de dependência! Para isso, basta registrar sua classe/record de opções na coleção de serviços. Dependendo do seu projeto, o ponto de entrada para isso pode ser o método <code class="language-plaintext highlighter-rouge">Startup.cs -&gt; ConfigureServices(IServiceCollection services)</code> ou em algum lugar em seu <code class="language-plaintext highlighter-rouge">Program.cs</code>.</p>
 
@@ -583,8 +656,14 @@
 
   </div>
 </div>
-
-<h3 id="validação">Validação</h3>
+<h3 id="validação">
+  
+  
+    Validação <a href="#validação" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>Meu recurso favorito do sistema de configuração do .NET é a facilidade com que é possível validar sua configuração! Acredito que essa seja uma das partes mais importantes de qualquer aplicativo, e não vejo que ela seja usada com frequência. O motivo pelo qual acredito que a configuração é uma das partes mais importantes de qualquer aplicativo é porque ela abriga definições muito importantes do seu aplicativo.</p>
 
@@ -627,8 +706,14 @@
 </ol>
 
 <p>Você também pode validar seu código de muitas outras maneiras. Você pode usar a interface <code class="language-plaintext highlighter-rouge">IValidatableOptions&lt;&gt;</code> para implementar uma lógica de validação complexa ou pode chamar <code class="language-plaintext highlighter-rouge">Validate(Func&lt;TOptions, bool&gt; validation)</code> para escrever uma lógica de validação personalizada como parte do construtor de opções. Você pode até mesmo <a href="https://andrewlock.net/adding-validation-to-strongly-typed-configuration-objects-using-flentvalidation/">integrá-lo ao FluentValidation</a>!</p>
-
-<h3 id="tempos-de-vida-da-configuração">Tempos de vida da configuração</h3>
+<h3 id="tempos-de-vida-da-configuração">
+  
+  
+    Tempos de vida da configuração <a href="#tempos-de-vida-da-configuração" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>Por fim, gostaria de falar sobre o tempo de vida do padrão Options. O <code class="language-plaintext highlighter-rouge">IOptions&lt;T&gt;</code> é um singleton. Isso significa que, se um de seus <a href="https://learn.microsoft.com/dotnet/core/extensions/configuration-providers?WT.mc_id=DT-MVP-5005050#json-configuration-provider">provedores de configuração for atualizado em tempo de execução</a>, as opções não serão atualizadas. Isso ocorre porque as opções são mapeadas apenas uma vez quando você chama <code class="language-plaintext highlighter-rouge">.Value</code> sobre elas.</p>
 
@@ -637,8 +722,14 @@
 <p><img src="/img/configuracao-dotnet/options-lifetimes.webp" alt="Visão geral dos recursos de IOptions, IOptionsSnapshot e IOptionsMonitor" /></p>
 
 <p>Visão geral dos recursos de IOptions, IOptionsSnapshot e IOptionsMonitor</p>
-
-<h4 id="ioptionssnapshot">IOptionsSnapshot</h4>
+<h4 id="ioptionssnapshot">
+  
+  
+    IOptionsSnapshot <a href="#ioptionssnapshot" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h4>
+    
 
 <p>Em vez de injetar <code class="language-plaintext highlighter-rouge">IOptions&lt;T&gt;</code> em uma de suas classes, você pode injetar <code class="language-plaintext highlighter-rouge">IOptionsSnapshot&lt;T&gt;</code>. Isso recarregará esse tipo específico de opções a cada <a href="https://learn.microsoft.com/dotnet/core/extensions/dependency-injection?WT.mc_id=DT-MVP-5005050#scoped">scope</a>. Um escopo no .NET é um termo abstrato. Um escopo pode ser uma solicitação HTTP, por exemplo. Portanto, para cada solicitação HTTP, ele recarregaria as opções e elas permaneceriam consistentes para toda a solicitação. Isso significa que, se você alterar sua configuração, ela só será atualizada em uma nova solicitação.</p>
 
@@ -653,14 +744,26 @@
 
   </div>
 </div>
-
-<h4 id="ioptionsmonitor">IOptionsMonitor</h4>
+<h4 id="ioptionsmonitor">
+  
+  
+    IOptionsMonitor <a href="#ioptionsmonitor" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h4>
+    
 
 <p>O <code class="language-plaintext highlighter-rouge">IOptionsMonitor&lt;T&gt;</code> não funciona com escopos. Em vez disso, você precisa chamar <code class="language-plaintext highlighter-rouge">.CurrentValue</code> (em vez de <code class="language-plaintext highlighter-rouge">.Value</code>) para recuperar a versão atual. No entanto, é preciso ter cuidado com a forma como você acessa a sua configuração! Imagine um cenário em que sua configuração é alterada no meio de uma solicitação HTTP. Chamar <code class="language-plaintext highlighter-rouge">.CurrentValue</code> no início e no final de uma solicitação resultaria em valores diferentes, o que cria um risco de sincronização. Você pode registrar uma chamada de retorno usando <code class="language-plaintext highlighter-rouge">OnChange()</code> para ser notificado sobre esses eventos.</p>
 
 <p>Essa interface é mais útil em um cenário de trabalho em segundo plano que é instanciado apenas uma vez, mas que se beneficiaria da capacidade de lidar com alterações de configuração.</p>
-
-<h2 id="gerenciamento-de-segredos-durante-o-desenvolvimento">Gerenciamento de segredos durante o desenvolvimento</h2>
+<h2 id="gerenciamento-de-segredos-durante-o-desenvolvimento">
+  
+  
+    Gerenciamento de segredos durante o desenvolvimento <a href="#gerenciamento-de-segredos-durante-o-desenvolvimento" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>Se você vai tirar alguma conclusão dEste post, que seja a seguinte:</p>
 
@@ -679,8 +782,14 @@
 <p>Se você armazenar segredos em seu repositório git e o repositório for comprometido, seus segredos também serão comprometidos. Acho que não preciso explicar por que isso é ruim. Então, como podemos evitar que isso aconteça com o .NET?</p>
 
 <p>Usando o provedor de configuração de user secrets (segredos de usuário).</p>
-
-<h3 id="o-provedor-de-configuração-de-user-secrets">O provedor de configuração de user secrets</h3>
+<h3 id="o-provedor-de-configuração-de-user-secrets">
+  
+  
+    O provedor de configuração de user secrets <a href="#o-provedor-de-configuração-de-user-secrets" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>Mencionei o provedor de configuração de user secrets <a href="#os-valores-default">anteriormente</a>. Esse provedor de configuração foi criado para desenvolvimento local <em>somente</em>. Ele permite que você armazene segredos em seu computador local sem precisar se preocupar com o risco de eles serem versionados no repositório git, pois são armazenados em um local diferente:</p>
 
@@ -704,10 +813,22 @@
 </div>
 
 <p>Esse provedor de configuração pode ser acessado usando a CLI ou seu IDE favorito. Talvez seja necessário instalar o pacote <a href="https://www.nuget.org/packages/Microsoft.Extensions.Configuration.UserSecrets">Microsoft.Extensions.Configuration.UserSecrets</a> caso você não use um <code class="language-plaintext highlighter-rouge">Host</code> ou tenha uma configuração personalizada.</p>
-
-<h3 id="usando-user-secrets">Usando User Secrets</h3>
-
-<h4 id="cli">CLI</h4>
+<h3 id="usando-user-secrets">
+  
+  
+    Usando User Secrets <a href="#usando-user-secrets" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
+<h4 id="cli">
+  
+  
+    CLI <a href="#cli" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h4>
+    
 
 <p>Você pode usar o <code class="language-plaintext highlighter-rouge">dotnet</code> cli para interagir com user-secrets abrindo um terminal no diretório em que reside o <code class="language-plaintext highlighter-rouge">*.csproj</code> do seu projeto.</p>
 
@@ -720,20 +841,44 @@ dotnet user-secrets set “AdminPassword” “hunter2”
 # Outros comandos como “list”, “remove” e “clear” também estão disponíveis
 
 </code></pre></div></div>
-
-<h4 id="visual-studio">Visual Studio</h4>
+<h4 id="visual-studio">
+  
+  
+    Visual Studio <a href="#visual-studio" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h4>
+    
 
 <p>Clique com o botão direito do mouse em um projeto no Solution Explorer e selecione <code class="language-plaintext highlighter-rouge">Manage User Secrets</code>. Um arquivo <code class="language-plaintext highlighter-rouge">secrets.json</code> será aberto, no qual você poderá inserir seus segredos.</p>
-
-<h4 id="visual-studio-code">Visual Studio Code</h4>
+<h4 id="visual-studio-code">
+  
+  
+    Visual Studio Code <a href="#visual-studio-code" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h4>
+    
 
 <p>Instale a extensão <a href="https://marketplace.visualstudio.com/items?itemName=adrianwilczynski.user-secrets">.NET Core User Secrets Visual Studio Code</a>. Em seguida, você pode clicar com o botão direito do mouse em um arquivo <code class="language-plaintext highlighter-rouge">*.csproj</code> e selecionar <code class="language-plaintext highlighter-rouge">Manage User Secrets</code>. Um arquivo <code class="language-plaintext highlighter-rouge">secrets.json</code> será aberto, no qual você poderá inserir seus segredos.</p>
-
-<h4 id="jetbrains-rider">JetBrains Rider</h4>
+<h4 id="jetbrains-rider">
+  
+  
+    JetBrains Rider <a href="#jetbrains-rider" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h4>
+    
 
 <p>Clique com o botão direito do mouse em um projeto no Solution Explorer e selecione <code class="language-plaintext highlighter-rouge">Tools</code> &gt; <code class="language-plaintext highlighter-rouge">Manage User Secrets</code>. Um arquivo <code class="language-plaintext highlighter-rouge">secrets.json</code> será aberto, no qual você poderá inserir seus segredos.</p>
-
-<h3 id="configurando-um-projeto-que-usa-user-secrets">Configurando um projeto que usa user-secrets</h3>
+<h3 id="configurando-um-projeto-que-usa-user-secrets">
+  
+  
+    Configurando um projeto que usa user-secrets <a href="#configurando-um-projeto-que-usa-user-secrets" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>Uma desvantagem de usar segredos de usuário durante o desenvolvimento é que, se o seu projeto exigir alguns segredos para ser executado, será necessário executar algumas etapas de configuração após a clonagem do projeto. Tenho duas recomendações para lidar com isso:</p>
 
@@ -741,12 +886,24 @@ dotnet user-secrets set “AdminPassword” “hunter2”
   <li>Você pode criar um script que recupere os segredos do seu local de armazenamento de segredos e, em seguida, armazene-os em user-secrets, canalizando esses valores para <code class="language-plaintext highlighter-rouge">dotnet user-secrets set</code>. Agora você só precisa executar esse script uma vez após clonar o projeto e pronto!</li>
   <li>Como alternativa, recomendo atualizar seu <code class="language-plaintext highlighter-rouge">README.MD</code> incluindo instruções de configuração que informem ao usuário quais user-secrets devem ser definidos e de onde obter esses valores. Sinta-se à vontade para criar um link para Este post se quiser explicar o que são user-secrets 😉.</li>
 </ul>
-
-<h2 id="meu-modelo-para-gerenciamento-de-configuração">Meu modelo para gerenciamento de configuração</h2>
+<h2 id="meu-modelo-para-gerenciamento-de-configuração">
+  
+  
+    Meu modelo para gerenciamento de configuração <a href="#meu-modelo-para-gerenciamento-de-configuração" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>Agora que abordamos os conceitos básicos e o uso avançado do sistema de configuração do .NET e como incorporar o gerenciamento de segredos locais, gostaria de mostrar minha “configuração” para o gerenciamento de configuração em um projeto .NET. Quando crio um novo projeto .NET, uso a seguinte configuração:</p>
-
-<h3 id="appsettingsjson">appsettings.json</h3>
+<h3 id="appsettingsjson">
+  
+  
+    appsettings.json <a href="#appsettingsjson" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>O sistema de configuração do .NET permite que você seja muito flexível com todos os diferentes provedores. Isso é ótimo, mas também pode causar confusão quando seu aplicativo estiver usando valores de configuração que você não esperava ou quando não conseguir descobrir de onde vem um valor de configuração específico.</p>
 
@@ -786,8 +943,14 @@ dotnet user-secrets set “AdminPassword” “hunter2”
 }
 
 </code></pre></div></div>
-
-<h3 id="appsettingsdevelopmentjson">appsettings.Development.json</h3>
+<h3 id="appsettingsdevelopmentjson">
+  
+  
+    appsettings.Development.json <a href="#appsettingsdevelopmentjson" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>A seguir, temos o arquivo <code class="language-plaintext highlighter-rouge">appsettings.Development.json</code>. Esse arquivo pode conter valores de configuração que substituem os valores do <code class="language-plaintext highlighter-rouge">appsettings.json</code>, como configurações de registro. Além disso, esse arquivo <strong>nunca</strong> deve conter segredos! Em vez disso, ele faz referência ao provedor de configuração de user secrets. Isso torna menos provável que as pessoas insiram segredos nesse arquivo, pois elas são levadas a usar o provedor de configuração de user secrets.</p>
 
@@ -811,8 +974,14 @@ dotnet user-secrets set “AdminPassword” “hunter2”
 }
 
 </code></pre></div></div>
-
-<h3 id="user-secrets">User Secrets</h3>
+<h3 id="user-secrets">
+  
+  
+    User Secrets <a href="#user-secrets" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>Por fim, uso o provedor de configuração user secrets para armazenar segredos locais <em>e</em> substituir a configuração não secreta que não quero enviar para o repositório git, como alterar as configurações de log no caso de precisar me aprofundar em um bug. Se eu alterasse esses valores de configuração no arquivo <code class="language-plaintext highlighter-rouge">appsettings.Development.json</code>, teria que me lembrar de reverter essas alterações antes de fazer o commit do meu código. Ao usar o provedor de configuração de user secrets, não preciso me preocupar com isso.</p>
 
@@ -845,8 +1014,14 @@ dotnet user-secrets set “AdminPassword” “hunter2”
 
   </div>
 </div>
-
-<h2 id="usando-o-azure-para-armazenar-a-configuração">Usando o Azure para armazenar a configuração</h2>
+<h2 id="usando-o-azure-para-armazenar-a-configuração">
+  
+  
+    Usando o Azure para armazenar a configuração <a href="#usando-o-azure-para-armazenar-a-configuração" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>Agora que sabemos como armazenar a configuração e os segredos localmente, é hora de falar sobre a execução de seus aplicativos em ambientes reais. Há muitas maneiras diferentes de configurar a configuração e o gerenciamento de segredos para ambientes não locais, portanto, tudo se resume a conhecer as vantagens e desvantagens dessas abordagens e escolher o que funciona melhor para você. Neste post, você aprenderá a usar o Azure para armazenar sua configuração e seus segredos com segurança.</p>
 
@@ -864,8 +1039,14 @@ dotnet user-secrets set “AdminPassword” “hunter2”
 
   </div>
 </div>
-
-<h3 id="armazenamento-de-segredos-no-azure-key-vault">Armazenamento de segredos no Azure Key Vault</h3>
+<h3 id="armazenamento-de-segredos-no-azure-key-vault">
+  
+  
+    Armazenamento de segredos no Azure Key Vault <a href="#armazenamento-de-segredos-no-azure-key-vault" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>Como dissemos anteriormente, não é possível usar o provedor de configuração User Secrets em ambientes não locais. Portanto, temos que encontrar uma maneira diferente de armazenar nossos segredos quando estivermos implantando nossos aplicativos. O <a href="https://azure.microsoft.com/services/key-vault/?WT.mc_id=DT-MVP-5005050">Azure Key Vault</a> é um ótimo serviço para armazenar segredos, chaves e certificados de forma barata, fácil e segura.</p>
 
@@ -899,8 +1080,14 @@ dotnet user-secrets set “AdminPassword” “hunter2”
 
   </div>
 </div>
-
-<h4 id="usando-o-key-vault-durante-o-desenvolvimento-local">Usando o Key Vault durante o desenvolvimento local</h4>
+<h4 id="usando-o-key-vault-durante-o-desenvolvimento-local">
+  
+  
+    Usando o Key Vault durante o desenvolvimento local <a href="#usando-o-key-vault-durante-o-desenvolvimento-local" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h4>
+    
 
 <p>Anteriormente neste post, mencionei brevemente que você pode estar em um cenário em que não é possível armazenar segredos em seu computador por motivos de segurança, por exemplo. Nesse caso, usar o Key Vault durante o desenvolvimento local resolveria esse problema. Você pode pegar o exemplo de código da seção anterior e modificá-lo da seguinte forma:</p>
 
@@ -927,8 +1114,14 @@ dotnet user-secrets set “AdminPassword” “hunter2”
 
   </div>
 </div>
-
-<h3 id="conectando-se-ao-azure-com-identidades-gerenciadas">Conectando-se ao Azure com identidades gerenciadas</h3>
+<h3 id="conectando-se-ao-azure-com-identidades-gerenciadas">
+  
+  
+    Conectando-se ao Azure com identidades gerenciadas <a href="#conectando-se-ao-azure-com-identidades-gerenciadas" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>Nos exemplos de código anteriores, você viu alguns tipos estranhos de credenciais: <code class="language-plaintext highlighter-rouge">ManagedIdentityCredential</code> e <code class="language-plaintext highlighter-rouge">DefaultAzureCredential</code>. Antes de discutirmos isso, considere o seguinte:</p>
 
@@ -955,8 +1148,14 @@ dotnet user-secrets set “AdminPassword” “hunter2”
 
   </div>
 </div>
-
-<h3 id="armazenamento-da-configuração-na-configuração-de-aplicativo-do-azure">Armazenamento da configuração na Configuração de Aplicativo do Azure</h3>
+<h3 id="armazenamento-da-configuração-na-configuração-de-aplicativo-do-azure">
+  
+  
+    Armazenamento da configuração na Configuração de Aplicativo do Azure <a href="#armazenamento-da-configuração-na-configuração-de-aplicativo-do-azure" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>Por último, mas não menos importante, quero falar sobre a oferta de nuvem do Azure para gerenciamento de <em>configuração</em>. Enquanto o Azure Key Vault abrange o gerenciamento de segredos, o <a href="https://azure.microsoft.com/products/app-configuration/?WT.mc_id=DT-MVP-5005050">Azure App configuration</a> é uma oferta de SaaS que o ajudará a gerenciar sua configuração. Esses dois serviços funcionam muito bem juntos quando você vincula o Azure App Configuration ao Azure Key Vault. Se optar por usar esse serviço, você só precisará adicionar o <a href="https://learn.microsoft.com/azure/azure-app-configuration/quickstart-aspnet-core-app?WT.mc_id=DT-MVP-5005050">Azure App Configuration como um provedor de configuração</a> e, em seguida, poderá usar o sistema de configuração do .NET para acessar todas as suas configurações E segredos da nuvem!</p>
 
@@ -974,16 +1173,34 @@ dotnet user-secrets set “AdminPassword” “hunter2”
 
   </div>
 </div>
-
-<h2 id="finalizando">Finalizando</h2>
+<h2 id="finalizando">
+  
+  
+    Finalizando <a href="#finalizando" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>Você chegou até o fim! Este post levou muito tempo para ser escrito, e estou feliz por finalmente ter sido concluído! Abaixo, você encontrará mais informações se quiser saber mais sobre os conceitos que abordei neste post. Se você tiver alguma dúvida, fique à vontade para deixar um comentário abaixo. Se quiser saber quando e onde darei a versão de palestra deste post, confira minha página <a href="https://stenbrinke.nl/speaking">Speaking</a>.</p>
-
-<h3 id="links-para-a-demo">Links para a demo</h3>
+<h3 id="links-para-a-demo">
+  
+  
+    Links para a demo <a href="#links-para-a-demo" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>Mencionei que o post é um complemento de uma de minhas sessões. Essa sessão contém várias demonstrações que mostram os conceitos discutidos nEste post. Você pode encontrar as demonstrações <a href="https://github.com/sander1095/secure-secret-storage-with-asp-net-core/">aqui</a>.</p>
-
-<h3 id="links-para-a-documentação-oficial">Links para a documentação oficial</h3>
+<h3 id="links-para-a-documentação-oficial">
+  
+  
+    Links para a documentação oficial <a href="#links-para-a-documentação-oficial" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <ul>
   <li><a href="https://learn.microsoft.com/dotnet/core/extensions/configuration?WT.mc_id=DT-MVP-5005050">Configuração</a></li>
@@ -992,13 +1209,17 @@ dotnet user-secrets set “AdminPassword” “hunter2”
   <li><a href="https://docs.microsoft.com/aspnet/core/security/app-secrets">user secrets</a></li>
   <li><a href="https://azure.microsoft.com/en-us/products/key-vault/?WT.mc_id=DT-MVP-5005050">Azure KeyVault</a></li>
   <li><a href="https://devblogs.microsoft.com/devops/demystifying-service-principals-managed-identities/?WT.mc_id=DT-MVP-5005050">Mais informações sobre Managed Identities</a></li>
-</ul>
-
-<hr />
+</ul><hr />
 
 <p>Você gostou deste post? <a href="https://ko-fi.com/stenbrinke"><img src="https://stenbrinke.nl/images/kofi_button_blue.webp" alt="Faça uma doção para o autor original em https://ko-fi.com/stenbrinke.nl" /></a></p>
-
-<h2 id="carlos-de-volta">Carlos de volta</h2>
+<h2 id="carlos-de-volta">
+  
+  
+    Carlos de volta <a href="#carlos-de-volta" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>Carlos Schults de volta aqui. Espero que tenham gostado bastante do post, e sugiro que o coloquem nos favoritos para ser um recurso útil de consulta toda vez que surgir alguma dúvida referente ao gerenciamento de secrets e configuração.</p>
 
@@ -1425,6 +1646,9 @@ dotnet user-secrets set “AdminPassword” “hunter2”
 
     <script src="/js/dark-mode.js"></script>
     <script src="/js/copy-code.js"></script>
+    
+    <script src="/js/post-enhancements.js"></script>
+    
   </body>
 
 </html>

@@ -124,6 +124,7 @@
   </header>
 
   <div class="post-content" itemprop="articleBody">
+    
     <p><img src="https://res.cloudinary.com/dz5ppacuo/image/upload/v1485700794/capa-min_no1cci.jpg" alt="" /></p>
 
 <p>Algumas pessoas acham que métodos privados devem ser evitados. Será que elas estão certas?
@@ -136,8 +137,14 @@
 <p>Hoje, o que eu realmente quero falar é de um assunto que surgiu na área de comentários do artigo do Marcos: que diversas pessoas consideram métodos privados como um <a href="https://www.pedromendes.com.br/2013/11/04/code-smells/"><em>Code Smell</em> (algo como “mau-cheiro de código”)</a>.</p>
 
 <p>Como eu nunca tinha ouvido ou lido nada nesse sentido antes, fiquei bastante surpreso e decidi pesquisar mais.</p>
-
-<h2 id="qual-seria-o-problema-de-métodos-privados">Qual seria o problema de métodos privados?</h2>
+<h2 id="qual-seria-o-problema-de-métodos-privados">
+  
+  
+    Qual seria o problema de métodos privados? <a href="#qual-seria-o-problema-de-métodos-privados" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>Para começar, vamos tentar entender por qual razão métodos privados seriam um problema.</p>
 
@@ -208,8 +215,14 @@
 </blockquote>
 
 <p>Eu acabei de mostrar alguns dos argumentos comuns contra a criação de métodos privados, então agora é hora de mostrar a opinião nesse assunto.</p>
-
-<h2 id="métodos-privados-não-são-necessariamente-violações-do-srp">Métodos privados <em>não</em> são necessariamente violações do SRP</h2>
+<h2 id="métodos-privados-não-são-necessariamente-violações-do-srp">
+  
+  
+    Métodos privados <em>não</em> são necessariamente violações do SRP <a href="#métodos-privados-não-são-necessariamente-violações-do-srp" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>O primeiro argumento apresentando afirma que métodos privados violam o Princípio da Responsabilidade Única.</p>
 
@@ -230,8 +243,14 @@
 <p>Meu principal problema com esse argumento não é que classes pequenas são geralmente melhores que as grandes, o que eu concordo.</p>
 
 <p>Meu problema é que eu não concordo que criar novas classes e métodos públicos <strong>apenas para evitar métodos privados</strong> vai <strong>automaticamente</strong> gerar “designs mais simples e melhores”. É claro que <em>pode</em> gerar; mas pode gerar projetos priores também. Cada situação é única.</p>
-
-<h2 id="eu-não-compro-testabilidade-como-um-fim-em-si-mesmo">Eu não compro testabilidade como um fim em si mesmo</h2>
+<h2 id="eu-não-compro-testabilidade-como-um-fim-em-si-mesmo">
+  
+  
+    Eu não compro testabilidade como um fim em si mesmo <a href="#eu-não-compro-testabilidade-como-um-fim-em-si-mesmo" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>Eu gosto muito de testes unitários (e testes automatizados de uma maneira geral). Eu ajudei evangelizar testes unitários no meu trabalho, e atualmente eu supervisiono o time que está adicionando testes unitários e de integração em nosso <em>codebase</em>.</p>
 
@@ -242,8 +261,14 @@
 <p>Minha resposta geralmente é: <strong>você não deveria precisar</strong>. Na minha opinião, não é muito produtivo colocar um esforço excessivo em testar métodos privados: como eles são chamados pelos públicos, eles vão ser exercitados pela sua suíte de testes de qualquer forma.</p>
 
 <p>O objetivo de um teste unitário deveria ser testar e documentar uma “unidade” (uma classe) por meio de usar sua API pública. O que nos leva ao próximo ponto.</p>
-
-<h1 id="sua-api-pública-deve-ser-estável-ou-encapsulamento-importa">Sua API pública deve ser estável (ou “Encapsulamento importa”)</h1>
+<h1 id="sua-api-pública-deve-ser-estável-ou-encapsulamento-importa">
+  
+  
+    Sua API pública deve ser estável (ou “Encapsulamento importa”)
+  
+  
+</h1>
+    
 
 <p>API significa <em>Application Programming Interface</em>, ou Interface de Programação de Aplicações, em tradução livre. 
 Esse termo pode significar várias coisas, mas no nosso contexto aqui, pense no conjunto das classes e métodos públicos que você expõe aos consumidores.</p>
@@ -309,8 +334,14 @@ Esse termo pode significar várias coisas, mas no nosso contexto aqui, pense no 
   <li>A prática de tornar métodos privados em públicos não leva automaticamente a um design melhor; ela pode também gerar uma API desnecessariamente inflada, encapsulamento enfraquecido, e maior trabalho para manutenção.</li>
   <li>Testabilidade é um objetivo nobre, mas precisa ser buscado de maneira pragmática. Métodos públicos bem testados e bem documentados deveriam ser suficientes, na maioria dos casos.</li>
 </ul>
-
-<h2 id="métodos-privados-podem-ser-bons-ou-ruins-aprenda-a-separ-o-joio-do-trigo">Métodos privados podem ser bons ou ruins; aprenda a separ o joio do trigo</h2>
+<h2 id="métodos-privados-podem-ser-bons-ou-ruins-aprenda-a-separ-o-joio-do-trigo">
+  
+  
+    Métodos privados podem ser bons ou ruins; aprenda a separ o joio do trigo <a href="#métodos-privados-podem-ser-bons-ou-ruins-aprenda-a-separ-o-joio-do-trigo" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>Tudo isso dito, eu também acho que existem casos nos quais métodos privados são usados de uma maneira errada. Toda ferramenta pode ser abusada. Existem alguns sinais para os quais você precisa ficar alerta:</p>
 
@@ -326,8 +357,14 @@ Esse termo pode significar várias coisas, mas no nosso contexto aqui, pense no 
 <p>Então, esse é o ponto: duas das três dicas que acabo de mostrar são meio subjetivas. Em algum ponto, você tem que fazer algumas escolhas. Quão complexo é complexo o suficiente para um método privado precisar de testes unitários? Como distinguir níveis de abstrações diferentes?</p>
 
 <p>A melhor dica que eu posso oferecer é: <strong>Duas cabeças pensam melhor que uma</strong>. Sempre faça com que outra pessoa olhe e examine seu código antes de ser commitado. Programação em par e/ou revisão de código são ótimas técnicas, não apenas para melhorar o projeto e encontrar bugs, mas principalmente para espalhar conhecimento por uma equipe. Não só conhecimento técnico, mas conhecimento do domínio também, e isso pode fazer toda a diferença na hora de tomar as decisões difíceis.</p>
-
-<h2 id="conclusão">Conclusão</h2>
+<h2 id="conclusão">
+  
+  
+    Conclusão <a href="#conclusão" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>Embora métodos privados podem ser usados em maneiras ruins, eu penso que seria prematuro automaticamente rotulá-los como uma coisa ruim a ser evitada.</p>
 
@@ -336,8 +373,14 @@ Esse termo pode significar várias coisas, mas no nosso contexto aqui, pense no 
 <p>Desenvolver software é uma arte, cheia de <em>trade-offs</em> e incerteza. E ainda que “regras de ouro” possam ser úteis, elas não devem ser seguidas cegamente.</p>
 
 <p>Este post ficou muito mais longo do que eu planejei. Agradeço caso tenha chegado até aqui. Até a próxima!</p>
-
-<h2 id="veja-também">Veja também</h2>
+<h2 id="veja-também">
+  
+  
+    Veja também <a href="#veja-também" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <ul>
   <li><a href="https://stackoverflow.com/questions/2620699/why-private-methods-in-the-object-oriented">https://stackoverflow.com/questions/2620699/why-private-methods-in-the-object-oriented</a></li>
@@ -765,6 +808,9 @@ Esse termo pode significar várias coisas, mas no nosso contexto aqui, pense no 
 
     <script src="/js/dark-mode.js"></script>
     <script src="/js/copy-code.js"></script>
+    
+    <script src="/js/post-enhancements.js"></script>
+    
   </body>
 
 </html>

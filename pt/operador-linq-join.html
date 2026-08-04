@@ -125,6 +125,7 @@
   </header>
 
   <div class="post-content" itemprop="articleBody">
+    
     <p><img src="https://res.cloudinary.com/dz5ppacuo/image/upload/v1617641333/reduce-cyclomatic-complexity/reduce-cyclomatic-complexity-1038x437.jpg" alt="" /></p>
 
 <p><em>NOTA: Eu escrevi este artigo, originalmente, para o blog da Stackify. Caso lhe interesse, você pode <a href="https://stackify.com/the-linq-join-operator-a-complete-tutorial/">ver o artigo original, em inglês, no site deles</a>.</em></p>
@@ -134,8 +135,14 @@
 <p>Vou abrir o post com uma definição do próprio LINQ, para que estejamos todos na mesma página. Depois disso, você verá uma explicação das operações de join no LINQ. Depois, é hora de arregaçar as mangas e colocar a mão na massa com nosso guia prático sobre o operador de <code class="language-plaintext highlighter-rouge">join</code>.</p>
 
 <p>Vamos começar.</p>
-
-<h2 id="o-quê-é-linq">O Quê é LINQ?</h2>
+<h2 id="o-quê-é-linq">
+  
+  
+    O Quê é LINQ? <a href="#o-quê-é-linq" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 <p><a href="https://learn.microsoft.com/pt-br/dotnet/csharp/linq/">LINQ</a> significa <em>Language Integrated Query</em>. É um recurso do C# que oferece uma sintaxe única e consistente para consultar conjuntos de dados, independentemente da origem deles. A principal vantagem do LINQ é que você pode usar a mesma sintaxe para consultar dados na memória, em um banco de dados, em arquivos XML e assim por diante.</p>
 
 <p>O LINQ está disponível em dois “sabores” diferentes: a sintaxe de consulta (query syntax) e a sintaxe de método (method syntax).</p>
@@ -152,18 +159,36 @@
 
 <figure class="highlight"><pre><code class="language-c#" data-lang="c#"><span class="kt">int</span><span class="p">[]</span> <span class="n">numbers</span> <span class="p">=</span> <span class="p">{</span> <span class="m">2</span><span class="p">,</span> <span class="m">8</span><span class="p">,</span> <span class="m">4</span><span class="p">,</span> <span class="m">9</span><span class="p">,</span> <span class="m">3</span><span class="p">,</span> <span class="m">6</span><span class="p">,</span> <span class="m">1</span><span class="p">,</span> <span class="m">7</span><span class="p">,</span> <span class="m">5</span> <span class="p">};</span>
 <span class="kt">var</span> <span class="n">largerThanFive</span> <span class="p">=</span> <span class="n">numbers</span><span class="p">.</span><span class="nf">Where</span><span class="p">(</span><span class="n">x</span> <span class="p">=&gt;</span> <span class="n">x</span> <span class="p">&gt;</span> <span class="m">5</span><span class="p">);</span></code></pre></figure>
-
-<h2 id="o-que-é-o-operador-linq-join">O que é o operador LINQ Join?</h2>
+<h2 id="o-que-é-o-operador-linq-join">
+  
+  
+    O que é o operador LINQ Join? <a href="#o-que-é-o-operador-linq-join" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>Ao trabalhar com dados, um cenário comum é ter duas fontes de dados que você deseja combinar com base em alguns critérios. Por exemplo, você pode ter uma tabela <code class="language-plaintext highlighter-rouge">Books</code> (Livros) e uma tabela <code class="language-plaintext highlighter-rouge">Authors</code> (Autores) em seu banco de dados, com um relacionamento de um para muitos entre elas, ou seja, um autor pode ser autor de muitos livros, mas cada livro tem apenas um autor. Se você precisar compilar uma lista de livros que contenha o nome do autor, precisará executar uma junção para fazer a correspondência entre cada linha da tabela <code class="language-plaintext highlighter-rouge">Books</code> e sua contraparte na tabela <code class="language-plaintext highlighter-rouge">Authors</code>.</p>
 
 <p>Uma junção no LINQ é essencialmente a mesma coisa: uma operação em que você pode mesclar duas coleções de acordo com alguns critérios que você define.</p>
-
-<h2 id="o-operador-linq-join-na-prática">O operador LINQ Join na prática</h2>
+<h2 id="o-operador-linq-join-na-prática">
+  
+  
+    O operador LINQ Join na prática <a href="#o-operador-linq-join-na-prática" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>Os exemplos sempre deixam as coisas mais claras. Então, vamos ver como usar o operador <code class="language-plaintext highlighter-rouge">join</code> na prática.</p>
-
-<h3 id="iniciando-com-um-problema"><strong>Iniciando com um problema</strong></h3>
+<h3 id="iniciando-com-um-problema">
+  
+  
+    <strong>Iniciando com um problema</strong> <a href="#iniciando-com-um-problema" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>Digamos que você tenha um aplicativo de comércio eletrônico com alguns dados sobre categorias:</p>
 
@@ -265,8 +290,14 @@
     </tr>
   </tbody>
 </table>
-
-<h3 id="resolvendo-o-problema-executando-um-linq-inner-join">Resolvendo o problema: executando um LINQ Inner Join</h3>
+<h3 id="resolvendo-o-problema-executando-um-linq-inner-join">
+  
+  
+    Resolvendo o problema: executando um LINQ Inner Join <a href="#resolvendo-o-problema-executando-um-linq-inner-join" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>Como seria essa operação no código? Em primeiro lugar, precisamos de código para representar nossas categorias e produtos. Graças ao recurso de <code class="language-plaintext highlighter-rouge">record</code> do C#, duas linhas de código são suficientes para isso:</p>
 
@@ -335,8 +366,14 @@
 <figure class="highlight"><pre><code class="language-sql" data-lang="sql"><span class="k">SELECT</span> <span class="n">p</span><span class="p">.</span><span class="n">Id</span><span class="p">,</span> <span class="n">p</span><span class="p">.</span><span class="n">Name</span><span class="p">,</span> <span class="k">c</span><span class="p">.</span><span class="n">Name</span> <span class="k">AS</span> <span class="n">Category</span>
 <span class="k">FROM</span> <span class="n">products</span> <span class="k">AS</span> <span class="n">p</span>
 <span class="k">JOIN</span> <span class="n">categories</span> <span class="k">AS</span> <span class="k">c</span> <span class="k">ON</span> <span class="n">p</span><span class="p">.</span><span class="n">CategoryId</span> <span class="o">=</span> <span class="k">c</span><span class="p">.</span><span class="n">Id</span></code></pre></figure>
-
-<h3 id="executando-uma-junção-externa-outer-join-no-linq">Executando uma junção externa (OUTER JOIN) no LINQ</h3>
+<h3 id="executando-uma-junção-externa-outer-join-no-linq">
+  
+  
+    Executando uma junção externa (OUTER JOIN) no LINQ <a href="#executando-uma-junção-externa-outer-join-no-linq" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>E se você quisesse executar o equivalente a um <code class="language-plaintext highlighter-rouge">OUTER JOIN</code> do SQL? Ou seja, você deseja recuperar todos os produtos, mesmo aqueles que não correspondem a nenhuma categoria. Como fazer isso?</p>
 
@@ -371,8 +408,14 @@
 </span><span class="p">{</span><span class="w"> </span><span class="err">Id</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w"> </span><span class="err">Name</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="err">Surgical</span><span class="w"> </span><span class="err">Gloves</span><span class="p">,</span><span class="w"> </span><span class="err">Category</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="p">}</span></code></pre></figure>
 
 <p>Como você pode ver, o produto “Surgical Gloves” (Luvas cirúrgicas) agora aparece, mesmo que não tenha uma categoria correspondente.</p>
-
-<h3 id="inner-join-do-linq-com-a-condição-where">Inner Join do LINQ com a condição <code class="language-plaintext highlighter-rouge">Where</code></h3>
+<h3 id="inner-join-do-linq-com-a-condição-where">
+  
+  
+    Inner Join do LINQ com a condição <code class="language-plaintext highlighter-rouge">Where</code> <a href="#inner-join-do-linq-com-a-condição-where" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>Realizar uma junção com uma cláusula <code class="language-plaintext highlighter-rouge">where</code> é muito fácil. Neste exemplo, realizaremos uma junção interna, filtrando apenas os produtos cujo id seja igual ou maior que 3:</p>
 
@@ -387,8 +430,14 @@
         <span class="n">Name</span> <span class="p">=</span> <span class="n">p</span><span class="p">.</span><span class="n">Name</span><span class="p">,</span>
         <span class="n">Category</span> <span class="p">=</span> <span class="n">c</span><span class="p">.</span><span class="n">Name</span>
     <span class="p">};</span></code></pre></figure>
-
-<h3 id="inner-join-do-linq-com-várias-condições">Inner Join do LINQ com várias condições</h3>
+<h3 id="inner-join-do-linq-com-várias-condições">
+  
+  
+    Inner Join do LINQ com várias condições <a href="#inner-join-do-linq-com-várias-condições" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>Se você quiser usar várias condições em sua junção, basta usar mais de uma cláusula where. Vamos atualizar nossa consulta mais uma vez:</p>
 
@@ -406,8 +455,14 @@
     <span class="p">};</span></code></pre></figure>
 
 <p>Aqui, estamos filtrando apenas as categorias cujos nomes terminam com a letra “s”.`</p>
-
-<h3 id="linq-join-com-chave-composta">LINQ Join com chave composta</h3>
+<h3 id="linq-join-com-chave-composta">
+  
+  
+    LINQ Join com chave composta <a href="#linq-join-com-chave-composta" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>Até agora, todos os nossos exemplos usaram chaves únicas para fazer a correspondência. Você também pode usar chaves compostas, ou seja, mais de um valor, para fazer a correspondência.</p>
 
@@ -452,8 +507,14 @@
 <p>Um único resultado é exibido a partir dessa consulta:</p>
 
 <figure class="highlight"><pre><code class="language-c#" data-lang="c#"><span class="p">{</span> <span class="n">Id</span> <span class="p">=</span> <span class="m">1</span><span class="p">,</span> <span class="n">Name</span> <span class="p">=</span> <span class="n">Amazon</span> <span class="n">Kindle</span><span class="p">,</span> <span class="n">Category</span> <span class="p">=</span> <span class="n">Electronics</span> <span class="p">}</span></code></pre></figure>
-
-<h2 id="conclusão">Conclusão</h2>
+<h2 id="conclusão">
+  
+  
+    Conclusão <a href="#conclusão" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>Como vimos, o LINQ é uma parte essencial do trabalho com o C#. Você pode aproveitar o LINQ em muitos cenários diferentes, desde o trabalho com dados na memória até XML e SQL. Você pode usar o LINQ em ORMs, como <a href="https://stackify.com/entity-framework-core-nhibernate/">NHibernate e Entity Framework</a>.</p>
 
@@ -874,6 +935,9 @@
 
     <script src="/js/dark-mode.js"></script>
     <script src="/js/copy-code.js"></script>
+    
+    <script src="/js/post-enhancements.js"></script>
+    
   </body>
 
 </html>

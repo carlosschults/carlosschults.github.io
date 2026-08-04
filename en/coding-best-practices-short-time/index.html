@@ -125,6 +125,7 @@
   </header>
 
   <div class="post-content" itemprop="articleBody">
+    
     <p><img src="https://res.cloudinary.com/dz5ppacuo/image/upload/v1539703469/coding-best-practices-1038x437_ugnhab.jpg" alt="" />
 Photo by Ales Nesetril on Unsplash</p>
 
@@ -149,14 +150,26 @@ Photo by Ales Nesetril on Unsplash</p>
 </ul>
 
 <p>The practices that follow all fit these parameters. And without further ado, here it is: my coding best practices emergency pack, with items listed in the order they should be implemented and starting with the most critical one.</p>
-
-<h2 id="version-control-system">Version Control System</h2>
+<h2 id="version-control-system">
+  
+  
+    Version Control System <a href="#version-control-system" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>I once worked for a software development shop where no version control system was used. The source files were placed in a shared folder that every developer could access. What was the process we used when editing a file? Yeah, you guessed it:  we’d simply create a copy of the file and rename it to “filename_old.ext” or something like that.</p>
 
 <p>This was about eight or nine years ago. So maybe things have improved, right? Well, they certainly have, to some extent, but not completely. There are still <a href="https://twitter.com/_m_b_j_/status/938785388268806146">companies out there that don’t use a VCS</a>.</p>
-
-<h3 id="how-to-proceed">How to Proceed?</h3>
+<h3 id="how-to-proceed">
+  
+  
+    How to Proceed? <a href="#how-to-proceed" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>From now on, I’ll just assume you agree that a VCS is a fundamental coding best practice. If that’s not the case, there’s plenty of resources out there explaining <a href="https://www.git-tower.com/learn/git/ebook/en/desktop-gui/basics/what-is-version-control#start">what a VCS is</a> and <a href="https://www.atlassian.com/git/tutorials/what-is-version-control#benefits-of-version-control">why should you use one.</a></p>
 
@@ -167,20 +180,38 @@ Photo by Ales Nesetril on Unsplash</p>
 <p>But it’s possible that Git is not the best choice for your team <strong>right now</strong>. Remember, you’re short on time. So we need to get your team to adopt these coding best practices ASAP.</p>
 
 <p>How do we do this? So, let’s say you have experience with <a href="https://subversion.apache.org/">Subversion</a>, having used it at your previous company, but you have no experience with Git at all. If that’s the case, I’d say Subversion is the best choice for you. The overhead of learning a new system and teaching it to your co-workers while putting it into production would be too great.</p>
-
-<h2 id="code-review">Code Review</h2>
+<h2 id="code-review">
+  
+  
+    Code Review <a href="#code-review" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>I’m not going to lie: I <em>love </em>code reviews—and <a href="https://www.codinghorror.com/blog/archives/000495.html">I’m not alone in that</a>. I’ve witnessed firsthand how a good code review can reduce the number of bugs in a codebase, make the code look and feel more consistent, and perhaps best of all, spread knowledge throughout a development team.</p>
 
 <p>And here’s a major selling point: a code review practice is relatively easy to implement. Start as simple as you can, and then tweak and experiment with your approach as the need arises.</p>
-
-<h3 id="what-do-i-mean-by-code-review">What Do I Mean by Code Review?</h3>
+<h3 id="what-do-i-mean-by-code-review">
+  
+  
+    What Do I Mean by Code Review? <a href="#what-do-i-mean-by-code-review" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>Talking about “code review” can be tricky. People sometimes mean widely different things when they use the term, so I think it warrants further clarification.</p>
 
 <p>I’m not in favor of a highly stressful and bureaucratic code review process, where your code is scrutinized and criticized in public for hours. I don’t believe in public shaming as a tool for achieving quality. On the contrary, <a href="https://blog.submain.com/code-review-vs-pair-programming-2/">the type of code review I advocate for</a> is a lightweight and low-stress process, usually initiated by submitting a pull request or using your favorite IDE.</p>
-
-<h3 id="how-to-proceed-1">How to Proceed </h3>
+<h3 id="how-to-proceed-1">
+  
+  
+    How to Proceed  <a href="#how-to-proceed-1" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>Since we’re now on the same page about what a code review should look like, how would one go about implementing the practice? My answer is, not surprisingly, “the simplest way that could possibly work.” </p>
 
@@ -199,16 +230,28 @@ Photo by Ales Nesetril on Unsplash</p>
 <p>For instance, <a href="https://submain.com/codeit.right/features">SubMain’s CodeIt.Right</a> will give you real-time feedback from inside Visual Studio, alerting you of possible coding issues and even automatically fix code smells and violations for you.</p>
 
 <p>By employing automation, you set your developers free to worry about higher level concerns when performing reviews, such as code clarity or architectural decisions.</p>
-
-<h2 id="automated-builds">Automated Builds</h2>
+<h2 id="automated-builds">
+  
+  
+    Automated Builds <a href="#automated-builds" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>You may be thinking that I’ve got it wrong. After all, does it even make sense to talk about automated builds without mentioning automated tests?</p>
 
 <p>Well, I’m going argue that yes, it does make sense, and for one very simple reason: it eliminates “<a href="https://blog.codinghorror.com/the-works-on-my-machine-certification-program/">it works on my machine</a>” syndrome. </p>
 
 <p>By having a central place where builds are performed, you shed light on all kinds of problems, from poor management of dependencies to bad test discipline.</p>
-
-<h3 id="how-to-proceed-2">How to Proceed</h3>
+<h3 id="how-to-proceed-2">
+  
+  
+    How to Proceed <a href="#how-to-proceed-2" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>My advice here is the same as before: do the simplest thing that could work.</p>
 
@@ -217,16 +260,28 @@ Photo by Ales Nesetril on Unsplash</p>
 <p>With time, you should improve your strategy. Remember the static code analyzers I mentioned earlier? You can integrate them into your build process. Unit testing and other kinds of automated tests are a very important addition as well.</p>
 
 <p>Speaking of which…</p>
-
-<h2 id="notable-absences">Notable Absences</h2>
+<h2 id="notable-absences">
+  
+  
+    Notable Absences <a href="#notable-absences" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>You might be surprised to see that I haven’t included unit testing in the list of coding best practices, <a href="https://carlosschults.net/en/unit-testing-for-beginners-part1/">despite being myself a firm believer in the importance of automated testing</a> to the overall quality of a codebase. And why is that?</p>
 
 <p>Adding unit tests to a legacy application, unfortunately, is <em>hard</em>, to the point that there’s even <a href="https://www.amazon.com/Working-Effectively-Legacy-Michael-Feathers/dp/0131177052/ref=sr_1_1?ie=UTF8&amp;qid=1515443597&amp;sr=8-1&amp;keywords=working+effectively+with+legacy+code">a famous book</a>that focuses solely on this. It’s just not a feasible task for you to tackle quickly.</p>
 
 <p>In a similar fashion, it’s possible that a portion of readers expected me to talk about clean code or the <a href="https://en.wikipedia.org/wiki/SOLID_(object-oriented_design)">SOLID</a>principles. I do encourage you to research and learn about these topics,  but I don’t think they’re a good fit for the purpose of this post. They are, as the name already points out, principles. Think of them as philosophical guidelines—useful, but not as easy to break down into simple, actionable advice.</p>
-
-<h2 id="deploy-your-package-asap">Deploy Your Package ASAP!</h2>
+<h2 id="deploy-your-package-asap">
+  
+  
+    Deploy Your Package ASAP! <a href="#deploy-your-package-asap" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>It’s possible that some of you found these practices to be extremely basic and not post-worthy. “Who doesn’t use version control in twenty-freaking-eighteen???” I hear you saying.</p>
 
@@ -605,6 +660,9 @@ Photo by Ales Nesetril on Unsplash</p>
 
     <script src="/js/dark-mode.js"></script>
     <script src="/js/copy-code.js"></script>
+    
+    <script src="/js/post-enhancements.js"></script>
+    
   </body>
 
 </html>

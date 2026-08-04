@@ -124,17 +124,30 @@
   </header>
 
   <div class="post-content" itemprop="articleBody">
+    
     <p>Welcome back to my journey of building git from scratch in Go, in order to learn more about both. If you don’t know what
 I’m talking about, go read <a href="/en/implementing-git-in-go">the first post</a>.</p>
-
-<h2 id="its-been-a-while">It’s Been a While</h2>
+<h2 id="its-been-a-while">
+  
+  
+    It’s Been a While <a href="#its-been-a-while" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 <p>I published the first entry for this log of sorts on March 9th. What have I been up to, and why it took me so long to continue the series?</p>
 
 <p>The answer is what you probably already know: I’m a busy adult and don’t have much time. Also, there are other personal projects that demand my time.</p>
 
 <p>Anyway, enough with the excuses. Let’s talk about what I’ve managed to implement since the last update.</p>
-
-<h2 id="plumbing-vs-porcelain-commands">Plumbing vs Porcelain Commands</h2>
+<h2 id="plumbing-vs-porcelain-commands">
+  
+  
+    Plumbing vs Porcelain Commands <a href="#plumbing-vs-porcelain-commands" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 <p>Before I go into more detail about what I implemented, I’ll need to digress a little bit and talk about a distinction that exists regarding git commands.</p>
 
 <p>When you think about git commands, what come to your mind are probably commands like <code class="language-plaintext highlighter-rouge">git add</code>, <code class="language-plaintext highlighter-rouge">git init</code>, <code class="language-plaintext highlighter-rouge">git log</code>, <code class="language-plaintext highlighter-rouge">git status</code>, and so on. And even that only if you actually use commands. Many people simply use GUIs for everything and never manage to learn not even the basic commands.</p>
@@ -144,13 +157,25 @@ I’m talking about, go read <a href="/en/implementing-git-in-go">the first post
 <p>There is another layer of commands, which people call “plumbing” commands. Plumbing commands are the low-level commands, which perform the nitty-gritty data manipulation that enables the high-level commands to do their work.</p>
 
 <p>So, recently, I’ve been implementing some plumbing commands that act as the foundation for much of what git does. They are <code class="language-plaintext highlighter-rouge">hash-object</code> and <code class="language-plaintext highlighter-rouge">cat-file</code>.</p>
-
-<h2 id="understanding-hash-object-and-cat-file">Understanding <code class="language-plaintext highlighter-rouge">hash-object</code> And <code class="language-plaintext highlighter-rouge">cat-file</code></h2>
+<h2 id="understanding-hash-object-and-cat-file">
+  
+  
+    Understanding <code class="language-plaintext highlighter-rouge">hash-object</code> And <code class="language-plaintext highlighter-rouge">cat-file</code> <a href="#understanding-hash-object-and-cat-file" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 <p>I’m going to talk very briefly about what these commands do before I talk about my experience implementing them. <code class="language-plaintext highlighter-rouge">hash-object</code> is the command used to save some data as a blob (binary large object) inside a git repository. You give the command a piece of text, and it saves an object with that information, and gives you back a SHA1 hash.</p>
 
 <p>The <code class="language-plaintext highlighter-rouge">cat-file</code> command does the opposite. You give it an object hash, and it returns you its contents (or size, or type, depending on how you call it).</p>
-
-<h3 id="hashing-your-first-object">Hashing Your First Object</h3>
+<h3 id="hashing-your-first-object">
+  
+  
+    Hashing Your First Object <a href="#hashing-your-first-object" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 <p>Do you want to test it? Run the following command:</p>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">echo </span>hi | git hash-object <span class="nt">--stdin</span>
@@ -173,8 +198,14 @@ I’m talking about, go read <a href="/en/implementing-git-in-go">the first post
 <p>What happened here is that git calculated a hash for the “hi” string and returned it to you. We’re using the <code class="language-plaintext highlighter-rouge">--stdin</code> flag so you can pipe the content from the standard input.</p>
 
 <p>However, that wasn’t saved anywhere. To actually write the data to disk, you need to use a different version of the command, and this time it needs to be inside a repository.</p>
-
-<h3 id="saving-an-object">Saving an Object</h3>
+<h3 id="saving-an-object">
+  
+  
+    Saving an Object <a href="#saving-an-object" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>Go to some place, create a new folder and a new repo inside it:</p>
 
@@ -210,8 +241,14 @@ git init
 <p>Go into that folder. Inside, you’ll find a file named after the remaining characters of the hash you got back. In my case, I see <code class="language-plaintext highlighter-rouge">b983be36b73c0788dc9cbcb76cbb80fc7bb057</code>.</p>
 
 <p><strong>That is your blob.</strong> That file is the object that git saved when you ran the <code class="language-plaintext highlighter-rouge">hash-object</code> command with the <code class="language-plaintext highlighter-rouge">-w</code> flag.</p>
-
-<h3 id="reading-objects-back">Reading Objects Back</h3>
+<h3 id="reading-objects-back">
+  
+  
+    Reading Objects Back <a href="#reading-objects-back" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 <p>Try opening the blob file using your text editor of choice. You’ll see that, yes, the file opens fine. But the contents are pure giberish. That’s because that’s a compressed, binary format. It isn’t plain text.</p>
 
 <p>This is what git does, in sequence:</p>
@@ -239,11 +276,23 @@ blob
 git cat-file <span class="nt">-s</span> 45b983be36b73c0788dc9cbcb76cbb80fc7bb057
 3
 </code></pre></div></div>
-
-<h2 id="enter-go-gitter">Enter Go-Gitter</h2>
+<h2 id="enter-go-gitter">
+  
+  
+    Enter Go-Gitter <a href="#enter-go-gitter" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 <p>Now that you understand what these two commands do, let’s talk about how I implemented them in <code class="language-plaintext highlighter-rouge">go-gitter</code>, starting with <code class="language-plaintext highlighter-rouge">hash-object</code>.</p>
-
-<h3 id="implementing-hash-object">Implementing <code class="language-plaintext highlighter-rouge">hash-object</code></h3>
+<h3 id="implementing-hash-object">
+  
+  
+    Implementing <code class="language-plaintext highlighter-rouge">hash-object</code> <a href="#implementing-hash-object" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>My first step was implementing the most basic version of <code class="language-plaintext highlighter-rouge">hash-object</code>, without the <code class="language-plaintext highlighter-rouge">-w</code> flag. So, the command would be able to display the SHA1 hash for a given text, but not actually save it to disk yet.</p>
 
@@ -293,8 +342,14 @@ git cat-file <span class="nt">-s</span> 45b983be36b73c0788dc9cbcb76cbb80fc7bb057
 <p>It took me a bit of time to get this right. Mostly because at some point I was completely misunderstanding what git actually did. I thought I was supposed to compress and save the <em>hash</em> that I calculated earlier. Yes, I know, makes no sense, but what can I say?</p>
 
 <p>Once I understood that, getting this to work was mainly a matter of figuring out the zlib compression part. Google and documentation did it for me, like in the old days.</p>
-
-<h3 id="implementing-cat-file">Implementing <code class="language-plaintext highlighter-rouge">cat-file</code></h3>
+<h3 id="implementing-cat-file">
+  
+  
+    Implementing <code class="language-plaintext highlighter-rouge">cat-file</code> <a href="#implementing-cat-file" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 <p>The <code class="language-plaintext highlighter-rouge">cat-file</code> command was easier to implement, because it’s essentially just the opposite. Based on a hash, find the corresponding file, uncompress it, and read its contents.</p>
 
 <p>This time I created a dedicated function for the new command from the start, as shown in the <a href="https://github.com/carlosschults/go-gitter/commit/81c9f03e1ca76a483335876b42637833f8a0a524">first commit</a>. This commit only implements the <code class="language-plaintext highlighter-rouge">-p</code> flag, though.</p>
@@ -341,8 +396,14 @@ git cat-file <span class="nt">-s</span> 45b983be36b73c0788dc9cbcb76cbb80fc7bb057
 </code></pre></div></div>
 
 <p>Go programmers reading this: I suspect this code isn’t the most beautiful and idiomatic Go you’ve ever seen, and I promise you that once I learn more about the language, I will refactor this. The priority for me at the moment was getting it to work.</p>
-
-<h2 id="what-ive-learned-so-far">What I’ve Learned So Far</h2>
+<h2 id="what-ive-learned-so-far">
+  
+  
+    What I’ve Learned So Far <a href="#what-ive-learned-so-far" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 <p>The goal of this project is to learn the Go language and also more about Git’s implementation. So, what did I learn about both by completing these two commands?</p>
 
 <p>First, the Git side. I can say I was surprised about how simple is the way git saves objects. It is really just the type of the object, a space, the size, a null character to act as delimiter, and then the contents. I understood, at a high level, how git stored objects, but actually implementing it gave me an appreciation for how simple and elegant it all is.</p>
@@ -354,8 +415,14 @@ git cat-file <span class="nt">-s</span> 45b983be36b73c0788dc9cbcb76cbb80fc7bb057
 <p>One aspect that I don’t like is the error handling. Having those if statements verifing <code class="language-plaintext highlighter-rouge">err</code> everywhere polutes the code. In C#/.NET, when there is an error that is something that should be absolutely impossible, I just let the exception bubble out until it reaches the top level exception handling middleware, where it gets logged and the user receives a message with the adequate level of detail.</p>
 
 <p>Maybe there’s some idiomatic way to do something like that in Go as well, but right now I’m not aware. But other than that, I really like the language so far.</p>
-
-<h2 id="whats-next">What’s Next?</h2>
+<h2 id="whats-next">
+  
+  
+    What’s Next? <a href="#whats-next" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 <p>For the next step I’ll implement another plumbing command called <a href="https://git-scm.com/docs/git-update-index">update-index</a>. This is necessary so I can stage changes and eventually commit them.</p>
 
 <p>If you want to play with <code class="language-plaintext highlighter-rouge">go-gitter</code>, install it like this:</p>
@@ -742,6 +809,9 @@ ggt cat-file <span class="nt">-p</span> 45b983be36b73c0788dc9cbcb76cbb80fc7bb057
 
     <script src="/js/dark-mode.js"></script>
     <script src="/js/copy-code.js"></script>
+    
+    <script src="/js/post-enhancements.js"></script>
+    
   </body>
 
 </html>

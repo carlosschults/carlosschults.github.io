@@ -127,12 +127,19 @@
   </header>
 
   <div class="post-content" itemprop="articleBody">
+    
     <p><img src="https://res.cloudinary.com/dz5ppacuo/image/upload/v1491343925/git-for-tfs-users-1038x437_ios03n.jpg" alt="" /></p>
 
 <p>Learning Git can be a bit challenging for developers with a background in centralized version control systems. But it doesn’t have to be that way.
 <!--more--></p>
-
-<h2 id="introduction">Introduction</h2>
+<h2 id="introduction">
+  
+  
+    Introduction <a href="#introduction" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>Git is becoming (or <em>has already become</em>, many would say) the <em>de facto</em> standard version control system of the industry. It was created in 2005 by Linus Torvalds to manage the source code from the Linux kernel, and since then its adoption has been growing phenomenally, specially after <a href="github.com">Github</a> showed up.</p>
 
@@ -143,8 +150,14 @@
 <p>That being said, Git’s learning curve <em>may</em> present some challenging to people that are used to centralized systems. I think it’s human nature to try to find patterns and to map concepts between what you already know and what you’re trying to learn; but there are significant differences and this “mapping” often results in frustration.</p>
 
 <p>With that in mind, I’ve decided to write a series of posts to try to help developers who are coming from centralized systems (specifically TFS/TFVC) and trying to learn Git. I don’t intend by any means to exhaust the subject. Quite the opposite: when necessary, I’ll provide links for more in-depth explanations of certain topics.</p>
-
-<h2 id="a-quick-note-about-naming">A quick note about naming</h2>
+<h2 id="a-quick-note-about-naming">
+  
+  
+    A quick note about naming <a href="#a-quick-note-about-naming" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p><strong>TFS</strong> stands for Team Foundation Server. It is a Microsoft product that offers capabilities such as project management, requirement management, build automation and release management.</p>
 
@@ -153,8 +166,14 @@
 <p>So, <strong>TFS</strong> refers to the complete application life-cycle management solution. The version control system itself is called <strong>TFVC</strong>.</p>
 
 <p>However, in this article I’ll be calling the version control system “TFS” since many developers colloquially call it that way.</p>
-
-<h2 id="commit--check-in">Commit != Check-in</h2>
+<h2 id="commit--check-in">
+  
+  
+    Commit != Check-in <a href="#commit--check-in" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>Being a centralized system, TFS presents a reasonably simple workflow, which usually consists of three steps:</p>
 
@@ -177,8 +196,14 @@
 <p>One more time: in Git doesn’t have a technical concept of a central repository; what’s described above is a <strong>convention</strong>.</p>
 
 <p>With that in mind, let’s practice some Git commands so you can get used to them. Today we’re not seeing anything regarding remotes, server, nothing like that: just local commands.</p>
-
-<h2 id="downloading-and-installing">Downloading and installing</h2>
+<h2 id="downloading-and-installing">
+  
+  
+    Downloading and installing <a href="#downloading-and-installing" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>Some people say that using Git on Windows used to be a pain. Fortunately, that isn’t the case anymore, as you’ll see.</p>
 
@@ -188,8 +213,14 @@
 <img src="https://res.cloudinary.com/dz5ppacuo/image/upload/v1491350434/git1_xek0vv.png" alt="" /></p>
 
 <p>When you get to this screen, choosing the second option you allow you to use Git from the Windows command prompt, and not only from Git Bash.</p>
-
-<h2 id="basic-configuration">Basic Configuration</h2>
+<h2 id="basic-configuration">
+  
+  
+    Basic Configuration <a href="#basic-configuration" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>After you’re done installing Git, it’s time to configure your identity, which consists in telling Git your name and email so it can associate them with each commit you make.</p>
 
@@ -204,8 +235,14 @@
 </blockquote>
 
 <p>There are a lot of other configurations available, but this is enough for you to be able to explore Git.</p>
-
-<h2 id="creating-your-first-repository">Creating your first repository</h2>
+<h2 id="creating-your-first-repository">
+  
+  
+    Creating your first repository <a href="#creating-your-first-repository" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>Using Git Bash, let’s create a folder and access it:</p>
 
@@ -234,8 +271,14 @@
 </blockquote>
 
 <p>Nothing mysterious: logged user, current location and current branch. In Git, the standard branch is called <em>master</em>. In the next post we’ll learn some basic operations in branches, but for now we’ll be using just master.</p>
-
-<h2 id="some-commands">Some commands</h2>
+<h2 id="some-commands">
+  
+  
+    Some commands <a href="#some-commands" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>OK, now you’ve got your repository, time to learn some commands. Let’s starting with one that you’ll probably use a lot: <code class="language-plaintext highlighter-rouge">git status</code>. This command allow you to visualize the current status of your repo.</p>
 
@@ -364,8 +407,14 @@ Changes not staged for commit:
 </blockquote>
 
 <p>To wrap things up, run <code class="language-plaintext highlighter-rouge">git status</code> and you’ll see a familiar message: working directory clean, nothing to commit.</p>
-
-<h2 id="conclusion">Conclusion</h2>
+<h2 id="conclusion">
+  
+  
+    Conclusion <a href="#conclusion" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>I kept this article extremely simple, and that was by design. My intention was to show you some basic Git commands, so you can get the “feel” of what using Git is like.</p>
 
@@ -760,6 +809,9 @@ Changes not staged for commit:
 
     <script src="/js/dark-mode.js"></script>
     <script src="/js/copy-code.js"></script>
+    
+    <script src="/js/post-enhancements.js"></script>
+    
   </body>
 
 </html>

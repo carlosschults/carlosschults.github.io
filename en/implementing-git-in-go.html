@@ -124,6 +124,7 @@
   </header>
 
   <div class="post-content" itemprop="articleBody">
+    
     <p>I’ve recently started working on my newest project: building git in Go, from scratch. What’s the point in that?, you might be wondering.</p>
 
 <p>Well, it’s quite a useless project in the sense that, you know, git has existed for 20 years. (Thanks, Linus).
@@ -132,8 +133,14 @@ My goal with this project is two-fold:</p>
   <li>learn the Go language</li>
   <li>strengthen my knowledge about git internals</li>
 </ul>
-
-<h2 id="project-scope">Project Scope</h2>
+<h2 id="project-scope">
+  
+  
+    Project Scope <a href="#project-scope" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 <p>I don’t intend to implement 100% of git. That would be simply too hard. What I’m going to do is to implement a small subset of git commands, only in their most basic variations for the most part. 
 This is the current list of what I intend to implement:</p>
 <ul>
@@ -145,22 +152,40 @@ This is the current list of what I intend to implement:</p>
 </ul>
 
 <p>This list isn’t static. I might decide to implement more commands, or fewer. It all depends whether I feel like I’ve learned enough. We’ll see how this goes.</p>
-
-<h2 id="project-workflow-i-really-didnt-know-what-to-call-this-section">Project Workflow (I really didn’t know what to call this section)</h2>
+<h2 id="project-workflow-i-really-didnt-know-what-to-call-this-section">
+  
+  
+    Project Workflow (I really didn’t know what to call this section) <a href="#project-workflow-i-really-didnt-know-what-to-call-this-section" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 <p>How will I go about all of this, in practice? I’m already going, since I’ve started about a week ago. So, the way I am going about this is basically going through that list of commands, implementing one by one, and documenting my learnings on this blog.</p>
 
 <p>I’m not sure about the cadence of the blog posts yet, though. I feel like weekly updates are too much; since I only have about 30 to 50 minutes per day to work on this, I don’t want to lose too much time writing the updates themselves.</p>
 
 <p>So I guess I will start by writing the posts whenever I feel I’ve accumulated enough interesting updates to share, then I’ll share them. I might later settle into a regular cadence, but don’t count on that.</p>
-
-<h2 id="about-llm-usage">About LLM Usage</h2>
+<h2 id="about-llm-usage">
+  
+  
+    About LLM Usage <a href="#about-llm-usage" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 <p>I’ve imposed some rules on myself for this project. The most important one is that zero code will be written by AI/LLMs. It would defeat the purpose, since the goal of this is to actually learn the language.</p>
 
 <p>That doesn’t mean I’m not using AI at all. I’m using Claude to help me plan the roadmap, so to speak. It’s been helping me decide the order of the commands that make more sense, what are the Go concepts that are required for me to build this and which ones I can skip, and so on.</p>
 
 <p>For my actual Go learning, I’m using the Go documentation and good-old search. Like the old days.</p>
-
-<h2 id="building-git-in-go-the-first-update">Building git in Go: The First Update</h2>
+<h2 id="building-git-in-go-the-first-update">
+  
+  
+    Building git in Go: The First Update <a href="#building-git-in-go-the-first-update" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 <p>So, what have I done so far?
 I’ve started this project on Monday, 2026-03-02. One week ago as the time of this writing. During the first three days, I’ve followed the <a href="https://go.dev/tour/welcome/1">Go Tour</a> in order to remember the few things I knew about the language and to learn more of the fundamentals.</p>
 
@@ -187,8 +212,14 @@ No commits yet
 nothing to commit (create/copy files and use "git add" to track)
 </code></pre></div></div>
 <p>Congrats! You’ve just created a git repo, manually. This is exactly what <a href="https://github.com/carlosschults/go-gitter/blob/main/ggt/main.go">my Go code is doing</a>.</p>
-
-<h2 id="follow-the-updates">Follow the Updates</h2>
+<h2 id="follow-the-updates">
+  
+  
+    Follow the Updates <a href="#follow-the-updates" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 <p>The updates to this progress will be tracked by the <a href="/tag/go-gitter">go-gitter</a> tag, so you can bookmark that page, if you want. 
 I’ve already linked to the repository, but here it is again, in case you’ve missed: <a href="https://github.com/carlosschults/go-gitter">go-gitter</a>.</p>
 
@@ -563,6 +594,9 @@ I’ve already linked to the repository, but here it is again, in case you’ve 
 
     <script src="/js/dark-mode.js"></script>
     <script src="/js/copy-code.js"></script>
+    
+    <script src="/js/post-enhancements.js"></script>
+    
   </body>
 
 </html>

@@ -124,6 +124,7 @@
   </header>
 
   <div class="post-content" itemprop="articleBody">
+    
     <p><img src="https://res.cloudinary.com/dz5ppacuo/image/upload/v1673926044/git-beautiful-history/git-beautiful-history-cover.png" alt="" /></p>
 
 <p><span>Foto por <a href="https://unsplash.com/@yancymin?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Yancy Min</a> no <a href="https://unsplash.com/photos/842ofHC6MaI?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span></p>
@@ -137,8 +138,14 @@
 <p>Neste post, eu lhe mostrarei como usar <code class="language-plaintext highlighter-rouge">amend</code> e rebase interativo para fazer sua história de commits no Git ficar bonitona antes de publicá-la. Não vai ter muita teoria; eu o acompanharei através de alguns cenários comuns, mostrando como eu iria resolvê-los.</p>
 
 <p>Antes de terminar, vou ensiná-lo a não atirar no seu pé com estes comandos. Como explicarei, <code class="language-plaintext highlighter-rouge">amend</code> e <code class="language-plaintext highlighter-rouge">rebase</code> são ações destrutivas, e tem situações em que você não deve executá-las.</p>
-
-<h2 id="requisitos">Requisitos</h2>
+<h2 id="requisitos">
+  
+  
+    Requisitos <a href="#requisitos" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 <p>Para acompanhar este posto, presumo que você:</p>
 
 <ul>
@@ -148,8 +155,14 @@
 </ul>
 
 <p>Ao escrever este post, estou no Windows, usando a versão Git <strong>2.38.1.windows.1</strong>* e digitando meus comandos no Git Bash. Se você estiver no Linux ou OSX, acho que tudo funcionará da mesma forma, mas eu não testei.</p>
-
-<h2 id="definindo-o-vs-code-como-seu-editor-de-texto-predefinido">Definindo o VS Code como seu editor de texto predefinido</h2>
+<h2 id="definindo-o-vs-code-como-seu-editor-de-texto-predefinido">
+  
+  
+    Definindo o VS Code como seu editor de texto predefinido <a href="#definindo-o-vs-code-como-seu-editor-de-texto-predefinido" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 <p>Apenas um último detalhe antes da gente começar pra valer. Alguns dos comandos que você verá ao longo deste post exigirão que você edite e salve um arquivo de texto. Eles fazem isso abrindo seu editor de texto padrão conforme configurado em seu arquivo de configuração Git e esperando até que você edite, salve e feche o arquivo.</p>
 
 <p>Se você estiver no Windows como eu, usando o Git Bash, seu editor padrão será o Vim. Vim é um editor de texto de linha de comando, e algumas pessoas o acham intimidante. Embora aprender Vim exija algum trabalho, não é tão difícil de começar, e eu recomendaria que você investisse algum tempo para aprender pelo menos os comandos mais básicos - especialmente como sair!</p>
@@ -157,11 +170,23 @@
 <p>Entretanto, Git permite que você escolha outros editores de texto como seu padrão. Se você tiver o <a href="https://code.visualstudio.com/">Visual Studio Code</a> instalado e quiser usá-lo, execute o seguinte comando:</p>
 
 <p><code class="language-plaintext highlighter-rouge">git config --global core.editor "code --wait"</code></p>
-
-<h2 id="reescrevendo-história-3-cenários-comuns">Reescrevendo História: 3 Cenários comuns</h2>
+<h2 id="reescrevendo-história-3-cenários-comuns">
+  
+  
+    Reescrevendo História: 3 Cenários comuns <a href="#reescrevendo-história-3-cenários-comuns" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 <p>Vou mostrar alguns cenários comuns nos quais você poderá se encontrar, nos quais a reescrita da história o salvará.</p>
-
-<h3 id="minha-mensagem-de-commit-tem-um-erro">Minha Mensagem de Commit Tem Um Erro</h3>
+<h3 id="minha-mensagem-de-commit-tem-um-erro">
+  
+  
+    Minha Mensagem de Commit Tem Um Erro <a href="#minha-mensagem-de-commit-tem-um-erro" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 <p>Você está correndo para corrigir este bug de alta prioridade. Depois de horas de depuração exaustiva, você encontra o código ofensivo, faz a correção e faz o commit da mudança.</p>
 
 <p>Só então você vê que cometeu um erro de digitação. Como corrigir isso?</p>
@@ -210,8 +235,14 @@ git commit <span class="nt">-m</span> <span class="s2">"fix async request in get
 <p>Você notará que a identificação (SHA-1) do commit é agora diferente do que era antes - e também diferente daquela da imagem acima. Voltarei a este assunto mais tarde.</p>
 
 <p>Por enquanto, você alterou com sucesso sua mensagem de commit. Parabéns!</p>
-
-<h3 id="esqueci-de-incluir-um-arquivo">Esqueci de Incluir um Arquivo</h3>
+<h3 id="esqueci-de-incluir-um-arquivo">
+  
+  
+    Esqueci de Incluir um Arquivo <a href="#esqueci-de-incluir-um-arquivo" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 <p>Às vezes você tem vários arquivos alterados e quer commitar alguns, mas não todos. Na sua pressa, você deixa um ou mais arquivos para trás. Como corrigir isso?</p>
 
 <p><code class="language-plaintext highlighter-rouge">amend</code> ao resgate novamente.</p>
@@ -251,8 +282,14 @@ nothing added to commit but untracked files present (use "git add" to track)
 <p><code class="language-plaintext highlighter-rouge">git commit --amend --no-edit</code></p>
 
 <p>Desta forma, Git não abrirá seu editor de texto, mantendo a mensagem de commit original.</p>
-
-<h3 id="quero-mesclar-vários-commits-em-um-só">Quero Mesclar Vários Commits Em Um Só</h3>
+<h3 id="quero-mesclar-vários-commits-em-um-só">
+  
+  
+    Quero Mesclar Vários Commits Em Um Só <a href="#quero-mesclar-vários-commits-em-um-só" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 <p>A fusão de vários commits em um só é uma operação chamada “squashing”. Mas por que você iria querer fazer isso?</p>
 
 <p>Bem, tudo se resume ao seu estilo Git. Eu gosto de fazer pequenos commits, com muita freqüência. Depois, quando estou prestes a torná-los públicos (por exemplo, ao abrir um pull request) eu os junto em um único commit, com uma mensagem bem escrita.</p>
@@ -325,8 +362,14 @@ squash a76fd60 empty commit 3 <span class="c"># empty</span>
 <p><img src="/img/git-beautiful-history/img6.png" alt="" /></p>
 
 <p>Como você pode ver, os três commits vazios foram substituídos por um único commit. Você realizou com sucesso sua primeira operação de <code class="language-plaintext highlighter-rouge">squash</code>. Parabéns!</p>
-
-<h2 id="quando-não-se-deve-mexer-com-a-história">Quando Não Se Deve Mexer Com a História</h2>
+<h2 id="quando-não-se-deve-mexer-com-a-história">
+  
+  
+    Quando Não Se Deve Mexer Com a História <a href="#quando-não-se-deve-mexer-com-a-história" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 <p>Antes de terminar, vamos entender quando a mudança da história é problemática.</p>
 
 <p>Primeiro, entenda que tanto <code class="language-plaintext highlighter-rouge">amend</code> quanto <code class="language-plaintext highlighter-rouge">rebase</code> produzem <strong>mudanças destrutivas</strong>. É como se eles estivessem destruindo a história e criando uma nova.</p>
@@ -338,8 +381,14 @@ squash a76fd60 empty commit 3 <span class="c"># empty</span>
 <p>Portanto, a regra de ouro é <strong>nunca reescreva a história da qual outras pessoas dependem.</strong> O que isto significa em específico depende do workflow de branches que você e sua equipe utilizam.</p>
 
 <p>Se você usar <a href="https://trunkbaseddevelopment.com/">trunk-based development,</a> nunca reescreva o branch master/main. O mesmo é verdade se seu trabalho com <a href="https://docs.github.com/en/get-started/quickstart/github-flow">GitHub Flow</a>. Se você usa o git-flow, isso significa nunca reescrever os branches permanentes, ou seja, master/main e develop.</p>
-
-<h2 id="ok-eu-menti-toma-um-pouco-de-teoria">OK, Eu Menti: Toma Um Pouco De Teoria</h2>
+<h2 id="ok-eu-menti-toma-um-pouco-de-teoria">
+  
+  
+    OK, Eu Menti: Toma Um Pouco De Teoria <a href="#ok-eu-menti-toma-um-pouco-de-teoria" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 <p>Ao longo deste artigo, usei expressões como “mudar a mensagem do commit”, “juntar múltiplos commits em um”, e assim por diante.</p>
 
 <p>Tecnicamente falando, tudo isso eram mentiras. Quando você utiliza comandos como <code class="language-plaintext highlighter-rouge">git commit --amend</code> ou <code class="language-plaintext highlighter-rouge">rebase -i</code>, você não está mudando nada. O que Git está fazendo é <strong>criar novos commits</strong>.</p>
@@ -361,8 +410,14 @@ squash a76fd60 empty commit 3 <span class="c"># empty</span>
 <p>O leitor astuto vai notar que até mesmo as imagens acima são uma simplificação. “Deveríamos ter mais commits na imagem”, dizem eles, com seu dedo indicador acusatório apontando para a tela. E adivinhe, eles estão certos.</p>
 
 <p>Lembra-se de que começamos tudo isso alterando dois commits? Bem, como dar <code class="language-plaintext highlighter-rouge">amend</code> não altera os commits, mas cria novos, temos dois commits extra perdidos em nosso repositório. Eu os omiti dos diagramas acima <sup>porque eu estava com preguiça</sup> por uma questão de brevidade. Mas como um exercício para o leitor, você mesmo pode adicioná-los.</p>
-
-<h2 id="reescreva-o-passado-para-parecer-e-ser-mais-inteligente">Reescreva o Passado Para Parecer (e ser) Mais Inteligente</h2>
+<h2 id="reescreva-o-passado-para-parecer-e-ser-mais-inteligente">
+  
+  
+    Reescreva o Passado Para Parecer (e ser) Mais Inteligente <a href="#reescreva-o-passado-para-parecer-e-ser-mais-inteligente" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 <p>Reescrever a história é uma poderosa capacidade do Git. Com comandos como <code class="language-plaintext highlighter-rouge">git commit --amend</code> e <code class="language-plaintext highlighter-rouge">git rebase -i</code> você pode “mudar” seus commits passados, escondendo seus erros e fazendo parecer que você fez tudo certo desde o início. Eu faço isso o tempo todo e colho os benefícios: meus colegas de trabalho pensam que sou muito mais esperto do que realmente sou - por favor, não conta meu segredo pra eles.</p>
 
 <p>Falando sério agora: esses comandos são ferramentas fantásticas para você conseguir um histórico mais organizado. Com eles, você pode perder de uma vez o medo de commitar com frequência. Faça commits pequenos e frequentes, e não ligue muito para a mensagem — por exemplo, se você usa <a href="/pt/testes-unitarios-csharp-intro-tdd/">TDD</a>, você pode commitar toda vez que os testes passarem.</p>
@@ -787,6 +842,9 @@ squash a76fd60 empty commit 3 <span class="c"># empty</span>
 
     <script src="/js/dark-mode.js"></script>
     <script src="/js/copy-code.js"></script>
+    
+    <script src="/js/post-enhancements.js"></script>
+    
   </body>
 
 </html>

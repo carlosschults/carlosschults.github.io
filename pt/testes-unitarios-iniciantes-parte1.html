@@ -128,6 +128,7 @@
   </header>
 
   <div class="post-content" itemprop="articleBody">
+    
     <p><img src="https://res.cloudinary.com/dz5ppacuo/image/upload/v1459979937/testes-unitarios-iniciantes-min_povcse.png" alt="" /></p>
 
 <p>Você já deve ter trabalhado em um sistema assim: incrivelmente complexo, com uma base de código gigantesca, mal documentada, cheia de gambiarras, acoplamentos desnecessários, com arquitetura confusa, especificações inexistentes, onde era quase considerado um milagre que o software chegasse a funcionar. Talvez eu tenha acabado de descrever seu projeto atual!
@@ -148,8 +149,14 @@
 <p>Por fim, a necessidade de independência entre os subsistemas incentivaria a diminuição do acoplamento entre as partes da aplicação.</p>
 
 <p>Parece bom demais para ser verdade? Pois saiba que não é. Esse sistema de alarmes é o benefício que você ganha ao implementar uma <strong>suíte de testes unitários</strong> em sua aplicação.</p>
-
-<h2 id="o-que-são-testes-unitários">O que são testes unitários</h2>
+<h2 id="o-que-são-testes-unitários">
+  
+  
+    O que são testes unitários <a href="#o-que-são-testes-unitários" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>Vamos ver a definição da Wikipédia:</p>
 
@@ -180,8 +187,14 @@
 <p><img src="https://res.cloudinary.com/dz5ppacuo/image/upload/v1459979476/teste01_ciglca.png" alt="Janela exibindo resultados da execução de testes unitários" /></p>
 
 <p>Com base nesse feedback, você decide o melhor curso de ação. Idealmente, um teste que falha deveria ser sinal de erro no código. O código de produção deveria então ser ajustado para que o teste volte a passar.</p>
-
-<h2 id="benefícios-dos-testes-unitários">Benefícios dos testes unitários</h2>
+<h2 id="benefícios-dos-testes-unitários">
+  
+  
+    Benefícios dos testes unitários <a href="#benefícios-dos-testes-unitários" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>No começo do post, ao usar a metáfora do sistema de alarmes, eu falei de alguns dos benefícios que os testes unitários trazem, como por exemplo:</p>
 
@@ -202,20 +215,38 @@
 <p>Pior ainda: eles custam caro duas vezes. Primeiro, há o custo dos testes em si, que você pode calcular com a fórmula <em>valor da hora de trabalho dos testadores x nº de testadores x horas gastas em teste.</em></p>
 
 <p>Além disso, há o <a href="https://pt.wikipedia.org/wiki/Custo_de_oportunidade">custo de oportunidade</a>: quando profissionais precisam desempenhar testes manuais que poderiam ser automatizados, eles estão deixando de desempenhar atividades criativas/intelectuais que teriam potencial de trazer ganhos muito maiores para a empresa.</p>
-
-<h2 id="equívocos-comuns">Equívocos comuns</h2>
+<h2 id="equívocos-comuns">
+  
+  
+    Equívocos comuns <a href="#equívocos-comuns" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>Nessa seção, vou tentar esclarecer alguns dos mitos e equívocos que existem a respeito de testes unitários.</p>
-
-<h3 id="programadores-não-deveriam-escrever-testes-pois-geralmente-são-maus-testadores">Programadores não deveriam escrever testes, pois geralmente são maus testadores</h3>
+<h3 id="programadores-não-deveriam-escrever-testes-pois-geralmente-são-maus-testadores">
+  
+  
+    Programadores não deveriam escrever testes, pois geralmente são maus testadores <a href="#programadores-não-deveriam-escrever-testes-pois-geralmente-são-maus-testadores" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>Existe uma ideia bastante difundida de que programadores não deveriam testar seu próprio código. O raciocínio é que eles, inconscientemente, evitariam usar a aplicação de uma maneira que a faria quebrar. E por experiência própria, eu digo que isso de fato acontece. Já perdi a conta de quantas vezes algum colega encontrou bugs em uma aplicação que eu fiz após <strong>segundos</strong> de uso, sendo que eu já havia passado muito mais tempo que isso testando e sem conseguir fazer falhar.</p>
 
 <p>O ponto a salientar aqui é: <strong>há testes e testes</strong>. Geralmente, quando pessoas dizem que programadores não deveriam testar, elas estão se referindo a testes de sistema, também chamados testes ponta a ponta. Tais testes têm o propósito de testar o sistema como um todo, o que, como já vimos, não é o objetivo dos testes unitários.</p>
 
 <p>Muitas vezes o que ocorre é simplesmente falta de informação: a pessoa talvez desconheça a natureza e propósito dos testes unitários, e os toma por testes de ponta a ponta.</p>
-
-<h3 id="escrever-testes-unitários-é-uma-perda-de-tempo-é-o-mesmo-que-programar-duas-vezes">Escrever testes unitários é uma perda de tempo; é o mesmo que programar duas vezes</h3>
+<h3 id="escrever-testes-unitários-é-uma-perda-de-tempo-é-o-mesmo-que-programar-duas-vezes">
+  
+  
+    Escrever testes unitários é uma perda de tempo; é o mesmo que programar duas vezes <a href="#escrever-testes-unitários-é-uma-perda-de-tempo-é-o-mesmo-que-programar-duas-vezes" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>Ao tentar “vender” testes unitários para a gerência na sua empresa, uma boa estratégia é apelar para a redução de custos, como visto anteriormente. Mas…e os desenvolvedores? Como convencê-los a gastar mais tempo escrevendo código de teste além do código de produção?</p>
 
@@ -238,8 +269,14 @@
 <p>O que estamos propondo é simplesmente trocar o ciclo “escreve código de produção -&gt; compila -&gt; testa -&gt; debuga -&gt; repete” pelo ciclo “escreve código de produção -&gt; escreve código de testes -&gt; executa testes -&gt; corrige código de produção se necessário”.</p>
 
 <p>É até possível argumentar que os ciclos são praticamente os mesmos. Mas a grande vantagem dos testes unitários é que, uma vez escritos, eles estão automatizados para o resto da vida do projeto. Você “perde tempo” só uma vez. Você investe tempo e esforço no começo, para criar os testes, e colhe os benefícios por tempo indefinido.</p>
-
-<h3 id="testes-unitários-substituem-todos-os-testes-manuais">Testes unitários substituem todos os testes manuais</h3>
+<h3 id="testes-unitários-substituem-todos-os-testes-manuais">
+  
+  
+    Testes unitários substituem todos os testes manuais <a href="#testes-unitários-substituem-todos-os-testes-manuais" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>Testes unitários não são os únicos tipos de testes que trazem benefícios a um projeto. Também podemos utilizar outros tipos de testes automatizados como <strong>testes de integração</strong> e <strong>testes de aceitação</strong>.</p>
 
@@ -252,8 +289,14 @@
 <p>Testes manuais exploratórios, que não seguem um roteiro definido, costumam ser valiosos na detecção de certos tipos de bugs. Os casos de testes automatizados tendem a focar no “Happy Path”, ou seja, o cenário no qual deu tudo certo, as unidades foram usadas exatamente do jeito que o codificador pensou e projetou. Na vida real, é muito comum que os usuários utilizem a aplicação de maneiras…como dizer?…“criativas”. Então,colocar o software sob stress, utilizando-o de maneiras diferentes e inesperadas, podem acabar revelando bugs que de outra forma permaneceriam ocultos.</p>
 
 <p>É claro que, uma vez que o bug tenha sido revelado pelo teste manual, deve-se imediatamente escrever um teste automatizado que o exponha. Assim, na eventualidade do bug regredir, ele será facilmente detectado.</p>
-
-<h2 id="conclusão">Conclusão</h2>
+<h2 id="conclusão">
+  
+  
+    Conclusão <a href="#conclusão" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>Testes unitários - e automação de testes, no geral - são um tema gigantesco. Há muitos livros sobre esse tema, bem como teses de mestrado. Há conferências anuais em diversos países apenas sobre teste de software. Então, é claro que seria impossível que eu, com uma mera postagem no meu blog, fizesse jus a esse tema.</p>
 
@@ -682,6 +725,9 @@ No próximo artigo, começaremos a colocar a mão na massa: vou mostrar a vocês
 
     <script src="/js/dark-mode.js"></script>
     <script src="/js/copy-code.js"></script>
+    
+    <script src="/js/post-enhancements.js"></script>
+    
   </body>
 
 </html>

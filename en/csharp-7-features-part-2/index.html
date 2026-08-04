@@ -126,6 +126,7 @@
   </header>
 
   <div class="post-content" itemprop="articleBody">
+    
     <p><img src="https://res.cloudinary.com/dz5ppacuo/image/upload/v1489452722/charp7-features-cover_ciekql.jpg" alt="" /></p>
 
 <p>In this post we’ll see some more new features from C# 7.0.
@@ -134,8 +135,14 @@
 <p>In <a href="https://carlosschults.net/en/csharp-7-features/">the first part of this series</a>, we talked about some new features from C#, namely: literal improvements, out variables, more <em>expression-bodied</em> members and throw expressions.</p>
 
 <p>Today we’ll see: <strong>Tuples</strong> and <strong>Local Functions</strong>. But before we go on, I’d like to thank my friend Gunter Italiano Ribeiro for reviewing this article.</p>
-
-<h2 id="tuples">Tuples</h2>
+<h2 id="tuples">
+  
+  
+    Tuples <a href="#tuples" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>Have you ever felt the need to write a method that returned more than one value? I’d bet you have. In previous versions of the C# language, there were some options available. You could use an out parameter, or even create a type for that, but each one of these had their own problems. Out parameters are non-intuitive and can complicate the design; creating a custom type just for this can be overkill.</p>
 
@@ -184,8 +191,14 @@
 <script src="https://gist.github.com/carlosschults/225e608c7b844df46084b6a7af5b6ac2.js"></script>
 
 <p>You don’t even need to declare the variables at the deconstruction moment. It’s perfectly valid to deconstruct a tuple into already existent variables.</p>
-
-<h3 id="some-notes">Some notes</h3>
+<h3 id="some-notes">
+  
+  
+    Some notes <a href="#some-notes" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>Tuples are <a href="https://carlosschults.net/en/value-reference-types-in-csharp//"><em>Value Types</em></a>. Equality for tuples works in the way you’d probably expect: two tuples are considered equals if their items have the same values and they return the same <code class="language-plaintext highlighter-rouge">HashCode</code>. The names of the items are not relevant</p>
 
@@ -198,8 +211,14 @@
 <p>Currently, for this feature to work, you must install a nuget package called <code class="language-plaintext highlighter-rouge">System.ValueTuple</code>. In Visual Studio, go to <strong>Tools</strong> &gt; <strong>NuGet Package Manager</strong> &gt; <strong>Package Manager Console.</strong>.</p>
 
 <p>The Package Manager Console Windows will be shown. Type <code class="language-plaintext highlighter-rouge">Install-Package System.ValueTuple</code> and press <code class="language-plaintext highlighter-rouge">ENTER</code>.</p>
-
-<h3 id="but-what-about-systemtuple">But what about <code class="language-plaintext highlighter-rouge">System.Tuple</code>?</h3>
+<h3 id="but-what-about-systemtuple">
+  
+  
+    But what about <code class="language-plaintext highlighter-rouge">System.Tuple</code>? <a href="#but-what-about-systemtuple" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>Maybe you’re wondering: why so much noise about tuples, if the .Net Framework has had the <code class="language-plaintext highlighter-rouge">System.Tuple</code> reference type since its 4.0 version? Why don’t we just stick to the older type?</p>
 
@@ -208,8 +227,14 @@
 <p>Firstly, as already mentioned, the older type is a <em>reference type</em>, and the new one is a <em>value type</em>, with all the usual implications.</p>
 
 <p>But the really important differences have to do with convenience and readability. If you use <code class="language-plaintext highlighter-rouge">System.Tuple</code> there is no deconstruction; you can only access the items by using the default names, which makes the code harder to read and understand.</p>
-
-<h2 id="local-functions">Local Functions</h2>
+<h2 id="local-functions">
+  
+  
+    Local Functions <a href="#local-functions" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>A <strong>Local Function</strong> is exactly what its name suggests: a function that can be declared inside another function.</p>
 
@@ -264,8 +289,14 @@
 <script src="https://gist.github.com/carlosschults/34b77038c058f261f615e739c7f9ea2a.js"></script>
 
 <p>You could turn <code class="language-plaintext highlighter-rouge">Iterator()</code> into a private method, sure, but that would be: 1) redundant and not very elegant, since it would require you to repeat the same signature from the outer function; and 2) less safe, because another part of the code could call the method without performing the validation.</p>
-
-<h2 id="conclusion">Conclusion</h2>
+<h2 id="conclusion">
+  
+  
+    Conclusion <a href="#conclusion" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>Today we’ve talked about <strong>Tuples</strong> and <strong>Local Functions</strong>, two new features from C# that, at first sight, can look harmless, but have potential to change the way you write code in interesting ways.</p>
 
@@ -280,8 +311,14 @@
 <p>My opinion about all of this is very simple: every tool can be abused. It’s up to us, professionals, and to our teams, to exercise our common-sense while using these (and other) features. By the way, as I mentioned in <a href="https://carlosschults.net/en/are-private-methods-a-code-smell/">my article about private methods</a>, code review and/or pair-programming can be of invaluable help in situations like these.</p>
 
 <p>Thanks for reading. See you next time.</p>
-
-<h2 id="references">References</h2>
+<h2 id="references">
+  
+  
+    References <a href="#references" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <ul>
   <li><a href="https://blogs.msdn.microsoft.com/dotnet/2017/03/09/new-features-in-c-7-0/">https://blogs.msdn.microsoft.com/dotnet/2017/03/09/new-features-in-c-7-0/</a></li>
@@ -657,6 +694,9 @@
 
     <script src="/js/dark-mode.js"></script>
     <script src="/js/copy-code.js"></script>
+    
+    <script src="/js/post-enhancements.js"></script>
+    
   </body>
 
 </html>

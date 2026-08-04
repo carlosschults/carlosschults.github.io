@@ -124,6 +124,7 @@
   </header>
 
   <div class="post-content" itemprop="articleBody">
+    
     <p><img src="https://res.cloudinary.com/dz5ppacuo/image/upload/v1516152067/cargo-cult-programming-1037x438_spoxet.jpg" alt="" /></p>
 
 <p><em>NOTA: Eu escrevi este post originalmente para o blog da NDepend. Você pode <a href="https://blog.ndepend.com/cargo-cult-programming/">clicar aqui para ler o artigo original no site deles, em inglês</a>. Enquanto estiver por lá, baixe e experimente o NDepend.</em></p>
@@ -133,8 +134,14 @@
 <p>Se você compartilha do estranhamento do meu “eu” do passado, o post de hoje é para você.</p>
 
 <p>Primeiramente, você verá o que programação cargo cult é e por que você deve se importar. Então, vamos dar uma olhada em alguns exemplos práticos, usando a linguagem C#. Finalmente, nós encerraremos com conselhos sobre o que você pode fazer para não cair nessa armadilha.</p>
-
-<h2 id="programação-cargo-cult-fazendo-as-coisas-porque-sim">Programação Cargo Cult: Fazendo as coisas porque sim.</h2>
+<h2 id="programação-cargo-cult-fazendo-as-coisas-porque-sim">
+  
+  
+    Programação Cargo Cult: Fazendo as coisas porque sim. <a href="#programação-cargo-cult-fazendo-as-coisas-porque-sim" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>Segundo a versão em inglês da <a href="https://en.wikipedia.org/wiki/Cargo_cult_programming">Wikipedia</a></p>
 
@@ -153,8 +160,14 @@
 <p>Ou talvez a pessoa tenha tentado usar uma técnica aprendida com um colega, mas falhou em compreender que os conceitos são diferentes e que a tal técnica é inútil na situação atual.</p>
 
 <p>Por fim, também é possível que o problema seja simplesmente educação insuficiente: talvez o desenvolvedor tenha um entendimento pobre a respeito de como as ferramentas usadas funcionam.</p>
-
-<h2 id="por-que-a-programação-cargo-cult-é-um-problema">Por que a programação <em>cargo cult</em> é um problema?</h2>
+<h2 id="por-que-a-programação-cargo-cult-é-um-problema">
+  
+  
+    Por que a programação <em>cargo cult</em> é um problema? <a href="#por-que-a-programação-cargo-cult-é-um-problema" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 <p>Como Eric Lippert diz, <a href="https://blogs.msdn.microsoft.com/ericlippert/2004/03/01/syntax-semantics-micronesian-cults-and-novice-programmers/">programadores cargo cult sofrem para fazer alterações significativas em um programa</a> e acabam usando uma abordagem de tentativa e erro já que eles não entendem o funcionamento interno do código que estão prestes a alterar.</p>
 
 <p>Isso não é tão diferente do que os <a href="https://pragprog.com/the-pragmatic-programmer/extracts/coincidence">programadores pragmáticos chamam de “programação por coincidência”</a>:</p>
@@ -170,18 +183,36 @@
 </blockquote>
 
 <p>A frase acima resume tudo para mim: se você não sabe como ou por que seu código funciona, você também não vai entender o que aconteceu quando ele parar de funcionar.</p>
-
-<h2 id="origem-do-termo">Origem do termo</h2>
+<h2 id="origem-do-termo">
+  
+  
+    Origem do termo <a href="#origem-do-termo" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 <p>Embora práticas que são consideradas “culto à carga” (<em>cargo cult</em>) atualmente <a href="https://en.wikipedia.org/wiki/Cargo_cult#First_occurrences">tenham sido registradas tão cedo quanto o final do século XIX</a>, o termo em si data de 1945, quando foi usado pela primeira vez para descrever práticas que surgiram durante e depois da Segunda Guerra Mundial entre habitantes da Melanésia.</p>
 
 <p>Os nativos começaram a imitar o comportamento dos soldados, vestindo-se como controladores de voo e balançando gravetos, na esperança de que isso faria com que aviões carregados de suprimentos descessem dos céus.</p>
 
 <p>Desde então, o termo culto à carga tem sido usado em uma variedade de contextos para significar <strong>imitar forma sem conteúdo</strong> - copiar perfeitamente os elementos superficiais mas ao mesmo tempo falhando em entender de maneira mais profunda o significado e funcionamento do que se está tentando emular.</p>
-
-<h2 id="falar-é-fácil-me-mostre-o-código">Falar é fácil; me mostre o código!</h2>
+<h2 id="falar-é-fácil-me-mostre-o-código">
+  
+  
+    Falar é fácil; me mostre o código! <a href="#falar-é-fácil-me-mostre-o-código" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 <p>Chega da aula de História por hoje. Hora de ver código! Eu vou mostrar cinco exemplos de programação cargo cult usando a linguagem C#. Vamos lá.</p>
-
-<h3 id="checar-um-tipo-de-valor-não-nulável-for-null">Checar um tipo de valor não-nulável for <em>Null</em></h3>
+<h3 id="checar-um-tipo-de-valor-não-nulável-for-null">
+  
+  
+    Checar um tipo de valor não-nulável for <em>Null</em> <a href="#checar-um-tipo-de-valor-não-nulável-for-null" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 <p>O primeiro item é algo que me incomoda já que eu vejo isso bastante em código de produção. É algo assim:</p>
 
 <figure class="highlight"><pre><code class="language-c#" data-lang="c#">	<span class="k">public</span> <span class="n">Product</span> <span class="nf">Find</span><span class="p">(</span><span class="kt">int</span> <span class="n">id</span><span class="p">)</span>
@@ -205,8 +236,14 @@
 <p>Tem problemas muito piores, claro. Sim, a aplicação não vai <em>quebrar</em> por causa disso. Então, qual é o ponto?</p>
 
 <p>Bom, pra começo de conversa, eu me preocuparia com uma empresa de desenvolvimento cujo único critério de qualidade é “roda sem quebrar”. Mas o problema de verdade aqui é que esse tipo de código demonstra uma falta de entendimento sobre características fundamentais da linguagem e da plataforma que podem lhe causar problemas no futuro.</p>
-
-<h3 id="uso-desnecessário-de-tolist-em-consultas-do-linq-to-object">Uso Desnecessário de <code class="language-plaintext highlighter-rouge">ToList()</code> em consultas do LINQ to Object</h3>
+<h3 id="uso-desnecessário-de-tolist-em-consultas-do-linq-to-object">
+  
+  
+    Uso Desnecessário de <code class="language-plaintext highlighter-rouge">ToList()</code> em consultas do LINQ to Object <a href="#uso-desnecessário-de-tolist-em-consultas-do-linq-to-object" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 <p>Assim como o problema anterior, o item atual é algo que eu rotineiramente vejo em código de produção. Considere o código abaixo:</p>
 
 <figure class="highlight"><pre><code class="language-c#" data-lang="c#">	<span class="kt">var</span> <span class="n">result</span> <span class="p">=</span> <span class="n">users</span><span class="p">.</span><span class="nf">ToList</span><span class="p">()</span>
@@ -224,8 +261,14 @@
 <p>O código acima pode ser reescrito da seguinte forma:</p>
 
 <figure class="highlight"><pre><code class="language-c#" data-lang="c#">	<span class="kt">var</span> <span class="n">result</span> <span class="p">=</span> <span class="n">users</span><span class="p">.</span><span class="nf">Where</span><span class="p">(</span><span class="n">x</span> <span class="p">=&gt;</span> <span class="n">x</span><span class="p">.</span><span class="n">PremiumUser</span><span class="p">).</span><span class="nf">Select</span><span class="p">(</span><span class="n">x</span> <span class="p">=&gt;</span> <span class="k">new</span> <span class="p">{</span> <span class="n">Name</span> <span class="p">=</span> <span class="n">x</span><span class="p">.</span><span class="n">Name</span><span class="p">,</span> <span class="n">Birth</span> <span class="p">=</span> <span class="n">x</span><span class="p">.</span><span class="n">DateOfBirth</span> <span class="p">});</span></code></pre></figure>
-
-<h3 id="conversões-desnecessárias">Conversões Desnecessárias</h3>
+<h3 id="conversões-desnecessárias">
+  
+  
+    Conversões Desnecessárias <a href="#conversões-desnecessárias" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 <p>Considere a linha seguinte:</p>
 
 <figure class="highlight"><pre><code class="language-c#" data-lang="c#">	<span class="n">DateTime</span> <span class="n">creationDate</span> <span class="p">=</span> <span class="n">DateTime</span><span class="p">.</span><span class="nf">Parse</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s">"creation_date"</span><span class="p">].</span><span class="nf">ToString</span><span class="p">());</span></code></pre></figure>
@@ -235,8 +278,14 @@
 <figure class="highlight"><pre><code class="language-c#" data-lang="c#">	<span class="n">DateTime</span> <span class="n">creationDate</span> <span class="p">=</span> <span class="p">(</span><span class="n">DateTime</span><span class="p">)</span><span class="n">row</span><span class="p">[</span><span class="s">"creation_date"</span><span class="p">];</span></code></pre></figure>
 
 <p>Esse exemplo assume que o tipo no banco de dados é um tipo específico para lidar com datas (como <code class="language-plaintext highlighter-rouge">date</code> ou <code class="language-plaintext highlighter-rouge">datetime</code> no SQL Server). É claro que se você estivesse usando um tipo inadequado (como <code class="language-plaintext highlighter-rouge">varchar</code>) então isso já seria um outro problema.</p>
-
-<h3 id="try-catch-em-todo-lugar"><code class="language-plaintext highlighter-rouge">Try-Catch</code> em todo lugar</h3>
+<h3 id="try-catch-em-todo-lugar">
+  
+  
+    <code class="language-plaintext highlighter-rouge">Try-Catch</code> em todo lugar <a href="#try-catch-em-todo-lugar" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 <p>Também conhecido como síndrome Pokémon (“Gotta catch’em all!”), o <em>anti-pattern</em> aqui é adicionar um bloco <code class="language-plaintext highlighter-rouge">try-catch</code> em cada linha em que exista a remota possibilidade de uma exceção ser disparada.</p>
 
 <p>Pontos bônus se o código estiver tentando capturar <code class="language-plaintext highlighter-rouge">System.Exception</code> ao invés de uma exceção mais específica, acabando com a distinção entre erros esperados e não esperados.</p>
@@ -246,8 +295,14 @@
 <p>A dica geral aqui é: jamais capture uma exceção a não ser que você tenha uma razão muito específica para fazê-lo. Do contrário, deixe que a exceção suba até que o gerenciador de exceções geral no nível mais alto lide com ela.</p>
 
 <p>Se esse conselho parece vago (“Como vou saber se eu tenho uma boa razão para capturar a exceção?”), é porque de fato é. Explorar esse tema mais a fundo iria além do escopo desse post, , mas <a href="https://blogs.msdn.microsoft.com/ericlippert/2008/09/10/vexing-exceptions/">ler o excelente artigo do Eric Lippert chamado “Vexing Exceptions”</a> vai aumentar e muito o seu entendimento sobre exceções.</p>
-
-<h3 id="usar-stringbuilder-demais">Usar <code class="language-plaintext highlighter-rouge">StringBuilder</code> Demais</h3>
+<h3 id="usar-stringbuilder-demais">
+  
+  
+    Usar <code class="language-plaintext highlighter-rouge">StringBuilder</code> Demais <a href="#usar-stringbuilder-demais" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 <p>Você já deve ter visto o filme: depois de ler em algum lugar que concatenar strings usando <code class="language-plaintext highlighter-rouge">+</code> é ineficiente, nosso intrépido desenvolvedor resolve tomar pra si a tarefa hercúlea de mudar cada concatenação de string no projeto para o uso de <code class="language-plaintext highlighter-rouge">StringBuilder</code>.</p>
 
 <p>A justificativa para isso, claro, é que <code class="language-plaintext highlighter-rouge">System.String</code> é imutável. Então, cada vez que você “muda” a string, você na verdade está criando uma instância nova na memória, o que pode prejudicar o desempenho da aplicação.</p>
@@ -269,8 +324,14 @@
 <blockquote>
   <p>Unnecessary code changes are expensive and dangerous; <strong>don’t make performance-based changes unless you’ve identified a performance problem.</strong></p>
 </blockquote>
-
-<h2 id="existe-solução">Existe Solução?</h2>
+<h2 id="existe-solução">
+  
+  
+    Existe Solução? <a href="#existe-solução" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 <p>Eu diria que é justo supor que pessoas com menos experiência são mais propensas a cometer erros devido à programação cargo cult. Mas desenvolvedor nenhum está realmente a salvo, independentemente de seu nível de conhecimento ou experiência.</p>
 
 <p>Nós somos apenas humanos no fim das contas. Cansaço, prazos, vieses cognitivos e (para ser realmente honesto) a preguiça eventual pode transformar até o melhor de nós em um programador cargo cult.</p>
@@ -278,24 +339,54 @@
 <p>Infelizmente, não há uma maneira 100% garantida de impedir isso de acontecer. Mesmo assim, aqui vão algumas medidas que você pode tomar para, ao menos, diminuir as chances.</p>
 
 <p>Vamos ver algumas delas.</p>
-
-<h3 id="use-revisão-de-códigoprogramação-em-par">Use Revisão de Código/Programação em Par</h3>
+<h3 id="use-revisão-de-códigoprogramação-em-par">
+  
+  
+    Use Revisão de Código/Programação em Par <a href="#use-revisão-de-códigoprogramação-em-par" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 <p>A primeira medida que você pode tomar para evitar o cargo cult é simplesmente ter uma segunda pessoa olhando seu código. Os benefícios de ter uma outra pessoa revisando cada linha de código antes que ela chegue em produção não podem ser subestimados. E embora <a href="https://blog.submain.com/code-review-vs-pair-programming-2/">revisão de código e programação em par não são exatamente equivalentes</a>, ambas as práticas podem lhe trazer esse benefício.</p>
-
-<h3 id="sempre-teste-suas-hipóteses">Sempre Teste Suas Hipóteses</h3>
+<h3 id="sempre-teste-suas-hipóteses">
+  
+  
+    Sempre Teste Suas Hipóteses <a href="#sempre-teste-suas-hipóteses" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 <p>Escreva <a href="https://carlosschults.net/pt/testes-unitarios-iniciantes-parte1">testes de unidade</a> (e outros tipos de testes também). Monitore sua aplicação em produção. Se algo não está tendo um bom desempenho, faça <em>benchmarks</em> exaustivos. Não faça só suposições. Testar as suas hipóteses pode trazer <em>insights</em> valiosos e salvar a sua pele naqueles momentos em que a sua intuição não for certeira.</p>
-
-<h3 id="leia-código-de-outras-pessoas">Leia Código de Outras Pessoas</h3>
+<h3 id="leia-código-de-outras-pessoas">
+  
+  
+    Leia Código de Outras Pessoas <a href="#leia-código-de-outras-pessoas" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 <p>Ler código escrito por outras pessoas é uma ótima maneira de aprender. É uma ferramenta perfeita para comparar suas ideias e suposições contra o que outros desenvolvedores estão fazendo, expondo você a novos conceitos que podem lhe forçar a ganhar um entendimento maior dos problemas que está tentando resolver.</p>
 
 <p>Na era do <a href="https://github.com/">GitHub</a>, não tem muita desculpa para não fazer isso.</p>
-
-<h3 id="aprenda-com-suas-ferramentas">Aprenda Com Suas Ferramentas</h3>
+<h3 id="aprenda-com-suas-ferramentas">
+  
+  
+    Aprenda Com Suas Ferramentas <a href="#aprenda-com-suas-ferramentas" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 <p>Existe um número enorme de ferramentas que podem ajudar <a href="https://www.ndepend.com/">sua equipe com a qualidade do seu código</a>. Aqui vai a dica principal: você não deve só usar essas ferramentas. Você deve também aprender com elas. Se você usa NDepend, <a href="https://www.ndepend.com/default-rules/webframe.html">leia sobre suas regras</a>. Tente entender a justificativa por trás de cada uma delas. Quais são os princípios e boas práticas que guiaram seus autores durante a criação delas?</p>
 
 <p>A mesma dica vale para outros tipos de ferramentas, e até para os warnings que o compilador lhe mostra.</p>
-
-<h2 id="ciência-da-computação-não-superstição-da-computação">Ciência da Computação, Não <em>Superstição</em> da Computação</h2>
+<h2 id="ciência-da-computação-não-superstição-da-computação">
+  
+  
+    Ciência da Computação, Não <em>Superstição</em> da Computação <a href="#ciência-da-computação-não-superstição-da-computação" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 <p>Embora ninguém seja imune à programação cargo cult, nós devemos nos esforçar para superá-la. Há sabedoria na nossa área à nossa disposição, acumulada lentamente ao longo de mais de 7 década. Vamos usá-la. Vamos entender melhor nossas ferramentas e nossa profissão e escrever software de qualidade.</p>
 
     
@@ -716,6 +807,9 @@
 
     <script src="/js/dark-mode.js"></script>
     <script src="/js/copy-code.js"></script>
+    
+    <script src="/js/post-enhancements.js"></script>
+    
   </body>
 
 </html>

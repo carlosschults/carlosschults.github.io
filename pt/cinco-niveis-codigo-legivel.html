@@ -123,6 +123,7 @@
   </header>
 
   <div class="post-content" itemprop="articleBody">
+    
     <p><img src="/img/levels.jpg" alt="" /></p>
 
 <p><span>Foto por <a href="https://unsplash.com/@greysonjoralemon?utm_content=creditCopyText&amp;utm_medium=referral&amp;utm_source=unsplash">Greyson Joralemon</a> no site <a href="https://unsplash.com/photos/w000nNe9Xq8?utm_content=creditCopyText&amp;utm_medium=referral&amp;utm_source=unsplash">Unsplash</a></span></p>
@@ -132,16 +133,28 @@
 <p>Essas são algumas das perguntas sobre as quais tenho pensado e, nesta publicação, apresento minhas respostas na tentativa de iniciar uma conversa sobre legibilidade.</p>
 
 <p>Aqui está a versão TL;DR: sim, acredito que definir objetivamente a legibilidade do código é possível e desejável e, neste artigo, sugiro um modelo para avaliar a legibilidade.</p>
-
-<h2 id="a-importância-de-uma-definição-de-legibilidade-de-código">A Importância de Uma Definição de Legibilidade de Código</h2>
+<h2 id="a-importância-de-uma-definição-de-legibilidade-de-código">
+  
+  
+    A Importância de Uma Definição de Legibilidade de Código <a href="#a-importância-de-uma-definição-de-legibilidade-de-código" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>A legibilidade sempre vai ser um pouco subjetiva e, até certo ponto, essa subjetividade é inofensiva. Entretanto, ela <em>pode</em> causar problemas em alguns cenários.</p>
 
 <p>Se estivermos trabalhando em uma equipe, é importante definir pelo menos algumas diretrizes objetivas em relação à legibilidade do código, e isso se deve às revisões de código (code reviews). Se o time não conseguir chegar a um consenso sobre o que é código legível, o feedback dos reviews fica parecendo arbitrário.</p>
 
 <p>Em resumo: as equipes precisam de convenções. Uma equipe deve ter uma visão sobre o que constitui um código bom e legível.</p>
-
-<h2 id="um-framework-para-pensar-sobre-a-legibilidade-do-código-níveis">Um Framework Para Pensar Sobre a Legibilidade Do Código: Níveis</h2>
+<h2 id="um-framework-para-pensar-sobre-a-legibilidade-do-código-níveis">
+  
+  
+    Um Framework Para Pensar Sobre a Legibilidade Do Código: Níveis <a href="#um-framework-para-pensar-sobre-a-legibilidade-do-código-níveis" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>Há pouco tempo, comecei a pensar na legibilidade do código em termos de níveis. Os níveis representam preocupações específicas com relação à legibilidade e são ordenados em termos de prioridade.</p>
 
@@ -150,8 +163,14 @@
 <p>Você vai ver alguns exemplos de código, em C#. Mas o que vou mostrar aqui se aplica a qualquer linguagem, a menos que eu diga explicitamente o contrário.</p>
 
 <p>Sem mais delongas, aqui estão os cinco níveis de código legível.</p>
-
-<h2 id="nível-1-seu-código-faz-o-mínimo-necessário">Nível 1: Seu Código Faz O Mínimo Necessário</h2>
+<h2 id="nível-1-seu-código-faz-o-mínimo-necessário">
+  
+  
+    Nível 1: Seu Código Faz O Mínimo Necessário <a href="#nível-1-seu-código-faz-o-mínimo-necessário" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>(Sim, nível um. Por favor, não me enche com isso de que “os programadores começam a contar no zero”).</p>
 
@@ -167,8 +186,14 @@
 </ul>
 
 <p>Não é difícil aprender esses tipos de práticas recomendadas. Você pode aprender a maioria delas por meio da experiência, ouvindo o feedback de desenvolvedores mais experientes durante as revisões de código ou lendo livros e até mesmo publicações em blogs como os listados acima.</p>
-
-<h2 id="nível-2-seu-código-é-idiomático">Nível 2: Seu Código é Idiomático</h2>
+<h2 id="nível-2-seu-código-é-idiomático">
+  
+  
+    Nível 2: Seu Código é Idiomático <a href="#nível-2-seu-código-é-idiomático" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>Considere a seguinte classe C#:</p>
 
@@ -225,8 +250,14 @@
 <p>O código não idiomático aumenta a <a href="https://linearb.io/blog/cognitive-complexity-in-software">complexidade cognitiva</a> de uma base de código. Isso dificulta a integração de desenvolvedores que estejam familiarizados com os padrões e expressões idiomáticas da linguagem. Se você tiver um projeto open source, o excesso de idiossincrasias no código pode afastar possíveis colaboradores.</p>
 
 <p>É claro que o oposto de tudo isso é verdadeiro.</p>
-
-<h2 id="nível-3-seu-código-revela-a-intenção-por-meio-do-uso-tático-da-tipagem">Nível 3: Seu Código Revela a Intenção Por Meio Do Uso Tático Da Tipagem</h2>
+<h2 id="nível-3-seu-código-revela-a-intenção-por-meio-do-uso-tático-da-tipagem">
+  
+  
+    Nível 3: Seu Código Revela a Intenção Por Meio Do Uso Tático Da Tipagem <a href="#nível-3-seu-código-revela-a-intenção-por-meio-do-uso-tático-da-tipagem" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>Como o título sugere, este item, diferentemente dos dois anteriores, só se aplica a linguagens estaticamente tipadas - ou, talvez, dinamicamente tipadas que apresentem algum tipo de anotação de tipo opcional.</p>
 
@@ -258,8 +289,14 @@
 <p>A solução acima, apesar de ser um pouco complicada, funcionaria. Mas eu o encorajaria fortemente a usar a classe <code class="language-plaintext highlighter-rouge">Stack&lt;T&gt;</code> normal. O uso do tipo mais específico tornaria o código imediatamente mais legível para qualquer pessoa que saiba o que é uma pilha. Isso faria com que o código revelasse sua intenção.</p>
 
 <p>Resumindo: a menos que você tenha um motivo justificável para não fazer isso, <strong>sempre prefira o tipo que representa melhor o conceito ou a funcionalidade de que você precisa</strong>. Isso não apenas tornará seu código mais robusto, mas também revelará melhor sua intenção.</p>
-
-<h2 id="nível-4-seu-código-não-mistura-níveis-de-abstração">Nível 4: Seu Código Não Mistura Níveis de Abstração</h2>
+<h2 id="nível-4-seu-código-não-mistura-níveis-de-abstração">
+  
+  
+    Nível 4: Seu Código Não Mistura Níveis de Abstração <a href="#nível-4-seu-código-não-mistura-níveis-de-abstração" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>Seu código não deve misturar mais de um nível de abstração. O código que está na parte de “Regras de negócios” da sua base de código não deve mexer com o código que está na parte de “Preocupações de IO”, para dar um exemplo.</p>
 
@@ -332,8 +369,14 @@
 <p>Essa função de exemplo não é a coisa mais difícil de ler no mundo, mas certamente é mais difícil do que deveria ser. Ela mistura lógica de domínio com IO. Ela mistura lógica de domínio com tratamento de erros de IO e até mesmo parsing. Uma solução melhor seria ter um método que obtivesse uma coleção de <code class="language-plaintext highlighter-rouge">ClimaticReading</code> e calculasse e retornasse a média.</p>
 
 <p>Em outras palavras, uma solução melhor e mais elegante seria ter uma <strong>função pura</strong>. Esse novo método, além de ser mais legível, seria mais robusto, menos propenso a erros e também determinístico, ou seja, sempre retornaria os mesmos resultados para a mesma entrada, tornando-o intrinsecamente <a href="https://carlosschults.net/pt/testes-unitarios-csharp-intro-tdd/">testável por testes de unidade</a>.</p>
-
-<h2 id="nível-5-seu-código-fala-a-linguagem-do-negócio">Nível 5: Seu Código Fala a Linguagem Do Negócio</h2>
+<h2 id="nível-5-seu-código-fala-a-linguagem-do-negócio">
+  
+  
+    Nível 5: Seu Código Fala a Linguagem Do Negócio <a href="#nível-5-seu-código-fala-a-linguagem-do-negócio" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>Você atingiu o nível 5 quando escreve um código que fala a linguagem do negócio. Quando você usa termos que são os mesmos que os especialistas no domínio usam.</p>
 
@@ -342,8 +385,14 @@
 <p>Se o seu código usa termos não ortodoxos em vez de termos do setor, isso dificulta a integração quando você traz novas pessoas que estão familiarizadas com o negócio, mas são novas na base de código. Se o código usar um jargão diferente do que os stakeholders usam, a comunicação se tornará mais cansativa, pois exigirá que você faça um mapeamento constante entre os conceitos apenas para conseguir acompanhar o que está acontecendo.</p>
 
 <p>O nível 5 é, de certa forma, uma consequência lógica do nível 4. Se você separar cuidadosamente as preocupações da sua aplicação, certificando-se de que o código de alto nível não se misture com o código de baixo nível, a tendência é que o código de alto nível fique cada vez mais próximo do domínio em termos de nomenclatura.</p>
-
-<h2 id="dê-um-level-up-na-legibilidade-do-seu-código">Dê um “Level Up” Na Legibilidade Do Seu Código</h2>
+<h2 id="dê-um-level-up-na-legibilidade-do-seu-código">
+  
+  
+    Dê um “Level Up” Na Legibilidade Do Seu Código <a href="#dê-um-level-up-na-legibilidade-do-seu-código" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>A maioria dos programadores concorda que a legibilidade do código é vital. Mas e quanto a concordar com a aparência de um “código legível”? Aí é outra história.</p>
 
@@ -770,6 +819,9 @@
 
     <script src="/js/dark-mode.js"></script>
     <script src="/js/copy-code.js"></script>
+    
+    <script src="/js/post-enhancements.js"></script>
+    
   </body>
 
 </html>

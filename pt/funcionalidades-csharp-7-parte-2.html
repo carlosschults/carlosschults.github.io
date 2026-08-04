@@ -124,6 +124,7 @@
   </header>
 
   <div class="post-content" itemprop="articleBody">
+    
     <p><img src="https://res.cloudinary.com/dz5ppacuo/image/upload/v1489452722/charp7-features-cover_ciekql.jpg" alt="" /></p>
 
 <p>Neste artigo, vamos continuar a ver algumas das features mais interessantes do C# 7.
@@ -132,8 +133,14 @@
 <p>Na <a href="https://carlosschults.net/pt/funcionalidades-csharp-7/">primeira parte da série</a>, nós falamos sobre algumas das novas features do C#, a saber: melhorias em literais, variáveis de saída, mais membros “<em>expression-bodied</em>” e throw expressions.</p>
 
 <p>Hoje nós veremos: <strong>Tuplas</strong> e <strong>Funções locais</strong>. Mas antes de continuarmos, quero deixar meu agradecimento ao amigo Gunter Italiano Ribeiro, que gentilmente revisou este artigo.</p>
-
-<h2 id="tuplas">Tuplas</h2>
+<h2 id="tuplas">
+  
+  
+    Tuplas <a href="#tuplas" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>Alguma vez você já teve a necessidade de escrever um método que retornasse mais de um valor? Provavelmente sim. Nas versões anteriores do C#, havia algumas opções disponíveis. Você poderia usar um parâmetro de saída (<em>out</em>), ou talvez criar um tipo específico, mas cada uma dessas opções tem seus próprios problemas. Parâmetros de saída podem complicar um pouco o design; criar um tipo para cada uma dessas situações pode ocasionar um <em>overhead</em> desnecessário, se tudo que você quer é só uma maneira de retornar dois valores, principalmente em um contexto privado.</p>
 
@@ -182,8 +189,14 @@
 <script src="https://gist.github.com/carlosschults/225e608c7b844df46084b6a7af5b6ac2.js"></script>
 
 <p>Você não precisa realmente declarar as variáveis no momento da desconstrução, porém. É perfeitamente válido desconstruir uma tupla em variáveis já declaradas.</p>
-
-<h3 id="algumas-notas">Algumas notas</h3>
+<h3 id="algumas-notas">
+  
+  
+    Algumas notas <a href="#algumas-notas" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>Tuplas são <a href="https://carlosschults.net/pt/tipos-valor-referencia-em-csharp/"><em>Tipos de Valor</em></a>. A igualdade nas tuplas é implementada da maneira que você provavelmente esperaria: duas tuplas são iguais se seus valores são iguais e elas retornam o mesmo <code class="language-plaintext highlighter-rouge">HashCode</code>. O nome dos elementos não é relevante.</p>
 
@@ -196,8 +209,14 @@
 <p>Atualmente, para que esta funcionalidade funcione, você precisa instalar um pacote do nuget chamado “System.ValueTuple”. No Visual Studio, vá para <strong>Ferramentas</strong> &gt; <strong>Gerenciador de pacotes do NuGet</strong> &gt; <strong>Console do Gerenciador de Pacotes</strong>.</p>
 
 <p>A janela do Console do Gerenciador de Pacotes será exibida. Digite (ou copie e cole) <code class="language-plaintext highlighter-rouge">Install-Package System.ValueTuple</code> e pressione <code class="language-plaintext highlighter-rouge">ENTER</code>.</p>
-
-<h3 id="mas-e-o-tipo-systemtuple">Mas e o tipo <code class="language-plaintext highlighter-rouge">System.Tuple</code>?</h3>
+<h3 id="mas-e-o-tipo-systemtuple">
+  
+  
+    Mas e o tipo <code class="language-plaintext highlighter-rouge">System.Tuple</code>? <a href="#mas-e-o-tipo-systemtuple" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>Você talvez esteja se perguntando: qual a razão de tanto barulho sobre tuplas, já que o .Net Framework tem o tipo de referência <code class="language-plaintext highlighter-rouge">System.Tuple</code> desde a versão 4.0? Por que não continuamos com o tipo mais antigo?</p>
 
@@ -206,8 +225,14 @@
 <p>Primeiramente, conforme já mencionado, o tipo mais antigo é um tipo de referência, e o novo tipo é um tipo de valor, com todas as implicações usuais que isso traz.</p>
 
 <p>Mas as diferenças realmente importantes têm a ver com conveniência e legibilidade. Ao usar <code class="language-plaintext highlighter-rouge">System.Tuple</code> não há desconstrução; você só pode acessar os elementos usando os nomes padrão (Item1, Item2, etc), o que pode prejudicar a leitura e interpretação do código.</p>
-
-<h2 id="funções-locais">Funções Locais</h2>
+<h2 id="funções-locais">
+  
+  
+    Funções Locais <a href="#funções-locais" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>Resumidamente, uma função local é exatamente o que o nome sugere: uma função que pode ser declarada dentro de outra.</p>
 
@@ -254,8 +279,14 @@
 <script src="https://gist.github.com/carlosschults/34b77038c058f261f615e739c7f9ea2a.js"></script>
 
 <p>Você poderia transformar a função <code class="language-plaintext highlighter-rouge">Iterator()</code> acima em um método privado, mas seria: 1) redundante e pouco elegante, pois iria requerer repetir a mesma assinatura e argumentos da função externa; e 2) menos seguro, pois outra parte do código poderia chamar o método sem fazer a validação.</p>
-
-<h2 id="conclusão">Conclusão</h2>
+<h2 id="conclusão">
+  
+  
+    Conclusão <a href="#conclusão" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>Falamos hoje sobre <strong>Tuplas</strong> e <strong>Funções Locais</strong>, duas novas features do C# que, à primeira vista, podem até parecer “inofensivas”, mas que têm potencial para mudar o código que escrevemos de maneiras interessantes.</p>
 
@@ -270,8 +301,14 @@
 <p>Minha opinião com relação à isso é simples: toda e qualquer feature pode ser abusada. Cada a nós, profissionais, e às nossas equipe, exercermos o senso crítico na hora de utilizar essas (e outras) funcionalidades. Aliás, conforme mencionei no <a href="https://carlosschults.net/pt/metodos-privados-code-smell/">meu artigo sobre métodos privados</a>, revisão de código e/ou programação em par são de ótima ajuda em momentos como esse.</p>
 
 <p>Obrigado pela leitura, e até a próxima.</p>
-
-<h2 id="referências">Referências</h2>
+<h2 id="referências">
+  
+  
+    Referências <a href="#referências" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <ul>
   <li><a href="https://blogs.msdn.microsoft.com/dotnet/2017/03/09/new-features-in-c-7-0/">https://blogs.msdn.microsoft.com/dotnet/2017/03/09/new-features-in-c-7-0/</a></li>
@@ -696,6 +733,9 @@
 
     <script src="/js/dark-mode.js"></script>
     <script src="/js/copy-code.js"></script>
+    
+    <script src="/js/post-enhancements.js"></script>
+    
   </body>
 
 </html>

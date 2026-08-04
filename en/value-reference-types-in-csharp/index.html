@@ -127,6 +127,7 @@
   </header>
 
   <div class="post-content" itemprop="articleBody">
+    
     <p><img src="https://res.cloudinary.com/dz5ppacuo/image/upload/v1466341001/csharp-min_buiizq.png" alt="" /></p>
 
 <p>This is my first “real” post here on my blog, and I decided to talk about value types and reference types. This is somewhat of a basic subject, in the sense that it is something that you should already know if you write C# code for a living.But at the same time, it can be a little non-intuitive if you’re not an experienced developer.
@@ -207,8 +208,14 @@ Now, suppose we have a class like this:</p>
 This is similar to when you copy a file from one folder and paste it somewhere else. You made a copy, but from now on, they are independent files and have nothing to do with each other.</p>
 
 <p>Reference types store a reference, that points to the data, which lives somewhere else in the machine’s memory. When you assign the value of a reference type variable to another, what gets copied is the reference.It can be useful to think of them as shortcuts to files. If you have one or more shortcuts that point to a particular file, when you make changes in the original file, those changes will be visible through the shortcuts. Because they’re just that, shortcuts.</p>
-
-<h2 id="which-types-are-value-types">Which types are value types?</h2>
+<h2 id="which-types-are-value-types">
+  
+  
+    Which types are value types? <a href="#which-types-are-value-types" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>According to MSDN, the value types are:</p>
 
@@ -218,8 +225,14 @@ This is similar to when you copy a file from one folder and paste it somewhere e
   <li>All structures</li>
   <li>Enumerations</li>
 </ul>
-
-<h2 id="which-types-are-reference-types">Which types are reference types?</h2>
+<h2 id="which-types-are-reference-types">
+  
+  
+    Which types are reference types? <a href="#which-types-are-reference-types" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>Again, acording to MSDN:</p>
 
@@ -229,16 +242,28 @@ This is similar to when you copy a file from one folder and paste it somewhere e
   <li>Classes</li>
   <li>Delegates</li>
 </ul>
-
-<h2 id="wait-a-minute-string-is-a-reference-type">Wait a minute! String is a reference type?!</h2>
+<h2 id="wait-a-minute-string-is-a-reference-type">
+  
+  
+    Wait a minute! String is a reference type?! <a href="#wait-a-minute-string-is-a-reference-type" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>Maybe you’re surprised to see String listed as a reference type. After all, it seems to behave as a value type. 
 Well, the reason for this is because String is an <strong>immutable type</strong>. As I said, I won’t talk about this today, but soon we’ll have a post all about System.String.</p>
 
 <p>OK, that’s it for today. I hope you guys enjoyed this post, and I’d love to hear your feedback.Have I expressed myself clearly enough? Have I said something innacurate - or even flat-out wrong?
 Let me know in the comments, or <a href="https://twitter.com/carlosschults">reach me on twitter</a>.</p>
-
-<h2 id="references">References:</h2>
+<h2 id="references">
+  
+  
+    References: <a href="#references" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <ul>
   <li><a href="https://jonskeet.uk/csharp/references.html">https://jonskeet.uk/csharp/references.html</a></li>
@@ -614,6 +639,9 @@ Let me know in the comments, or <a href="https://twitter.com/carlosschults">reac
 
     <script src="/js/dark-mode.js"></script>
     <script src="/js/copy-code.js"></script>
+    
+    <script src="/js/post-enhancements.js"></script>
+    
   </body>
 
 </html>

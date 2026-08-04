@@ -125,12 +125,19 @@
   </header>
 
   <div class="post-content" itemprop="articleBody">
+    
     <p><img src="https://res.cloudinary.com/dz5ppacuo/image/upload/v1491343925/git-for-tfs-users-1038x437_ios03n.jpg" alt="" /></p>
 
 <p>Aprender Git pode ser desafiador para desenvolvedores com experiência em versionadores centralizados. Mas não precisa ser assim. 
 <!--more--></p>
-
-<h2 id="introdução">Introdução</h2>
+<h2 id="introdução">
+  
+  
+    Introdução <a href="#introdução" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>O Git está se tornando (já se tornou, muitos diriam) o sistema de controles de versão padrão da nossa área. O versionador foi criado em 2005 por Linus Torvalds para gerenciar o código-fonte do kernel do Linux, e desde então tem apresentado um crescimento fenomenal no seu uso, principalmente após o advento do <a href="github.com">Github</a>.</p>
 
@@ -141,8 +148,14 @@
 <p>Tendo dito isto, a curva de aprendizado do Git <em>pode</em> apresentar mais desafios para pessoas que estão acostumadas com sistemas de controle de versão centralizados. É natural tentar encontrar padrões e mapear conceitos entre o sistema que se conhece e o que se está aprendendo; mas existem diferenças marcantes o suficiente para que o resultado deste mapeamento seja frustrante.</p>
 
 <p>Com isso em mente, resolvi escrever uma série de artigos para tentar auxiliar desenvolvedores vindos de versionadores centralizados (especificamente TFS/TFVC) e tentando aprender o Git. Não tenho nenhuma pretensão de fazer uma cobertura exaustiva do assunto; muito pelo contrário: nos momentos em que for necessário, indicarei conteúdos que ofereçam uma explicação mais densa de certos tópicos.</p>
-
-<h2 id="uma-nota-rápida-sobre-a-nomenclatura-utilizada-neste-artigo">Uma nota rápida sobre a nomenclatura utilizada neste artigo</h2>
+<h2 id="uma-nota-rápida-sobre-a-nomenclatura-utilizada-neste-artigo">
+  
+  
+    Uma nota rápida sobre a nomenclatura utilizada neste artigo <a href="#uma-nota-rápida-sobre-a-nomenclatura-utilizada-neste-artigo" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p><strong>TFS</strong> significa Team Foundation Server. É um produto da Microsoft que visa o gerenciamento de projeto, gerenciamento de requisitos, automatização de build, gerenciamento de releases, e diversas outras features.</p>
 
@@ -151,8 +164,14 @@
 <p>Então, <strong>TFS</strong> se refere à solução completa de gerenciamento do ciclo de vida da aplicação. E <strong>TFVC</strong> se refere ao versionador.</p>
 
 <p>Independente disso, neste artigo vou me referir ao versionador como TFS, pois, coloquialmente, muitos desenvolvedores o conhecem por este nome.</p>
-
-<h2 id="commit--check-in">Commit != Check-in</h2>
+<h2 id="commit--check-in">
+  
+  
+    Commit != Check-in <a href="#commit--check-in" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>O TFS, por ser um versionador centralizado, apresenta um fluxo de trabalho razoavelmente simples, que geralmente consiste em três ações:</p>
 
@@ -173,8 +192,14 @@
 <p>Quando se trabalha em equipe é comum utilizar-se de um repositório padrão que é considerado, para efeitos de organização, o repositório padrão, onde o código “mais atual” encontra-se. Mais uma vez, no Git não existe conceito de servidor central; o uso de tal repositório padrão é uma convenção utilizada pelos times.</p>
 
 <p>Com isso em mente, vamos treinar um pouco alguns comandos do Git para começarmos a nos habituar com eles. No post de hoje não veremos nada de repositório remoto, servidor, nada disso: apenas comandos locais.</p>
-
-<h2 id="baixando-e-instalando-o-git">Baixando e instalando o Git</h2>
+<h2 id="baixando-e-instalando-o-git">
+  
+  
+    Baixando e instalando o Git <a href="#baixando-e-instalando-o-git" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>Dizem que houve uma época em que trabalhar com o Git no Windows era problemático. Atualmente, não é mais o caso, como você já vai ver.</p>
 
@@ -185,8 +210,14 @@
 <p><img src="https://res.cloudinary.com/dz5ppacuo/image/upload/v1491350434/git1_xek0vv.png" alt="" /></p>
 
 <p>Quando chegar a esta tela, é interessante marcar a segunda opção para que você seja capaz de utilizar o Git a partir do prompt de comando do Windows, e não apenas a partir do Bash do Git.</p>
-
-<h2 id="configuração-básica">Configuração básica</h2>
+<h2 id="configuração-básica">
+  
+  
+    Configuração básica <a href="#configuração-básica" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>Depois de terminada a instalação, é necessária fazer a configuração básica de identidade do Git, que consiste em dizer ao Git seu nome e e-mail para que ele os associe a cada commit que você efetuar.</p>
 
@@ -201,8 +232,14 @@
 </blockquote>
 
 <p>Existem mais configurações e opções possíveis, mas isso já é suficiente para que você comece a experimentar o Git.</p>
-
-<h2 id="criando-o-repositório">Criando o repositório</h2>
+<h2 id="criando-o-repositório">
+  
+  
+    Criando o repositório <a href="#criando-o-repositório" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>No Git Bash, vamos criar uma nova pasta e em seguida acessá-la:</p>
 
@@ -231,8 +268,14 @@
 </blockquote>
 
 <p>Ou seja: usuário logado, localização atual e branch atual. O branch padrão do Git chama-se <em>master</em>. No próximo artigo desta série aprenderemos a operação básica de branches, mas por enquanto vamos permanecer apenas no branch padrão mesmo.</p>
-
-<h2 id="primeiros-comandos">Primeiros comandos</h2>
+<h2 id="primeiros-comandos">
+  
+  
+    Primeiros comandos <a href="#primeiros-comandos" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>OK, com o repositório criado, é hora de testarmos alguns comandos. Um dos comandos mais úteis e que você irá utilizar com mais frequência é o <code class="language-plaintext highlighter-rouge">git status</code>, que serve para visualizar o estado atual em que se encontra o repositório.</p>
 
@@ -361,8 +404,14 @@ Changes not staged for commit:
 </blockquote>
 
 <p>Para terminar, execute novamente o <code class="language-plaintext highlighter-rouge">git status</code> e verá novamente a mensagem já familiar: diretório de trabalho limpo, nada a ser commitado.</p>
-
-<h2 id="conclusão">Conclusão</h2>
+<h2 id="conclusão">
+  
+  
+    Conclusão <a href="#conclusão" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>Este artigo foi extremamente simples, e isso não foi um acidente. Minha intenção foi de mostrar os comandos mais básicos, com a intenção de que você pegue o “feeling” de como se usa o Git.</p>
 
@@ -806,6 +855,9 @@ Changes not staged for commit:
 
     <script src="/js/dark-mode.js"></script>
     <script src="/js/copy-code.js"></script>
+    
+    <script src="/js/post-enhancements.js"></script>
+    
   </body>
 
 </html>

@@ -126,6 +126,7 @@
   </header>
 
   <div class="post-content" itemprop="articleBody">
+    
     <p><img src="https://res.cloudinary.com/dz5ppacuo/image/upload/v1617641333/reduce-cyclomatic-complexity/reduce-cyclomatic-complexity-1038x437.jpg" alt="" />
 <span>Foto por <a href="https://unsplash.com/@hishahadat?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Shahadat Rahman</a> no <a href="https://unsplash.com/s/photos/complexity?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span></p>
 
@@ -134,14 +135,26 @@
 <p>Engenheiros(as) de software dignos do nome estão sempre em busca de maneiras de melhorar seu código. A boa notícia é que existe uma maneira confiável de avaliar a saúde de uma base de código e de um projeto, e isso é através do uso de <a href="https://linearb.io/metrics-modern-dev-leaders/">métricas</a>. O post de hoje é sobre uma métrica específica. Você aprenderá como reduzir a complexidade ciclomática e, mais importante, por que você gostaria de fazê-lo.</p>
 
 <p>Vamos começar definindo a complexidade ciclomática. Depois disso, você aprenderá qual é o problema de ter um alto valor de complexidade ciclomática e por que você precisaria reduzi-la. Depois do “o quê” e do “porquê”, finalmente chegaremos ao “como”: mostraremos as táticas que você pode adotar para reduzir a complexidade ciclomática de seu código. Vamos lá.</p>
-
-<h2 id="complexidade-ciclomática-uma-breve-definição">Complexidade Ciclomática: Uma breve definição</h2>
+<h2 id="complexidade-ciclomática-uma-breve-definição">
+  
+  
+    Complexidade Ciclomática: Uma breve definição <a href="#complexidade-ciclomática-uma-breve-definição" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>A complexidade ciclomática é uma importante métrica de software. Refere-se ao número de caminhos de execução possíveis dentro de um determinado código - por exemplo, uma função. Quanto mais estruturas de decisão você usar, mais ramificações possíveis existem para seu código.</p>
 
 <p>A complexidade ciclomática é especialmente importante quando se trata de testes. Ao calcular a complexidade ciclomática de uma função, por exemplo, você sabe o número mínimo de casos de teste que você precisará para alcançar a <a href="https://linearb.io/blog/what-is-branch-coverage/">cobertura de ramificação</a> completa dessa função. Portanto, podemos dizer que a complexidade ciclomática pode ser um preditor de quão difícil é testar um determinado código.</p>
-
-<h2 id="um-exemplo-de-complexidade-ciclomática-super-simples">Um Exemplo de Complexidade Ciclomática Super Simples</h2>
+<h2 id="um-exemplo-de-complexidade-ciclomática-super-simples">
+  
+  
+    Um Exemplo de Complexidade Ciclomática Super Simples <a href="#um-exemplo-de-complexidade-ciclomática-super-simples" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>Considere a seguinte função escrita em pseudocódigo:</p>
 
@@ -161,68 +174,170 @@
 <p>A segunda versão da função tem um ramo nela. O chamador da função pode passar <strong>true</strong> como o valor do parâmetro <strong>sayGoodbye</strong>, mesmo que o valor padrão seja <strong>false</strong><em>. Se isso acontecer, a função imprimirá uma mensagem de adeus após dizer olá. Por outro lado, se o interlocutor não fornecer um valor para o parâmetro ou escolher <strong>false</strong></em>, a mensagem de adeus não será exibida.</p>
 
 <p>Portanto, a função tem dois ramos de execução possíveis, o que é o mesmo que dizer que sua complexidade ciclomática tem um valor de 2.</p>
-
-<h2 id="por-que-a-complexidade-ciclomática-é-ruim">Por que a Complexidade Ciclomática é Ruim?</h2>
+<h2 id="por-que-a-complexidade-ciclomática-é-ruim">
+  
+  
+    Por que a Complexidade Ciclomática é Ruim? <a href="#por-que-a-complexidade-ciclomática-é-ruim" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>A complexidade ciclomática não é intrinsecamente ruim. Por exemplo, você pode ter um pedaço de código com um valor complexo ciclomático um pouco alto que é super fácil de ler e entender. Entretanto, de modo geral, podemos dizer que ter uma alta complexidade ciclomática é ou um sintoma de problemas com a base de código ou uma causa potencial de problemas futuros. Vamos cobrir algumas das razões pelas quais você gostaria de reduzi-la com mais detalhes.</p>
-
-<h3 id="a-complexidade-ciclomática-pode-contribuir-para-a-complexidade-cognitiva">A Complexidade Ciclomática Pode Contribuir para a Complexidade Cognitiva</h3>
+<h3 id="a-complexidade-ciclomática-pode-contribuir-para-a-complexidade-cognitiva">
+  
+  
+    A Complexidade Ciclomática Pode Contribuir para a Complexidade Cognitiva <a href="#a-complexidade-ciclomática-pode-contribuir-para-a-complexidade-cognitiva" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>A complexidade cognitiva refere-se ao quanto é difícil entender um determinado código. Embora nem sempre seja esse o caso, a complexidade ciclomática pode ser um dos fatores que impulsionam a complexidade cognitiva. Quanto maior a complexidade cognitiva de um pedaço de código, mais difícil é navegar e manter.</p>
-
-<h3 id="a-complexidade-ciclomática-torna-o-código-mais-difícil-de-ser-testado">A Complexidade Ciclomática torna o código mais difícil de ser testado</h3>
+<h3 id="a-complexidade-ciclomática-torna-o-código-mais-difícil-de-ser-testado">
+  
+  
+    A Complexidade Ciclomática torna o código mais difícil de ser testado <a href="#a-complexidade-ciclomática-torna-o-código-mais-difícil-de-ser-testado" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>Como já mencionamos, valores mais altos de complexidade ciclomática resultam na necessidade de um maior número de casos de teste para testar de forma abrangente um bloco de código - e.g., uma função. Portanto, se você quer facilitar sua vida ao escrever testes, provavelmente quer reduzir a complexidade ciclomática de seu código.</p>
-
-<h3 id="a-complexidade-ciclomática-contribui-para-maior-risco-de-defeitos">A Complexidade Ciclomática Contribui para Maior Risco de Defeitos</h3>
+<h3 id="a-complexidade-ciclomática-contribui-para-maior-risco-de-defeitos">
+  
+  
+    A Complexidade Ciclomática Contribui para Maior Risco de Defeitos <a href="#a-complexidade-ciclomática-contribui-para-maior-risco-de-defeitos" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>É mais provável que você introduza defeitos em uma área da base de código que você muda muito do que a uma que você raramente toca. Além disso, quanto mais complexo for um determinado pedaço de código, mais provável é que você o entenda mal e introduza um defeito a ele.</p>
 
 <p>Portanto, código complexo que sofre muito <a href="https://linearb.io/blog/what-is-code-churn/">churn</a>- mudanças freqüentes pela equipe - representa mais risco de defeitos. Ao reduzir a complexidade ciclomática - e, idealmente, também a rotatividade do código - você estará mitigando esses riscos.</p>
-
-<h2 id="como-reduzir-a-complexidade-ciclomática-6-maneiras-práticas">Como Reduzir a Complexidade Ciclomática: 6 Maneiras Práticas</h2>
+<h2 id="como-reduzir-a-complexidade-ciclomática-6-maneiras-práticas">
+  
+  
+    Como Reduzir a Complexidade Ciclomática: 6 Maneiras Práticas <a href="#como-reduzir-a-complexidade-ciclomática-6-maneiras-práticas" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>Agora vamos rever algumas dicas práticas que você pode usar para garantir que a complexidade ciclomática de seu código seja a mais baixa possível.</p>
-
-<h3 id="1preferir-funções-menores">1.Preferir funções menores</h3>
-
-<h4 id="o-que-fazer">O que fazer?</h4>
+<h3 id="1preferir-funções-menores">
+  
+  
+    1.Preferir funções menores <a href="#1preferir-funções-menores" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
+<h4 id="o-que-fazer">
+  
+  
+    O que fazer? <a href="#o-que-fazer" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h4>
+    
 
 <p>Sendo todas as outras iguais, funções menores são mais fáceis de ler e entender. Elas também são menos propensas a conter bugs em virtude de seu comprimento. Se você não tem muito código, você não tem muitas oportunidades para o código de bugs. O mesmo raciocínio se aplica à complexidade ciclomática: é menos provável que você tenha um código complexo se tiver menos período de código. Portanto, o conselho aqui é preferir funções menores.</p>
-
-<h4 id="como-fazer-isso">Como fazer isso?</h4>
+<h4 id="como-fazer-isso">
+  
+  
+    Como fazer isso? <a href="#como-fazer-isso" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h4>
+    
 
 <p>Para cada função, identifique sua principal responsabilidade. Extraia o que sobra para suas próprias funções e módulos. Fazer isso também facilita a reutilização do código, o que é um ponto que revisaremos em breve.</p>
-
-<h3 id="2evitar-argumentos-de-bandeira-em-funções">2.Evitar Argumentos de Bandeira em Funções</h3>
-
-<h4 id="o-que-fazer-1">O que fazer?</h4>
+<h3 id="2evitar-argumentos-de-bandeira-em-funções">
+  
+  
+    2.Evitar Argumentos de Bandeira em Funções <a href="#2evitar-argumentos-de-bandeira-em-funções" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
+<h4 id="o-que-fazer-1">
+  
+  
+    O que fazer? <a href="#o-que-fazer-1" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h4>
+    
 
 <p>Os argumentos da bandeira são parâmetros booleanos que você acrescenta a uma função. As pessoas normalmente os utilizam quando precisam mudar o funcionamento de uma função, preservando ao mesmo tempo o antigo comportamento.</p>
-
-<h4 id="como-fazer">Como fazer?</h4>
+<h4 id="como-fazer">
+  
+  
+    Como fazer? <a href="#como-fazer" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h4>
+    
 
 <p>O que usar ao invés de parâmetros de bandeira? Em poucas palavras, você pode usar estratégias que alcançam o mesmo resultado sem incorrer em alta complexidade. Por exemplo, você poderia criar uma nova função, mantendo a antiga como está e extraindo as partes comuns em sua própria função privada.</p>
 
 <p>Se o parâmetro da bandeira estiver sendo usado para melhorar ou melhorar de alguma forma o comportamento da função original, você pode querer aproveitar o [padrão decorator] (https://en.wikipedia.org/wiki/Decorator_pattern) para alcançar o mesmo fim.</p>
-
-<h3 id="3reduzir-o-número-de-estruturas-de-decisão">3.Reduzir o número de estruturas de decisão</h3>
-
-<h4 id="o-que-fazer-2">O que fazer?</h4>
+<h3 id="3reduzir-o-número-de-estruturas-de-decisão">
+  
+  
+    3.Reduzir o número de estruturas de decisão <a href="#3reduzir-o-número-de-estruturas-de-decisão" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
+<h4 id="o-que-fazer-2">
+  
+  
+    O que fazer? <a href="#o-que-fazer-2" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h4>
+    
 
 <p>Você pode considerar este um “não-cérebro”. Se as estruturas de decisão - especialmente <strong>se-else</strong> e mudar de caso são o que causa mais ramos no código, é lógico que você deve reduzi-los se quiser manter a complexidade ciclomática à distância.</p>
-
-<h4 id="como-fazer-isso-1">Como fazer isso?</h4>
+<h4 id="como-fazer-isso-1">
+  
+  
+    Como fazer isso? <a href="#como-fazer-isso-1" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h4>
+    
 
 <p>Algumas das táticas que acabamos de ver podem contribuir para reduzir o número de <strong>se</strong> declarações em seu código. Por exemplo, em vez de usar argumentos de bandeira e depois usar uma declaração <strong>if</strong>* para verificar, você pode usar o padrão decorador. Em vez de usar um caso de troca para rever muitas possibilidades e decidir qual delas o código executará, você pode aproveitar o <a href="https://en.wikipedia.org/wiki/Strategy_pattern">design pattern strategy</a>. Claro que, em algum ponto do código, você ainda precisará de um estojo de troca. Afinal de contas, <em>alguém</em> tem que decidir qual a implementação real a ser usada. Entretanto, esse ponto se torna o único ponto no código que precisa dessa estrutura de decisão.</p>
-
-<h3 id="4get-rid-of-duplicated-code-livre-se-do-código-duplicado">4.Get Rid of Duplicated Code (Livre-se do código duplicado)</h3>
-
-<h4 id="o-que-fazer-3">O que fazer?</h4>
+<h3 id="4get-rid-of-duplicated-code-livre-se-do-código-duplicado">
+  
+  
+    4.Get Rid of Duplicated Code (Livre-se do código duplicado) <a href="#4get-rid-of-duplicated-code-livre-se-do-código-duplicado" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
+<h4 id="o-que-fazer-3">
+  
+  
+    O que fazer? <a href="#o-que-fazer-3" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h4>
+    
 
 <p>Às vezes, você tem funções/métodos que fazem quase a mesma coisa. Manter ambos aumentam a complexidade ciclomática total de sua classe ou módulo. Se você pode limitar suas duplicatas, você pode limitar a complexidade.</p>
-
-<h4 id="como-fazer-1">Como fazer?</h4>
+<h4 id="como-fazer-1">
+  
+  
+    Como fazer? <a href="#como-fazer-1" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h4>
+    
 
 <p>Remova as duplicatas de código por:</p>
 
@@ -231,30 +346,72 @@
   <li>alavancando padrões de projeto - tais como <a href="https://en.wikipedia.org/wiki/Template_method_pattern">o design pattern template</a>- que incentivam a reutilização do código.</li>
   <li>extraindo funções utilitárias genéricas em pacotes-gems, módulos npm, pacotes NuGet, etc. - que podem ser reutilizados por toda a organização.</li>
 </ul>
-
-<h3 id="5remover-código-obsoleto">5.Remover Código Obsoleto</h3>
-
-<h4 id="o-que-fazer-4">O que fazer?</h4>
+<h3 id="5remover-código-obsoleto">
+  
+  
+    5.Remover Código Obsoleto <a href="#5remover-código-obsoleto" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
+<h4 id="o-que-fazer-4">
+  
+  
+    O que fazer? <a href="#o-que-fazer-4" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h4>
+    
 
 <p>Há muitas razões pelas quais é uma boa idéia remover o código obsoleto, ou seja, o código morto de sua aplicação. Para nosso contexto, basta dizer que essa é uma forma “gratuita” de aumentar a cobertura de código e diminuir a complexidade ciclomática.</p>
-
-<h4 id="como-fazer-isso-2">Como fazer isso?</h4>
+<h4 id="como-fazer-isso-2">
+  
+  
+    Como fazer isso? <a href="#como-fazer-isso-2" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h4>
+    
 
 <p>Basta usar uma ferramenta que lhe permita identificar o código morto - até mesmo sua IDE pode ser capaz de fazê-lo - e depois apagá-lo impiedosamente.</p>
-
-<h3 id="6não-reinvente-a-roda">6.Não Reinvente a Roda</h3>
-
-<h4 id="o-que-fazer-5">O que fazer?</h4>
+<h3 id="6não-reinvente-a-roda">
+  
+  
+    6.Não Reinvente a Roda <a href="#6não-reinvente-a-roda" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
+<h4 id="o-que-fazer-5">
+  
+  
+    O que fazer? <a href="#o-que-fazer-5" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h4>
+    
 
 <p>Deixe o desenvolvedor que nunca escreveu uma função - ou mesmo alguns deles - realizar a formatação da data lançar a primeira pedra! É quase como um rito de passagem.</p>
 
 <p>Escrever código que simplesmente duplica a funcionalidade que a biblioteca padrão de seu idioma ou sua estrutura já oferece é uma maneira segura de aumentar desnecessariamente a complexidade. Se <a href="https://wiki.c2.com/?SoftwareAsLiability">código é uma responsabilidade</a>, você quer escrever apenas a quantidade estritamente necessária.</p>
-
-<h4 id="como-fazer-isso-3">Como fazer isso?</h4>
+<h4 id="como-fazer-isso-3">
+  
+  
+    Como fazer isso? <a href="#como-fazer-isso-3" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h4>
+    
 
 <p>Implemente uma sólida estratégia de revisão de código que seja capaz de identificar e se livrar de tais reinvenções de roda.</p>
-
-<h2 id="reduzir-a-complexidade-ciclomática-aumentar-a-clareza-do-código">Reduzir a Complexidade Ciclomática, Aumentar a Clareza do Código</h2>
+<h2 id="reduzir-a-complexidade-ciclomática-aumentar-a-clareza-do-código">
+  
+  
+    Reduzir a Complexidade Ciclomática, Aumentar a Clareza do Código <a href="#reduzir-a-complexidade-ciclomática-aumentar-a-clareza-do-código" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>A complexidade ciclomática é uma das métricas mais valiosas na engenharia de software. Ela tem implicações importantes para a qualidade do código e a capacidade de manutenção, sem mencionar os testes. A alta complexidade ciclomática pode ser tanto um sinal de problemas existentes como um preditor de problemas futuros. Portanto, manter o valor desta métrica sob controle é certamente algo que você quer fazer se quiser alcançar uma base de código saudável. Mantê-lo sob controle é exatamente o que você aprendeu com nosso posto.</p>
 
@@ -678,6 +835,9 @@
 
     <script src="/js/dark-mode.js"></script>
     <script src="/js/copy-code.js"></script>
+    
+    <script src="/js/post-enhancements.js"></script>
+    
   </body>
 
 </html>

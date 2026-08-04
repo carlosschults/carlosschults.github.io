@@ -130,6 +130,7 @@
   </header>
 
   <div class="post-content" itemprop="articleBody">
+    
     <p><img src="https://res.cloudinary.com/dz5ppacuo/image/upload/v1459979937/testes-unitarios-iniciantes-min_povcse.png" alt="" /></p>
 
 <p><em>This post is part of a series. <a href="http://carlosschults.net/tag/unit-testing-series/">See all the articles in the series.</a></em></p>
@@ -141,12 +142,24 @@
 <p>We start the post with a brief definition of TDD. You’ll learn not only that TDD stands for Test-Driven Development, but also that it’s not a testing technique, despite the name. After that, I explain what TDD is and what its benefits are.</p>
 
 <p>After the “what” and “why” are both out of our way, we’ll be ready to have some fun. I’m going to show you, in practice, how to get started with TDD, developing a solution for a famous programming exercise. Sounds good? Then, let’s dig in.</p>
-
-<h2 id="c-unit-testing--tdd-basics">C# Unit Testing &amp; TDD Basics</h2>
+<h2 id="c-unit-testing--tdd-basics">
+  
+  
+    C# Unit Testing &amp; TDD Basics <a href="#c-unit-testing--tdd-basics" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>I’ve mentioned earlier that TDD is not a testing technique. What is it, though? And how it’s related to C# unit testing (or unit testing in general, for that matter?)</p>
-
-<h3 id="defining-tdd">Defining TDD</h3>
+<h3 id="defining-tdd">
+  
+  
+    Defining TDD <a href="#defining-tdd" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>As you’ve seen, TDD stands for Test-Driven Development. It is a technique or methodology of software development that uses unit tests to drive the development of the application.</p>
 
@@ -160,8 +173,14 @@
 </ul>
 
 <p>That’s what we’re going to see next.</p>
-
-<h3 id="the-tdd-phases">The TDD Phases</h3>
+<h3 id="the-tdd-phases">
+  
+  
+    The TDD Phases <a href="#the-tdd-phases" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>Test-driven development relies on the repetition of an incredibly short cycle. This cycle is composed of three phases:</p>
 
@@ -178,20 +197,38 @@
 <p>Finally, the third phase is the only one that allows you to write production code without having to create a failing test first. But you can’t create new classes or functions; you can only refactor the code you wrote in the previous step, to make it more readable, to eliminate duplication, or to solve another problem. And, of course, the test should still pass.</p>
 
 <p>People often use refer to the TDD as “red-green-refactor” because most unit testing tools use red to denote failing tests and green for passing tests.</p>
-
-<h3 id="why-use-tdd">Why Use TDD?</h3>
+<h3 id="why-use-tdd">
+  
+  
+    Why Use TDD? <a href="#why-use-tdd" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>The hard thing to understand when getting started with TDD isn’t the how. The “how” is trivial: write a test, make it pass, maybe refactor, rinse, repeat. The troubling part is the “why.” Why develop software in such a non-intuitive way?</p>
 
 <p>I’ll talk more of the TDD philosophy in future articles. In a nutshell, applying TDD ensures you’ll have testable code from the beginning. It will encourage you to design your code in a simple and modular way.</p>
 
 <p>But perhaps, the main advantage of TDD is increasing the developer’s confidence on their code. By developing one tiny step at a time, you’ll never be able to get a lot wrong, since you’re doing too little. Knowing that you’re only one failing test away from having working code is reassuring.</p>
-
-<h2 id="c-unit-testing--tdd-the-hands-on-guide-to-get-started">C# Unit Testing &amp; TDD: The Hands-On Guide To Get Started</h2>
+<h2 id="c-unit-testing--tdd-the-hands-on-guide-to-get-started">
+  
+  
+    C# Unit Testing &amp; TDD: The Hands-On Guide To Get Started <a href="#c-unit-testing--tdd-the-hands-on-guide-to-get-started" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>I’ve covered how to get started with C# unit testing in the past. I’ve also covered the required tools and how to get started. However, I won’t assume you’ve read those articles. Instead, I’ll cover everything from scratch. So, you’ll be able to follow the tutorial even if you have zero experience with unit testing.</p>
-
-<h3 id="our-problem-the-string-calculator-kata">Our Problem: The String Calculator Kata</h3>
+<h3 id="our-problem-the-string-calculator-kata">
+  
+  
+    Our Problem: The String Calculator Kata <a href="#our-problem-the-string-calculator-kata" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>For our tutorial, we’ll write a solution for Roy Osherov’s <a href="https://osherove.com/tdd-kata-1">String Calculator kata</a>. A coding kata is a programming exercise, meant to allow developers to practice fundamental agile software-engineering practices, such as refactoring, and—you’ve guessed it—TDD.</p>
 
@@ -205,8 +242,14 @@
   <li>If we pass negative numbers, the method should throw an ArgumentException, with the message “Negative numbers not allowed:” followed by the negatives that were specified.</li>
   <li>The method should ignore numbers greater than 1000 should. So, “1,2,1000” should result in 1003, but “1,2,1001” should result in 3.</li>
 </ol>
-
-<h3 id="creating-the-production-project">Creating The Production Project</h3>
+<h3 id="creating-the-production-project">
+  
+  
+    Creating The Production Project <a href="#creating-the-production-project" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>For this tutorial, I’ll be using the community edition of Visual Studio 2019. If you don’t already have it, you can download it and install it from free.</p>
 
@@ -221,8 +264,14 @@
 <p>The next screen simply asks you for a name for the project and the solution. I chose” StringCalculatorKata” for both the project and the solution. You’ll also have to provide a location for saving the project files. When you’re done, just click “Create.”</p>
 
 <p>If everything went well, you should see the default class open for you in Visual Studio. Go to Solution Explorer and delete that class; we’re not going to need it.</p>
-
-<h3 id="creating-the-test-project">Creating The Test Project</h3>
+<h3 id="creating-the-test-project">
+  
+  
+    Creating The Test Project <a href="#creating-the-test-project" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>Now, it’s time to create the test project. We could this in two ways: creating a regular “Class Library” project and then adding the necessary dependencies to it, or creating a unit test project right away. We’ll go with the latter since it makes the whole thing easier.</p>
 
@@ -271,8 +320,14 @@
 <p><img src="https://res.cloudinary.com/dz5ppacuo/image/upload/v1594235427/unit3/add-reference.png" alt="" /></p>
 
 <p>Then, you just have to click on “OK,” and now you’re ready to go.</p>
-
-<h2 id="starting-our-coding-kata">Starting Our Coding Kata</h2>
+<h2 id="starting-our-coding-kata">
+  
+  
+    Starting Our Coding Kata <a href="#starting-our-coding-kata" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>Now, we’re ready to write our first failing test. So, open the StringCalculatorTest class and add the following method to it:</p>
 
@@ -343,8 +398,14 @@ Add_EmptyStringAsParam_ReturnsZero
       Expected: 0
       But was:  -1
 </pre>
-
-<h3 id="making-the-test-pass">Making The Test Pass</h3>
+<h3 id="making-the-test-pass">
+  
+  
+    Making The Test Pass <a href="#making-the-test-pass" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>We’re now finally ready to make the test pass. As I’ve said earlier, to make a test pass, you’re not only allowed but encouraged to cheat. In our case, we can simply make the Add method return zero:</p>
 
@@ -352,8 +413,14 @@ Add_EmptyStringAsParam_ReturnsZero
 <span class="p">{</span>
     <span class="k">return</span> <span class="m">0</span><span class="p">;</span>
 <span class="p">}</span></code></pre></figure>
-
-<h3 id="writing-the-second-test-a-single-number">Writing The Second Test: A Single Number</h3>
+<h3 id="writing-the-second-test-a-single-number">
+  
+  
+    Writing The Second Test: A Single Number <a href="#writing-the-second-test-a-single-number" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>The requirements say that passing a single number should return the number itself. That’s sound like a useful thing to test:</p>
 
@@ -385,8 +452,14 @@ Add_StringContainingSingleNumber_ReturnsTheNumberItself
 
     <span class="k">return</span> <span class="m">5</span><span class="p">;</span>
 <span class="p">}</span></code></pre></figure>
-
-<h3 id="testing-two-numbers">Testing Two Numbers</h3>
+<h3 id="testing-two-numbers">
+  
+  
+    Testing Two Numbers <a href="#testing-two-numbers" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>Since we’ve already tested the Add method by passing zero numbers (an empty string) and a single number, it feels like the next natural step for us now would be to write a test for the scenario of adding two numbers. So, let’s do just that.</p>
 
@@ -412,8 +485,14 @@ Add_StringContainingSingleNumber_ReturnsTheNumberItself
 
     <span class="k">return</span> <span class="m">5</span><span class="p">;</span>
 <span class="p">}</span></code></pre></figure>
-
-<h3 id="testing-three-numbers">Testing Three Numbers</h3>
+<h3 id="testing-three-numbers">
+  
+  
+    Testing Three Numbers <a href="#testing-three-numbers" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>Have you noticed that, up until now, we haven’t done any refactoring? Well, we’re getting closer to the point when our tests drive us to include some nasty duplication to our code. Then, we’ll use refactoring to change the code in a way that gets closer to a general solution.</p>
 
@@ -460,8 +539,14 @@ Add_StringContainingSingleNumber_ReturnsTheNumberItself
 <p>By leveraging the <code class="language-plaintext highlighter-rouge">TryParse</code> method from the <code class="language-plaintext highlighter-rouge">System.Int32</code> type, I’ve managed to get rid of the first if instruction. We’ve also used a feature introduced in <a href="https://carlosschults.net/en/csharp-7-features/">C# 7</a> called “out variables.” This feature allows us to use out parameters without having to declare them beforehand.</p>
 
 <p>All tests still pass, so I can’t write more production code. What should the next test be?</p>
-
-<h3 id="testing-more-than-three-numbers">Testing More Than Three Numbers</h3>
+<h3 id="testing-more-than-three-numbers">
+  
+  
+    Testing More Than Three Numbers <a href="#testing-more-than-three-numbers" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>The requirements don’t say we should only be able to handle three numbers. So, let’s create another test case to cover the scenarios with 4, 5, or more numbers. While we’re at it, we can also include the requirement of ignoring numbers greater than 1000.</p>
 
@@ -499,8 +584,14 @@ Add_StringContainingSingleNumber_ReturnsTheNumberItself
 <span class="p">}</span></code></pre></figure>
 
 <p>The code above should be easy to understand. We just split the string into parts using the comma as the delimiter. Then, for each part, we parse it to an integer, verify whether it’s equal or less than a thousand, and, if so, we add it to the result variable. Finally, we return the result.</p>
-
-<h2 id="were-not-done-yet">We’re Not Done Yet</h2>
+<h2 id="were-not-done-yet">
+  
+  
+    We’re Not Done Yet <a href="#were-not-done-yet" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>The requirements say that negative numbers shouldn’t be allowed. Let’s add a test for that! For brevity’s sake, we’ll add a single test method with several test cases, so we’re forced to go for the correct implementation right away:</p>
 
@@ -545,8 +636,14 @@ Add_StringContainingSingleNumber_ReturnsTheNumberItself
 <p>As you can see, right at the beginning, we define a <code class="language-plaintext highlighter-rouge">List&lt;int&gt;</code> to store the negatives we find while iterating over all the numbers. Inside the loop, we verify whether the current number is negative. If it is, we add it to the list. If it isn’t, we verify whether it’s less than or equals to 1000, in which we case we add it to the result variable.</p>
 
 <p>After the loop, we verify whether the negatives list has any elements. If it has, we create an exception message that includes the specified negatives and then throw a new ArgumentException. Otherwise, we return the result.</p>
-
-<h2 id="conclusion">Conclusion</h2>
+<h2 id="conclusion">
+  
+  
+    Conclusion <a href="#conclusion" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>This post was a practical guide on how to get started with TDD in C#. So, where do you go from here?</p>
 
@@ -931,6 +1028,9 @@ Add_StringContainingSingleNumber_ReturnsTheNumberItself
 
     <script src="/js/dark-mode.js"></script>
     <script src="/js/copy-code.js"></script>
+    
+    <script src="/js/post-enhancements.js"></script>
+    
   </body>
 
 </html>

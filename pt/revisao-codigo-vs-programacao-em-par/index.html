@@ -125,6 +125,7 @@
   </header>
 
   <div class="post-content" itemprop="articleBody">
+    
     <p><img src="https://res.cloudinary.com/dz5ppacuo/image/upload/v1516470435/code-review-vs-pair-programming1038x437_w99q2t.jpg" alt="" /></p>
 
 <p><em>NOTA: Eu escrevi este post originalmente para o blog da SubMain. Você pode <a href="https://blog.submain.com/code-review-vs-pair-programming-2/">conferir o artigo original no site deles, em inglês</a>. Enquanto estiver por lá, dê uma conferida no CodeIt.Right, uma ferramenta que pode lhe ajudar com automação de revisões de código.</em></p>
@@ -139,8 +140,14 @@
 <p>Como eu já havia implementado práticas de revisão de código (<em>code review</em>) com sucesso e também pareado até certo ponto, eu não tinha dificuldades em ver como as duas práticas podem ser valiosas. Mas será que uma deles é claramente <em>melhor</em> que a outra? Revisão de código e programação em par são intercambiáveis, ou há cenários em que um ou outro claramente se destaca?</p>
 
 <p>É o que vou responder hoje. Vamos lá.</p>
-
-<h2 id="o-que-quero-dizer-por-revisão-de-código">O que quero dizer por “Revisão de Código”</h2>
+<h2 id="o-que-quero-dizer-por-revisão-de-código">
+  
+  
+    O que quero dizer por “Revisão de Código” <a href="#o-que-quero-dizer-por-revisão-de-código" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>Imagine a seguinte cena: você é um(a) jovem programador(a) em seu primeiro trabalho com desenvolvimento de software. Após terminar sua primeira tarefa, você é convocado(a) a uma sala de reunião; lá você encontra o desenvolvedor líder e três desenvolvedores seniores. Um monitor enorme está ligado exibindo seu código. Hora da revisão!</p>
 
@@ -149,8 +156,14 @@
 <p>É essa a cena exibida na sua mente quando você vê as palavras “revisão de código”?</p>
 
 <p>Boa notícias pra você, então. Este <em>não</em> é o tipo de revisão de código sobre o qual estou falando. Ao invés, pense em um processo bem leve e informal. Você submete seu código para revisão criando um pull request ou mesmo usando alguma funcionalidade incorporada na sua IDE.</p>
-
-<h3 id="a-parte-boa">A parte boa</h3>
+<h3 id="a-parte-boa">
+  
+  
+    A parte boa <a href="#a-parte-boa" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>Após tocar brevemente no “o que” e no “como” de uma revisão de código, hora de abordarmos o “por que”. Por que o seu time deve adotar a prática? Quais são os benefícios?</p>
 
@@ -168,8 +181,14 @@
 <p>O revisor também pode encontrar <em>corner cases</em> que passaram despercebidos ou ajudar na avaliação de performance do código escrito.</p>
 
 <p>E chegamos à última razão. Uma revisão de código bem feita pode <strong>espalhar conhecimento pelo time.</strong> Isso destrói ilhas de conhecimento na equipe, melhorando a qualidade final do produto.</p>
-
-<h3 id="a-parte-ruim">A parte ruim</h3>
+<h3 id="a-parte-ruim">
+  
+  
+    A parte ruim <a href="#a-parte-ruim" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>Enquanto alguns dizem que a revisão de código é a <a href="https://blog.codinghorror.com/code-reviews-just-do-it/">prática mais importante que você deve adotar</a> para aperfeiçoar seu código, <a href="https://blog.nelhage.com/2010/06/i-hate-code-review/">tal entusiasmo não é universal</a>. Assim, não poderíamos deixar de falar também das potenciais desvantagens da prática.</p>
 
@@ -180,8 +199,14 @@
 <p>Digamos que o Bruno gastou <em>x</em> horas implementando uma funcionalidade. Então a Ana revisa o trabalho dele e diz que a implementação está completamente errada, e ele precisa refazer tudo. <strong>Aquelas <em>x</em> horas de desenvolvimento acabaram de ir para o lixo</strong>.</p>
 
 <p>Finalmente, às vezes as pessoas desperdiçam quantidades ridículas de tempo <strong>discutindo sobre detalhes estéticos inúteis</strong>, como a posição das chaves, ou se devem ou não incluir um underscore no nome de um campo privado. Infelizmente, debates idiotas assim às vezes escalam para níveis que tornam o local de trabalho tóxico.</p>
-
-<h2 id="programação-em-par-mais-que-uma-super-revisão-de-código">Programação em Par: Mais que uma super revisão de código</h2>
+<h2 id="programação-em-par-mais-que-uma-super-revisão-de-código">
+  
+  
+    Programação em Par: Mais que uma super revisão de código <a href="#programação-em-par-mais-que-uma-super-revisão-de-código" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>Programação em par é uma técnica na qual duas pessoas colaboram no código juntas, na mesma estação de trabalho.</p>
 
@@ -190,8 +215,14 @@
 <p>Seria a programação em par nada mais que “<em>code review on steroids</em>”, <a href="https://blog.codinghorror.com/pair-programming-vs-code-reviews/">como coloca Jeff Atwood</a>?</p>
 
 <p>Talvez não. Um dos princípios básicos das metologias ágeis é que o desenvolvimento de software se beneficia de ciclos de feedback curtos. Levando isso em consideração, trazer a revisão de código para o mais cedo possível no processo faria bastante sentido, por estar em harmonia com os princípios ágeis.</p>
-
-<h3 id="a-parte-boa-1">A parte boa</h3>
+<h3 id="a-parte-boa-1">
+  
+  
+    A parte boa <a href="#a-parte-boa-1" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>Não deveria ser surpresa que a programação em par compartilha vários dos benefícios da revisão de código, como detecção de bugs, melhoras na legibilidade do código e propagação de conhecimento pela equipe.</p>
 
@@ -202,8 +233,14 @@
   <li><strong>Ciclos de feedback mais curtos.</strong>. Já que seu par está revisando seu código o tempo todo, existe um risco muito menor de desperdiçar tempo graças a feedback tardio.</li>
   <li><strong>Aumento no uso de outras boas práticas da Engenharia de Software</strong>. Como sugerido por um estudo realizado na Universidade Estadual da Carolina do Norte, <a href="https://collaboration.csc.ncsu.edu/laurie/Papers/ESE%20WilliamsPairProgramming_V2.pdf">equipes usando programação em par tendem a usar mais práticas de desenvolvimento como testes unitários, integração contínua e a criação de padrões de código</a>.</li>
 </ul>
-
-<h3 id="a-parte-ruim-1">A parte ruim</h3>
+<h3 id="a-parte-ruim-1">
+  
+  
+    A parte ruim <a href="#a-parte-ruim-1" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>Assim como no caso da revisão de código, programação em par está longe de ser uma prática universalmente aceita. Enquanto muitas pessoas amam a prática, <a href="https://web.archive.org/web/20110101145142/https://tersesystems.com/2010/12/29/where-pair-programming-fails-for-me">outras não têm histórias tão felizes para contar</a></p>
 
@@ -228,8 +265,14 @@
 <p>Tem gente que argumenta que trabalhar em pares pode <strong>prejudicar a criatividade e impedir experimentações.</strong> Durante uma sessão em par, pode ser considerado rude desperdiçar o tempo de seu par tentando uma abordagem experimental que pode talvez não dar em nada. Então, a decisão mais segura possível tende a prevalecer sempre, mesmo que não seja a melhor possível.</p>
 
 <p>Finalmente, a programação em par não fornece um dos benefícios chave da revisão de código posterior: ter uma pessoa com zero contexto analisando o código produzido. As duas pessoas do par <strong>compartilham contexto desde o início da sessão</strong>, o que não deve ser subestimado. As pessoas têm uma tendência a <a href="https://en.wikipedia.org/wiki/IKEA_effect">superestimar o valor de suas contribuições e criar laços emocionais com o que elas criam</a>; por isso é tão importante conseguir uma outra pessoa que, livre desses laços, será capaz de oferecer um julgamento mais claro.</p>
-
-<h2 id="revisão-de-código-vs-programação-em-par-o-veredito">Revisão de Código vs Programação em Par: O Veredito?</h2>
+<h2 id="revisão-de-código-vs-programação-em-par-o-veredito">
+  
+  
+    Revisão de Código vs Programação em Par: O Veredito? <a href="#revisão-de-código-vs-programação-em-par-o-veredito" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 <p>Eu cheguei à conclusão de que, embora revisão de código e programação em par <em>pareçam</em> equivalentes, na verdade não são. Existe uma intersecção ali, mas cada prática também apresenta benefícios e desafios únicos.</p>
 
 <p>Não tem como fugir do fato de que programação em par, apesar de seus benefícios, requer um número par de pessoas, trabalhando ao mesmo tempo. Se seu time consiste de pessoas vivendo em diversos fusos horários diferentes (ou mesmo uma equipe local mas com horário flexível), é fácil decidir: revisão de código na cabeça.</p>
@@ -237,8 +280,14 @@
 <p>Se a sua equipe não se encaixa na descrição acima, então eu digo: <strong>faça uma tentativa com programação em par</strong>. Contanto que você se esforce para acomodar e ter empatia com <a href="https://www.amazon.com/Quiet-Power-Introverts-World-Talking/dp/0307352153/ref=asap_bc?ie=UTF8">diferentes tipos de personalidades</a> e não torne obrigatório, programação em par pode ser benéfica para sua equipe.</p>
 
 <p>Finalmente, não há nada lhe impedindo de usar <em>ambas</em> práticas. Você pode adotar programação em par como o <em>Modus Operandi</em> padrão e deixar e revisão de código para preencher os vácuos onde o pareamento não funciona tão bem.</p>
-
-<h2 id="de-um-jeito-ou-de-outro-abrace-a-automação">De um jeito ou de outro, abrace a automação</h2>
+<h2 id="de-um-jeito-ou-de-outro-abrace-a-automação">
+  
+  
+    De um jeito ou de outro, abrace a automação <a href="#de-um-jeito-ou-de-outro-abrace-a-automação" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 <p>Imagine que você escreve para uma publicação, como uma revista. Após finalizar um rascunho, ele precisa ser submetido para revisão. Será que faz sentido para a editora gastar todo seu tempo procurando por erros de ortografia? É claro que não! Nós temos ferramentas para checar tais erros de forma automática, liberando a editora para procurar por problemas em um nível mais alto, como vocabulário mal escolhido, falta de coesão, tom inapropriado, e todas aquelas coisas sobre as quais a sua professora de português não dava sossego.</p>
 
 <p>Com software não é diferente. Ao usar <a href="https://submain.com/products/codeit.right.aspx">uma ferramenta de revisão de códigos automatizados</a>, você pode eliminar muitas das discussões inúteis que acontecem frequentemente em revisões de código ou sessões de programação em par. Não vai ter mais briga sobre convenções estéticas e de nomenclatura, posição de chaves e outras trivialidades inúteis.</p>
@@ -246,8 +295,14 @@
 <p>You can also employ a static analysis tool to warn you about potential bugs and opportunities for refactoring. That way, the reviewer/navigator is free to focus on the high-level stuff that requires human creativity, intelligence, and empathy.</p>
 
 <p>Você também pode usar uma ferramenta de análise estática para lhe alertar sobre potenciais bugs e oportunidades para refatoração. Assim, o revisor/navegador fica livre para focar em preocupações de mais alto nível que necessitam da criatividade, inteligência e empatia humanas.</p>
-
-<h2 id="confiança-e-respeito">Confiança e respeito</h2>
+<h2 id="confiança-e-respeito">
+  
+  
+    Confiança e respeito <a href="#confiança-e-respeito" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 <p>Quando estava pesquisando para escrever esse post, um tema aparecia bastante: pessoas afirmando que revisão de código surge devido à falta de confiança em nossos desenvolvedores ou que programação em par os infantiliza.</p>
 
 <p>Eu não poderia discordar mais.</p>
@@ -255,7 +310,6 @@
 <p>É exatamente por respeitarmos nossos colegas e clientes que devemos empregar técnicas e ferramentas à nossa disposição para melhorar a qualidade do trabalho que produzimos.</p>
 
 <p>Não é falta de confiança. É reconhecer que programar é difícil e às vezes, só um cérebro pode não dar conta do recado.</p>
-
 
     
     
@@ -669,6 +723,9 @@
 
     <script src="/js/dark-mode.js"></script>
     <script src="/js/copy-code.js"></script>
+    
+    <script src="/js/post-enhancements.js"></script>
+    
   </body>
 
 </html>

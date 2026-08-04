@@ -124,6 +124,7 @@
   </header>
 
   <div class="post-content" itemprop="articleBody">
+    
     <p><img src="https://res.cloudinary.com/dz5ppacuo/image/upload/v1531165684/4-datetime-mistakes-1038x437_nm6csc.jpg" alt="" /></p>
 
 <p><em>NOTA: Eu escrevi este post originalmente para o blog da SubMain.  Você pode <a href="https://blog.submain.com/4-common-datetime-mistakes-c-avoid/">conferir o original no site deles, em inglês</a>. Enquanto estiver por lá, dê uma conferida no CodeIt.Right, uma ferramenta que pode lhe ajudar com problemas relacionados a tempo e muitos outros.</em></p>
@@ -143,8 +144,14 @@
 <p>O artigo é interessante, mas eu acho que faria sentido oferecer informações um pouco mais acionáveis.</p>
 
 <p>E é exatamente esse é o objetivo do post de hoje. Eu vou mostrar 4 erros comuns que as pessoas cometem ao lidar com tempo em C#/.NET. E não para por aí. Eu também vou mostrar o que você deve fazer para evitar esses erros e tornar seu código mais seguro e mais fácil de ser compreendido.</p>
-
-<h2 id="1-calculando-durações-de-maneira-ingênua">1. Calculando Durações de Maneira Ingênua</h2>
+<h2 id="1-calculando-durações-de-maneira-ingênua">
+  
+  
+    1. Calculando Durações de Maneira Ingênua <a href="#1-calculando-durações-de-maneira-ingênua" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>Considere o código abaixo:</p>
 
@@ -163,8 +170,14 @@
 <p>Eu imagino que você compreendeu o que aconteceu aqui: quando os relógios estavam prestes a marcar 14h, o Horário de Verão entrou em efeito, movendo-os diretamente para 15h. Então o método <code class="language-plaintext highlighter-rouge">EndMatch</code> recuperou o horário atual, somando uma hora adicional ao cálculo. Se o experimento tivesse acontecido no fim do Horário de Verão, o resultado seria apenas 15 minutos!</p>
 
 <p>Sim, o código mostrado é apenas um exemplo, uma brincadeira. Mas e se fosse algo mais sério? Uma aplicação de folha de pagamento, digamos. Você gostaria de pagar o valor errado a um funcionário?</p>
-
-<h3 id="o-que-fazer">O que fazer?</h3>
+<h3 id="o-que-fazer">
+  
+  
+    O que fazer? <a href="#o-que-fazer" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>Quando precisar calcular a duração de atividades humanas, use UTC para os tempos de início e fim. Dessa forma, você será capaz de <strong>referenciar de maneira não ambígua um ponto específico no tempo</strong>. Ao invés de usar a propriedade <code class="language-plaintext highlighter-rouge">Now</code>, use <code class="language-plaintext highlighter-rouge">UtcNow</code> para recuperar a data e hora já em formato UTC para realizar os cálculos:</p>
 
@@ -173,8 +186,14 @@
 <p>Mas e se os valores <code class="language-plaintext highlighter-rouge">DateTime</code> que você tem já são do tipo <code class="language-plaintext highlighter-rouge">Local</code>? Nesse caso, você deve usar o método <code class="language-plaintext highlighter-rouge">ToUniversalTime()</code> para convertê-los para UTC:</p>
 
 <script src="https://gist.github.com/carlosschults/58837695af07386836753ef6541233aa.js"></script>
-
-<h3 id="uma-rápida-advertência-sobre-touniversaltime">Uma Rápida Advertência Sobre <code class="language-plaintext highlighter-rouge">ToUniversalTime()</code></h3>
+<h3 id="uma-rápida-advertência-sobre-touniversaltime">
+  
+  
+    Uma Rápida Advertência Sobre <code class="language-plaintext highlighter-rouge">ToUniversalTime()</code> <a href="#uma-rápida-advertência-sobre-touniversaltime" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>O uso do método <code class="language-plaintext highlighter-rouge">ToUniversalTime()</code> - e seu irmão, <code class="language-plaintext highlighter-rouge">ToLocalTime()</code> - pode ser um pouco chato. O problema é que esses métodos fazem suposições sobre o que você quer baseados no valor da propriedade <code class="language-plaintext highlighter-rouge">Kind</code> do objeto datetime que você tem, o que pode trazer resultados inesperados.</p>
 
@@ -198,8 +217,14 @@
 </ul>
 
 <p>Como evitar que isso aconteça? Uma prática recomendada é usar UTC para armazenar o tempo em que um evento aconteceu. Minha sugestão é seguir esse conselho e também esse fato bem explícito. Coloque o sufixo “UTC” em cada coluna de tabela no banco de dados e também em nomes de propriedades que se referem a um valor em UTC. Ao invés de “Inclusao”, use “InclusaoUTC” e assim por diante. Não é tão bonito, mas com certeza é mais claro.</p>
-
-<h2 id="2-não-usar-utc-quando-deveria-e-vice-versa">2. Não Usar UTC Quando Deveria (e vice-versa)</h2>
+<h2 id="2-não-usar-utc-quando-deveria-e-vice-versa">
+  
+  
+    2. Não Usar UTC Quando Deveria (e vice-versa) <a href="#2-não-usar-utc-quando-deveria-e-vice-versa" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>Nós podemos definir isso como uma regra universal: use UTC para registrar quando eventos aconteceram. Ao logar, auditar, e registrar todo tipo de <em>timestamps</em> na sua aplicação, UTC é a resposta.</p>
 
@@ -210,20 +235,38 @@
 <p>Em casos assim, faria mais sentido (a) registrar o momento em UTC e gravar também o fuso horário do usuário ou (b) usar o tipo <code class="language-plaintext highlighter-rouge">DateTimeOffset</code>, que armazena a data/hora local junto com o deslocamento, ou <em>offset</em>, para UTC, permitindo que você reconstrua o valor em UTC quando precisar.</p>
 
 <p>Outro caso de uso comum para o qual UTC não é a solução correta é  <a href="https://stackoverflow.com/questions/19626177/how-to-store-repeating-dates-keeping-in-mind-daylight-savings-time?noredirect=1&amp;lq=1">o agendamento de eventos locais no futuro</a>. Você não quer que seu alarme acorde você uma hora mais cedo ou uma hora mais tarde nos dias de transição do Horário de Verão, certo? Pois é exatamente isso que aconteceria se você configurasse o seu alarme pelo horário UTC.</p>
-
-<h2 id="3-não-validar-entrada-dos-usuários">3. Não Validar Entrada dos Usuários</h2>
+<h2 id="3-não-validar-entrada-dos-usuários">
+  
+  
+    3. Não Validar Entrada dos Usuários <a href="#3-não-validar-entrada-dos-usuários" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>Imagine que você criou uma aplicação desktop simples que permite que usuários configurem lembretes. A pessoa informa a data e hora que quer receber o lembrete, clica em um botão, e pronto.</p>
 
 <p>Tudo parece estar funcionando direito até que alguém do Brasil envia um e-mail para você, reclamando que o lembrete que ela configurou para 15 de outubro às 0h15 não funcionou. O que será que aconteceu?</p>
-
-<h3 id="o-horário-de-verão-contra-ataca">O Horário de Verão Contra Ataca</h3>
+<h3 id="o-horário-de-verão-contra-ataca">
+  
+  
+    O Horário de Verão Contra Ataca <a href="#o-horário-de-verão-contra-ataca" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>O vilão aqui é o bom e velho Horário de Verão novamente. Em 2017, o Horário de Verão no Brasil começou à meia-noite do dia 15 de outubro. Então, a combinação de data e hora que a usuária informou <strong>simplesmente não existe em seu fuso-horário!</strong></p>
 
 <p>É claro que o problema oposto também é possível. Quando o Horário de Verão chega ao fim e os relógios são atrasados, isso <strong>gera horas ambíguas</strong>.</p>
-
-<h3 id="qual-é-a-solução">Qual É A Solução?</h3>
+<h3 id="qual-é-a-solução">
+  
+  
+    Qual É A Solução? <a href="#qual-é-a-solução" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>Como lidar com esse tipo de problema no C#? A classe <code class="language-plaintext highlighter-rouge">TimeZoneInfo</code> pode lhe salvar. Ela serve para representar um fuso horário e também oferece métodos para verificar se um determinado objeto <code class="language-plaintext highlighter-rouge">DateTime</code> é válido:</p>
 
@@ -236,8 +279,14 @@
 <p>Vamos abordar o caso das horas inválidas primeiro. Suas opções são: mover para frente ou para trás. É uma decisão meio arbitrária, então qual você deve escolher? Por exemplo, o app do Google Calendar no Android move para frente. E até que faz sentido se você parar pra pensar. Isso é exatamente o que seus relógios fizeram devido ao horário de verão. Por que sua aplicação não pode fazer o mesmo?</p>
 
 <p>E no caso das horas ambíguas? Você também tem duas opções: escolher entre a primeira e segunda ocorrências. Novamente, é meio arbitrário, mas eu aconselho você a escolher a primeira ocorrência, pelo simples fato de tornar as coisas mais simples.</p>
-
-<h2 id="4-confundir-um-offset--com-um-fuso-horário">4. Confundir um <em>Offset</em>  com um Fuso Horário</h2>
+<h2 id="4-confundir-um-offset--com-um-fuso-horário">
+  
+  
+    4. Confundir um <em>Offset</em>  com um Fuso Horário <a href="#4-confundir-um-offset--com-um-fuso-horário" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>Considere o timestamp a seguir: 1995-07-14T13:05:00.0000000-03:00. Quando alguém pergunta o que o “-03:00” no final é chamado, muita gente responde “o fuso horário”.</p>
 
@@ -253,8 +302,14 @@
 </ul>
 
 <p>Em resumo: não tente adivinhar um fuso horário pelo offset. Você vai errar a maioria das vezes.</p>
-
-<h2 id="quer-aprender-sobre-tempo-já-não-era-sem-tempo">Quer aprender sobre tempo? Já não era sem tempo!</h2>
+<h2 id="quer-aprender-sobre-tempo-já-não-era-sem-tempo">
+  
+  
+    Quer aprender sobre tempo? Já não era sem tempo! <a href="#quer-aprender-sobre-tempo-já-não-era-sem-tempo" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>Esta lista não é de forma alguma exausitiva. Eu apenas quis oferecer a vocês uma introdução ao fascinante e meio bizarro mundo dos problemas com hora e data em programação. Há muitos recursos valiosos por aí, como<a href="https://stackoverflow.com/tags/timezone/info">a tag time zone no Stack Overflow</a> ou blogs como <a href="https://codeblog.jonskeet.uk/">o de Jon Skeet</a> e <a href="https://codeofmatt.com/">o de Matt Johnson</a> que são autores da popular biblioteca NodaTime.</p>
 
@@ -678,6 +733,9 @@
 
     <script src="/js/dark-mode.js"></script>
     <script src="/js/copy-code.js"></script>
+    
+    <script src="/js/post-enhancements.js"></script>
+    
   </body>
 
 </html>

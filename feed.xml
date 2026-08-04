@@ -5,8 +5,8 @@
     <description>Articles on software development and technology.</description>
     <link>https://carlosschults.net/</link>
     <atom:link href="https://carlosschults.net/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Tue, 21 Jul 2026 19:13:48 +0000</pubDate>
-    <lastBuildDate>Tue, 21 Jul 2026 19:13:48 +0000</lastBuildDate>
+    <pubDate>Tue, 04 Aug 2026 19:50:46 +0000</pubDate>
+    <lastBuildDate>Tue, 04 Aug 2026 19:50:46 +0000</lastBuildDate>
     <generator>Jekyll v4.3.1</generator>
     
     
@@ -47,11 +47,11 @@
   &lt;li&gt;you have at least a bit of experience with the PostgreSQL database and the SQL language&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;&lt;strong&gt;PostgreSQL &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;LIKE&lt;/code&gt;: The Fundamentals&lt;/strong&gt;&lt;/p&gt;
+&lt;h2 id=&quot;postgresql-like-the-fundamentals&quot;&gt;PostgreSQL &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;LIKE&lt;/code&gt;: The Fundamentals&lt;/h2&gt;
 
 &lt;p&gt;With the requirements out of the way, let’s start by covering some fundamentals about today’s topic.&lt;/p&gt;
 
-&lt;p&gt;&lt;strong&gt;What Is PostgreSQL &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;LIKE&lt;/code&gt;?&lt;/strong&gt;&lt;/p&gt;
+&lt;h3 id=&quot;what-is-postgresql-like&quot;&gt;What Is PostgreSQL &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;LIKE&lt;/code&gt;?&lt;/h3&gt;
 
 &lt;p&gt;PostgreSQL &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;LIKE&lt;/code&gt; is PostgreSQL’s implementation of the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;LIKE&lt;/code&gt; operator from the SQL language. You use LIKE when you want to retrieve rows in which one or more of their textual columns match a given pattern. In the introduction, I gave an example: retrieving students whose last name starts with a given letter. So, let’s see a real query that does just that using PostgreSQL &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;LIKE&lt;/code&gt;:&lt;/p&gt;
 
@@ -78,17 +78,17 @@
 
 &lt;p&gt;That’s right: if you want to match values that contain a given string, you surround the string with percentage signs (&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;%&lt;/code&gt;).&lt;/p&gt;
 
-&lt;p&gt;&lt;strong&gt;What Is the Difference Between LIKE and ILIKE in Postgresql?&lt;/strong&gt;&lt;/p&gt;
+&lt;h3 id=&quot;what-is-the-difference-between-like-and-ilike-in-postgresql&quot;&gt;What Is the Difference Between LIKE and ILIKE in PostgreSQL?&lt;/h3&gt;
 
 &lt;p&gt;When reviewing PostgreSQL code in the wild, you might encounter queries that use the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ILIKE&lt;/code&gt; operator instead of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;LIKE&lt;/code&gt; and get confused. The difference is that the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;LIKE&lt;/code&gt; operator is case sensitive—i.e. it distinguishes between lowercase and uppercase letters. On the other hand, the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ILIKE&lt;/code&gt; operator is case &lt;em&gt;insensitive&lt;/em&gt;—hence the i. It does not distinguish between upper and lowercase letters, and therefore you should use it when you don’t care about the case.&lt;/p&gt;
 
 &lt;p&gt;An important thing to keep in mind: the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ILIKE&lt;/code&gt; operator doesn’t exist in ANSI SQL; instead, it’s a specific extension of PostgreSQL. That means that employing ILIKE makes your SQL code less portable, in case you have the need to change your database engine.&lt;/p&gt;
 
-&lt;p&gt;&lt;strong&gt;PostgreSQL Like: Practical Use Cases&lt;/strong&gt;&lt;/p&gt;
+&lt;h2 id=&quot;postgresql-like-practical-use-cases&quot;&gt;PostgreSQL LIKE: Practical Use Cases&lt;/h2&gt;
 
 &lt;p&gt;Having covered the basics of PostgreSQL &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;LIKE&lt;/code&gt;, let’s now see several usage examples. We’ll begin by preparing the database for the tests.&lt;/p&gt;
 
-&lt;p&gt;&lt;strong&gt;Preparing the Database&lt;/strong&gt;&lt;/p&gt;
+&lt;h3 id=&quot;preparing-the-database&quot;&gt;Preparing the Database&lt;/h3&gt;
 
 &lt;p&gt;Using your preferred client, connect to your PostgreSQL instance, making sure there’s a database you can connect to for the tests.&lt;/p&gt;
 
@@ -107,7 +107,7 @@
 &lt;span class=&quot;k&quot;&gt;INSERT&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;INTO&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;albums&lt;/span&gt;  &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;title&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;artist&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;release_year&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;VALUES&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&apos;Ryan Adams&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;Ryan Adams&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2014&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;&lt;strong&gt;Matching a Single Character&lt;/strong&gt;&lt;/p&gt;
+&lt;h3 id=&quot;matching-a-single-character&quot;&gt;Matching a Single Character&lt;/h3&gt;
 
 &lt;p&gt;As you’ve seen, the table now contains albums by both Bryan and Ryan Adams. That’s not by coincidence. First, use the following query to retrieve albums by the two singers:&lt;/p&gt;
 
@@ -136,7 +136,7 @@
 (1 row)
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;&lt;strong&gt;Negative Matches&lt;/strong&gt;&lt;/p&gt;
+&lt;h3 id=&quot;negative-matches&quot;&gt;Negative Matches&lt;/h3&gt;
 
 &lt;p&gt;When working with database tables, you often need to retrieve data that doesn’t match a given pattern. For that, you can use the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;NOT LIKE&lt;/code&gt; operator. For instance, let’s get only artists that don’t start with “The”:&lt;/p&gt;
 
@@ -145,7 +145,7 @@
 
 &lt;p&gt;Since the only artist starting with “The” are The Beatles, they won’t be fetched by the query above.&lt;/p&gt;
 
-&lt;p&gt;&lt;strong&gt;Matching Without Case Sensitivity&lt;/strong&gt;&lt;/p&gt;
+&lt;h3 id=&quot;matching-without-case-sensitivity&quot;&gt;Matching Without Case Sensitivity&lt;/h3&gt;
 
 &lt;p&gt;As mentioned earlier, the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ILIKE&lt;/code&gt; operator is a special PostgreSQL extension to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;LIKE&lt;/code&gt; that matches in a case-insensitive way. Let’s see that in practice. First, let’s use the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;LIKE&lt;/code&gt; operator to get all artists which contain an uppercase “A”:&lt;/p&gt;
 
@@ -177,7 +177,7 @@
 
 &lt;p&gt;Now, all artists are returned, except for Pink Floyd.&lt;/p&gt;
 
-&lt;p&gt;&lt;strong&gt;Escaping the WildCards&lt;/strong&gt;&lt;/p&gt;
+&lt;h3 id=&quot;escaping-the-wildcards&quot;&gt;Escaping the Wildcards&lt;/h3&gt;
 
 &lt;p&gt;For this example, let’s update two rows:&lt;/p&gt;
 
@@ -225,7 +225,7 @@
 
 &lt;p&gt;With the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ESCAPE&lt;/code&gt; clause, you can choose a different character as the escape character. That way—at least in my opinion—the resulting query is more explicit in the way it escapes the wildcard.&lt;/p&gt;
 
-&lt;p&gt;&lt;strong&gt;Conclusion: PostgreSQL LIKE: Learn It, Leverage It&lt;/strong&gt;&lt;/p&gt;
+&lt;h2 id=&quot;conclusion-postgresql-like--learn-it-leverage-it&quot;&gt;Conclusion: PostgreSQL LIKE — Learn It, Leverage It&lt;/h2&gt;
 
 &lt;p&gt;In this post, you’ve learned about the LIKE operator in PostgreSQL: what it is, what’s used for, and how it works along several examples. As you’ve seen, the operator’s working is quite easy once you understand how the wildcards work. We’ve also walked you through some usage examples, like matching against a single character and performing negative matches.&lt;/p&gt;
 
@@ -550,7 +550,7 @@ Also, I acknowledge that you’re probably under a lot of pressure to perform, t
 &lt;p&gt;It may seem crazy that a programmer would start working on a task he or she doesn’t fully understand. But I know I have, and bet you have too. Of course, how are you supposed to explain the why behind a change when even you don’t fully grasp it?&lt;/p&gt;
 
 &lt;h3 id=&quot;writing-is-hard&quot;&gt;…Writing Is Hard&lt;/h3&gt;
-&lt;p&gt;As Phil Karlton once put, &lt;a href=&quot;https://martinfowler.com/bliki/TwoHardThings.html&quot;&gt;there are only two hard things in computer science&lt;/a&gt;, and naming things is one of them.&lt;/p&gt;
+&lt;p&gt;As Phil Karlton once put&lt;sup id=&quot;fnref:1&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:1&quot; class=&quot;footnote&quot; rel=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;, &lt;a href=&quot;https://martinfowler.com/bliki/TwoHardThings.html&quot;&gt;there are only two hard things in computer science&lt;/a&gt;, and naming things is one of them.&lt;/p&gt;
 
 &lt;p&gt;If you think about it, “naming things” is a form of writing. A subset of writing, if you will. So, yeah, writing commit messages is hard because writing, in general, is hard.&lt;/p&gt;
 
@@ -659,7 +659,7 @@ AZ-2234
 &lt;/ul&gt;
 
 &lt;h3 id=&quot;follow-the-5072-rule&quot;&gt;…Follow the 50/72 Rule&lt;/h3&gt;
-&lt;p&gt;The 50/72 rule is the closest we have to a standard when it comes to commit messages. It was &lt;a href=&quot;https://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html&quot;&gt;first proposed by Tim Pope&lt;/a&gt; and it goes like this:&lt;/p&gt;
+&lt;p&gt;The 50/72 rule is the closest we have to a standard when it comes to commit messages. It was &lt;a href=&quot;https://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html&quot;&gt;first proposed by Tim Pope&lt;/a&gt;&lt;sup id=&quot;fnref:2&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:2&quot; class=&quot;footnote&quot; rel=&quot;footnote&quot;&gt;2&lt;/a&gt;&lt;/sup&gt; and it goes like this:&lt;/p&gt;
 
 &lt;ul&gt;
   &lt;li&gt;Start with a summary, capitalized, and make it 50 characters long at the most&lt;/li&gt;
@@ -702,7 +702,7 @@ This reverts commit 5ab08c5d3ee7bfdb334406d418d96f76d08962fe.
 
 &lt;p&gt;That way, if you make mistakes and needs to throw some work away, you just revert a few minutes’ worth of work instead of hours. You also have those checkpoints you can go back to, should the power went off or something.&lt;/p&gt;
 
-&lt;p&gt;For instance, people who practice TDD (test-drive development) often commit every time they reach the green phase. In other words, every time they make the tests pass.&lt;/p&gt;
+&lt;p&gt;For instance, people who practice TDD (test-driven development)&lt;sup id=&quot;fnref:3&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:3&quot; class=&quot;footnote&quot; rel=&quot;footnote&quot;&gt;3&lt;/a&gt;&lt;/sup&gt; often commit every time they reach the green phase. In other words, every time they make the tests pass.&lt;/p&gt;
 
 &lt;p&gt;It’s also a good idea to leave all your commits clean. By that I mean, all of your commits, when applied, should leave your project in a state where it builds successfully and all tests pass. That makes it easier for you or someone else to use &lt;a href=&quot;/git-bisect-intro/&quot;&gt;git bisect in the future to find where a bug was introduced&lt;/a&gt;.&lt;/p&gt;
 
@@ -825,6 +825,20 @@ Follow these rules:
 &lt;p&gt;But I guarantee you: years from now, when you’re investigating a critical production issue and then you’ve come across some great commit messages that offer valuable insights into why some changes were made…you’re going to be happy you did.&lt;/p&gt;
 
 &lt;p&gt;Thanks for reading.&lt;/p&gt;
+
+&lt;div class=&quot;footnotes&quot; role=&quot;doc-endnotes&quot;&gt;
+  &lt;ol&gt;
+    &lt;li id=&quot;fn:1&quot; role=&quot;doc-endnote&quot;&gt;
+      &lt;p&gt;Phil Karlton was a principal engineer at Netscape in the 1990s. The exact wording of the quote varies depending on the source — Martin Fowler has &lt;a href=&quot;https://martinfowler.com/bliki/TwoHardThings.html&quot;&gt;a good note on its provenance&lt;/a&gt;. &lt;a href=&quot;#fnref:1&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li id=&quot;fn:2&quot; role=&quot;doc-endnote&quot;&gt;
+      &lt;p&gt;Tim Pope is a prolific open-source developer best known in the Vim community for plugins like vim-fugitive (Git integration) and vim-surround. His 2008 blog post on commit messages remains one of the most-cited references on the topic. &lt;a href=&quot;#fnref:2&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li id=&quot;fn:3&quot; role=&quot;doc-endnote&quot;&gt;
+      &lt;p&gt;The TDD cycle is: write a failing test (red), write the minimum code to make it pass (green), then clean up the code without breaking anything (refactor). Committing after each green phase gives you a granular, always-passing history you can bisect with confidence. &lt;a href=&quot;#fnref:3&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+  &lt;/ol&gt;
+&lt;/div&gt;
 </description>
         <pubDate>Tue, 31 Mar 2026 00:00:00 +0000</pubDate>
         <link>https://carlosschults.net/en/your-commit-messages-suck</link>

@@ -125,6 +125,7 @@
   </header>
 
   <div class="post-content" itemprop="articleBody">
+    
     <p><img src="https://res.cloudinary.com/dz5ppacuo/image/upload/v1488499558/comments-1038x437.jpg" alt="" /></p>
 
 <p>Alerta de Spoiler: Você deveria evitar a maioria.
@@ -137,8 +138,14 @@
 <p>Depois de me formar e encontrar um emprego, as coisas começaram a mudar. Eu comecei a ser exposto à <em>código real</em>. Eu estava lendo livros, artigos e blog posts escritos por pessoas influentes da área.</p>
 
 <p>Todas essas experiências moldaram a minha visão atual.</p>
-
-<h2 id="os-perigos-da-documentação-ruim">Os perigos da documentação ruim</h2>
+<h2 id="os-perigos-da-documentação-ruim">
+  
+  
+    Os perigos da documentação ruim <a href="#os-perigos-da-documentação-ruim" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>Comentários são apenas outra forma de documentação. E não se engane: documentação é uma coisa boa - <em>quando feita corretamente e na quantidade certa</em>.</p>
 
@@ -147,16 +154,28 @@
 <p>Muitos tipos de documentação podem ser problemáticas. É muito comum que a documentação perca sincronia com o que está documentando, o que é bem pior que não ter documentação nenhuma para começar.</p>
 
 <p>Esse é um dos problemas dos quais comentários sofrem, mas está longe de ser o único.</p>
-
-<h3 id="código-comentado">Código comentado</h3>
+<h3 id="código-comentado">
+  
+  
+    Código comentado <a href="#código-comentado" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>Vamos começar com o problema mais óbvio de todos, que é código comentado. Alguns desenvolvedores, durante uma correção de bug por exemplo, decidem comentar o código que está errado, em vez de removê-lo.</p>
 
 <p><strong>Não faça isso!</strong></p>
 
 <p>Código comentado não traz benefício para ninguém. É apenas desperdício. Confie no seu sistema de controle de versão. Ele vai lembrar das alterações feitas caso seja necessário revertê-las no futuro.</p>
-
-<h3 id="comentários-changelog">Comentários ‘Changelog’</h3>
+<h3 id="comentários-changelog">
+  
+  
+    Comentários ‘Changelog’ <a href="#comentários-changelog" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>Esta categoria de comentários ruins é parecida com a anterior, no sentido de ser causada por uma falta de confiança no sistema de controle de versões.</p>
 
@@ -167,16 +186,28 @@
 <p>Comentários desse tipo estão apenas fazendo o mesmo trabalho que seu controle de versão, mas de uma maneira desajeitada e propensa ao erro.</p>
 
 <p>Não escreve comentários como esses. Use <a href="https://git-scm.com/">git</a> e seja feliz.</p>
-
-<h3 id="comentários-redundantes">Comentários redundantes</h3>
+<h3 id="comentários-redundantes">
+  
+  
+    Comentários redundantes <a href="#comentários-redundantes" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>Esse tipo de comentário ruim é muito fácil de detectar e corrigir. Considere o código a seguir:</p>
 
 <script src="https://gist.github.com/carlosschults/cc821bc3c00137e5fad68f1fe7d65490.js"></script>
 
 <p>Eu acho que todos podemos concordar que esses comentários são inúteis. O código é perfeitamente claro sem eles, portanto, devem ser removidos.</p>
-
-<h3 id="comentários-delimitando-fim-de-blocos">Comentários delimitando fim de blocos</h3>
+<h3 id="comentários-delimitando-fim-de-blocos">
+  
+  
+    Comentários delimitando fim de blocos <a href="#comentários-delimitando-fim-de-blocos" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>Você provavelmente já viu algum código assim antes:</p>
 
@@ -187,14 +218,26 @@
 <p>Se você precisa de comentários por essa razão, isso é indicativo de que seu método é muito longo e você tem muitos níveis de indentação.</p>
 
 <p>Lembre-se do Princípio da Responsabilidade Única: cada método deve fazer apenas uma coisa. Divida o seu método em métodos menores e a necessidade desse tipo de comentários desaparece.</p>
-
-<h3 id="comentários-que-delimitam-seções-dentro-de-um-método">Comentários que delimitam seções dentro de um método</h3>
+<h3 id="comentários-que-delimitam-seções-dentro-de-um-método">
+  
+  
+    Comentários que delimitam seções dentro de um método <a href="#comentários-que-delimitam-seções-dentro-de-um-método" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>Esse é parecido com o anterior. Se você tem diversas seções dentro de um método, cada uma delas com um comentário explicativo em cima, então você provavelmente está violando o Princípio da Responsabilidade Única.</p>
 
 <p>Extraia cada trecho para seu próprio método, usando o texto do comentário como o nome do novo método, e então remova os comentários.</p>
-
-<h3 id="comentários-desatualizados">Comentários desatualizados.</h3>
+<h3 id="comentários-desatualizados">
+  
+  
+    Comentários desatualizados. <a href="#comentários-desatualizados" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>Um cenário comum:</p>
 
@@ -207,8 +250,14 @@
 <p>O que nós temos agora? Comentários mentirosos!</p>
 
 <p><strong>Documentação que espalha mentiras é pior que não ter documentação alguma.</strong> É uma fonte de confusão para os desenvolvedores, e terreno fértil para bugs. Quando você ver um comentário desatualizado, não pense duas vezes: remova-o imediatamente, ou corrija-o. Mas na maioria das vezes você não deveria manter o comentário. Veja o próximo tópico para descobrir o porquê.</p>
-
-<h3 id="comentários-criados-devido-à-falta-de-expressividade-no-código">Comentários criados devido à falta de expressividade no código</h3>
+<h3 id="comentários-criados-devido-à-falta-de-expressividade-no-código">
+  
+  
+    Comentários criados devido à falta de expressividade no código <a href="#comentários-criados-devido-à-falta-de-expressividade-no-código" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>Considere o código a seguir:</p>
 
@@ -221,8 +270,14 @@
 <p>No novo código, nós extraímos o conceito de ser elegível para doar sangue para uma nova propriedade. As regras para elegibilidade para doação de sangue estão agora consolidadas em um único local; se elas mudarem algum dia, a quantidade de trabalho necessária para atualizá-las será mínima.</p>
 
 <p>E nós ainda ganhamos o benefício adicional da legibilidade: a nova instrução <code class="language-plaintext highlighter-rouge">if</code> lê quase como linguagem natural.</p>
-
-<h2 id="conclusão">Conclusão</h2>
+<h2 id="conclusão">
+  
+  
+    Conclusão <a href="#conclusão" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>Como vimos, há diversos tipos de comentários ruins com os quais você deve ficar alerta. Eles geralmente são sinais de que há algo errado no seu código. Talvez seus métodos são muito longos.Talvez <a href="https://carlosschults.net/pt/como-escolher-bons-nomes/">você não escolheu bons nomes para suas variáveis</a>.</p>
 
@@ -231,8 +286,14 @@
 <p>Nem todos os comentários são ruins. Em um post futuro, vou falar sobre os tipos de comentários que são úteis.</p>
 
 <p>Até mais!</p>
-
-<h2 id="ler-mais-todos-os-links-em-inglês">Ler mais (todos os links em inglês)</h2>
+<h2 id="ler-mais-todos-os-links-em-inglês">
+  
+  
+    Ler mais (todos os links em inglês) <a href="#ler-mais-todos-os-links-em-inglês" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <ul>
   <li><a href="https://butunclebob.com/ArticleS.TimOttinger.ApologizeIncode">Apologies In Code, por Robert C. Martin</a></li>
@@ -654,6 +715,9 @@
 
     <script src="/js/dark-mode.js"></script>
     <script src="/js/copy-code.js"></script>
+    
+    <script src="/js/post-enhancements.js"></script>
+    
   </body>
 
 </html>

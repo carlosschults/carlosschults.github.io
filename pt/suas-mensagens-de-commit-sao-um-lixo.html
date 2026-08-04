@@ -122,6 +122,7 @@
   </header>
 
   <div class="post-content" itemprop="articleBody">
+    
     <p>Suas mensagens de commit são um lixo. Na melhor das hipóteses, elas são inúteis. Mas geralmente, elas são piores do que nada.
 Eu não digo isso pra ser babaca. Na verdade, é o contrário. Eu quero te ajudar.</p>
 
@@ -131,39 +132,75 @@ Eu não digo isso pra ser babaca. Na verdade, é o contrário. Eu quero te ajuda
 Não fique ofendido. Isso não é culpa só sua. É bem provável que ninguém nunca te ensinou como escrever boas mensagens de commit, ou nem o porquê disso ser importante. E escrever é realmente muito difícil.</p>
 
 <p>A boa notícia é que agora você finalmente tem alguém pra te ajudar. Nesse post, eu vou explicar tudo que você precisa saber sobre mensagens de commit horríveis, e o que fazer pra escrever as que não são horríveis.</p>
-
-<h2 id="suas-mensagens-de-commit-são-um-lixo-porque">Suas Mensagens de Commit São um Lixo Porque…</h2>
+<h2 id="suas-mensagens-de-commit-são-um-lixo-porque">
+  
+  
+    Suas Mensagens de Commit São um Lixo Porque… <a href="#suas-mensagens-de-commit-são-um-lixo-porque" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>Por que a maioria das mensagens de commit é tão ruim? Na minha experiência, os motivos se resumem ao que vou falar agora. Vale lembrar que não tem nada de científico ou baseado em dados aqui. É tudo baseado na minha experiência pessoal.</p>
-
-<h3 id="você-só-liga-pra-código">…Você Só Liga pra Código</h3>
+<h3 id="você-só-liga-pra-código">
+  
+  
+    …Você Só Liga pra Código <a href="#você-só-liga-pra-código" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>Se você é como a maioria dos devs, você só — ou quase só — liga pra codar. É onde a diversão mora, e tudo o mais você vê como perda de tempo.
 Eu sei também que você provavelmente está sob muita pressão pra performar, pra entregar o máximo de valor o mais rápido possível. Então o que você mais quer é terminar o que está fazendo, mergar o PR e então pegar outro ticket do Jira/Azure/Linear pra começar a implementar.</p>
 
 <p>O que acaba acontecendo é que tudo que não é código é tratado como detalhe secundário e não recebe a devida atenção. Isso inclui testes, documentação, preparar uma revisão da feature implementada pra retrospectiva semanal e, claro, escrever mensagens de commit e descrições de PR.</p>
-
-<h3 id="às-vezes-você-não-entende-o-que-está-fazendo">…Às Vezes Você Não Entende o Que Está Fazendo</h3>
+<h3 id="às-vezes-você-não-entende-o-que-está-fazendo">
+  
+  
+    …Às Vezes Você Não Entende o Que Está Fazendo <a href="#às-vezes-você-não-entende-o-que-está-fazendo" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>Boas mensagens de commit — e boa documentação em geral — devem focar no <em>porquê</em> das coisas. Qual é a motivação por trás das suas mudanças? Qual é o problema que você está tentando resolver, por que vale a pena resolvê-lo, de que forma isso ajuda seu time e sua empresa?</p>
 
 <p>Pode parecer loucura que um programador comece a trabalhar numa tarefa que não entende completamente. Mas eu já fiz isso, e aposto que você também. E claro, como você vai explicar o porquê de uma mudança se nem você mesmo entende direito?</p>
+<h3 id="escrever-é-difícil">
+  
+  
+    …Escrever é Difícil <a href="#escrever-é-difícil" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
-<h3 id="escrever-é-difícil">…Escrever é Difícil</h3>
-
-<p>Como Phil Karlton disse uma vez, <a href="https://martinfowler.com/bliki/TwoHardThings.html">só existem duas coisas difíceis em ciência da computação</a>, e dar nome às coisas é uma delas.</p>
+<p>Como Phil Karlton disse uma vez<sup id="fnref:1" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup>, <a href="https://martinfowler.com/bliki/TwoHardThings.html">só existem duas coisas difíceis em ciência da computação</a>, e dar nome às coisas é uma delas.</p>
 
 <p>Se você parar pra pensar, “dar nome às coisas” é uma forma de escrever. Um subconjunto da escrita, digamos assim. Então sim, escrever mensagens de commit é difícil porque escrever, em geral, é difícil.</p>
-
-<h3 id="ninguém-te-ensinou">…Ninguém Te Ensinou</h3>
+<h3 id="ninguém-te-ensinou">
+  
+  
+    …Ninguém Te Ensinou <a href="#ninguém-te-ensinou" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>Acho que a formação de desenvolvedores frequentemente falha em ensinar muita coisa importante que você realmente vai precisar como engenheiro de software. Tratamento de erros de verdade é um exemplo.</p>
 
 <p>Tudo bem, eles vão te ensinar a mecânica de como um try-catch-finally funciona, mas raramente vão te ensinar quando capturar uma exceção, quando não capturar, quando lançar uma exceção, quando logar ou não, e assim por diante.</p>
 
 <p>E escrever mensagens de commit é uma dessas coisas.</p>
-
-<h3 id="o-github-te-ensinou-maus-hábitos">…O GitHub Te Ensinou Maus Hábitos</h3>
+<h3 id="o-github-te-ensinou-maus-hábitos">
+  
+  
+    …O GitHub Te Ensinou Maus Hábitos <a href="#o-github-te-ensinou-maus-hábitos" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>Vamos deixar uma coisa clara: eu uso o GitHub todo dia e gosto muito. O GitHub é o <a href="https://pt.wikipedia.org/wiki/Aplicativo_matador">aplicativo matador/killer app</a> do Git, e o Git não teria tido o mesmo nível de adoção sem ele.</p>
 
@@ -172,8 +209,14 @@ Eu sei também que você provavelmente está sob muita pressão pra performar, p
 <p>Então faz sentido que algumas pessoas não se esforcem muito pra escrever boas mensagens de commit, argumentando que podem escrever descrições ricas no PR.</p>
 
 <p>Claro que o que acaba acontecendo frequentemente é que elas não escrevem as descrições de PR também!</p>
-
-<h3 id="a-flag--m-do-git-te-viciou">…A Flag <code class="language-plaintext highlighter-rouge">-m</code> do Git Te Viciou</h3>
+<h3 id="a-flag--m-do-git-te-viciou">
+  
+  
+    …A Flag <code class="language-plaintext highlighter-rouge">-m</code> do Git Te Viciou <a href="#a-flag--m-do-git-te-viciou" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>Acho que a maioria dos programadores nem sabe que mensagens de commit podem ter um corpo com várias linhas. E a culpada aqui é a forma como a maioria das pessoas ensina o comando <code class="language-plaintext highlighter-rouge">commit</code>:</p>
 
@@ -181,8 +224,14 @@ Eu sei também que você provavelmente está sob muita pressão pra performar, p
 </code></pre></div></div>
 
 <p>Sem nem mencionar que a flag <code class="language-plaintext highlighter-rouge">-m</code> é só uma conveniência pra quando você tem uma mensagem de uma linha, o que deveria ser a exceção, não a regra.</p>
-
-<h3 id="você-não-tem-higiene-de-commits">…Você Não Tem Higiene de Commits</h3>
+<h3 id="você-não-tem-higiene-de-commits">
+  
+  
+    …Você Não Tem Higiene de Commits <a href="#você-não-tem-higiene-de-commits" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>Escrever mensagens de commit que não são lixo faz parte de algo mais amplo que algumas pessoas chamam de “higiene de controle de versão.”</p>
 
@@ -191,12 +240,24 @@ Eu sei também que você provavelmente está sob muita pressão pra performar, p
 <p>Às vezes você tem dificuldade pra escrever uma mensagem de commit porque trabalha de forma bagunçada. Se suas mudanças são uma salada de correções de bug, refatorações, código morto e ideias de implementação pela metade, claro que você vai ter problema pra escrever uma mensagem descritiva e útil.</p>
 
 <p>Isso costuma ser causado por falta de domínio do Git. Se você não domina ferramentas como stash, reset, rebase interativo e outras, é mais provável que você transforme seu trabalho num caos.</p>
-
-<h2 id="taxonomia-das-mensagens-de-commit-ruins">Taxonomia das Mensagens de Commit Ruins</h2>
+<h2 id="taxonomia-das-mensagens-de-commit-ruins">
+  
+  
+    Taxonomia das Mensagens de Commit Ruins <a href="#taxonomia-das-mensagens-de-commit-ruins" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>Descobri que mensagens de commit ruins se encaixam em algumas categorias. Vou cobrir algumas delas agora.</p>
-
-<h3 id="a-mensagem-de-uma-linha-quase-inútil">A Mensagem de Uma Linha Quase Inútil</h3>
+<h3 id="a-mensagem-de-uma-linha-quase-inútil">
+  
+  
+    A Mensagem de Uma Linha Quase Inútil <a href="#a-mensagem-de-uma-linha-quase-inútil" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>Essa é a mensagem de uma linha que dá uma explicação superficial do que foi mudado. Eu chamo de “quase” inútil porque pelo menos o resumo é preciso.</p>
 
@@ -213,8 +274,14 @@ Eu sei também que você provavelmente está sob muita pressão pra performar, p
 Enable EF Core execution strategy # o que é essa tal "strategy"? por que você teve que habilitar?
 Added Required attribute to model # qual model? isso não é uma breaking change que vai afetar os usuários atuais?
 </code></pre></div></div>
-
-<h3 id="a-mensagem-de-uma-linha-inútil">A Mensagem de Uma Linha Inútil</h3>
+<h3 id="a-mensagem-de-uma-linha-inútil">
+  
+  
+    A Mensagem de Uma Linha Inútil <a href="#a-mensagem-de-uma-linha-inútil" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>A mensagem de uma linha inútil é… bem, como a quase inútil, mas completamente inútil.</p>
 
@@ -227,8 +294,14 @@ more changes
 </code></pre></div></div>
 
 <p>Quer dizer, no momento em que você escreve “changes” como mensagem de commit, você poderia simplesmente escrever “batata”. Ou contar uma piada. Seria igualmente inútil, mas pelo menos poderia ter graça.</p>
-
-<h3 id="só-a-referência-do-sistema-de-tickets">Só a Referência do Sistema de Tickets</h3>
+<h3 id="só-a-referência-do-sistema-de-tickets">
+  
+  
+    Só a Referência do Sistema de Tickets <a href="#só-a-referência-do-sistema-de-tickets" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>É quando as pessoas colocam apenas o id de um issue/ticket/card do sistema de gerenciamento, e nada mais. Alguns exemplos:</p>
 
@@ -242,16 +315,34 @@ AZ-2234
 <p>É mais irritante também porque obriga o leitor a parar e ir a outro lugar pra entender o contexto daquela mudança. Não sei você, mas eu prefiro aprender o motivo por trás de um commit pelo próprio commit, como <del>Deus</del>Linus quis.</p>
 
 <p>Além do incômodo, existe um risco maior aqui: a possibilidade de que, um dia, sua empresa migre do sistema de tickets atual e você fique sem aquelas descrições. Todas as empresas em que trabalhei como desenvolvedor fizeram pelo menos uma migração dessas, e tenho certeza que você já passou por pelo menos uma também.</p>
-
-<h3 id="a-mensagem-de-uma-linha-enganosa">A Mensagem de Uma Linha Enganosa</h3>
+<h3 id="a-mensagem-de-uma-linha-enganosa">
+  
+  
+    A Mensagem de Uma Linha Enganosa <a href="#a-mensagem-de-uma-linha-enganosa" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>Às vezes você tem uma mensagem que parece inofensiva, como <code class="language-plaintext highlighter-rouge">Add PrintHtmlOutput() method</code>. Aí você vai ver as mudanças e elas também incluem uma breaking change em um endpoint ou alteram a forma como a aplicação interage com o banco de dados.</p>
-
-<h2 id="você-vai-escrever-boas-mensagens-de-commit-quando">Você Vai Escrever Boas Mensagens de Commit Quando…</h2>
+<h2 id="você-vai-escrever-boas-mensagens-de-commit-quando">
+  
+  
+    Você Vai Escrever Boas Mensagens de Commit Quando… <a href="#você-vai-escrever-boas-mensagens-de-commit-quando" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>Agora você entende por que escreve mensagens ruins, e <em>como</em> elas são ruins. Pronto pra aprender a melhorar?</p>
-
-<h3 id="escrever-suas-mensagens-em-inglês">…Escrever Suas Mensagens Em Inglês</h3>
+<h3 id="escrever-suas-mensagens-em-inglês">
+  
+  
+    …Escrever Suas Mensagens Em Inglês <a href="#escrever-suas-mensagens-em-inglês" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 <p>Um dos posts mais visitados desse blog discute se <a href="/pt/programar-portugues-ou-ingles/">devemos escrever código em português ou inglês</a>. Eu considero que fiz bons argumentos, mostrando os prós e constras de ambos os lados e deixando meu posicionamento bem claro.</p>
 
 <p>Ainda assim, alguns leitores me acusaram de ficar em cima do muro.</p>
@@ -259,14 +350,26 @@ AZ-2234
 <p>Dessa vez, então, vou falar sem sombra de dúvida: <strong>ESCREVA SUAS MENSAGENS DE COMMIT EM INGLÊS.</strong> É simplesmente o padrão do mercado, e o quanto antes você se acostumar com isso, melhor.</p>
 
 <p>E é por isso, inclusive, que os exemplos de mensagem de commit deste post estão todos em inglês. Eu escrevi o post originalmente em inglês e agora estou traduzindo para português, mas deixei as mensagens em inglês de propósito mesmo, por causa desse ponto.</p>
-
-<h3 id="parar-de-escrever-mensagens-de-uma-linha">…Parar de Escrever Mensagens de Uma Linha</h3>
+<h3 id="parar-de-escrever-mensagens-de-uma-linha">
+  
+  
+    …Parar de Escrever Mensagens de Uma Linha <a href="#parar-de-escrever-mensagens-de-uma-linha" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>Mensagens de uma linha são ótimas quando o escopo da mudança é pequeno. Se o seu commit só corrige um typo, então <code class="language-plaintext highlighter-rouge">Fix typo</code> é uma mensagem de commit válida. Mas na maioria das vezes os commits contêm muito mais mudanças, e nesses casos escrever uma mensagem de uma linha é uma oportunidade perdida de criar uma documentação duradoura.</p>
 
 <p>Então, por favor, pare de usar a flag <code class="language-plaintext highlighter-rouge">-m</code> na hora de commitar. Escreva um corpo adequado com mais detalhes na maioria das suas mensagens.</p>
-
-<h3 id="começar-pelo-o-quê-expandir-com-o-por-quê-e-o-como">…Começar pelo “O Quê”, Expandir com o “Por Quê” e o “Como”</h3>
+<h3 id="começar-pelo-o-quê-expandir-com-o-por-quê-e-o-como">
+  
+  
+    …Começar pelo “O Quê”, Expandir com o “Por Quê” e o “Como” <a href="#começar-pelo-o-quê-expandir-com-o-por-quê-e-o-como" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>Agora você sabe que deve escrever um resumo e um corpo na maioria das suas mensagens de commit. O que colocar em cada um?</p>
 
@@ -281,10 +384,16 @@ AZ-2234
   <li>links de referência para termos que possam ser desconhecidos (por exemplo, um link para um artigo da Wikipedia, ou para o <a href="https://refactoring.com/catalog/">Catálogo de Refatorações</a> do Martin Fowler)</li>
   <li>links de referência para a solução que você aplicou (por exemplo, um link para uma resposta no Stack Overflow)</li>
 </ul>
+<h3 id="seguir-a-regra-do-5072">
+  
+  
+    …Seguir a Regra do 50/72 <a href="#seguir-a-regra-do-5072" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
-<h3 id="seguir-a-regra-do-5072">…Seguir a Regra do 50/72</h3>
-
-<p>A regra do 50/72 é o mais próximo que temos de um padrão quando se trata de mensagens de commit. Foi <a href="https://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html">proposta pela primeira vez por Tim Pope</a> e funciona assim:</p>
+<p>A regra do 50/72 é o mais próximo que temos de um padrão quando se trata de mensagens de commit. Foi <a href="https://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html">proposta pela primeira vez por Tim Pope</a><sup id="fnref:2" role="doc-noteref"><a href="#fn:2" class="footnote" rel="footnote">2</a></sup> e funciona assim:</p>
 
 <ul>
   <li>Comece com um resumo, com a primeira letra maiúscula, com no máximo 50 caracteres</li>
@@ -310,8 +419,14 @@ This reverts commit 5ab08c5d3ee7bfdb334406d418d96f76d08962fe.
 <p><code class="language-plaintext highlighter-rouge">Closes: #456</code></p>
 
 <p>E ele vai automaticamente associar o commit ao issue e fechá-lo. Existem outras palavras-chave que você pode usar, como <code class="language-plaintext highlighter-rouge">Fixes</code>, <code class="language-plaintext highlighter-rouge">Resolves</code>, <code class="language-plaintext highlighter-rouge">Resolved</code>, e assim por diante. Você pode aprender mais sobre como fechar issues do GitHub automaticamente <a href="https://docs.github.com/pt/issues/tracking-your-work-with-issues/using-issues/linking-a-pull-request-to-an-issue">aqui</a>.</p>
-
-<h3 id="adotar-commits-atômicos">…Adotar Commits Atômicos</h3>
+<h3 id="adotar-commits-atômicos">
+  
+  
+    …Adotar Commits Atômicos <a href="#adotar-commits-atômicos" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>A ideia dos commits atômicos é simples: um commit deve conter apenas mudanças logicamente relacionadas. É o oposto da falta de higiene de controle de versão que mencionei antes.</p>
 
@@ -322,22 +437,34 @@ This reverts commit 5ab08c5d3ee7bfdb334406d418d96f76d08962fe.
 <p>Fazer isso exige que você domine as ferramentas do Git. Você precisa saber como fazer stage das mudanças e commitar apenas aquelas em vez de tudo. Precisa saber usar o stash. Com frequência, vai precisar saber como commitar coisas e depois editar esse histórico.</p>
 
 <p>Essas habilidades valem a pena ter. Vai atrás delas!</p>
-
-<h3 id="commitar-sempre-polir-depois">…Commitar Sempre, Polir Depois</h3>
+<h3 id="commitar-sempre-polir-depois">
+  
+  
+    …Commitar Sempre, Polir Depois <a href="#commitar-sempre-polir-depois" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>Você não precisa esperar estar “pronto” pra commitar. Pelo contrário, você deve commitar o tempo todo. Trabalhe em incrementos pequenos e commite ao longo do caminho.</p>
 
 <p>Assim, se cometer erros e precisar descartar algum trabalho, você vai reverter apenas alguns minutos de trabalho em vez de horas. Você também tem esses checkpoints pra voltar caso a luz caia ou algo do tipo.</p>
 
-<p>Por exemplo, quem pratica TDD (desenvolvimento orientado a testes) frequentemente commita toda vez que chega na fase verde. Ou seja, toda vez que os testes passam.</p>
+<p>Por exemplo, quem pratica TDD (desenvolvimento orientado a testes)<sup id="fnref:3" role="doc-noteref"><a href="#fn:3" class="footnote" rel="footnote">3</a></sup> frequentemente commita toda vez que chega na fase verde. Ou seja, toda vez que os testes passam.</p>
 
 <p>Também é uma boa ideia manter todos os seus commits limpos. Com isso quero dizer que todos os seus commits, quando aplicados, devem deixar o projeto em um estado onde ele builda com sucesso e todos os testes passam. Isso facilita para você ou outra pessoa usar o <a href="/pt/git-bisect-intro/">git bisect no futuro pra encontrar onde um bug foi introduzido</a>.</p>
 
 <p>Mas se você seguir essa dica, pode acabar com muitos commits pequeninhos que não têm boas mensagens, ou que não representam um conjunto coeso de mudanças. Como resolver isso?</p>
 
 <p>A resposta é: <a href="/pt/git-historico-bonito/">você edita seu histórico pra deixá-lo bonito</a>. Editar o histórico é mal visto — e com razão — quando é uma branch da qual outras pessoas já dependem. Mas se você está trabalhando na sua própria branch isolada e ninguém depende das suas mudanças, você pode fazer o que quiser até aquele ponto. Então commite cedo e com frequência, e depois use amend e rebase até ter um histórico que faça sentido e tenha ótimas mensagens de commit.</p>
-
-<h2 id="exemplos-de-boas-mensagens-de-commit">Exemplos de Boas Mensagens de Commit</h2>
+<h2 id="exemplos-de-boas-mensagens-de-commit">
+  
+  
+    Exemplos de Boas Mensagens de Commit <a href="#exemplos-de-boas-mensagens-de-commit" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>Finalmente chegou a hora de mostrar alguns exemplos de mensagens de commit valiosas que incorporam tudo que cobrimos até aqui.</p>
 
@@ -394,8 +521,14 @@ Closes: <span class="c">#89</span>
 
 <p>Todas as mensagens precisam ter esse nível de profundidade? Claro que não. Por exemplo, <code class="language-plaintext highlighter-rouge">Fix typo</code> é uma ótima mensagem de commit, se tudo que você está fazendo naquele commit é corrigir um typo. O mesmo vale para <code class="language-plaintext highlighter-rouge">Remove commented-out code</code>, <code class="language-plaintext highlighter-rouge">Remove blank lines</code>, e assim por diante.
 O tamanho da sua mensagem de commit precisa ser diretamente proporcional ao tamanho e escopo da sua mudança.</p>
-
-<h2 id="a-ia-muda-tudo-ouserá-que-não">A IA Muda Tudo. Ou…Será Que Não?</h2>
+<h2 id="a-ia-muda-tudo-ouserá-que-não">
+  
+  
+    A IA Muda Tudo. Ou…Será Que Não? <a href="#a-ia-muda-tudo-ouserá-que-não" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>Eu sei o que você ficou se perguntando durante todo esse tempo. “Mas…mas…mas…e o ChatGPT?”</p>
 
@@ -443,8 +576,14 @@ Follow these rules:
 <p>Quando uso o Claude Code, essas regras do prompt acima ficam no arquivo <code class="language-plaintext highlighter-rouge">Claude.md</code> do projeto. Nesse cenário, ele tende a ir muito melhor em entender o “porquê”, porque tudo começou com um prompt em que eu expliquei o motivo por trás da mudança, e então fizemos uma sessão de planejamento antes de começar a implementar.</p>
 
 <p>Mas mesmo assim, a IA frequentemente ainda precisa de muita orientação até conseguir escrever uma mensagem de commit que realmente foque nos motivos por trás da mudança e que dê informações no nível certo de abstração. Por conta própria, a IA produz mensagens bem escritas que são essencialmente um diff em prosa.</p>
-
-<h2 id="conclusão">Conclusão</h2>
+<h2 id="conclusão">
+  
+  
+    Conclusão <a href="#conclusão" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>A essa altura, você provavelmente percebeu que este é um post bem opinionado. Algumas das coisas cobertas aqui estão muito perto de ser um padrão, como a regra do 50/72 e a ideia de escrever resumos no modo imperativo.</p>
 
@@ -457,6 +596,20 @@ Follow these rules:
 <p>Mas eu garanto: anos depois, quando você estiver investigando um incidente crítico em produção e se deparar com ótimas mensagens de commit que oferecem insights valiosos sobre o porquê de algumas mudanças terem sido feitas… você vai ficar feliz por ter feito isso.</p>
 
 <p>Obrigado por ler.</p>
+
+<div class="footnotes" role="doc-endnotes">
+  <ol>
+    <li id="fn:1" role="doc-endnote">
+      <p>Phil Karlton foi engenheiro principal na Netscape nos anos 90. A formulação exata da frase varia dependendo da fonte — Martin Fowler tem <a href="https://martinfowler.com/bliki/TwoHardThings.html">uma boa nota sobre sua origem</a>. <a href="#fnref:1" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:2" role="doc-endnote">
+      <p>Tim Pope é um desenvolvedor open source prolífico, muito conhecido na comunidade Vim por plugins como vim-fugitive (integração com Git) e vim-surround. Seu post de 2008 sobre mensagens de commit continua sendo uma das referências mais citadas sobre o assunto. <a href="#fnref:2" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:3" role="doc-endnote">
+      <p>O ciclo do TDD é: escrever um teste que falha (vermelho), escrever o mínimo de código para fazê-lo passar (verde), depois limpar o código sem quebrar nada (refatorar). Commitar a cada fase verde gera um histórico granular, sempre funcional, que você pode percorrer com confiança usando o git bisect. <a href="#fnref:3" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
 
     
     
@@ -876,6 +1029,9 @@ Follow these rules:
 
     <script src="/js/dark-mode.js"></script>
     <script src="/js/copy-code.js"></script>
+    
+    <script src="/js/post-enhancements.js"></script>
+    
   </body>
 
 </html>

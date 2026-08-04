@@ -125,6 +125,7 @@
   </header>
 
   <div class="post-content" itemprop="articleBody">
+    
     <p><img src="https://res.cloudinary.com/dz5ppacuo/image/upload/v1462225938/baby-name-min_nosetz.png" alt="" /></p>
 
 <blockquote>
@@ -143,8 +144,14 @@
 <p>So, today I’m going to talk about naming conventions and principles that I try to use whenever I’m coding. It’s a mix of what I learned in college, studying by my own and working as a professional developer. It’s been useful to me, so I hope it’s going to be useful to you as well.</p>
 
 <p>Some of the tips I’m going show you here today come from the book “Clean Code”, by Robert C. Martin (Uncle Bob). It’s one of my favorite programming books, and I’ll write a review on it sometime soon. Stay tuned!</p>
-
-<h2 id="0-use-self-explanatory-names">0. Use self-explanatory names</h2>
+<h2 id="0-use-self-explanatory-names">
+  
+  
+    0. Use self-explanatory names <a href="#0-use-self-explanatory-names" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>What your variable/class/whatever does? How it’s supposed to be used? Choose a name that answers these questions.</p>
 
@@ -159,26 +166,50 @@
 <p>So…why not just drop the comment and use the comment’s text as the variable’s name?</p>
 
 <figure class="highlight"><pre><code class="language-c#" data-lang="c#">    <span class="kt">int</span> <span class="n">daysUntilDealine</span><span class="p">;</span></code></pre></figure>
-
-<h2 id="1-use-abbreviations-only-when-theyre-widely-known">1. Use abbreviations only when they’re widely known</h2>
+<h2 id="1-use-abbreviations-only-when-theyre-widely-known">
+  
+  
+    1. Use abbreviations only when they’re widely known <a href="#1-use-abbreviations-only-when-theyre-widely-known" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>It would be crazy to name a variable “ServiceUniformResourceLocator” instead of “ServiceUrl”. Every developer knows what a Url is. The same thing with Ftp, UI, IO, and so on. So, it’s ok to use abbreviations to name things, but only if they are widely known and used. It would be counterproductive not to do so.</p>
 
 <p>By the way. When I say “widely known”, I don’t necessarily mean <em>worldwide known</em>. Of course you can use abbreviations that are common in your business domain. It is considered a best practice to program as close as possible to the customer’s language. So, if your fellow developers and the business people are comfortable with the abbreviations, there’s no problem at all in using them.</p>
-
-<h2 id="2-choose-clarity-over-brevity">2. Choose clarity over brevity</h2>
+<h2 id="2-choose-clarity-over-brevity">
+  
+  
+    2. Choose clarity over brevity <a href="#2-choose-clarity-over-brevity" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>This is somewhat related to the first point. All else being equal, shorter names are better. But one day you’ll have to choose between clarity and brevity. When that day comes, always pick clarity. Six months down the road, when you have to revisit that code, you’re going to thank yourself.</p>
-
-<h2 id="3-use-widely-accepted-conventions-most-of-the-time">3. Use widely accepted conventions (most of the time)</h2>
+<h2 id="3-use-widely-accepted-conventions-most-of-the-time">
+  
+  
+    3. Use widely accepted conventions (most of the time) <a href="#3-use-widely-accepted-conventions-most-of-the-time" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>There are very few points in the book “Clean Code” that I disagree with. One of them is Uncle Bob’s recommendation to not start interface names with a capital “I”.  He argues that this practice is reminiscent of Hungarian notation, and thus should die. Even though I understand why he thinks like this, I’m still starting my interface names with an “I”.</p>
 
 <p>Why? One simple reason: starting interface names with an “I” is a very widespread and accepted convention in the .Net community. When you go against an established convention, you risk alienating developers who are used to that convention, like potential new team members or open-source projects contributors.</p>
 
 <p>I think you should abandon a widely accepted convention only when the benefit of doing so greatly outweighs the costs. And I don’t think that’s the case here.</p>
-
-<h2 id="4-dont-use-hungarian-notation">4. Don’t use Hungarian notation</h2>
+<h2 id="4-dont-use-hungarian-notation">
+  
+  
+    4. Don’t use Hungarian notation <a href="#4-dont-use-hungarian-notation" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>Maybe you’ve heard about Hungarian Notation, maybe you haven’t. But I bet you’ve seen it, or even used it yourself, even if the name doesn’t ring a bell immediately.</p>
 
@@ -200,8 +231,14 @@
   <li>It can be misleading. People make mistakes, and it’s perfectly possible to change the variable’s type but forget to also change its name to reflect the new type. So now you have a variable prefixed with “int” but it’s actually a long.</li>
   <li>It makes the names more difficult to pronounce, and this may complicate discussion about the code and the architecture of your application.</li>
 </ul>
-
-<h2 id="5-stick-to-the-languageframeworkprojects-coding-style">5. Stick to the language/framework/project’s coding style</h2>
+<h2 id="5-stick-to-the-languageframeworkprojects-coding-style">
+  
+  
+    5. Stick to the language/framework/project’s coding style <a href="#5-stick-to-the-languageframeworkprojects-coding-style" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>Most C# developers tend to use CamelCase to name local variables, instance variables and methods parameters, as in <code class="language-plaintext highlighter-rouge">productName</code>. In Ruby, for instance, the recommended style is <code class="language-plaintext highlighter-rouge">snake_case</code>, as in <code class="language-plaintext highlighter-rouge">product_name</code>.</p>
 
@@ -210,26 +247,56 @@
 <p>It would be pointless to fight against established standards, due to a matter of taste and preference. If you’re writing Ruby code, write the way the Ruby community expects. The same with Java, C#, PHP, what have you.</p>
 
 <p>It’s like they say: “When in Rome, do as the Romans do”.</p>
-
-<h2 id="6-method-names-should-start-with-a-verb">6. Method names should start with a verb</h2>
+<h2 id="6-method-names-should-start-with-a-verb">
+  
+  
+    6. Method names should start with a verb <a href="#6-method-names-should-start-with-a-verb" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>This one is really short. Methods are usually actions that an object can perform. As such, their names should start with a verb that indicates the action to be performed, e.g. <code class="language-plaintext highlighter-rouge">PrintReport()</code>, <code class="language-plaintext highlighter-rouge">DrawShape(IShape shape)</code>.</p>
-
-<h2 id="7-class-names-should-be-nouns">7. Class names should be nouns</h2>
+<h2 id="7-class-names-should-be-nouns">
+  
+  
+    7. Class names should be nouns <a href="#7-class-names-should-be-nouns" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>Likewise, class names should be nouns, like <code class="language-plaintext highlighter-rouge">Product</code>, <code class="language-plaintext highlighter-rouge">Customer</code>, <code class="language-plaintext highlighter-rouge">Student</code>. Avoid using the words like <code class="language-plaintext highlighter-rouge">Manager</code>, <code class="language-plaintext highlighter-rouge">Data</code>, because they add little or no value.</p>
-
-<h2 id="8-property-names-should-be-nouns-or-adjective-phrases-c-specific">8. Property names should be nouns or adjective phrases (C# specific)</h2>
+<h2 id="8-property-names-should-be-nouns-or-adjective-phrases-c-specific">
+  
+  
+    8. Property names should be nouns or adjective phrases (C# specific) <a href="#8-property-names-should-be-nouns-or-adjective-phrases-c-specific" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>Properties should be names with nouns, noun phrases or adjectives. When naming boolean properties, you may add the prefixes <code class="language-plaintext highlighter-rouge">Can</code>, <code class="language-plaintext highlighter-rouge">Is</code> or <code class="language-plaintext highlighter-rouge">Has</code>, when doing so provides value to the caller.</p>
-
-<h2 id="9-use-pronounceablesearchable-names">9. Use pronounceable/searchable names</h2>
+<h2 id="9-use-pronounceablesearchable-names">
+  
+  
+    9. Use pronounceable/searchable names <a href="#9-use-pronounceablesearchable-names" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>Work hard to choose names that are pronounceable. When you pick a name that is hard or impossible to pronounce, you discourage discussion about your code, which is never a good thing.</p>
 
 <p>Likewise, try to avoid names with a single letter. Among other reasons, they may give you a very hard time when you have to search for them! They make good names only for loop control variables or in lambda expressions. But even then, only when the scope is super short.</p>
-
-<h2 id="conclusion">Conclusion</h2>
+<h2 id="conclusion">
+  
+  
+    Conclusion <a href="#conclusion" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>Choosing names is really hard. A name should express purpose, intention, meaning. It doesn’t necessarily need to be clever – but there are certain tricky situations that will require a little bit of cleverness.</p>
 
@@ -612,6 +679,9 @@
 
     <script src="/js/dark-mode.js"></script>
     <script src="/js/copy-code.js"></script>
+    
+    <script src="/js/post-enhancements.js"></script>
+    
   </body>
 
 </html>

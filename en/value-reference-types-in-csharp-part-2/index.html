@@ -127,6 +127,7 @@
   </header>
 
   <div class="post-content" itemprop="articleBody">
+    
     <p><img src="https://res.cloudinary.com/dz5ppacuo/image/upload/v1466341001/csharp-min_buiizq.png" alt="" /></p>
 
 <p>“Why is not allowed to assign <code class="language-plaintext highlighter-rouge">null</code> to a DateTime?” Again and again, this question keeps showing up on StackOverflow and similar sites. Different phrasing, maybe a different type <a href="https://stackoverflow.com/questions/6191339/why-type-int-is-never-equal-to-null">(“Why type “int” is never equal to ‘null’?”)</a>, but the same question, in essence. Which is only natural, considering that probably thousands of developers join the field every year.
@@ -139,8 +140,14 @@
 <p>I mean, at some point, the C# designers had to make that call. They deliberately decided that <code class="language-plaintext highlighter-rouge">null</code> can’t be assigned to a value type. Is there something intrinsic to value types that prevent them from being <code class="language-plaintext highlighter-rouge">null</code>? Maybe it has something to do with the stack and the heap?</p>
 
 <p>Well, I think before we try to answer those questions, it’d be helpful to get a step back and think about other question.</p>
-
-<h2 id="what-exactly-is-null">What exactly is ‘null’?</h2>
+<h2 id="what-exactly-is-null">
+  
+  
+    What exactly is ‘null’? <a href="#what-exactly-is-null" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>You probably think of <code class="language-plaintext highlighter-rouge">null</code> as a way to represent a missing piece of information. Something that is unknown, absent or irrelevant. Maybe a piece of information that isn’t where it’s supposed to be <em>yet</em>, but it might be in the future.</p>
 
@@ -154,8 +161,14 @@ In practice, the <code class="language-plaintext highlighter-rouge">null</code> 
 <p>Of course, this is just an implementation detail. It could be implemented in different ways, so this isn’t really relevant for us. What you need to understand is, you need something to represent nothing. You need some kind of special value that means “this value is missing” or “this value is unknown”.</p>
 
 <p>Once you understand this, it becomes easier to see what the problem is with value types.</p>
-
-<h2 id="how-would-you-represent-null-for-a-value-type">How would you represent null for a value type?</h2>
+<h2 id="how-would-you-represent-null-for-a-value-type">
+  
+  
+    How would you represent null for a value type? <a href="#how-would-you-represent-null-for-a-value-type" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>To understand why would be complicated to represent <code class="language-plaintext highlighter-rouge">null</code> using a value type, you must bear in mind that value types usually have a range of possible values that they’re able to represent.</p>
 
@@ -187,8 +200,14 @@ are horrible, not to mention the fact that you’d have to check the flag every 
 </blockquote>
 
 <p>So, there is nothing <strong>in principle</strong> that prevents value types from being <code class="language-plaintext highlighter-rouge">null</code>. It’d just be so complicated that  the C# designers considered that the benefits of doing so don’t outweigh the costs.</p>
-
-<h2 id="but-i-really-wantneed-a-nullable-value-type-what-can-i-do">But I really want/need a nullable value type. What can I do?</h2>
+<h2 id="but-i-really-wantneed-a-nullable-value-type-what-can-i-do">
+  
+  
+    But I really want/need a nullable value type. What can I do? <a href="#but-i-really-wantneed-a-nullable-value-type-what-can-i-do" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>You now hopefully understand the complications involved in representing <code class="language-plaintext highlighter-rouge">null</code> for a value type, and why the C# developers decided against it. But, what if you really need to do this? One common scenario is when you’re fetching data from a relational database. What should you do?</p>
 
@@ -567,6 +586,9 @@ are horrible, not to mention the fact that you’d have to check the flag every 
 
     <script src="/js/dark-mode.js"></script>
     <script src="/js/copy-code.js"></script>
+    
+    <script src="/js/post-enhancements.js"></script>
+    
   </body>
 
 </html>

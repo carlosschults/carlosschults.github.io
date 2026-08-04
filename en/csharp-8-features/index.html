@@ -126,6 +126,7 @@
   </header>
 
   <div class="post-content" itemprop="articleBody">
+    
     <p><img src="https://res.cloudinary.com/dz5ppacuo/image/upload/v1513817072/csharp8-1037x438_skogpz.jpg" alt="" /></p>
 
 <p>C# 8.0 is coming and will bring some great new features. Let’s check out what the future holds for us.
@@ -142,8 +143,14 @@
 <p>Of course it is. Microsoft has developed C# “in the open” for quite a while now. You can just <a href="https://github.com/dotnet/csharplang">take a look at the GitHub repo</a> to read (and participate—why not?) in the discussions and proposals.</p>
 
 <p>Today, we’ve selected three feature proposals for C# 8.0 to talk about here: <strong>extension everything</strong>, <strong>default implementations on interfaces,</strong> and <strong>nullable reference types</strong>.</p>
-
-<h2 id="extension-everything">Extension Everything</h2>
+<h2 id="extension-everything">
+  
+  
+    Extension Everything <a href="#extension-everything" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>Extension everything is probably the least controversial of these three feature proposals, and in a certain way, it’s the least fleshed out also. So I figured it’d make a good starting point.</p>
 
@@ -152,8 +159,14 @@
 <p>At some point you may have wondered, though: why only extension <em>methods</em>? And you wouldn’t be alone. Extension properties, for instance, have been a desire of C# developers for quite a long time, as evidenced by <a href="https://stackoverflow.com/questions/619033/does-c-sharp-have-extension-properties">this 2009 Stack Overflow question</a> or this <a href="https://channel9.msdn.com/forums/Coffeehouse/257556-C-Extension-Properties/">even older 2007(!) forum thread</a>.</p>
 
 <p>But now it seems the wait is finally coming to an end. According to Mads Torgersen, the program manager for the C# design team, <a href="https://channel9.msdn.com/Blogs/Seth-Juarez/A-Preview-of-C-8-with-Mads-Torgersen">a Microsoft intern proposed a new syntax for extension methods that will also allow “extension <em>other things</em>”</a>.</p>
-
-<h3 id="lets-see-the-code">Let’s See the Code</h3>
+<h3 id="lets-see-the-code">
+  
+  
+    Let’s See the Code <a href="#lets-see-the-code" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>Well, if I were you, I’d be itching to see some code. Here’s an example of an extension method using current syntax:</p>
 
@@ -178,12 +191,24 @@
 <p>This new feature is meant to support methods, properties, operators, and static members, at least in the beginning; events and constructors may come later.</p>
 
 <p>You won’t be able to add additional state to the original instance, i.e., creating a private field in the extension class. According to Torgersen, this would add undesirable complexity in order to keep track of this new state.</p>
-
-<h3 id="current-status">Current Status</h3>
+<h3 id="current-status">
+  
+  
+    Current Status <a href="#current-status" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>You can <a href="https://github.com/dotnet/csharplang/issues/192">follow the feature development on its GitHub issue.</a></p>
-
-<h2 id="default-implementation-on-interfaces">Default Implementation on Interfaces</h2>
+<h2 id="default-implementation-on-interfaces">
+  
+  
+    Default Implementation on Interfaces <a href="#default-implementation-on-interfaces" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>I admit I was surprised—and not exactly happy—when I first heard about default implementation on interfaces <a href="https://channel9.msdn.com/Events/Build/2017/B8104">in a talk Mads Torgersen gave in May 2017, at the Build 2017 Conference.</a></p>
 
@@ -198,8 +223,14 @@
 <p>Besides methods, you’ll also be allowed to add bodies for indexers, properties, and event accessors. Static members such as methods, properties, and indexers will be allowed as well.</p>
 
 <p>Instance state will not be allowed in interfaces, though. You’ll be able to use static fields but not instance fields. As a consequence of this, auto-implement properties won’t be allowed as well, since they automatically declare a hidden backing-field.</p>
-
-<h3 id="use-cases">Use Cases</h3>
+<h3 id="use-cases">
+  
+  
+    Use Cases <a href="#use-cases" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>As stated in the feature <a href="https://github.com/dotnet/csharplang/blob/master/proposals/default-interface-methods.md">proposal</a>, the primary use case for default interface methods is to enable the developer to safely evolve an interface. You could add new methods to it and, as long as you provided a default implementation, existing clients of the interface wouldn’t be forced to implement it.</p>
 
@@ -208,22 +239,46 @@
 <p>That’s when default implementation shines.</p>
 
 <p>Another important value proposition of default implementation on interfaces relates to Android and iOS. Since both Java and Swift offer this feature, it’s tricky to use C# to wrap Android/iOS APIs that make use of it. C# 8.0 will make it possible to wrap those APIs more faithfully.</p>
-
-<h3 id="will-interfaces-become-abstract-classes">Will Interfaces Become Abstract Classes?</h3>
+<h3 id="will-interfaces-become-abstract-classes">
+  
+  
+    Will Interfaces Become Abstract Classes? <a href="#will-interfaces-become-abstract-classes" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>Sort of, but not really. As you know, there’s no multiple inheritance in languages like C# and Java, which means you can’t inherit from more than one class. On the other hand, a class is (and will continue to be) able to implement several interfaces.</p>
-
-<h3 id="current-status-1">Current Status</h3>
+<h3 id="current-status-1">
+  
+  
+    Current Status <a href="#current-status-1" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>This feature is currently being prototyped. <a href="https://github.com/dotnet/csharplang/blob/master/proposals/default-interface-methods.md">You can follow its development on the GitHub issue.</a></p>
-
-<h2 id="nullable-reference-types">Nullable Reference Types</h2>
+<h2 id="nullable-reference-types">
+  
+  
+    Nullable Reference Types <a href="#nullable-reference-types" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>“What?” you may be wondering. “Shouldn’t it be ‘<strong>non</strong>-nullable reference types’?” The name of this feature can be a bit confusing, indeed. I’ll get back to that soon, but first, let me address why this is even a thing.</p>
 
 <p>I bet you’re familiar with the phrase “the billion dollar mistake.” On the off-chance you’re not, the phrase refers to the null reference, and it <a href="https://en.wikipedia.org/wiki/Tony_Hoare#Apologies_and_retractions">was coined by none other than Sir Tony Hoare, the inventor of the null reference himself.</a></p>
-
-<h3 id="but-why-is-that-why-is-null-so-bad">But why is that? Why is null so bad?</h3>
+<h3 id="but-why-is-that-why-is-null-so-bad">
+  
+  
+    But why is that? Why is null so bad? <a href="#but-why-is-that-why-is-null-so-bad" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>You could make several arguments as to why, but the biggest problem is, of course, the risk of getting the infamous null-reference exception (aka null-pointer exception in Java-land). Since everything (“everything” in the context of C# meaning all <a href="https://carlosschults.net/en/value-reference-types-in-csharp/">reference types</a>) can be null, you always run the risk of getting an exception when you try to access some member of the object.</p>
 
@@ -238,8 +293,14 @@
 <p>Here’s the catch: the C# design team—in a move not free of controversy—intends to make non-nullability the new default for reference types. In that sense, the “new” thing would be the nullable types.</p>
 
 <p>To keep the language consistent, they propose to use the same syntax that already exists for nullable reference types—in other words, the question mark.</p>
-
-<h3 id="enough-talking-lets-see-some-code">Enough talking. Let’s see some code!</h3>
+<h3 id="enough-talking-lets-see-some-code">
+  
+  
+    Enough talking. Let’s see some code! <a href="#enough-talking-lets-see-some-code" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>I suppose using the infamous “Person” class in an example is the software equivalent of playing “Stairway to Heaven” in a musical instruments store—it may be a little overdone. But using a more elaborate example would be both distracting and unnecessary, so please bear with me.</p>
 
@@ -268,8 +329,14 @@
 <script src="https://gist.github.com/carlosschults/518c1b35560cafe17fca829aa2aef27b.js"></script>
 
 <p>In short, you have several options. As soon as you convince the compiler that your code offers no risk of throwing a null reference exception, the warning goes away.</p>
-
-<h3 id="preventing-assignment-from-nullable-to-non-nullable">Preventing Assignment from Nullable to Non-Nullable</h3>
+<h3 id="preventing-assignment-from-nullable-to-non-nullable">
+  
+  
+    Preventing Assignment from Nullable to Non-Nullable <a href="#preventing-assignment-from-nullable-to-non-nullable" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>The new version of C# will also prevent assigning from a nullable variable to a non-nullable, so the code below will result in a warning as well:</p>
 
@@ -286,20 +353,38 @@
 <script src="https://gist.github.com/carlosschults/008709a0b9ff6a72abc8fc4882a467d3.js"></script>
 
 <p>Keep in my mind that, by using this operator, you’re basically telling the compiler: “Trust me! I know what I’m doing.” So you’d better really know what you’re doing!</p>
-
-<h3 id="what-about-backward-compatibility">What about backward compatibility?</h3>
+<h3 id="what-about-backward-compatibility">
+  
+  
+    What about backward compatibility? <a href="#what-about-backward-compatibility" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>I know what you’re probably thinking by now. “That sounds nice and all, but wouldn’t this change break a lot of existing code?”</p>
 
 <p>Well, of course it would. That’s why this will be an <strong>opt-in</strong> change, activated on a per-project basis</p>
-
-<h3 id="current-status-2">Current Status</h3>
+<h3 id="current-status-2">
+  
+  
+    Current Status <a href="#current-status-2" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>This one is already prototyped. If you’re interested, <a href="https://github.com/dotnet/csharplang/wiki/Nullable-Reference-Types-Preview">you can download, install, and test a preview for nullable reference types right away.</a></p>
 
 <p>As with the previous features, you can stay tuned by <a href="https://github.com/dotnet/csharplang/blob/master/proposals/nullable-reference-types.md">following the relevant proposal in GitHub.</a></p>
-
-<h2 id="c-has-a-future-and-it-looks-awesome">C# Has a Future. And It Looks Awesome</h2>
+<h2 id="c-has-a-future-and-it-looks-awesome">
+  
+  
+    C# Has a Future. And It Looks Awesome <a href="#c-has-a-future-and-it-looks-awesome" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>So now you know a bit more about three of the features we’re probably getting with the next major version of the C# language.</p>
 
@@ -674,6 +759,9 @@
 
     <script src="/js/dark-mode.js"></script>
     <script src="/js/copy-code.js"></script>
+    
+    <script src="/js/post-enhancements.js"></script>
+    
   </body>
 
 </html>

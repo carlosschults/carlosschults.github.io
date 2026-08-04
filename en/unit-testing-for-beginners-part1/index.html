@@ -129,6 +129,7 @@
   </header>
 
   <div class="post-content" itemprop="articleBody">
+    
     <p><img src="https://res.cloudinary.com/dz5ppacuo/image/upload/v1459979937/testes-unitarios-iniciantes-min_povcse.png" alt="" /></p>
 
 <p>Maybe, some time in your career, you might have worked on an incredibly complex application, with an enormous, poorly-documented code base, full of hacks, unnecessary couplings, with a confused architecture and no specifications at all. That kind of app you’d call a miracle if it even works. Maybe I’ve just described your current project!
@@ -149,8 +150,14 @@
 <p>Finally, the need for independence between the subsystems would promote the reduction of coupling between modules of the application.</p>
 
 <p>It sounds too good to be true? Well, it isn’t. This “alarm system” is exactly the benefit you get after adding a suite of unit tests to your application.</p>
-
-<h2 id="what-are-unit-tests">What are unit tests?</h2>
+<h2 id="what-are-unit-tests">
+  
+  
+    What are unit tests? <a href="#what-are-unit-tests" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>Let’s see what Wikipedia tells us:</p>
 
@@ -174,8 +181,14 @@
 <p><img src="https://res.cloudinary.com/dz5ppacuo/image/upload/v1459979476/teste01_ciglca.png" alt="Windows displaying the result of a test run" /></p>
 
 <p>With this feedback, you can decide on your best course of action. Ideally, a failing test should signal something wrong in the production code. The production code should then be fixed so the test can pass.</p>
-
-<h2 id="benefits-of-unit-tests">Benefits of unit tests</h2>
+<h2 id="benefits-of-unit-tests">
+  
+  
+    Benefits of unit tests <a href="#benefits-of-unit-tests" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>In the beginning of the post, while using the alarm system metaphor, I’ve talked about some of the benefits that unit tests can provide, for instance:</p>
 
@@ -196,20 +209,38 @@
 <p>Worse yet: they are expensive twice. First, there’s the cost itself, that you can calculate with the formula <em>hourly rate of tester x number of testers x hours spent in testing</em>. Pretty straightforward, no surprises here.</p>
 
 <p>But, besides that, there is also an <a href="https://en.wikipedia.org/wiki/Opportunity_cost">opportunity cost</a>: if professionals are spending time doing manual tests that could be automated, then they are <em>NOT</em> doing other tasks that could have a greater ROI to the company.</p>
-
-<h2 id="common-misconceptions">Common misconceptions</h2>
+<h2 id="common-misconceptions">
+  
+  
+    Common misconceptions <a href="#common-misconceptions" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>In this section, I’m going to try to clarify some of the myths and misconceptions that some people have about unit testing.</p>
-
-<h3 id="programmers-shouldnt-write-tests-because-they-are-bad-testers">Programmers shouldn’t write tests, because they are bad testers</h3>
+<h3 id="programmers-shouldnt-write-tests-because-they-are-bad-testers">
+  
+  
+    Programmers shouldn’t write tests, because they are bad testers <a href="#programmers-shouldnt-write-tests-because-they-are-bad-testers" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>There is a widespread notion that programmers shouldn’t test their own code. The rationale for this is that the developers would unconsciously avoid to use the app in a way that would break it. And from experience I can say that this indeed happens. I’ve lost count of how many times a coworker found bugs in an app I made after literally <strong>seconds</strong> of using it, in spite of the fact that I had already tested it a lot without making it fail.</p>
 
 <p>The important point here is: <strong>there are tests and tests</strong>. Often, when people say that developers shouldn’t test, they’re talking about system tests, also called end-to-end tests. Such tests mean to test the system as a whole, which is not the goal of unit tests, as I said before.</p>
 
 <p>Maybe, it’s just lack of information: the person probably doesn’t know the nature and purpose of unit tests, and mistake them for end-to-end tests.</p>
-
-<h2 id="writing-unit-tests-is-a-waste-of-time-its-like-coding-the-same-thing-twice">Writing unit tests is a waste of time; it’s like coding the same thing twice</h2>
+<h2 id="writing-unit-tests-is-a-waste-of-time-its-like-coding-the-same-thing-twice">
+  
+  
+    Writing unit tests is a waste of time; it’s like coding the same thing twice <a href="#writing-unit-tests-is-a-waste-of-time-its-like-coding-the-same-thing-twice" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>When you try to convince management that unit tests are worth it, it would be wise to focus on cost reduction. But, what about the developers? How to convince them to spend time writing test code, when they’re already in tight deadlines and under a lot of pressure?</p>
 
@@ -232,8 +263,14 @@
 <p>What we propose is just to swap the “write production code -&gt; compile -&gt; test manually -&gt; debug -&gt; repeat” cycle for the “write production code -&gt; write test code -&gt; run tests -&gt; fix production code if necessary”.</p>
 
 <p>You could argue that the cycles are the same - they kind of are. But the big advantage of unit tests is that, once written, they are easily repeatable until the end of the project’s life. You “waste time” only once. Or better, you <strong>invest</strong> time and effort in the beginning, in order to create the tests, and seize the benefits for indefinite time.</p>
-
-<h3 id="unit-tests-replace-all-manual-tests">Unit tests replace all manual tests</h3>
+<h3 id="unit-tests-replace-all-manual-tests">
+  
+  
+    Unit tests replace all manual tests <a href="#unit-tests-replace-all-manual-tests" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>Unit tests are not the only types of tests that can be beneficial to a project. We can also use several other types of automated tests such as <strong>integration tests</strong> and <em>acceptance tests</em>.</p>
 
@@ -247,8 +284,14 @@
 In real life, is very common for the users to use the application in…hm…“creative” ways. So, when you put the system under stress, using it in ways that the developers never intended, nasty bugs that would otherwise keep hidden, can show up.</p>
 
 <p>Of course, once the bug is found, you should immediately write a test that exposes it. That way, if the bug ever comes back, it’ll be easily detected.</p>
-
-<h2 id="conclusion">Conclusion</h2>
+<h2 id="conclusion">
+  
+  
+    Conclusion <a href="#conclusion" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>Unit testing - and automated software testing, in general - is a huge subject. There are a lot of books about it, there are master’s theses about it. So, of course I can’t do justice to this subject with a mere blog post.</p>
 
@@ -628,6 +671,9 @@ Next post: time to get your hands dirty! I’m going to show how to create your 
 
     <script src="/js/dark-mode.js"></script>
     <script src="/js/copy-code.js"></script>
+    
+    <script src="/js/post-enhancements.js"></script>
+    
   </body>
 
 </html>

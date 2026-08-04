@@ -125,6 +125,7 @@
   </header>
 
   <div class="post-content" itemprop="articleBody">
+    
     <p><img src="https://res.cloudinary.com/dz5ppacuo/image/upload/v1593715153/null-evill-1068x437_ztikwf.jpg" alt="" />
 <span>Foto por <a href="https://unsplash.com/@benhershey?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Ben Hershey</a> on <a href="https://unsplash.com/s/photos/null?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span></p>
 
@@ -137,8 +138,14 @@
 <p>Criticar null tende a ficar chato rapidamente, portanto, os autores não fazem só isso. Eles também oferecem alternativas. E embora eu acredite que muitas das alternativas apresentadas têm seus méritos, também acho que talvez tenhamos negligenciado a melhor solução para tudo isso.</p>
 
 <p>Neste post, vamos examinar algumas das alternativas comuns para o retorno nulo antes de fazer o argumento de que a melhor alternativa é a própria nulidade. Vamos começar!</p>
-
-<h2 id="null-é-tóxico">Null é Tóxico…</h2>
+<h2 id="null-é-tóxico">
+  
+  
+    Null é Tóxico… <a href="#null-é-tóxico" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>Não vou me deter muito em toda essa coisa do “nulo é mal”, já que muito já foi escrito sobre isso. Alguns exemplos (em inglês):</p>
 
@@ -146,20 +153,38 @@
 <a href="&quot;http://blog.ploeh.dk/2015/11/13/null-has-no-type-but-maybe-has/&quot;&gt;">Null has no type, but Maybe has</a></p>
 
 <p><a href="https://softwareengineering.stackexchange.com/questions/12777/are-null-references-really-a-bad-thing">Esta resposta de Stack Overflow</a> também tem algumas informações valiosas.</p>
-
-<h2 id="mas-útil-quais-são-as-alternativas">…Mas útil. Quais são as Alternativas?</h2>
+<h2 id="mas-útil-quais-são-as-alternativas">
+  
+  
+    …Mas útil. Quais são as Alternativas? <a href="#mas-útil-quais-são-as-alternativas" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>Agora, espero que estejamos na mesma página no que diz respeito ao status de nulo como um recurso de linguagem problemática. Mas tóxico ou não, o nulo serve a alguns propósitos. As pessoas o usam para representar um dado ausente, inválido ou desconhecido, ou mesmo para indicar que ocorreu um erro.</p>
 
 <p>O que deveriam estar fazendo ao invés disso?</p>
-
-<h3 id="lançar-uma-exceção">Lançar uma Exceção</h3>
+<h3 id="lançar-uma-exceção">
+  
+  
+    Lançar uma Exceção <a href="#lançar-uma-exceção" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>Em algumas situações em que as pessoas retornam null, a coisa razoável a fazer é lançar uma exceção. Pense desta maneira: se um método promete realizar algo e não o faz, ele deve lançar uma exceção. Em outras palavras: quando um método não cumpre seu contrato, então é razoável disparar uma exceção.</p>
 
 <p>É claro que você deve reservar exceções para cenários que sejam verdadeiramente excepcionais. Se uma determinada situação acontece com freqüência, então uma exceção não é a melhor solução.</p>
-
-<h3 id="padrão-de-objeto-null">Padrão de Objeto Null</h3>
+<h3 id="padrão-de-objeto-null">
+  
+  
+    Padrão de Objeto Null <a href="#padrão-de-objeto-null" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>Considere as seguintes linhas de código:</p>
 
@@ -183,18 +208,36 @@
 <span class="p">}</span></code></pre></figure>
 
 <p>Ao empregar o padrão de objeto nulo você poderia - teoricamente, pelo menos - ter a certeza de que sempre receberá um objeto que cumpre o contrato que você espera que ele honre sem explodir na sua cara.</p>
-
-<h3 id="maybeoption">Maybe/Option</h3>
+<h3 id="maybeoption">
+  
+  
+    Maybe/Option <a href="#maybeoption" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>Finalmente, temos uma alternativa muito interessante que muitas vezes é encontrada na <a href="https://blog.ndepend.com/functional-programming-makes-code-not-oo/">programação funcional</a> linguagens. Esta alternativa é o uso de um tipo dedicado, destinado a representar o caso de uso de um valor potencialmente ausente. Por exemplo, <a href="https://docs.microsoft.com/en-us/dotnet/fsharp/language-reference/options">em F# isto é chamado de tipo de option</a>; Haskell a chama de <a href="https://hackage.haskell.org/package/base-4.11.0.0/docs/Data-Maybe.html">Maybe</a>. A partir da versão 8, Java introduziu a classe <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html">Optional</a>.</p>
 
 <p>Neste momento, o C# não oferece algo parecido com este tipo nativamente.</p>
-
-<h2 id="alternativas-ao-null-elas-são-boas">Alternativas ao Null: Elas são boas?</h2>
+<h2 id="alternativas-ao-null-elas-são-boas">
+  
+  
+    Alternativas ao Null: Elas são boas? <a href="#alternativas-ao-null-elas-são-boas" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>Tendo apresentado as alternativas mais comumente usadas para nulo, é hora do veredicto final. Vamos começar com a opção “lançar exceção”.</p>
-
-<h3 id="exceções">Exceções</h3>
+<h3 id="exceções">
+  
+  
+    Exceções <a href="#exceções" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>Se o chamador não fornecer os argumentos corretos para a função que está chamando, então poderíamos dizer que ele está quebrando o contrato da função. Lançar uma exceção é a coisa correta a fazer nesta situação.</p>
 
@@ -241,8 +284,14 @@
 <span class="p">}</span></code></pre></figure>
 
 <p>Além disso, <a href="https://blogs.msdn.microsoft.com/ericlippert/2008/09/10/vexing-exceptions/">não capture exceções exógenas</a> que possam acontecer dentro de seu método e retorne nulo; em vez disso, deixe-as subir, pois este tipo de exceções representam problemas fora de seu controle. Problemas como uma falha na rede são problemas que você não poderia ter evitado de qualquer forma, em código.</p>
-
-<h3 id="padrão-null-object">Padrão Null Object</h3>
+<h3 id="padrão-null-object">
+  
+  
+    Padrão Null Object <a href="#padrão-null-object" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>Vamos considerar o padrão de objeto nulo, do qual certamente não sou um grande fã. Um problema com este padrão é que você só deve usá-lo quando o código de chamada não se importa com o resultado do que quer que ele esteja tentando realizar. Considere novamente nosso exemplo de contrato:</p>
 
@@ -261,16 +310,28 @@
 </ul>
 
 <p>Pode-se argumentar que estes problemas não são relevantes no contexto de uma única equipe que trabalha com a mesma base de código. Os desenvolvedores poderiam concordar em usar o padrão corretamente. Mas se tudo equivale a confiança e convenção no final do dia, você poderia muito bem concordar em nunca retornar nulo e teria o mesmo resultado.</p>
-
-<h4 id="maybeoption-1">Maybe/Option</h4>
+<h4 id="maybeoption-1">
+  
+  
+    Maybe/Option <a href="#maybeoption-1" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h4>
+    
 
 <p>Por último, mas não menos importante, e quanto aos tipos Maybe/Option? Esta é uma alternativa ao mesmo tempo elegante e robusta, especialmente em linguagens como o F#, onde você é forçado, de certa forma, a lidar com ambos os casos usando <em>pattern matching.</em></p>
 
 <p>Mas a triste realidade é a seguinte: embora <code class="language-plaintext highlighter-rouge">Maybe/Option</code> sejam abordagens surpreendentes, elas não podem mudar o fato de que o nulo existe e continuará a existir. Você não pode realmente impedir as pessoas de usá-lo, nem pode removê-lo de todas as linhas de código que as pessoas têm escrito desde o início da história do C#.</p>
 
 <p>Portanto, mesmo sendo grandes abordagens, elas ainda sofrem com o problema de serem mais um tipo de nulo para os desenvolvedores lidarem.</p>
-
-<h2 id="a-solução-para-null-o-próprio-null">A solução para Null: O próprio Null</h2>
+<h2 id="a-solução-para-null-o-próprio-null">
+  
+  
+    A solução para Null: O próprio Null <a href="#a-solução-para-null-o-próprio-null" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>Você conhece o velho ditado “Quando em um buraco, pare de cavar”? Para o melhor ou para o pior, existe o nulo. Tóxico ou não, é uma característica que as pessoas usam. Portanto, talvez a solução para tudo isso seja apenas consertar o nulo.</p>
 
@@ -698,6 +759,9 @@
 
     <script src="/js/dark-mode.js"></script>
     <script src="/js/copy-code.js"></script>
+    
+    <script src="/js/post-enhancements.js"></script>
+    
   </body>
 
 </html>

@@ -126,6 +126,7 @@
   </header>
 
   <div class="post-content" itemprop="articleBody">
+    
     <p><img src="https://res.cloudinary.com/dz5ppacuo/image/upload/v1485700794/capa-min_no1cci.jpg" alt="" /></p>
 
 <p>Some people believe private methods should be avoided. Are they right?
@@ -138,8 +139,14 @@
 <p>Instead, I want to talk about a subject that showed up in the comment’s thread: private methods as a <a href="https://martinfowler.com/bliki/CodeSmell.html">code smell</a>.</p>
 
 <p>Since I’d never heard something along those lines, I was naturally surprised and decided to do some research.</p>
-
-<h2 id="whats-the-matter-with-private-methods">What’s the matter with private methods?</h2>
+<h2 id="whats-the-matter-with-private-methods">
+  
+  
+    What’s the matter with private methods? <a href="#whats-the-matter-with-private-methods" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>First, let’s try to understand why would private methods be a problem.</p>
 
@@ -180,8 +187,14 @@
 </blockquote>
 
 <p>I’ve just outlined some of the common arguments against the creation of private methods, so now it’s time to show my opinions on this.</p>
-
-<h2 id="private-methods-are-not-necessarily-srp-violations">Private methods are <em>not</em> necessarily SRP violations</h2>
+<h2 id="private-methods-are-not-necessarily-srp-violations">
+  
+  
+    Private methods are <em>not</em> necessarily SRP violations <a href="#private-methods-are-not-necessarily-srp-violations" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>The first argument presented states that private methods violate the Single Responsibility Principle.</p>
 
@@ -202,8 +215,14 @@
 <p>My main issue with this argument is not that small classes are generally better than large ones, which I agree.</p>
 
 <p>My problem is that I don’t agree that creating new classes and public methods <strong>just for the sake of avoiding private methods</strong> will <strong>automatically</strong> lead to “simpler, better designs”. It sure <em>can</em>; but it can lead you to worse designs as well. Each situation is unique.</p>
-
-<h2 id="i-dont-buy-testability-for-testabilitys-sake">I don’t buy testability for testability’s sake</h2>
+<h2 id="i-dont-buy-testability-for-testabilitys-sake">
+  
+  
+    I don’t buy testability for testability’s sake <a href="#i-dont-buy-testability-for-testabilitys-sake" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>I really like unit tests (and automated tests in general). I helped evangelize unit testing in my workplace, and I’m currently supervising the team that is adding unit and integration tests to our codebase.</p>
 
@@ -214,8 +233,14 @@
 <p>My answer usually is: <strong>you shouldn’t</strong>. IMHO, it’s just not that productive to put a lot of effort into testing private methods: since they are called by the public ones, they’re going to be exercised by your tests anyway.</p>
 
 <p>The goal of a unit test should be to test and document a “unit” (a class) by using its public API. Which leads us to the next point.</p>
-
-<h2 id="your-public-api-should-be-stable">Your public API should be stable!</h2>
+<h2 id="your-public-api-should-be-stable">
+  
+  
+    Your public API should be stable! <a href="#your-public-api-should-be-stable" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>API stands for “Application Programming Interface”. This term can mean a bunch of things, but in this context, think of the API as the set of all public classes and methods that your application exposes to consumers.</p>
 
@@ -260,8 +285,14 @@
   <li>Making private methods public don’t automatically lead to better design; it can also lead to an unnecessary inflated API, weak encapsulation, and increased maintenance overhead.</li>
   <li>Testability is a noble goal, but should be pursued pragmatically. Well tested and documented public methods should be enough, for most cases.</li>
 </ul>
-
-<h2 id="private-methods-can-be-good-or-bad-learn-to-tell-them-apart">Private methods can be good or bad; learn to tell them apart</h2>
+<h2 id="private-methods-can-be-good-or-bad-learn-to-tell-them-apart">
+  
+  
+    Private methods can be good or bad; learn to tell them apart <a href="#private-methods-can-be-good-or-bad-learn-to-tell-them-apart" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>All being said, I do think there are cases in which private methods are used in a wrong way. Like any other tool, they can be abused. You should probably watch out for some red flags.</p>
 
@@ -277,8 +308,14 @@
 <p>So, here is the thing: two out of the three signs I’ve just outlined are somewhat subjective. At some point, you have to make some choices. How complex is complex enough for a private method to need unit testing? How to properly tell about different levels of abstractions?</p>
 
 <p>The best tip I can offer is: <strong>Use an extra pair of eyes</strong>. Always have another person look and examine your code before you check it in. Pair-programming and/or code review are great techniques, not only for improving design and catching bugs, but also for spreading knowledge across a team. Not only technical knowledge, but domain knowledge as well, and that can make the difference when the time comes to make those tough decisions.</p>
-
-<h2 id="in-conclusion">In conclusion</h2>
+<h2 id="in-conclusion">
+  
+  
+    In conclusion <a href="#in-conclusion" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>Although private methods can be used in bad ways, I think it’s premature to automatically label them as a bad thing and something to be avoided.</p>
 
@@ -287,8 +324,14 @@
 <p>Software development is an art, full of trade-offs and uncertainty. And while rules-of-thumbs can be useful, they should not be followed blindly.</p>
 
 <p>This post turned out way longer than I intended. Thanks if you’ve made this far. See you next time!</p>
-
-<h2 id="references">References</h2>
+<h2 id="references">
+  
+  
+    References <a href="#references" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <ul>
   <li><a href="https://stackoverflow.com/questions/2620699/why-private-methods-in-the-object-oriented">https://stackoverflow.com/questions/2620699/why-private-methods-in-the-object-oriented</a></li>
@@ -302,7 +345,6 @@
 </ul>
 
 <p>* The author has given me permission to translate the article to English. <a href="https://objectpascalprogramming.com/posts/menos-e-mais/">Here is the original version, in Portuguese</a>.</p>
-
 
     
     
@@ -670,6 +712,9 @@
 
     <script src="/js/dark-mode.js"></script>
     <script src="/js/copy-code.js"></script>
+    
+    <script src="/js/post-enhancements.js"></script>
+    
   </body>
 
 </html>

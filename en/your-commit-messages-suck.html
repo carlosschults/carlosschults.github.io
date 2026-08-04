@@ -124,6 +124,7 @@
   </header>
 
   <div class="post-content" itemprop="articleBody">
+    
     <p>Your commit messages suck. They are, at best, useless. At worse, they are harmful and misleading.
 I don’t say this to be mean. Quite the opposite, I mean this in the most charitable way possible. I’m here to help.</p>
 
@@ -134,34 +135,70 @@ I don’t say this to be mean. Quite the opposite, I mean this in the most chari
 <p>Don’t get offended. This is mostly not your fault. Chances are, nobody every taught you how to write good messages, or even why that’s important. And writing is freaking <em>hard</em>, let me tell you.</p>
 
 <p>Good news is, you’ve finally got someone to help you. In this post, I will explain everything you need to know about terrible commit messages and, of course, how to write great ones instead.</p>
-
-<h2 id="your-commit-messages-suck-because">Your commit Messages Suck Because…</h2>
+<h2 id="your-commit-messages-suck-because">
+  
+  
+    Your commit Messages Suck Because… <a href="#your-commit-messages-suck-because" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 <p>Why is it that most commit messages are so bad? In my experience, the reasons amount to the reason I’ll talk about now. Keep in mind that there is nothing scientific or data-driven about any of these. They’re all based on my personal experience.</p>
-
-<h3 id="you-only-care-about-coding">…You Only Care About Coding</h3>
+<h3 id="you-only-care-about-coding">
+  
+  
+    …You Only Care About Coding <a href="#you-only-care-about-coding" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 <p>If you’re like most developers, you only or mostly care about coding. This is where the fun lives, and everything else you see it as a waste of time.
 Also, I acknowledge that you’re probably under a lot of pressure to perform, to deliver as much value as quickly as possible. So, what you want the most is finish what you’re doing, merge your PR and then get another ticket off of Jira/Azure/Linear to start implementing.</p>
 
 <p>What ends up happening is that anything that is not coding is treated like an afterthought and not given as much care. This includes testing, documenting, preparing a review of the implemented feature for the weekly retro and, of course, writing commit messages and PR descriptions.</p>
-
-<h3 id="sometimes-you-dont-understand-what-youre-doing">…Sometimes You Don’t Understand What You’re Doing</h3>
+<h3 id="sometimes-you-dont-understand-what-youre-doing">
+  
+  
+    …Sometimes You Don’t Understand What You’re Doing <a href="#sometimes-you-dont-understand-what-youre-doing" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 <p>Great commit messages and great documentation in general should focus on the <em>why</em> of things. What’s the motivation behind you making those changes? What’s the problem you’re trying to solve, why is it worth solving, in which way it helps your team and your company?</p>
 
 <p>It may seem crazy that a programmer would start working on a task he or she doesn’t fully understand. But I know I have, and bet you have too. Of course, how are you supposed to explain the why behind a change when even you don’t fully grasp it?</p>
-
-<h3 id="writing-is-hard">…Writing Is Hard</h3>
-<p>As Phil Karlton once put, <a href="https://martinfowler.com/bliki/TwoHardThings.html">there are only two hard things in computer science</a>, and naming things is one of them.</p>
+<h3 id="writing-is-hard">
+  
+  
+    …Writing Is Hard <a href="#writing-is-hard" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
+<p>As Phil Karlton once put<sup id="fnref:1" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup>, <a href="https://martinfowler.com/bliki/TwoHardThings.html">there are only two hard things in computer science</a>, and naming things is one of them.</p>
 
 <p>If you think about it, “naming things” is a form of writing. A subset of writing, if you will. So, yeah, writing commit messages is hard because writing, in general, is hard.</p>
-
-<h3 id="nobody-has-taught-you">…Nobody Has Taught You</h3>
+<h3 id="nobody-has-taught-you">
+  
+  
+    …Nobody Has Taught You <a href="#nobody-has-taught-you" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 <p>I think that developer education often fails to teach lots of important things that you actually need as a software engineer. True error handling is one of them.</p>
 
 <p>Fair, they’ll teach you the mechanics of how a try-catch-finally work, but often they won’t teach you when to catch an exception, when not to catch it, when to throw an exception, when to log it or not, and so on.</p>
 
 <p>And writing commit messages is one of those things.</p>
-
-<h3 id="github-taught-you-bad-habits">…GitHub Taught You Bad Habits</h3>
+<h3 id="github-taught-you-bad-habits">
+  
+  
+    …GitHub Taught You Bad Habits <a href="#github-taught-you-bad-habits" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 <p>Let’s get this out of the way: I use GitHub every day, and I love it. GitHub is the <a href="https://en.wikipedia.org/wiki/Killer_application">killer app</a> for Git, and Git wouldn’t have gotten the same level of adoption without GitHub.</p>
 
 <p>That being said, I do believe that the popularity of GitHub and pull requests caused people to care more about pull requests than about the individual commits. And it does make sense: pull requests support discussions that live on as a historical artifacts of that project, they support attachments, rich text and what have you.</p>
@@ -169,15 +206,27 @@ Also, I acknowledge that you’re probably under a lot of pressure to perform, t
 <p>So, it makes sense that some people don’t put a lot of effort writing good commit messages, claiming that they can write rich PR descriptions instead.</p>
 
 <p>Of course what ends up happening frequently is that they don’t write PR descriptions either!</p>
-
-<h3 id="gits--m-option-trained-you-poorly">…Git’s <code class="language-plaintext highlighter-rouge">-m</code> Option Trained You Poorly</h3>
+<h3 id="gits--m-option-trained-you-poorly">
+  
+  
+    …Git’s <code class="language-plaintext highlighter-rouge">-m</code> Option Trained You Poorly <a href="#gits--m-option-trained-you-poorly" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 <p>I think that most programmers don’t even know that commit messages can have a body with multiple lines. And the culprit here is the fact that most people teach the <code class="language-plaintext highlighter-rouge">commit</code>command like this:</p>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git commit <span class="nt">-m</span> <span class="s2">"Some message"</span>
 </code></pre></div></div>
 <p>And not even mention that the <code class="language-plaintext highlighter-rouge">-m</code> flag is just a convenience for when you have a one-line message, which should be the exception rather than the norm.</p>
-
-<h3 id="you-dont-have-proper-commit-hygiene">…You Don’t Have Proper Commit Hygiene</h3>
+<h3 id="you-dont-have-proper-commit-hygiene">
+  
+  
+    …You Don’t Have Proper Commit Hygiene <a href="#you-dont-have-proper-commit-hygiene" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 <p>Writing commit messages that aren’t trash is part of a broader thing that some people call “version control hygiene.”</p>
 
 <p>This is exactly what it sounds like: don’t be a slob when writing code.</p>
@@ -185,11 +234,23 @@ Also, I acknowledge that you’re probably under a lot of pressure to perform, t
 <p>Sometimes you struggle when writing a commit message because you work in a messy way. If your changes are a hodgepodge of bug fixes, refactorings, dead code and half-baked implementation ideas, of course you’re going to have a problem writing a descriptive and useful commit message.</p>
 
 <p>This is often caused by a lack of Git skills. If you don’t master tools like stashing, reseting, interactive rebasing and others, then you’re more likely to make a big mess out of your work.</p>
-
-<h2 id="taxonomy-of-bad-commit-messages">Taxonomy of Bad Commit Messages</h2>
+<h2 id="taxonomy-of-bad-commit-messages">
+  
+  
+    Taxonomy of Bad Commit Messages <a href="#taxonomy-of-bad-commit-messages" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 <p>I have found that commit messages can be bad in a few number of categories. I’ll cover now some of them.</p>
-
-<h3 id="almost-useless-one-liner">Almost Useless One-Liner</h3>
+<h3 id="almost-useless-one-liner">
+  
+  
+    Almost Useless One-Liner <a href="#almost-useless-one-liner" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 <p>This is the one-line message that gives a high-level explanation of what the change was. I call it “almost” useless because at least the summary is accurate.</p>
 
 <p>It then fails to add any more context. I’m left with questions like:</p>
@@ -205,8 +266,14 @@ Also, I acknowledge that you’re probably under a lot of pressure to perform, t
 Enable EF Core execution strategy# what is this strategy thing? why did you have to enable it?
 Added Required attribute to model # Which model? Also, isn't this a breaking change that will affect current users?
 </code></pre></div></div>
-
-<h3 id="useless-one-liner">Useless One-Liner</h3>
+<h3 id="useless-one-liner">
+  
+  
+    Useless One-Liner <a href="#useless-one-liner" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 <p>The useless one-liner is…well, like the almost useless one-liner, but completely useless.</p>
 
 <p>The examples don’t merit more comments:</p>
@@ -218,8 +285,14 @@ more changes
 </code></pre></div></div>
 
 <p>I mean, by the time you’re writing “changes” as a commit message, you might as well just say “potatoes”. Or write a joke. It would be just as useless but at least it might have been funny.</p>
-
-<h3 id="ticket-system-reference-only">Ticket System Reference Only</h3>
+<h3 id="ticket-system-reference-only">
+  
+  
+    Ticket System Reference Only <a href="#ticket-system-reference-only" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 <p>This is when people only add an id of issue/ticket/card from their issue system, and nothing more. Some examples:</p>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>JIRA-42
@@ -231,19 +304,43 @@ AZ-2234
 <p>This is also more annoying because it requires the reader to stop and go to another place to get context for that change. I don’t know about you, but I’d like to learn the reason behind a commit from the commit itself, just like <del>God</del>Linus intended.</p>
 
 <p>Besides the annoyance, there is a greater risk here: the possibility that, someday, your company will migrate from the current ticketing system and then you’ll be left without those descriptions. All companies I’ve worked for as a software developer have done at least one such migration, and I’m sure you probably have lived through at least one.</p>
-
-<h3 id="the-misleading-one-liner">The Misleading One-Liner</h3>
+<h3 id="the-misleading-one-liner">
+  
+  
+    The Misleading One-Liner <a href="#the-misleading-one-liner" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 <p>Sometimes you have a message that says something seemingly harmless, like <code class="language-plaintext highlighter-rouge">Add PrintHtmlOutput() method</code>. And then it turns out the changes also add a breaking change to an endpoint or change something in the way the application interacts with the database.</p>
-
-<h2 id="you-will-write-great-commit-messages-when-you">You Will Write Great Commit Messages When You…</h2>
+<h2 id="you-will-write-great-commit-messages-when-you">
+  
+  
+    You Will Write Great Commit Messages When You… <a href="#you-will-write-great-commit-messages-when-you" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 <p>Now you understand why you write bad commit messages, and <em>how</em> they are bad. Ready to learn how to improve?</p>
-
-<h3 id="stop-writing-one-liners">…Stop Writing One-Liners</h3>
+<h3 id="stop-writing-one-liners">
+  
+  
+    …Stop Writing One-Liners <a href="#stop-writing-one-liners" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 <p>One-liners are great when the scope of your change is small. If your commit only fixes a typo, then <code class="language-plaintext highlighter-rouge">Fix typo</code> is a valid commit message. But most often commits contain many more changes, and in those cases writing a one-liner is a missed opportunity to write a durable piece of documentation.</p>
 
 <p>So, please, stop using the <code class="language-plaintext highlighter-rouge">-m</code> flag when commiting. Write a proper body with more detail for most of your messages.</p>
-
-<h3 id="lead-with-the-what-expand-with-the-why-and-how">…Lead With The “What”, Expand With The “Why” and “How”</h3>
+<h3 id="lead-with-the-what-expand-with-the-why-and-how">
+  
+  
+    …Lead With The “What”, Expand With The “Why” and “How” <a href="#lead-with-the-what-expand-with-the-why-and-how" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 <p>So, now you know you’re supposed to write a summary and a body for most of your commit messages. What should be in each?</p>
 
 <p>Simple: start with the summary, in which you describe <em>what</em> you did. Make it descriptive but concise.</p>
@@ -257,9 +354,15 @@ AZ-2234
   <li>reference links for possibly unkown terms you used (for instance, a link to an Wikipedia article, or to Martin Fowler’s <a href="https://refactoring.com/catalog/">Catalog of Refactorings</a>)</li>
   <li>reference links for the solution you employed (for instance, a link to a Stack Overflow answer)</li>
 </ul>
-
-<h3 id="follow-the-5072-rule">…Follow the 50/72 Rule</h3>
-<p>The 50/72 rule is the closest we have to a standard when it comes to commit messages. It was <a href="https://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html">first proposed by Tim Pope</a> and it goes like this:</p>
+<h3 id="follow-the-5072-rule">
+  
+  
+    …Follow the 50/72 Rule <a href="#follow-the-5072-rule" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
+<p>The 50/72 rule is the closest we have to a standard when it comes to commit messages. It was <a href="https://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html">first proposed by Tim Pope</a><sup id="fnref:2" role="doc-noteref"><a href="#fn:2" class="footnote" rel="footnote">2</a></sup> and it goes like this:</p>
 
 <ul>
   <li>Start with a summary, capitalized, and make it 50 characters long at the most</li>
@@ -285,8 +388,14 @@ This reverts commit 5ab08c5d3ee7bfdb334406d418d96f76d08962fe.
 <p><code class="language-plaintext highlighter-rouge">Closes: #456</code></p>
 
 <p>And it would automatically associate the commit to the issue and close it. There are other keywords you can use, such as <code class="language-plaintext highlighter-rouge">Fixes</code>, <code class="language-plaintext highlighter-rouge">Resolves</code>, <code class="language-plaintext highlighter-rouge">Resolved</code>, and so on. You can learn more about automatically closing GH issues <a href="https://docs.github.com/en/issues/tracking-your-work-with-issues/using-issues/linking-a-pull-request-to-an-issue">here</a>.</p>
-
-<h3 id="adopt-atomic-commits">…Adopt Atomic Commits</h3>
+<h3 id="adopt-atomic-commits">
+  
+  
+    …Adopt Atomic Commits <a href="#adopt-atomic-commits" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 <p>The idea of atomic commits is simple: have a commit only contain changes that are logically related. This is the opposite of the lack of version control hygiene that I talked about earlier.</p>
 
 <p>So, let’s say you’re currently working on a feature. Then your boss tells you to stop and fix a bug. You go and fix the bug, and then you have your changes from the start of your feature implementation.</p>
@@ -296,21 +405,33 @@ This reverts commit 5ab08c5d3ee7bfdb334406d418d96f76d08962fe.
 <p>Doing things like these require you master the tools of Git. You need to know how to stage changes and commit only those instead of everything. You need to know how to stash. Often, you’ll need to know how to commit things and then edit that history.</p>
 
 <p>Those skills are worth having. Get them!</p>
-
-<h3 id="commit-often-perfect-later">…Commit Often, Perfect Later</h3>
+<h3 id="commit-often-perfect-later">
+  
+  
+    …Commit Often, Perfect Later <a href="#commit-often-perfect-later" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 <p>You don’t have to wait until you’re “done” to commit. Instead, you should commit all of the time. Work in small increments, and commit along the way.</p>
 
 <p>That way, if you make mistakes and needs to throw some work away, you just revert a few minutes’ worth of work instead of hours. You also have those checkpoints you can go back to, should the power went off or something.</p>
 
-<p>For instance, people who practice TDD (test-drive development) often commit every time they reach the green phase. In other words, every time they make the tests pass.</p>
+<p>For instance, people who practice TDD (test-driven development)<sup id="fnref:3" role="doc-noteref"><a href="#fn:3" class="footnote" rel="footnote">3</a></sup> often commit every time they reach the green phase. In other words, every time they make the tests pass.</p>
 
 <p>It’s also a good idea to leave all your commits clean. By that I mean, all of your commits, when applied, should leave your project in a state where it builds successfully and all tests pass. That makes it easier for you or someone else to use <a href="/git-bisect-intro/">git bisect in the future to find where a bug was introduced</a>.</p>
 
 <p>But if you follow this tip, you might end up with many tiny little commits that don’t have good messages, or that don’t represent a cohesive set of changes. How to solve this?</p>
 
 <p>The answer is: <a href="/en/git-beautiful-history/">you edit your history to make it look beautiful</a>. Editing your history is frowned upon, and with good reason, when it’s a branch other people already depend on. But if you’re working on your own isolated branch and no one depends on your changes, you can do whatever you want up to that point. So, commit early and often, then amend and rebase your way into a history that makes sense and has great commit messages.</p>
-
-<h2 id="examples-of-great-commit-messages">Examples of Great Commit Messages</h2>
+<h2 id="examples-of-great-commit-messages">
+  
+  
+    Examples of Great Commit Messages <a href="#examples-of-great-commit-messages" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 <p>Now it’s finally time to show you some examples of valuable commit messages that incorporate everything we’ve been covering so far.</p>
 
 <p>For instance, instead of:</p>
@@ -364,8 +485,14 @@ Closes: <span class="c">#89</span>
 </code></pre></div></div>
 <p>Do all messages need this kind of in-depth message? Or course not. For instance, <code class="language-plaintext highlighter-rouge">Fix typo</code> is a great commit message, if all you’re doing in that commit is fixing a typo. The same goes for <code class="language-plaintext highlighter-rouge">Remove commented-out code</code>, <code class="language-plaintext highlighter-rouge">Remove blank lines</code>, and so on.
 The length of your commit message needs to be directly proportional to the size/scope of your change.</p>
-
-<h2 id="ai-changes-everything-ordoes-it">AI Changes Everything. Or…Does It?</h2>
+<h2 id="ai-changes-everything-ordoes-it">
+  
+  
+    AI Changes Everything. Or…Does It? <a href="#ai-changes-everything-ordoes-it" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 <p>I know what you have been wondering all of this time. “But..but…but…what about AI?”</p>
 
 <p>My honest take is that AI changes little, if anything at all, of what we’ve been discussing.</p>
@@ -412,8 +539,14 @@ Follow these rules:
 <p>When I’m using Claude Code, those rules from above exist in the <code class="language-plaintext highlighter-rouge">Claude.md</code> file for the project. In this scenario, it tends to do much better understanding the “why”, because everything started with a prompt in which I explained the reason behind the change, and then we did a planning session before starting to implement the change.</p>
 
 <p>But even then, the AI often still needs a lot of guidance until it’s able to write a commit message that really focus on the reasons behind the change and gives information at the right level of abstraction. Left to its own devices, AI produces well-written messages that are essentially a diff in prose.</p>
-
-<h2 id="conclusion">Conclusion</h2>
+<h2 id="conclusion">
+  
+  
+    Conclusion <a href="#conclusion" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 <p>By now, you’ve probably realized this was a fairly opinionated post. Some of the things covered here are very close to being a standard, such as the 50/72 rule and idea of writing the summaries using the imperative mood.</p>
 
 <p>However, some of what I’ve discussed are personal preferences. For instance, I usually don’t use <a href="https://www.conventionalcommits.org/en/v1.0.0/">Conventional Commits</a>. The reasons for that go beyond the scope of this post, but they exist. But they’re also fairly personal, so I won’t hold it against you if you like to use Conventional Commits.</p>
@@ -425,6 +558,20 @@ Follow these rules:
 <p>But I guarantee you: years from now, when you’re investigating a critical production issue and then you’ve come across some great commit messages that offer valuable insights into why some changes were made…you’re going to be happy you did.</p>
 
 <p>Thanks for reading.</p>
+
+<div class="footnotes" role="doc-endnotes">
+  <ol>
+    <li id="fn:1" role="doc-endnote">
+      <p>Phil Karlton was a principal engineer at Netscape in the 1990s. The exact wording of the quote varies depending on the source — Martin Fowler has <a href="https://martinfowler.com/bliki/TwoHardThings.html">a good note on its provenance</a>. <a href="#fnref:1" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:2" role="doc-endnote">
+      <p>Tim Pope is a prolific open-source developer best known in the Vim community for plugins like vim-fugitive (Git integration) and vim-surround. His 2008 blog post on commit messages remains one of the most-cited references on the topic. <a href="#fnref:2" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:3" role="doc-endnote">
+      <p>The TDD cycle is: write a failing test (red), write the minimum code to make it pass (green), then clean up the code without breaking anything (refactor). Committing after each green phase gives you a granular, always-passing history you can bisect with confidence. <a href="#fnref:3" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
 
     
     
@@ -795,6 +942,9 @@ Follow these rules:
 
     <script src="/js/dark-mode.js"></script>
     <script src="/js/copy-code.js"></script>
+    
+    <script src="/js/post-enhancements.js"></script>
+    
   </body>
 
 </html>

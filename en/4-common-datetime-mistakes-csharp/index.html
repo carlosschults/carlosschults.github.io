@@ -126,6 +126,7 @@
   </header>
 
   <div class="post-content" itemprop="articleBody">
+    
     <p><img src="https://res.cloudinary.com/dz5ppacuo/image/upload/v1531165684/4-datetime-mistakes-1038x437_nm6csc.jpg" alt="" /></p>
 
 <p><em>Editorial note: I originally wrote this post for the SubMain blog.  You can <a href="https://blog.submain.com/4-common-datetime-mistakes-c-avoid/">check out the original here, at their site</a>. While you’re there, have a look at CodeIt.Right, which can help you with time-related issues and much more.</em></p>
@@ -145,8 +146,14 @@
 <p>The article is interesting food for thought, but I think it’d make sense to provide more actionable information.</p>
 
 <p>That’s what today’s post is about. I’m going to show you four common mistakes C#/.NET developers make when dealing with time. And that’s not all. I’ll also show what you should do to avoid them and make your code safer and easier to reason about.</p>
-
-<h2 id="1-naively-calculating-durations">1. Naively Calculating Durations</h2>
+<h2 id="1-naively-calculating-durations">
+  
+  
+    1. Naively Calculating Durations <a href="#1-naively-calculating-durations" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>Consider the code below:</p>
 
@@ -165,8 +172,14 @@
 <p>I bet you’ve correctly guessed what just happened here: when clocks were about to hit 2 AM, DST just kicked in and moved them straight to 3 AM. Then <code class="language-plaintext highlighter-rouge">EndMatch</code> got back the current time, effectively adding a whole hour to the calculation. If the same had happened at the end of DST, the result would’ve been just 15 minutes!</p>
 
 <p>Sure, the code above is just a toy example, but what if it were a payroll application? Would you like to pay an employee the wrong amount?</p>
-
-<h3 id="what-to-do">What to Do?</h3>
+<h3 id="what-to-do">
+  
+  
+    What to Do? <a href="#what-to-do" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>When calculating the duration of human activities, use UTC for the start and end dates. That way, you’ll be able to** unambiguously point to an instant in time**. Instead of using the <code class="language-plaintext highlighter-rouge">Now</code> property on <code class="language-plaintext highlighter-rouge">DateTime</code>, use `UtcNow to retrieve the date time already in UTC to perform the calculations:</p>
 
@@ -175,8 +188,14 @@
 <p>What if the <code class="language-plaintext highlighter-rouge">DateTime</code> objects you already have are set to Local? In that case, you should use the ToUniversalTime() method to convert them to UTC:</p>
 
 <script src="https://gist.github.com/carlosschults/58837695af07386836753ef6541233aa.js"></script>
-
-<h3 id="a-little-warning-about-touniversaltime">A Little Warning About ToUniversalTime()</h3>
+<h3 id="a-little-warning-about-touniversaltime">
+  
+  
+    A Little Warning About ToUniversalTime() <a href="#a-little-warning-about-touniversaltime" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>The usage of <code class="language-plaintext highlighter-rouge">ToUniversalTime()</code> — and its sibling, <code class="language-plaintext highlighter-rouge">ToLocalTime()</code>— can be a little tricky. The problem is that these methods make assumptions about what you want based on the value of the Kind property of your date, and that can cause unexpected results.</p>
 
@@ -200,8 +219,14 @@
 </ul>
 
 <p>How do you prevent this? It’s a recommended practice to use UTC to record the time when an event happened. My suggestion here is to follow this advice and also to make it explicit that you’re doing so. Append the “UTC” suffix to every database column and class property that holds a UTC datetime. Instead of Created, change it to CreatedUTC and so on. It’s not as pretty, but it’s definitely more clear.</p>
-
-<h2 id="2-not-using-utc-when-it-should-be-used-and-vice-versa">2. Not Using UTC When It Should Be Used (and Vice Versa)</h2>
+<h2 id="2-not-using-utc-when-it-should-be-used-and-vice-versa">
+  
+  
+    2. Not Using UTC When It Should Be Used (and Vice Versa) <a href="#2-not-using-utc-when-it-should-be-used-and-vice-versa" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>We could define this as a universal rule: use UTC to record the time when events <em>happened</em>. When logging, auditing, and recording all types of timestamps in your application, UTC is the way to go.</p>
 
@@ -212,20 +237,38 @@
 <p>In cases like this, it’d make more sense to either (a) store the datetime in UTC along with the user’s time zone or (b) use the <code class="language-plaintext highlighter-rouge">DateTimeOffset</code> type, which will record the local date along with the UTC offset, enabling you to reconstruct the UTC date from it when you need it.</p>
 
 <p>Another common use case where UTC is not the right solution is <a href="https://stackoverflow.com/questions/19626177/how-to-store-repeating-dates-keeping-in-mind-daylight-savings-time?noredirect=1&amp;lq=1">scheduling future local events</a>. You wouldn’t want to wake up one hour later or earlier in the days of DST transitions, right? That’s exactly what would happen if you’d set your alarm clock by UTC.</p>
-
-<h2 id="3-not-validating-user-input">3. Not Validating User Input</h2>
+<h2 id="3-not-validating-user-input">
+  
+  
+    3. Not Validating User Input <a href="#3-not-validating-user-input" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>Let’s say you’ve created a simple Windows desktop app that lets users set reminders for themselves. The user enters the date and time at which they want to receive the reminder, clicks a button, and that’s it.</p>
 
 <p>Everything seems to be working fine until a user from Brazil emails you, complaining the reminder she set for October 15th at 12:15 AM didn’t work. What happened?</p>
-
-<h3 id="dst-strikes-back">DST Strikes Back</h3>
+<h3 id="dst-strikes-back">
+  
+  
+    DST Strikes Back <a href="#dst-strikes-back" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>The villain here is good old Daylight Saving Time again. In 2017, DST in Brazil started at midnight on October 15th. (Remember that Brazil is in the southern hemisphere.) So, the date-time combination the user supplied <strong>simply didn’t exist in her time zone!</strong></p>
 
 <p>Of course, the opposite problem is also possible. When DST ends and clocks turn backward by one hour, this <strong>generates ambiguous times.</strong></p>
-
-<h3 id="what-is-the-remedy">What Is the Remedy?</h3>
+<h3 id="what-is-the-remedy">
+  
+  
+    What Is the Remedy? <a href="#what-is-the-remedy" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>How do you deal with those issues as a C# developer? The <code class="language-plaintext highlighter-rouge">TimeZoneInfo</code> class has got you covered. It not only represents a time zone but it also provides methods to check for a datetime validity:</p>
 
@@ -238,8 +281,14 @@
 <p>Let’s talk about invalid times first. Your options: move forward or backward. It’s somewhat of an arbitrary decision, so which one should you pick? For instance, the Google Calendar app on Android chooses the former. And it makes sense when you think about it. That’s exactly what your clocks already did due to DST. Why shouldn’t you do the same?</p>
 
 <p>And what about ambiguous times? You also have two options: choose between the first and second occurrences. Then again, it’s somewhat arbitrary, but my advice is to pick the first one. Since you have to choose one, why not make things simpler?</p>
-
-<h2 id="4-mistaking-an-offset-for-a-time-zone">4. Mistaking an Offset for a Time Zone</h2>
+<h2 id="4-mistaking-an-offset-for-a-time-zone">
+  
+  
+    4. Mistaking an Offset for a Time Zone <a href="#4-mistaking-an-offset-for-a-time-zone" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>Consider the following timestamp: 1995-07-14T13:05:00.0000000-03:00. When asked what the -03:00 at the end is called, many developers answer, “a time zone.”</p>
 
@@ -255,8 +304,14 @@
 </ul>
 
 <p>In short: don’t try to guess a time zone by the offset. You’ll be wrong most of the time.</p>
-
-<h2 id="its-about-timeyou-learn-about-time">It’s About Time…You Learn About Time!</h2>
+<h2 id="its-about-timeyou-learn-about-time">
+  
+  
+    It’s About Time…You Learn About Time! <a href="#its-about-timeyou-learn-about-time" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>This list is by no means exhaustive. I only wanted to give you a quick start in the fascinating and somewhat bizarre world of datetime issues. There are plenty of valuable resources out there for you to learn from, such as the <a href="https://stackoverflow.com/tags/timezone/info">time zone tag on Stack Overflow</a> or blogs such as <a href="https://codeblog.jonskeet.uk/">Jon Skeet’s</a> and <a href="https://codeofmatt.com/">Matt Johnson’s,</a> who are authors of the popular NodaTime library.</p>
 
@@ -631,6 +686,9 @@
 
     <script src="/js/dark-mode.js"></script>
     <script src="/js/copy-code.js"></script>
+    
+    <script src="/js/post-enhancements.js"></script>
+    
   </body>
 
 </html>

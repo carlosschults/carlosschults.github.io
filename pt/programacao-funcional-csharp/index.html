@@ -124,6 +124,7 @@
   </header>
 
   <div class="post-content" itemprop="articleBody">
+    
     <p><img src="https://res.cloudinary.com/dz5ppacuo/image/upload/v1548200356/Untitled_xfahmy.jpg" alt="" /></p>
 
 <p><em>NOTA: Este post foi originalmente publicado no blog da SubMain. Você pode <a href="https://blog.submain.com/csharp-functional-programming/">ler o original aqui, em inglês</a>. Aproveite para conferir o CodeIt.Right, um produto que pode ajudar a melhorar seu código.</em></p>
@@ -131,22 +132,40 @@
 <p>Você provavelmente pensa no C# como uma linguagem orientada a objeto. Mas é possível que você, ao programar em C#, tenha usado conceitos de programação funcional sem sequer ter notado.</p>
 
 <p>O post de hoje trata desse tema. Vou começar abordando as vantagens da programação funcional, mostrando a justificativa se aplicá-la mesmo usando uma assim chamada linguagem orientada a objetos. Depois vou explicar como você já está usando um pouco do estilo funcional em seu código C#, mesmo sem estar ciente disso. Finalmente, vou demonstrar como aplicar um pouco de pensamento funcional ao seu código pode torná-lo mais limpo, seguro e mais expressivo.</p>
-
-<h2 id="programação-funcional-em-c-por-quê">Programação Funcional em C#: Por quê?</h2>
+<h2 id="programação-funcional-em-c-por-quê">
+  
+  
+    Programação Funcional em C#: Por quê? <a href="#programação-funcional-em-c-por-quê" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>Nós sabemos que o .NET framework oferece algumas capacidades funcionais na forma dos métodos de extensão do LINQ, mas qual seria a vantagem de usá-las?</p>
 
 <p>Para responder bem essa pergunta, precisamos voltar um passo e entender os atrativos da programação funcional em si. Na minha opinião, para começar a entender os benefícios da programação funcional você precisa primeiro entender dois tópicos: <strong>funções puras</strong> e <strong>imutabilidade</strong>.</p>
 
 <p><strong>Funções puras</strong> são funções que apenas podem acessar os valores que receberam por argumentos e, como consequência, não podem ter nenhum efeito colateral. <strong>Imutabilidade</strong> se refere a objetos ou estruturas de dados que, uma vez inicializados, não podem sofrer nenhuma mudança em seus valores. Isso os torna mais fáceis de entender e seguros para serem usados em código com múltiplas threads.</p>
-
-<h2 id="operações-fundamentais-da-programação-funcional-e-como-executá-las-usando-c">Operações Fundamentais da Programação Funcional e Como Executá-las Usando C#</h2>
+<h2 id="operações-fundamentais-da-programação-funcional-e-como-executá-las-usando-c">
+  
+  
+    Operações Fundamentais da Programação Funcional e Como Executá-las Usando C# <a href="#operações-fundamentais-da-programação-funcional-e-como-executá-las-usando-c" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>Como já cobrimos o <em>o quê</em> e o <em>porquê</em> da programação funcional, está na hora de vermos o <em>como</em>.</p>
 
 <p>Eu vou abordar três operações: <strong>map</strong>, <strong>filter</strong> e <strong>reduce</strong>. Vou começar mostrando alguns problemas, usando uma abordagem procedural tradicional para resolvê-los. Em seguida, vou apresentar a alternativa usando o estilo funcional.</p>
-
-<h2 id="map">Map</h2>
+<h2 id="map">
+  
+  
+    Map <a href="#map" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>Em termos simples, a operação “map” recebe uma sequência de valores, aplica alguma transformação em cada um dos itens, e retorna uma nova sequência contendo os valores resultantes. Vamos ver alguns exemplos:</p>
 
@@ -173,8 +192,14 @@
 	<span class="p">}</span></code></pre></figure>
 
 <p>Então aparece um novo pedido. Agora você tem que escrever uma função para multiplicar cada elemento do array especificado por três. Não vou me dar ao trabalho de adicionar o código de exemplo, porque seria bem trivial. A esse ponto, você já sabe o suficiente para evitar fixar o número no código, então você provavelmente vai pular direto para uma versão generalizada. Mesmo assim, alguma duplicação ainda vai permanecer: o laço de repetição em si. E se você pudesse manter o loop e parametrizar a ação a ser aplicada nos itens?</p>
-
-<h3 id="a-maneira-funcional">A Maneira Funcional</h3>
+<h3 id="a-maneira-funcional">
+  
+  
+    A Maneira Funcional <a href="#a-maneira-funcional" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>Leve em consideração o que você acabou de ler sobre funções puras—e também seu conhecimento prévio de <a href="https://blog.submain.com/coding-best-practices-short-time/">boas práticas de programação</a> em geral—e pense em maneiras nas quais o código do exemplo poderia ser melhorado.</p>
 
@@ -190,8 +215,14 @@
 <figure class="highlight"><pre><code class="language-c#" data-lang="c#">	<span class="k">let</span> <span class="n">result</span> <span class="p">=</span> <span class="n">Seq</span><span class="p">.</span><span class="nf">map</span> <span class="p">(</span><span class="n">fun</span> <span class="n">x</span> <span class="p">-&gt;</span> <span class="n">x</span> <span class="p">+</span> <span class="m">3</span><span class="p">)</span> <span class="n">numbers</span></code></pre></figure>
 
 <p>Aqui, “numbers” represente uma sequência de números que eu consegui de alguma forma. Então eu uso a função <strong>map</strong> que pertence ao módulo <strong>Seq</strong>, passando a sequência como um dos parâmetros, junto com uma função que recebe um número inteiro e adiciona três a ele.</p>
-
-<h3 id="o-jeito-funcional-sabor-c">O Jeito Funcional, sabor C#</h3>
+<h3 id="o-jeito-funcional-sabor-c">
+  
+  
+    O Jeito Funcional, sabor C# <a href="#o-jeito-funcional-sabor-c" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>O .NET implementa a operação map na forma do método de extensão do LINQ chamado “Select.” Então, para converter o código em F# acima para C#, você faria assim:</p>
 
@@ -201,14 +232,26 @@
 
 <figure class="highlight"><pre><code class="language-c#" data-lang="c#">	<span class="n">List</span><span class="p">&lt;</span><span class="n">Employee</span><span class="p">&gt;</span> <span class="n">employees</span> <span class="p">=</span> <span class="n">EmployeeRepository</span><span class="p">.</span><span class="nf">All</span><span class="p">();</span>
 	<span class="n">IEnumerable</span><span class="p">&lt;</span><span class="kt">int</span><span class="p">&gt;</span> <span class="n">ids</span> <span class="p">=</span> <span class="n">employees</span><span class="p">.</span><span class="nf">Select</span><span class="p">(</span><span class="n">x</span> <span class="p">=&gt;</span> <span class="n">x</span><span class="p">.</span><span class="n">Id</span><span class="p">);</span></code></pre></figure>
-
-<h2 id="filter">Filter</h2>
+<h2 id="filter">
+  
+  
+    Filter <a href="#filter" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>A operação filter é, sem dúvida, a mais fácil das três. Ela tem um nome bastante intuitivo, e a necessidade de se filtrar coisas é algo tão comum na programação que eu tenho certeza de que você adivinhou o que ela faz só pelo nome (caso já não soubesse antes).</p>
 
 <p>Mesmo assim, vamos defini-la. A operação filter filtra uma sequência, retornando uma nova sequência contendo apenas os itens aprovados por um ou mais critérios especificados.</p>
-
-<h3 id="o-jeito-imperativo">O Jeito Imperativo</h3>
+<h3 id="o-jeito-imperativo">
+  
+  
+    O Jeito Imperativo <a href="#o-jeito-imperativo" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>Já que nós usamos o exemplo de “employees” na seção anterior, vamos continuar dentro do mesmo tema. Digamos que você precise recuperar uma lista com os funcionários que tenham tirado pelo menos três dias de atestado médico.</p>
 
@@ -232,8 +275,14 @@
 <p>Eu não acho que o código acima esteja errado. O nome do método é um pouco longo, porém bastante descritivo. O código faz o que promete. E a legibilidade está boa.</p>
 
 <p>Mas da mesma forma que no exemplo anterior, nós poderíamos fazer o argumento de que o código está poluído demais Podemos dizer quem, na prática, a única linha que faz algo relacionado à lógica do problema é o teste do if. Todas as outras linhas são código boilerplate. Será que a abordagem funcional consegue melhorar a situação?</p>
-
-<h3 id="a-maneira-funcional-1">A Maneira Funcional</h3>
+<h3 id="a-maneira-funcional-1">
+  
+  
+    A Maneira Funcional <a href="#a-maneira-funcional-1" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>Vamos reescrever o código acima usando LINQ:</p>
 
@@ -245,16 +294,28 @@
 <p>Here we use the “Where” extension method, passing the filtering criterium as a delegate. To be honest, the outer method became not very useful since it just delegates the work. In real life, I’d get rid of it.</p>
 
 <p>Aqui nós usamos o método “Here”, passando o critério de filtragem como parâmetro. Para ser honesto, o método de fora não é tão útil, já que ele só delega o trabalho para o método do LINQ. Na vida real, em código de produção, eu jogaria ele fora.</p>
-
-<h2 id="reduce">Reduce</h2>
+<h2 id="reduce">
+  
+  
+    Reduce <a href="#reduce" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>Geralmente, a operação reduce é a que algumas pessoas costumam ter dificuldade entendendo. Mas não tem nada de difícil. Pense dessa forma: você tem uma sequência de alguma coisa, e também tem uma função que recebe duas dessas coisas e retorna uma.</p>
 
 <p>Então você começa a aplicar a função. Você a aplica nos dois primeiros elementos na sequência e guarda o resultado. Então aplica de novo, com o resultado e o terceiro elemento. Depois faz a mesma coisa, aplicando a função ao resultado da última etapa e o quarto elemento, e assim sucessivamente.</p>
 
 <p>O exemplo clássico do reduce é a soma de uma lista de números, então é exatamente isso que vamos fazer.</p>
-
-<h3 id="o-modo-imperativo">O Modo Imperativo</h3>
+<h3 id="o-modo-imperativo">
+  
+  
+    O Modo Imperativo <a href="#o-modo-imperativo" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>Suponha que temos que somar um punhado de números inteiros. Poderíamos fazer assim:</p>
 
@@ -270,8 +331,14 @@
 	<span class="p">}</span></code></pre></figure>
 
 <p>A essa altura do campeonato você já pode até prever o que eu tenho a dizer a respeito desse código: não está necessariamente errado, mas é pouco flexível e cheio de ruído. Mas a programação funcional pode nos salvar.</p>
-
-<h3 id="o-modo-funcional">O Modo Funcional</h3>
+<h3 id="o-modo-funcional">
+  
+  
+    O Modo Funcional <a href="#o-modo-funcional" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>No .NET framework, a operação “reduce” toma a forma do método de extensão “Aggregate”. Dessa vez, vou me livrar do método externo e escrever a solução usando LINQ de uma vez:</p>
 
@@ -287,8 +354,14 @@ Sendo esse um caso de uso tão comum, o framework disponibiliza um método dedic
 <figure class="highlight"><pre><code class="language-c#" data-lang="c#">	<span class="kt">var</span> <span class="n">sum</span> <span class="p">=</span> <span class="n">numbers</span><span class="p">.</span><span class="nf">Sum</span><span class="p">();</span></code></pre></figure>
 
 <p>Para que serve o “Aggregate”, então? Adicionar uma lista de números é apenas uma das muitas aplicações do reduce, mas você pode usá-lo com qualquer operação binária, como concatenação de strings ou a soma de tipos customizados.</p>
-
-<h2 id="o-veredito-a-abordagem-funcional-é-melhor">O Veredito: A Abordagem Funcional é Melhor?</h2>
+<h2 id="o-veredito-a-abordagem-funcional-é-melhor">
+  
+  
+    O Veredito: A Abordagem Funcional é Melhor? <a href="#o-veredito-a-abordagem-funcional-é-melhor" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>Após esses exemplos, você talvez esteja em dúvida se o jeito funcional de fazer as coisas é realmente melhor. Seria extremamente difícil definir o que “melhor” significa, então nem vou tentar. Vamos considerar outro critério: legibilidade.</p>
 
@@ -303,8 +376,14 @@ Sendo esse um caso de uso tão comum, o framework disponibiliza um método dedic
 <p>It almost reads like natural language: “The list of employees where their time in the company is greater than five years, select their salary and sum them”.</p>
 
 <p>Para quem entende inglês, quase parece linguagem natural: “Da lista de todos os funcionários, onde o tempo de empresa é mais de cinco anos, selecione o salário e some.”</p>
-
-<h2 id="uso-um-pouco-de-tempero-funcional-e-deixe-seu-código-mais-saboroso">Uso Um Pouco de Tempero Funcional e Deixe Seu Código Mais Saboroso</h2>
+<h2 id="uso-um-pouco-de-tempero-funcional-e-deixe-seu-código-mais-saboroso">
+  
+  
+    Uso Um Pouco de Tempero Funcional e Deixe Seu Código Mais Saboroso <a href="#uso-um-pouco-de-tempero-funcional-e-deixe-seu-código-mais-saboroso" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>Muitas pessoas usam LINQ por anos sem nem perceber que estão usando conceitos de programação funcional. Eu enxergo isso como prova de que a programação funcional não está além das capacidades do típico desenvolvedor enterprise que não tem uma sólida formação matemática.</p>
 
@@ -732,6 +811,9 @@ Sendo esse um caso de uso tão comum, o framework disponibiliza um método dedic
 
     <script src="/js/dark-mode.js"></script>
     <script src="/js/copy-code.js"></script>
+    
+    <script src="/js/post-enhancements.js"></script>
+    
   </body>
 
 </html>

@@ -121,7 +121,7 @@
 
   <div class="post-content" itemprop="articleBody">
     
-<div class="callout callout-info">
+    <div class="callout callout-info">
   <div class="callout-title">
     <span class="callout-icon">ℹ️</span>
     Info
@@ -154,12 +154,24 @@
   <li>conseguir se conectar a essa instância através de um cliente</li>
   <li>ter ao menos um pouco de experiência com o banco de dados PostgreSQL e com a linguagem SQL</li>
 </ul>
-
-<p><strong>LIKE do PostgreSQL: Fundamentos</strong></p>
+<h2 id="like-do-postgresql-fundamentos">
+  
+  
+    LIKE do PostgreSQL: Fundamentos <a href="#like-do-postgresql-fundamentos" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>Com os pré-requisitos resolvidos, vamos começar cobrindo alguns fundamentos sobre o assunto de hoje.</p>
-
-<p><strong>O Que É o <code class="language-plaintext highlighter-rouge">LIKE</code> do PostgreSQL?</strong></p>
+<h3 id="o-que-é-o-like-do-postgresql">
+  
+  
+    O Que É o <code class="language-plaintext highlighter-rouge">LIKE</code> do PostgreSQL? <a href="#o-que-é-o-like-do-postgresql" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>O <code class="language-plaintext highlighter-rouge">LIKE</code> do PostgreSQL é a implementação, feita pelo PostgreSQL, do operador <code class="language-plaintext highlighter-rouge">LIKE</code> da linguagem SQL. Você usa o LIKE quando quer encontrar linhas nas quais uma ou mais colunas textuais correspondem a um determinado padrão. Na introdução, dei um exemplo: achar alunos cujo sobrenome comece com uma determinada letra. Então, vamos ver uma query real que faz exatamente isso usando o <code class="language-plaintext highlighter-rouge">LIKE</code> do PostgreSQL:</p>
 
@@ -185,18 +197,36 @@
 </code></pre></div></div>
 
 <p>Isso mesmo: se você quer buscar valores que contenham uma string, basta envolver a string com sinais de porcentagem (<code class="language-plaintext highlighter-rouge">%</code>).</p>
-
-<p><strong>Qual a Diferença Entre LIKE e ILIKE no PostgreSQL?</strong></p>
+<h3 id="qual-a-diferença-entre-like-e-ilike-no-postgresql">
+  
+  
+    Qual a Diferença Entre LIKE e ILIKE no PostgreSQL? <a href="#qual-a-diferença-entre-like-e-ilike-no-postgresql" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>Ao ler código PostgreSQL por aí, você pode encontrar queries que usam o operador <code class="language-plaintext highlighter-rouge">ILIKE</code> em vez do <code class="language-plaintext highlighter-rouge">LIKE</code> e ficar confuso. A diferença é que o operador <code class="language-plaintext highlighter-rouge">LIKE</code> diferencia maiúsculas de minúsculas (é <em>case sensitive</em>). Já o operador <code class="language-plaintext highlighter-rouge">ILIKE</code> não diferencia (é <em>case insensitive</em>) — daí o “i” no nome. Ele não distingue letras maiúsculas de minúsculas, e por isso você deveria usá-lo quando não se importa com a caixa das letras.</p>
 
 <p>Um detalhe importante a se ter em mente: o operador <code class="language-plaintext highlighter-rouge">ILIKE</code> não existe no SQL ANSI; na verdade, é uma extensão específica do PostgreSQL. Isso significa que usar o ILIKE torna seu código SQL menos portável, caso você precise trocar de banco de dados no futuro.</p>
-
-<p><strong>LIKE do PostgreSQL: Casos de Uso Práticos</strong></p>
+<h2 id="like-do-postgresql-casos-de-uso-práticos">
+  
+  
+    LIKE do PostgreSQL: Casos de Uso Práticos <a href="#like-do-postgresql-casos-de-uso-práticos" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>Tendo coberto o básico sobre o <code class="language-plaintext highlighter-rouge">LIKE</code> do PostgreSQL, vamos agora ver vários exemplos de uso. Vamos começar preparando o banco de dados para os testes.</p>
-
-<p><strong>Preparando o Banco de Dados</strong></p>
+<h3 id="preparando-o-banco-de-dados">
+  
+  
+    Preparando o Banco de Dados <a href="#preparando-o-banco-de-dados" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>Usando seu cliente preferido, conecte-se à sua instância do PostgreSQL, garantindo que existe um banco de dados ao qual você pode se conectar para os testes.</p>
 
@@ -214,8 +244,14 @@
 <span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">albums</span>  <span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="n">artist</span><span class="p">,</span> <span class="n">release_year</span><span class="p">)</span> <span class="k">VALUES</span><span class="p">(</span><span class="s1">'Reckless'</span><span class="p">,</span> <span class="s1">'Bryan Adams'</span><span class="p">,</span> <span class="mi">1984</span><span class="p">);</span>
 <span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">albums</span>  <span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="n">artist</span><span class="p">,</span> <span class="n">release_year</span><span class="p">)</span> <span class="k">VALUES</span><span class="p">(</span><span class="s1">'Ryan Adams'</span><span class="p">,</span> <span class="s1">'Ryan Adams'</span><span class="p">,</span> <span class="mi">2014</span><span class="p">);</span>
 </code></pre></div></div>
-
-<p><strong>Correspondendo a um Único Caractere</strong></p>
+<h3 id="correspondendo-a-um-único-caractere">
+  
+  
+    Correspondendo a um Único Caractere <a href="#correspondendo-a-um-único-caractere" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>Como você viu, a tabela agora contém álbuns tanto do Bryan quanto do Ryan Adams. Isso não é coincidência. Primeiro, use a seguinte query para recuperar álbuns dos dois cantores:</p>
 
@@ -243,8 +279,14 @@
   5 | Ryan Adams | Ryan Adams |         2014
 (1 row)
 </code></pre></div></div>
-
-<p><strong>Correspondências Negativas</strong></p>
+<h3 id="correspondências-negativas">
+  
+  
+    Correspondências Negativas <a href="#correspondências-negativas" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>Ao trabalhar com tabelas de banco de dados, muitas vezes você precisa recuperar dados que <em>não</em> correspondam a um certo padrão. Para isso, você pode usar o operador <code class="language-plaintext highlighter-rouge">NOT LIKE</code>. Por exemplo, vamos buscar apenas artistas cujo nome não comece com “The”:</p>
 
@@ -252,8 +294,14 @@
 </code></pre></div></div>
 
 <p>Já que o único artista que começa com “The” é The Beatles, ele não será retornado pela query acima.</p>
-
-<p><strong>Correspondência Sem Diferenciar Maiúsculas de Minúsculas</strong></p>
+<h3 id="correspondência-sem-diferenciar-maiúsculas-de-minúsculas">
+  
+  
+    Correspondência Sem Diferenciar Maiúsculas de Minúsculas <a href="#correspondência-sem-diferenciar-maiúsculas-de-minúsculas" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>Como falei antes, o operador <code class="language-plaintext highlighter-rouge">ILIKE</code> é uma extensão especial do PostgreSQL para o <code class="language-plaintext highlighter-rouge">LIKE</code> que faz correspondências sem diferenciar maiúsculas de minúsculas. Vamos ver isso na prática. Primeiro, vamos usar o operador <code class="language-plaintext highlighter-rouge">LIKE</code> para obter todos os artistas que contenham um “A” maiúsculo:</p>
 
@@ -284,8 +332,14 @@
 </code></pre></div></div>
 
 <p>Agora, todos os artistas são retornados, exceto Pink Floyd.</p>
-
-<p><strong>Escapando os Wildcards</strong></p>
+<h3 id="escapando-os-wildcards">
+  
+  
+    Escapando os Wildcards <a href="#escapando-os-wildcards" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>Para este exemplo, vamos atualizar duas linhas:</p>
 
@@ -330,8 +384,14 @@
 </code></pre></div></div>
 
 <p>Com a cláusula <code class="language-plaintext highlighter-rouge">ESCAPE</code>, você pode escolher um caractere diferente para servir de escape. Dessa forma — pelo menos na minha opinião — a query resultante fica mais explícita quanto à forma como escapa o wildcard.</p>
-
-<p><strong>Conclusão: LIKE do PostgreSQL: Aprenda e Aproveite</strong></p>
+<h2 id="conclusão-like-do-postgresql--aprenda-e-aproveite">
+  
+  
+    Conclusão: LIKE do PostgreSQL — Aprenda e Aproveite <a href="#conclusão-like-do-postgresql--aprenda-e-aproveite" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>Neste post, você aprendeu sobre o operador LIKE no PostgreSQL: o que é, para que serve, e como funciona, através de vários exemplos. Como você viu, o funcionamento do operador é bem simples assim que você entende como os wildcards funcionam. Também percorremos alguns exemplos de uso, como correspondência a um único caractere e a realização de correspondências negativas.</p>
 
@@ -745,6 +805,9 @@
 
     <script src="/js/dark-mode.js"></script>
     <script src="/js/copy-code.js"></script>
+    
+    <script src="/js/post-enhancements.js"></script>
+    
   </body>
 
 </html>

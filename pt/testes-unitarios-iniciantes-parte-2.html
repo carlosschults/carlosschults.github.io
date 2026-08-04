@@ -128,20 +128,33 @@
   </header>
 
   <div class="post-content" itemprop="articleBody">
+    
     <p><img src="https://res.cloudinary.com/dz5ppacuo/image/upload/v1459979937/testes-unitarios-iniciantes-min_povcse.png" alt="" /></p>
 
 <p>Antes tarde do que mais tarde! Hora de continuar nossa série sobre testes unitários para iniciantes. Hoje você vai escrever seu primeiro teste unitário.
 <!--more--></p>
-
-<h2 id="introdução">Introdução</h2>
+<h2 id="introdução">
+  
+  
+    Introdução <a href="#introdução" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p><em>Este post faz parte de uma série. <a href="http://carlosschults.net/tag_ptbr/serie-testes-unitarios/">Veja os outros artigos.</a></em></p>
 
 <p>No <a href="https://carlosschults.net/pt/testes-unitarios-iniciantes-parte1">primeiro artigo nesta série</a> eu defini o que são testes unitários, e também falei dos benefícios de sua utilização.</p>
 
 <p>Hoje você vai aprender, na prática, como criar testes unitários. Vou mostrar como instalar e utilizar o framework de testes <strong>NUnit</strong>. E depois vamos criar alguns testes para você conhecer algumas das features deste framework.</p>
-
-<h2 id="instalando-o-nunit">Instalando o NUnit</h2>
+<h2 id="instalando-o-nunit">
+  
+  
+    Instalando o NUnit <a href="#instalando-o-nunit" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>Como eu expliquei no <a href="https://carlosschults.net/pt/testes-unitarios-iniciantes-parte1">primeiro post da série</a>, para utilizar testes unitários na sua aplicação você necessita de um <strong>Framework de Testes</strong>.</p>
 
@@ -194,8 +207,14 @@ Após a criação do projeto, vou remover a classe adicionada por padrão, assim
 <p>Assim como no passo anterior, verifique que o projeto correto está selecionado antes de confirmar. A instalação deve terminar em poucos segundos.</p>
 
 <p>É isto.</p>
-
-<h2 id="criando-e-executando-o-primeiro-teste">Criando e executando o primeiro teste</h2>
+<h2 id="criando-e-executando-o-primeiro-teste">
+  
+  
+    Criando e executando o primeiro teste <a href="#criando-e-executando-o-primeiro-teste" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>Vamos começar a criar alguns testes. Primeiro, vamos adicionar uma nova classe ao nosso projeto de Produção. A classe se chamará <code class="language-plaintext highlighter-rouge">Employee</code> e terá o seguinte código:</p>
 
@@ -323,8 +342,14 @@ Mas foi: “Hi! My name is Alice and I work as a JobTitle.”</p>
 <script src="https://gist.github.com/carlosschults/a91d41ff7ac732fc9c57e63c03a6be07.js"></script>
 
 <p>Embora não seja realmente necessário, eu sugiro que você use comentários para demarcar as fases do teste como no exemplo acima, ao menos no início de seu aprendizado.</p>
-
-<h2 id="mais-um-teste-método-giveraise">Mais um teste: método <code class="language-plaintext highlighter-rouge">GiveRaise</code></h2>
+<h2 id="mais-um-teste-método-giveraise">
+  
+  
+    Mais um teste: método <code class="language-plaintext highlighter-rouge">GiveRaise</code> <a href="#mais-um-teste-método-giveraise" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>Um aumento no salário é sempre bem-vindo, concordam? Vamos testar que o método <code class="language-plaintext highlighter-rouge">GiveRaise</code> funciona como deveria. Na sua classe de teste, adicione o método a seguir:</p>
 
@@ -344,8 +369,14 @@ Mas foi: “Hi! My name is Alice and I work as a JobTitle.”</p>
 </blockquote>
 
 <p>Ok, podemos ver que o teste realmente falhou. Podemos voltar o método ao normal e ver que agora tudo passa como deveria.</p>
-
-<h2 id="um-último-teste">Um último teste</h2>
+<h2 id="um-último-teste">
+  
+  
+    Um último teste <a href="#um-último-teste" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>Digamos que surgiu um novo requisito: se a porcentagem de aumento passada for negativa, o salário deve permanecer o mesmo. Vamos então alterar o método <code class="language-plaintext highlighter-rouge">GiveRaise</code> para tratar este caso:</p>
 
@@ -364,8 +395,14 @@ Mas foi: “Hi! My name is Alice and I work as a JobTitle.”</p>
 <script src="https://gist.github.com/carlosschults/a474698655450da6547dbfa6b9dbcb8c.js"></script>
 
 <p>Nada de surpreendente aqui, certo? À esta altura, você já deve ter pegado o jeito da coisa. Assim, vou deixar por sua conta o <strong>teste do teste:</strong> sabote o método de uma ou mais maneiras e confira que o teste falhou conforme deveria.</p>
-
-<h2 id="recapitulando">Recapitulando</h2>
+<h2 id="recapitulando">
+  
+  
+    Recapitulando <a href="#recapitulando" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>O artigo de hoje foi bem mais prático que o anterior. Conseguimos abordar diversos tópicos:</p>
 
@@ -383,15 +420,27 @@ Mas foi: “Hi! My name is Alice and I work as a JobTitle.”</p>
 <p>Também foram abordados alguns padrões de nomenclatura, tanto para classes quanto para métodos de teste.</p>
 
 <p>Finalmente, você aprendeu sobre a importância de ver o teste falhar, e como podemos “testar o teste” através de uma sabotagem deliberada do código de produção.</p>
-
-<h2 id="notas">Notas</h2>
+<h2 id="notas">
+  
+  
+    Notas <a href="#notas" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <ul>
   <li>O código do post de hoje <a href="https://github.com/carlosschults/learning-unit-testing/">está no Github</a>.</li>
   <li>Agradeço novamente ao amigo Gunter Italiano Ribeiro por revisar este artigo.</li>
 </ul>
-
-<h2 id="conclusão">Conclusão</h2>
+<h2 id="conclusão">
+  
+  
+    Conclusão <a href="#conclusão" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>Este foi o segundo artigo da minha série sobre testes unitários. Como já mencionei, ele é propositalmente maior e mais prático que o artigo inicial da série. Ainda assim, tudo o que foi abordado é apenas a ponta do iceberg do que existe a respeito de testes de unidade. Livros inteiros poderiam foram escritos sobre este assunto. Nos artigos futuros indicarei alguns, além de outros materiais para estudo.</p>
 
@@ -819,6 +868,9 @@ Mas foi: “Hi! My name is Alice and I work as a JobTitle.”</p>
 
     <script src="/js/dark-mode.js"></script>
     <script src="/js/copy-code.js"></script>
+    
+    <script src="/js/post-enhancements.js"></script>
+    
   </body>
 
 </html>

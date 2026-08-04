@@ -127,6 +127,7 @@
   </header>
 
   <div class="post-content" itemprop="articleBody">
+    
     <p><img src="https://res.cloudinary.com/dz5ppacuo/image/upload/v1466341001/csharp-min_buiizq.png" alt="" /></p>
 
 <p>It’s weird how our memory works, right? I can’t quite remember what I had for dinner two nights ago, or the reason why I failed to attend the gym some days last week.
@@ -142,8 +143,14 @@ But I do remember vividly a specific bug that I fixed in my first programming jo
 <p>Mistakes like this are easy to make and hard to spot even in code review. Even testing might let it slip, since you might have the misfortune of supplying values that accidentally make the code work without blowing everything up.</p>
 
 <p>As it turns out, there’s a great way to prevent issues like the one I’ve just described. The problem? Most developers would think it’s too much work to bother.</p>
-
-<h2 id="tiny-types-the-greatest-software-design-technique-that-nobody-uses">Tiny Types: The Greatest Software Design Technique That Nobody Uses</h2>
+<h2 id="tiny-types-the-greatest-software-design-technique-that-nobody-uses">
+  
+  
+    Tiny Types: The Greatest Software Design Technique That Nobody Uses <a href="#tiny-types-the-greatest-software-design-technique-that-nobody-uses" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>I know, I know. I’ll be the first one to admit this title is overblown. “An Interesting Software Design Technique That Many People Don’t Use” just doesn’t pack the same punch, I’m sorry.</p>
 
@@ -153,8 +160,14 @@ But I do remember vividly a specific bug that I fixed in my first programming jo
 
 <div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">void</span> <span class="nf">ProcessOrder</span><span class="p">(</span><span class="n">OrderId</span> <span class="n">orderId</span><span class="p">,</span> <span class="n">CustomerId</span> <span class="n">customerId</span><span class="p">)</span>
 </code></pre></div></div>
-
-<h3 id="implementing-a-tiny-type">Implementing a Tiny Type</h3>
+<h3 id="implementing-a-tiny-type">
+  
+  
+    Implementing a Tiny Type <a href="#implementing-a-tiny-type" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 <p>What would the <code class="language-plaintext highlighter-rouge">OrderId</code> type look like?</p>
 
 <p>For starters, since <code class="language-plaintext highlighter-rouge">OrderId</code> is supposed to wrap an int, it should get an int as parameter and store it somewhere. Let’s see:</p>
@@ -279,8 +292,14 @@ But I do remember vividly a specific bug that I fixed in my first programming jo
     <span class="k">public</span> <span class="k">override</span> <span class="kt">string</span> <span class="nf">ToString</span><span class="p">()</span> <span class="p">=&gt;</span> <span class="n">_value</span><span class="p">.</span><span class="nf">ToString</span><span class="p">();</span>
 <span class="p">}</span>
 </code></pre></div></div>
-
-<h3 id="tiny-types-are-too-expensive">Tiny Types Are Too Expensive</h3>
+<h3 id="tiny-types-are-too-expensive">
+  
+  
+    Tiny Types Are Too Expensive <a href="#tiny-types-are-too-expensive" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 <p>My tiny <code class="language-plaintext highlighter-rouge">OrderId</code> type there takes 42 lines on my Visual Studio. Yes, there’s some stylistic choices involved—for one, I do not like when lines are over 80 characters of length—but even so, it’s quite some work.</p>
 
 <p>The more concise version, which leverages the record feature of modern C#, is shorter, but still requires a reasonable amount of code.</p>
@@ -295,8 +314,14 @@ But I do remember vividly a specific bug that I fixed in my first programming jo
 <p>And so on.</p>
 
 <p>That’s the main reason why developers who know this technique don’t use it. Even when they like the idea and understand how it could be beneficial, they think doing all of that isn’t worth the trouble.</p>
-
-<h2 id="llms-to-the-rescue">LLMs To The Rescue</h2>
+<h2 id="llms-to-the-rescue">
+  
+  
+    LLMs To The Rescue <a href="#llms-to-the-rescue" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>It’s been two years since OpenAI <a href="https://openai.com/index/chatgpt/">introduced ChatGPT to the world</a>, and I’ve been experimenting with LLMs since then. My current take on them is that their value proposition for 
 experienced devs is two-fold:</p>
@@ -482,8 +507,14 @@ custom type:</p>
     <span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div></div>
-
-<h2 id="conclusion">Conclusion</h2>
+<h2 id="conclusion">
+  
+  
+    Conclusion <a href="#conclusion" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 <p>This post had two goals. First, to present the concept of tiny types to those of you who had never heard of it. I hope you agree that, despite being a simple idea, the tiny types pattern is something that can help you write code that is more robust.</p>
 
 <p>Second, and more broadly, to demonstrate how LLMs can play an interesting role in fostering better software design. In the past, many software design techniques might have been dismissed as too much work to be worth it. Now, with the help of Claude, ChatGPT, or coding assistants like Copilot, we can streamline the writing of “boring” code, which makes the economics of design techniques such as the one I’ve presented in this post make more sense.</p>
@@ -857,6 +888,9 @@ custom type:</p>
 
     <script src="/js/dark-mode.js"></script>
     <script src="/js/copy-code.js"></script>
+    
+    <script src="/js/post-enhancements.js"></script>
+    
   </body>
 
 </html>

@@ -124,6 +124,7 @@
   </header>
 
   <div class="post-content" itemprop="articleBody">
+    
     <p><img src="https://res.cloudinary.com/dz5ppacuo/image/upload/v1513817072/csharp8-1037x438_skogpz.jpg" alt="" />
 <em>NOTA: Eu originalmente escrevi esse post para o blog da empresa Stackify.  Você pode <a href="https://stackify.com/c-regex-how-regular-expressions-work-in-c-with-examples/">ler o artigo original, em inglês, no site deles</a>.</em></p>
 
@@ -132,8 +133,14 @@
 <p>Você aprenderá o que são expressões regulares, por que você deseja usá-las e como começar de uma maneira abrangente e acessível. Dessa forma, você poderá começar a usar expressões regulares para resolver problemas reais o mais rápido possível.</p>
 
 <p>Prepare-se para sua jornada de aprendizado de regex, que começa agora!</p>
-
-<h2 id="o-que-é-regex">O Que é Regex?</h2>
+<h2 id="o-que-é-regex">
+  
+  
+    O Que é Regex? <a href="#o-que-é-regex" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 <p>Uma expressão regular (também chamadas de regex, abreviação para <em>regular expression</em>) é uma expressão que contém um ou vários caracteres que expressam um determinado padrão no texto. Se isso parecer um pouco vago, um exemplo vai ajudar. Considere uma data no seguinte formato:</p>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>28-JUL-2023
@@ -158,38 +165,80 @@
 30-FEV-1978
 00-AAA-9999
 </code></pre></div></div>
-
-<h2 id="existe-regex-no-c">Existe Regex no C#?</h2>
+<h2 id="existe-regex-no-c">
+  
+  
+    Existe Regex no C#? <a href="#existe-regex-no-c" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>Sim, é claro. Mas isso não vem da própria linguagem. Em vez disso, o suporte a regex vem da <a href="https://learn.microsoft.com/pt-br/dotnet/standard/class-library-overview">.NET’s BCL (Base Class Library),</a> que é essencialmente a biblioteca padrão do C#.</p>
-
-<h2 id="por-que-usar-regex-em-c">Por Que Usar Regex em C#?</h2>
+<h2 id="por-que-usar-regex-em-c">
+  
+  
+    Por Que Usar Regex em C#? <a href="#por-que-usar-regex-em-c" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>Como você viu, regex é algo a ser usado para expressar um padrão que pode corresponder a um determinado texto.</p>
 
 <p>Na prática, todos os usos de regex em C# ou em outras linguagens se resumem a três motivos: validação, manipulação e extração.</p>
-
-<h3 id="validação">Validação</h3>
+<h3 id="validação">
+  
+  
+    Validação <a href="#validação" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>Um caso de uso incrivelmente comum para regex é a validação de dados. Por exemplo, digamos que você tenha um formulário da Web e queira garantir que um determinado campo só aceite entradas em um formato específico. Como resolver isso? O Regex vem em seu socorro.</p>
-
-<h3 id="manipulação">Manipulação</h3>
+<h3 id="manipulação">
+  
+  
+    Manipulação <a href="#manipulação" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>Às vezes, você precisa alterar informações dentro do texto. Vamos voltar ao exemplo anterior. Imagine que, por motivos de compliance, você precise remover todos os números de telefone desse corpo de texto e substituí-los pela palavra “REDACTED”. Novamente, as expressões regulares seriam perfeitas para essa situação.</p>
 
 <p>É interessante notar que as linguagens de programação não são as únicas a usar expressões regulares para resolver problemas. Até mesmo os editores de texto, como o Notepad++, oferecem recursos de localizar e substituir com o auxílio de expressões regulares.</p>
-
-<h2 id="extração">Extração</h2>
+<h2 id="extração">
+  
+  
+    Extração <a href="#extração" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>Digamos que você tenha uma quantidade considerável de texto. Esse texto contém números de telefone que você precisa extrair. Você conhece o formato desses números e o fato de que eles estão dentro do texto, mas esse é o limite do seu conhecimento.</p>
 
 <p>Como você faria para extrair essas informações? Um regex C# bem feito certamente seria útil nessa situação.</p>
-
-<h2 id="como-usar-o-regex-em-c-primeiros-passos-na-prática">Como usar o Regex em C#: Primeiros passos na prática</h2>
+<h2 id="como-usar-o-regex-em-c-primeiros-passos-na-prática">
+  
+  
+    Como usar o Regex em C#: Primeiros passos na prática <a href="#como-usar-o-regex-em-c-primeiros-passos-na-prática" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>O C# é uma <a href="https://stackify.com/oop-concepts-c-sharp/">linguagem orientada a objetos</a>, portanto, não é de surpreender que você use uma classe para trabalhar com regex no C#. Mais especificamente, a classe de que estou falando é apropriadamente chamada de <code class="language-plaintext highlighter-rouge">Regex</code> e reside no namespace <code class="language-plaintext highlighter-rouge">System.Text.RegularExpressions</code>.</p>
-
-<h3 id="c-regex-um-exemplo-de-validação">C# Regex: Um exemplo de validação</h3>
+<h3 id="c-regex-um-exemplo-de-validação">
+  
+  
+    C# Regex: Um exemplo de validação <a href="#c-regex-um-exemplo-de-validação" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>Vamos começar com um exemplo simples de validação sobre como usar regex para validar se várias cadeias de caracteres correspondem a um determinado padrão. A primeira etapa é adicionar a seguinte instrução <strong>using</strong> ao seu código:</p>
 
@@ -255,8 +304,14 @@ A cadeia de caracteres '11-JUN-2022, a date plus other stuff' corresponde ao pad
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>A string '28-JUL-2023' corresponde ao padrão '^[0-9]{2}-[A-Z]{3}-[0-9]{4}
 </code></pre></div></div>
-
-<h3 id="c-regex-um-exemplo-de-manipulação">C# Regex: Um exemplo de manipulação</h3>
+<h3 id="c-regex-um-exemplo-de-manipulação">
+  
+  
+    C# Regex: Um exemplo de manipulação <a href="#c-regex-um-exemplo-de-manipulação" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>Considere que você tem um texto que contém dados sensíveis do usuário. Devido a questões de privacidade/compliance, você deseja excluir esses dados. Felizmente para você, é muito fácil usar uma regex para isso.</p>
 
@@ -315,8 +370,14 @@ James Thompson,(000) 000-0000
 Isabella Wilson,(000) 000-0000
 Michael Taylor,(000) 000-0000
 </code></pre></div></div>
-
-<h3 id="c-regex-um-exemplo-de-extração">C# Regex: Um exemplo de extração</h3>
+<h3 id="c-regex-um-exemplo-de-extração">
+  
+  
+    C# Regex: Um exemplo de extração <a href="#c-regex-um-exemplo-de-extração" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>Para o nosso último exemplo, vamos extrair dados de uma string usando uma expressão regular. Vamos começar convertendo o array do exemplo anterior em uma única string:</p>
 
@@ -358,8 +419,14 @@ Michael Taylor,(000) 000-0000
 <span class="p">(</span><span class="m">555</span><span class="p">)</span> <span class="m">888</span><span class="p">-</span><span class="m">9999</span>
 <span class="p">(</span><span class="m">555</span><span class="p">)</span> <span class="m">333</span><span class="p">-</span><span class="m">4444</span>
 <span class="p">(</span><span class="m">555</span><span class="p">)</span> <span class="m">777</span><span class="p">-</span><span class="m">1111</span></code></pre></figure>
-
-<h2 id="c-regex-uma-ferramenta-indispensável">C# Regex: Uma Ferramenta Indispensável</h2>
+<h2 id="c-regex-uma-ferramenta-indispensável">
+  
+  
+    C# Regex: Uma Ferramenta Indispensável <a href="#c-regex-uma-ferramenta-indispensável" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>Como dissemos na introdução, a manipulação de texto é um elemento básico da programação, e as expressões regulares facilitam essa tarefa. Neste guia de regex em C#, você aprendeu o que são expressões regulares, seus cenários de uso mais comuns e como começar a usar expressões regulares em C#.</p>
 
@@ -790,6 +857,9 @@ Michael Taylor,(000) 000-0000
 
     <script src="/js/dark-mode.js"></script>
     <script src="/js/copy-code.js"></script>
+    
+    <script src="/js/post-enhancements.js"></script>
+    
   </body>
 
 </html>

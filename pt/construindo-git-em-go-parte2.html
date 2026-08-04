@@ -122,17 +122,30 @@
   </header>
 
   <div class="post-content" itemprop="articleBody">
+    
     <p>Bem-vindo de volta à minha jornada de construir o git do zero em Go, com o objetivo de aprender mais sobre os dois. Se você não sabe do que estou falando, leia <a href="/pt/implementando-git-em-go">o primeiro post</a>.</p>
-
-<h2 id="já-faz-um-tempo">Já faz um tempo</h2>
+<h2 id="já-faz-um-tempo">
+  
+  
+    Já faz um tempo <a href="#já-faz-um-tempo" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>Eu postei o primeiro post em 9 de março. O que eu fiquei fazendo, e por que demorei tanto para continuar a série?</p>
 
 <p>A resposta é o que você provavelmente já sabe: eu sou um adulto ocupado e não tenho muito tempo. Além disso, outros projetos pessoais também demandam atenção.</p>
 
 <p>Mas chega de desculpa. Vamos falar sobre o que consegui implementar desde a última atualização.</p>
-
-<h2 id="comandos-plumbing-vs-porcelain">Comandos Plumbing vs Porcelain</h2>
+<h2 id="comandos-plumbing-vs-porcelain">
+  
+  
+    Comandos Plumbing vs Porcelain <a href="#comandos-plumbing-vs-porcelain" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>Antes de entrar em detalhes sobre o que implementei, preciso falar rapidinho sobre uma distinção que existe entre os comandos do git.</p>
 
@@ -143,14 +156,26 @@
 <p>Existe outra camada de comandos, conhecida como comandos “plumbing”. Os comandos plumbing são os de baixo nível, que realizam a manipulação de dados que permite aos comandos de alto nível fazer o seu trabalho.</p>
 
 <p>Recentemente, estive implementando alguns desses comandos plumbing que servem de fundação para grande parte do que o git faz. São eles: <code class="language-plaintext highlighter-rouge">hash-object</code> e <code class="language-plaintext highlighter-rouge">cat-file</code>.</p>
-
-<h2 id="entendendo-o-hash-object-e-o-cat-file">Entendendo o <code class="language-plaintext highlighter-rouge">hash-object</code> e o <code class="language-plaintext highlighter-rouge">cat-file</code></h2>
+<h2 id="entendendo-o-hash-object-e-o-cat-file">
+  
+  
+    Entendendo o <code class="language-plaintext highlighter-rouge">hash-object</code> e o <code class="language-plaintext highlighter-rouge">cat-file</code> <a href="#entendendo-o-hash-object-e-o-cat-file" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>Vou falar rapidamente sobre o que esses comandos fazem antes de contar minha experiência. O <code class="language-plaintext highlighter-rouge">hash-object</code> é o comando usado para salvar dados como um blob (binary large object) dentro de um repositório git. Você passa um texto para o comando, ele salva um objeto com aquela informação e te devolve um hash SHA1.</p>
 
 <p>O <code class="language-plaintext highlighter-rouge">cat-file</code> faz o oposto. Você passa um hash de objeto e ele retorna o conteúdo (ou o tamanho, ou o tipo, dependendo de como você o chama).</p>
-
-<h3 id="calculando-o-hash-do-seu-primeiro-objeto">Calculando o hash do seu primeiro objeto</h3>
+<h3 id="calculando-o-hash-do-seu-primeiro-objeto">
+  
+  
+    Calculando o hash do seu primeiro objeto <a href="#calculando-o-hash-do-seu-primeiro-objeto" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>Quer testar? Execute o seguinte comando:</p>
 
@@ -174,8 +199,14 @@
 <p>O que aconteceu aqui é que o git calculou um hash para a string “hi” e o retornou para você. Usamos a flag <code class="language-plaintext highlighter-rouge">--stdin</code> para poder passar o conteúdo pela entrada padrão.</p>
 
 <p>Porém, nada foi salvo em disco. Para de fato gravar os dados, você precisa usar uma versão diferente do comando, e desta vez dentro de um repositório.</p>
-
-<h3 id="salvando-um-objeto">Salvando um objeto</h3>
+<h3 id="salvando-um-objeto">
+  
+  
+    Salvando um objeto <a href="#salvando-um-objeto" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>Vá para algum lugar, crie uma nova pasta e inicialize um repositório nela:</p>
 
@@ -211,8 +242,14 @@ git init
 <p>Entre nessa pasta. Dentro, você vai encontrar um arquivo cujo nome é formado pelo restante dos caracteres do hash. No meu caso, vejo <code class="language-plaintext highlighter-rouge">b983be36b73c0788dc9cbcb76cbb80fc7bb057</code>.</p>
 
 <p><strong>Esse é o seu blob.</strong> Esse arquivo é o objeto que o git salvou quando você executou o comando <code class="language-plaintext highlighter-rouge">hash-object</code> com a flag <code class="language-plaintext highlighter-rouge">-w</code>.</p>
-
-<h3 id="lendo-objetos-de-volta">Lendo objetos de volta</h3>
+<h3 id="lendo-objetos-de-volta">
+  
+  
+    Lendo objetos de volta <a href="#lendo-objetos-de-volta" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>Tente abrir o arquivo do blob no seu editor de texto favorito. O arquivo abre normalmente, mas o conteúdo é puro lixo que não dá pra ler. Isso porque ele está em formato binário comprimido, não em texto puro.</p>
 
@@ -242,12 +279,24 @@ blob
 git cat-file <span class="nt">-s</span> 45b983be36b73c0788dc9cbcb76cbb80fc7bb057
 3
 </code></pre></div></div>
-
-<h2 id="implementação-no-go-gitter">Implementação no Go-Gitter</h2>
+<h2 id="implementação-no-go-gitter">
+  
+  
+    Implementação no Go-Gitter <a href="#implementação-no-go-gitter" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>Agora que você entende o que esses dois comandos fazem, vamos falar sobre como os implementei no <code class="language-plaintext highlighter-rouge">go-gitter</code>, começando pelo <code class="language-plaintext highlighter-rouge">hash-object</code>.</p>
-
-<h3 id="implementando-o-hash-object">Implementando o <code class="language-plaintext highlighter-rouge">hash-object</code></h3>
+<h3 id="implementando-o-hash-object">
+  
+  
+    Implementando o <code class="language-plaintext highlighter-rouge">hash-object</code> <a href="#implementando-o-hash-object" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>Meu primeiro passo foi implementar a versão mais básica do <code class="language-plaintext highlighter-rouge">hash-object</code>, sem a flag <code class="language-plaintext highlighter-rouge">-w</code>. O comando conseguiria exibir o hash SHA1 de um texto passado como argumento, mas ainda sem salvar nada em disco.</p>
 
@@ -297,8 +346,14 @@ git cat-file <span class="nt">-s</span> 45b983be36b73c0788dc9cbcb76cbb80fc7bb057
 <p>Demorei um pouco para acertar. Em grande parte porque, em determinado momento, eu estava entendendo completamente errado o que o git faz. Achei que deveria comprimir e salvar o <em>hash</em> que calculei. Sim, eu sei, não faz sentido nenhum, mas o que posso dizer?</p>
 
 <p>Depois que entendi o fluxo correto, fazer funcionar foi principalmente uma questão de descobrir como usar a compressão zlib. O Google e a documentação resolveram, como nos bons tempos.</p>
-
-<h3 id="implementando-o-cat-file">Implementando o <code class="language-plaintext highlighter-rouge">cat-file</code></h3>
+<h3 id="implementando-o-cat-file">
+  
+  
+    Implementando o <code class="language-plaintext highlighter-rouge">cat-file</code> <a href="#implementando-o-cat-file" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>O <code class="language-plaintext highlighter-rouge">cat-file</code> foi mais fácil de implementar, porque é essencialmente o caminho inverso. A partir de um hash, localizar o arquivo correspondente, descomprimir o arquivo e ler o conteúdo.</p>
 
@@ -346,8 +401,14 @@ git cat-file <span class="nt">-s</span> 45b983be36b73c0788dc9cbcb76cbb80fc7bb057
 </code></pre></div></div>
 
 <p>Para os programadores Go que estão lendo isso: eu sei que esse código não seja o mais bonito e idiomático que você já viu, e prometo que, conforme for aprendendo mais sobre a linguagem, vou refatorar. A prioridade no momento era fazer funcionar.</p>
-
-<h2 id="o-que-aprendi-até-agora">O que aprendi até agora</h2>
+<h2 id="o-que-aprendi-até-agora">
+  
+  
+    O que aprendi até agora <a href="#o-que-aprendi-até-agora" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>O objetivo deste projeto é aprender a linguagem Go e também mais sobre a implementação do Git. Então, o que aprendi sobre os dois ao completar esses dois comandos?</p>
 
@@ -360,8 +421,14 @@ git cat-file <span class="nt">-s</span> 45b983be36b73c0788dc9cbcb76cbb80fc7bb057
 <p>Um aspecto que não gosto é o tratamento de erros. Ter aqueles <code class="language-plaintext highlighter-rouge">if</code> verificando <code class="language-plaintext highlighter-rouge">err</code> em todo lugar polui o código. Em C#/.NET, quando ocorre um erro que deveria ser absolutamente impossível, eu só deixo a exceção subir até o middleware de tratamento de exceções no nível mais alto, onde ela é logada e o usuário recebe uma mensagem com o nível adequado de detalhes.</p>
 
 <p>Talvez exista alguma forma idiomática de fazer algo assim em Go também, mas por enquanto não conheço. Fora isso, estou gostando muito da linguagem.</p>
-
-<h2 id="o-que-vem-a-seguir">O que vem a seguir?</h2>
+<h2 id="o-que-vem-a-seguir">
+  
+  
+    O que vem a seguir? <a href="#o-que-vem-a-seguir" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>Para o próximo passo vou implementar outro comando plumbing chamado <a href="https://git-scm.com/docs/git-update-index">update-index</a>. Ele é necessário para eu poder stagear mudanças e eventualmente fazer commits.</p>
 
@@ -798,6 +865,9 @@ ggt cat-file <span class="nt">-p</span> 45b983be36b73c0788dc9cbcb76cbb80fc7bb057
 
     <script src="/js/dark-mode.js"></script>
     <script src="/js/copy-code.js"></script>
+    
+    <script src="/js/post-enhancements.js"></script>
+    
   </body>
 
 </html>

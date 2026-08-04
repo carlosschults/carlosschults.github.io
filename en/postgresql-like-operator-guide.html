@@ -124,7 +124,7 @@
 
   <div class="post-content" itemprop="articleBody">
     
-<div class="callout callout-info">
+    <div class="callout callout-info">
   <div class="callout-title">
     <span class="callout-icon">ℹ️</span>
     Info
@@ -157,12 +157,24 @@
   <li>you can connect to the said instance through a client</li>
   <li>you have at least a bit of experience with the PostgreSQL database and the SQL language</li>
 </ul>
-
-<p><strong>PostgreSQL <code class="language-plaintext highlighter-rouge">LIKE</code>: The Fundamentals</strong></p>
+<h2 id="postgresql-like-the-fundamentals">
+  
+  
+    PostgreSQL <code class="language-plaintext highlighter-rouge">LIKE</code>: The Fundamentals <a href="#postgresql-like-the-fundamentals" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>With the requirements out of the way, let’s start by covering some fundamentals about today’s topic.</p>
-
-<p><strong>What Is PostgreSQL <code class="language-plaintext highlighter-rouge">LIKE</code>?</strong></p>
+<h3 id="what-is-postgresql-like">
+  
+  
+    What Is PostgreSQL <code class="language-plaintext highlighter-rouge">LIKE</code>? <a href="#what-is-postgresql-like" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>PostgreSQL <code class="language-plaintext highlighter-rouge">LIKE</code> is PostgreSQL’s implementation of the <code class="language-plaintext highlighter-rouge">LIKE</code> operator from the SQL language. You use LIKE when you want to retrieve rows in which one or more of their textual columns match a given pattern. In the introduction, I gave an example: retrieving students whose last name starts with a given letter. So, let’s see a real query that does just that using PostgreSQL <code class="language-plaintext highlighter-rouge">LIKE</code>:</p>
 
@@ -188,18 +200,36 @@
 </code></pre></div></div>
 
 <p>That’s right: if you want to match values that contain a given string, you surround the string with percentage signs (<code class="language-plaintext highlighter-rouge">%</code>).</p>
-
-<p><strong>What Is the Difference Between LIKE and ILIKE in Postgresql?</strong></p>
+<h3 id="what-is-the-difference-between-like-and-ilike-in-postgresql">
+  
+  
+    What Is the Difference Between LIKE and ILIKE in PostgreSQL? <a href="#what-is-the-difference-between-like-and-ilike-in-postgresql" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>When reviewing PostgreSQL code in the wild, you might encounter queries that use the <code class="language-plaintext highlighter-rouge">ILIKE</code> operator instead of <code class="language-plaintext highlighter-rouge">LIKE</code> and get confused. The difference is that the <code class="language-plaintext highlighter-rouge">LIKE</code> operator is case sensitive—i.e. it distinguishes between lowercase and uppercase letters. On the other hand, the <code class="language-plaintext highlighter-rouge">ILIKE</code> operator is case <em>insensitive</em>—hence the i. It does not distinguish between upper and lowercase letters, and therefore you should use it when you don’t care about the case.</p>
 
 <p>An important thing to keep in mind: the <code class="language-plaintext highlighter-rouge">ILIKE</code> operator doesn’t exist in ANSI SQL; instead, it’s a specific extension of PostgreSQL. That means that employing ILIKE makes your SQL code less portable, in case you have the need to change your database engine.</p>
-
-<p><strong>PostgreSQL Like: Practical Use Cases</strong></p>
+<h2 id="postgresql-like-practical-use-cases">
+  
+  
+    PostgreSQL LIKE: Practical Use Cases <a href="#postgresql-like-practical-use-cases" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>Having covered the basics of PostgreSQL <code class="language-plaintext highlighter-rouge">LIKE</code>, let’s now see several usage examples. We’ll begin by preparing the database for the tests.</p>
-
-<p><strong>Preparing the Database</strong></p>
+<h3 id="preparing-the-database">
+  
+  
+    Preparing the Database <a href="#preparing-the-database" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>Using your preferred client, connect to your PostgreSQL instance, making sure there’s a database you can connect to for the tests.</p>
 
@@ -217,8 +247,14 @@
 <span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">albums</span>  <span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="n">artist</span><span class="p">,</span> <span class="n">release_year</span><span class="p">)</span> <span class="k">VALUES</span><span class="p">(</span><span class="s1">'Reckless'</span><span class="p">,</span> <span class="s1">'Bryan Adams'</span><span class="p">,</span> <span class="mi">1984</span><span class="p">);</span>
 <span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">albums</span>  <span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="n">artist</span><span class="p">,</span> <span class="n">release_year</span><span class="p">)</span> <span class="k">VALUES</span><span class="p">(</span><span class="s1">'Ryan Adams'</span><span class="p">,</span> <span class="s1">'Ryan Adams'</span><span class="p">,</span> <span class="mi">2014</span><span class="p">);</span>
 </code></pre></div></div>
-
-<p><strong>Matching a Single Character</strong></p>
+<h3 id="matching-a-single-character">
+  
+  
+    Matching a Single Character <a href="#matching-a-single-character" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>As you’ve seen, the table now contains albums by both Bryan and Ryan Adams. That’s not by coincidence. First, use the following query to retrieve albums by the two singers:</p>
 
@@ -246,8 +282,14 @@
   5 | Ryan Adams | Ryan Adams |         2014
 (1 row)
 </code></pre></div></div>
-
-<p><strong>Negative Matches</strong></p>
+<h3 id="negative-matches">
+  
+  
+    Negative Matches <a href="#negative-matches" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>When working with database tables, you often need to retrieve data that doesn’t match a given pattern. For that, you can use the <code class="language-plaintext highlighter-rouge">NOT LIKE</code> operator. For instance, let’s get only artists that don’t start with “The”:</p>
 
@@ -255,8 +297,14 @@
 </code></pre></div></div>
 
 <p>Since the only artist starting with “The” are The Beatles, they won’t be fetched by the query above.</p>
-
-<p><strong>Matching Without Case Sensitivity</strong></p>
+<h3 id="matching-without-case-sensitivity">
+  
+  
+    Matching Without Case Sensitivity <a href="#matching-without-case-sensitivity" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>As mentioned earlier, the <code class="language-plaintext highlighter-rouge">ILIKE</code> operator is a special PostgreSQL extension to <code class="language-plaintext highlighter-rouge">LIKE</code> that matches in a case-insensitive way. Let’s see that in practice. First, let’s use the <code class="language-plaintext highlighter-rouge">LIKE</code> operator to get all artists which contain an uppercase “A”:</p>
 
@@ -287,8 +335,14 @@
 </code></pre></div></div>
 
 <p>Now, all artists are returned, except for Pink Floyd.</p>
-
-<p><strong>Escaping the WildCards</strong></p>
+<h3 id="escaping-the-wildcards">
+  
+  
+    Escaping the Wildcards <a href="#escaping-the-wildcards" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>For this example, let’s update two rows:</p>
 
@@ -335,8 +389,14 @@
 </code></pre></div></div>
 
 <p>With the <code class="language-plaintext highlighter-rouge">ESCAPE</code> clause, you can choose a different character as the escape character. That way—at least in my opinion—the resulting query is more explicit in the way it escapes the wildcard.</p>
-
-<p><strong>Conclusion: PostgreSQL LIKE: Learn It, Leverage It</strong></p>
+<h2 id="conclusion-postgresql-like--learn-it-leverage-it">
+  
+  
+    Conclusion: PostgreSQL LIKE — Learn It, Leverage It <a href="#conclusion-postgresql-like--learn-it-leverage-it" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>In this post, you’ve learned about the LIKE operator in PostgreSQL: what it is, what’s used for, and how it works along several examples. As you’ve seen, the operator’s working is quite easy once you understand how the wildcards work. We’ve also walked you through some usage examples, like matching against a single character and performing negative matches.</p>
 
@@ -701,6 +761,9 @@
 
     <script src="/js/dark-mode.js"></script>
     <script src="/js/copy-code.js"></script>
+    
+    <script src="/js/post-enhancements.js"></script>
+    
   </body>
 
 </html>

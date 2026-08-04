@@ -127,13 +127,20 @@
   </header>
 
   <div class="post-content" itemprop="articleBody">
+    
     <p><img src="https://res.cloudinary.com/dz5ppacuo/image/upload/v1673926044/git-beautiful-history/git-beautiful-history-cover.png" alt="" /></p>
 
 <p><span>Photo by <a href="https://unsplash.com/@yancymin?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Yancy Min</a> on <a href="https://unsplash.com/photos/842ofHC6MaI?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span></p>
 
 <p>If you’re trying to level up your <em>git-fu</em>, you could do worse than learn the <code class="language-plaintext highlighter-rouge">git bisect</code> command. Git has its (un)fair share of complicated commands, that’s true. The good news is that, unlike those, <code class="language-plaintext highlighter-rouge">git bisect</code> is quite easy to understand and use. The even better news is that it’s super useful to help you fix bugs.</p>
-
-<h2 id="prerequisites">Prerequisites</h2>
+<h2 id="prerequisites">
+  
+  
+    Prerequisites <a href="#prerequisites" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>Before getting started, let’s review some prerequisites you’ll need to follow along with the post:</p>
 <ul>
@@ -143,8 +150,14 @@
 </ul>
 
 <p>Have all that? Great, let’s move on.</p>
-
-<h2 id="whats-git-bisect-why-do-you-need-it">What’s Git Bisect? Why Do You Need It?</h2>
+<h2 id="whats-git-bisect-why-do-you-need-it">
+  
+  
+    What’s Git Bisect? Why Do You Need It? <a href="#whats-git-bisect-why-do-you-need-it" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p><code class="language-plaintext highlighter-rouge">Git bisect</code> is a command that enables you to perform a binary search on your commit history. Why do that?</p>
 
@@ -157,12 +170,24 @@
 <p>Do you know what’s more efficient? A binary search. If you have, say, 50 commits you need to check, and you test the 25th one and don’t find the bug, what does that mean? You can disregard the first 25 commits and continue your search within the 25 later ones. Continue the process, always partioning by half, and you’ll find the faulty one in way fewer checks than would be necessary with a linear search.</p>
 
 <p>Doing this by hand would be super boring, though. And that’s where <code class="language-plaintext highlighter-rouge">git bisect</code> comes in handy. It has an easy syntax that allows you to specify both a good and a bad commit, and then git will perform the binary partitions on your behalf. At each step, you’ll have to test your application and inform git whether that commit is a bad or a good one. Then, git calculates the next step, takes you there, and the process ends when you find the culprit.</p>
-
-<h2 id="how-to-use-git-bisect-in-practice">How To Use <code class="language-plaintext highlighter-rouge">Git Bisect</code> In Practice?</h2>
+<h2 id="how-to-use-git-bisect-in-practice">
+  
+  
+    How To Use <code class="language-plaintext highlighter-rouge">Git Bisect</code> In Practice? <a href="#how-to-use-git-bisect-in-practice" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>Time to learn how to use <code class="language-plaintext highlighter-rouge">git bisect</code> in a hands-on approach. To practice this command, you need a repo with at least some commits, and that has a bug. It’d take a while for you to set up a repository like this, so I already made one for you—yes, I’m nice like that.</p>
-
-<h3 id="getting-the-sample-application">Getting The Sample Application</h3>
+<h3 id="getting-the-sample-application">
+  
+  
+    Getting The Sample Application <a href="#getting-the-sample-application" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 <p>Just <a href="https://github.com/carlosschults/git-bisect-intro">clone this GitHub repo</a> and you’re good to go.</p>
 
 <p>The repo contains a silly toy JavaScript application that implements some rules from the <a href="https://osherove.com/tdd-kata-1">String Calculator Kata by Roy Osherov</a>. Here’s what the application is supposed to do:</p>
@@ -226,8 +251,14 @@ Error: Negatives not allowed: -5, -4, -7.
 </code></pre></div></div>
 
 <p>Sweet. Now, for the next step. But first, run <code class="language-plaintext highlighter-rouge">git checkout main</code> to return to the latest commit.</p>
-
-<h3 id="time-to-roll-up-your-sleeves">Time To Roll-Up Your Sleeves</h3>
+<h3 id="time-to-roll-up-your-sleeves">
+  
+  
+    Time To Roll-Up Your Sleeves <a href="#time-to-roll-up-your-sleeves" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 <p>To start using the <code class="language-plaintext highlighter-rouge">git bisect</code> command, you need to begin a <em>bisect session</em>. You do this by simply running <code class="language-plaintext highlighter-rouge">git bisect start</code>. You’ll then see the following message:</p>
 
 <p><code class="language-plaintext highlighter-rouge">status: waiting for both good and bad commits</code></p>
@@ -350,8 +381,14 @@ Date:   Tue Jan 9 08:53:47 2024 -0300
  index.js | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 </code></pre></div></div>
-
-<h3 id="what-now">What Now?</h3>
+<h3 id="what-now">
+  
+  
+    What Now? <a href="#what-now" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 <p>Ok, now you know that the commit <code class="language-plaintext highlighter-rouge">e159647d4d142c410894aaf10c1e11e2208848d7</code> is the one that introduced the bug. What should you do now?</p>
 
 <p>In short, you need to see details of this commit, to learn what changes it makes so you can understand what caused the problem. Let’s use the <code class="language-plaintext highlighter-rouge">git show</code> command for that:</p>
@@ -381,8 +418,14 @@ index 5f351e0..4e65e0c 100644
 <p>As you can see, this commit made a change to the <code class="language-plaintext highlighter-rouge">if</code> statement that tests for negative numbers, adding an equals sign to the comparison. That way, the error will be thrown regardless of whether the <code class="language-plaintext highlighter-rouge">negatives</code> array has elements.</p>
 
 <p>Now that you know how the bug was introduced, it’s super easy to fix it. To end the bisect session, just run <code class="language-plaintext highlighter-rouge">git bisect reset</code>. That way, you’ll be back to the point in which you originally started.</p>
-
-<h2 id="a-note-about-good-and-bad">A Note About “Good” and “Bad”</h2>
+<h2 id="a-note-about-good-and-bad">
+  
+  
+    A Note About “Good” and “Bad” <a href="#a-note-about-good-and-bad" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>Astute readers will have noticed that, although this command uses terms like “goo”,’ “bad,” and “bug,” there’s nothing stopping you from using <code class="language-plaintext highlighter-rouge">git bisect</code> to find out the point in time at which any property of the codebase has changed. After all, Git can’t know how your application is supposed to work; it was you, the whole time, who was testing it.</p>
 
@@ -402,8 +445,14 @@ For example, you might be looking for the commit that introduced a particular fi
 <p>The command is even more flexible than that: you can pick your own terms! Just start a session by running the following:</p>
 
 <p><code class="language-plaintext highlighter-rouge">git bisect start --term-old &lt;term-old&gt; --term-new &lt;term-new&gt;</code></p>
-
-<h2 id="git-bisect-where-do-you-go-now">Git Bisect: Where Do You Go Now?</h2>
+<h2 id="git-bisect-where-do-you-go-now">
+  
+  
+    Git Bisect: Where Do You Go Now? <a href="#git-bisect-where-do-you-go-now" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>I know this is only anecdotal data but, from my observations, I’d say that <code class="language-plaintext highlighter-rouge">git bisect</code> is an underused command. Which is pretty sad, considering that <code class="language-plaintext highlighter-rouge">git bisect</code> is a)incredibly useful and b)easy to understand and use, at least in its most basic use case.</p>
 
@@ -788,6 +837,9 @@ For example, you might be looking for the commit that introduced a particular fi
 
     <script src="/js/dark-mode.js"></script>
     <script src="/js/copy-code.js"></script>
+    
+    <script src="/js/post-enhancements.js"></script>
+    
   </body>
 
 </html>

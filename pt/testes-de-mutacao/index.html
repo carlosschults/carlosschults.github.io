@@ -127,6 +127,7 @@
   </header>
 
   <div class="post-content" itemprop="articleBody">
+    
     <p><img src="https://res.cloudinary.com/dz5ppacuo/image/upload/v1595528879/mutation/mutation-testing-1038x437.jpg" alt="" /></p>
 
 <p><span>Photo by <a href="https://unsplash.com/@wocintechchat?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Christina @ wocintechchat.com</a> on <a href="https://unsplash.com/s/photos/software-testing?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span></p>
@@ -138,50 +139,98 @@
 <p>Então, fiquei atônito ao perceber que muito poucos desenvolvedores compartilhavam meu interesse em testes de mutação. Na verdade, ouso dizer que a maioria dos desenvolvedores ainda nem sequer ouviu falar sobre isso. E isso é uma pena porque eles - e nós, como uma indústria - estamos perdendo tantos benefícios.</p>
 
 <p>Portanto, este posto é minha humilde tentativa de remediar a situação. Vou começar por explicar os atuais dilemas que os desenvolvedores enfrentam em relação à confiabilidade dos testes que escrevem. Em seguida, vou prosseguir para lhe mostrar como os testes de mutação são a resposta a estes dilemas. Explicarei o que é, como pode tornar seus testes mais confiáveis, e como pode transformar a cobertura de código na valiosa métrica que deve ser.</p>
-
-<h2 id="o-problema-a-confiabilidade-dos-testes">O problema: a confiabilidade dos testes</h2>
+<h2 id="o-problema-a-confiabilidade-dos-testes">
+  
+  
+    O problema: a confiabilidade dos testes <a href="#o-problema-a-confiabilidade-dos-testes" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>Ao aprender sobre <a href="https://carlosschults.net/pt/testes-unitarios-iniciantes-parte1/">testes unitários</a> - ou testes automatizados em geral - a maioria das pessoas fará a mesma pergunta ou uma pergunta semelhante: Como sei que meus testes estão corretos? Essa é uma preocupação legítima. Se seus testes não são confiáveis, então talvez você esteja melhor sem nenhum teste.</p>
 
 <p>Então, qual é a resposta? Como as pessoas lidam com o problema da confiabilidade dos testes sem depender de testes de mutação?</p>
-
-<h2 id="tornando-os-testes-confiáveis-sem-testes-de-mutação">Tornando os testes confiáveis sem testes de mutação</h2>
+<h2 id="tornando-os-testes-confiáveis-sem-testes-de-mutação">
+  
+  
+    Tornando os testes confiáveis sem testes de mutação <a href="#tornando-os-testes-confiáveis-sem-testes-de-mutação" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>Há técnicas que os desenvolvedores empregam para melhorar a confiabilidade de seus testes, e cobriremos brevemente algumas delas nesta seção. Se você tem experiência com testes unitários, provavelmente está familiarizado com essas técnicas. Vamos lá.</p>
-
-<h3 id="manter-os-testes-simples">Manter os testes simples</h3>
+<h3 id="manter-os-testes-simples">
+  
+  
+    Manter os testes simples <a href="#manter-os-testes-simples" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>A primeira técnica que cobriremos aqui para melhorar a confiabilidade de seus testes é apenas mantê-los simples. E por “simples” quero dizer com menos complexidade ciclomática. Quanto menor a <a href="https://pt.wikipedia.org/wiki/Complexidade_ciclom%C3%A1tica">complexidade ciclomática</a> de um determinado código, mais provável é que ele realmente faz o que você pensa que faz. O código simples é mais fácil de entender, que é uma propriedade que você definitivamente quer que seus testes unitários tenham.</p>
 
 <p>Mantenha o código de teste simples ao ponto de ser óbvio. Isso significa, por exemplo, evitar loops ou estruturas de decisão. Além disso, evite fazer qualquer coisa para computar o resultado esperado (mais sobre isso na próxima seção). Em vez disso, codifique-o de maneira fixa.</p>
-
-<h3 id="não-duplique-o-código-de-implementação">Não Duplique o Código de Implementação</h3>
+<h3 id="não-duplique-o-código-de-implementação">
+  
+  
+    Não Duplique o Código de Implementação <a href="#não-duplique-o-código-de-implementação" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>Digamos que você esteja praticando o <a href="https://codingdojo.org/kata/RomanNumerals/">Coding Kata dos números romanos</a>. Resista à tentação de gerar automaticamente os valores esperados (“I” para 1, “II” para 2, e assim por diante). Em vez disso, codifique os valores de forma fixa. Se a repetição realmente o incomoda e sua ferramenta de teste o permite, use testes parametrizados.</p>
 
 <p>Por que isso seria um problema? Simples: Quanto mais sofisticado for o código de teste, mais provável é que seja uma duplicação do código de produção. Se este for o caso, você pode ter o azar de se encontrar na situação em que seu código de produção está errado (não resolve o problema como deveria fazer), mas os testes passam. Esse é um dos piores cenários possíveis. É ainda pior do que não ter nenhum teste.</p>
-
-<h3 id="garanta-que-você-veja-o-teste-falhar">Garanta que você veja o teste falhar</h3>
+<h3 id="garanta-que-você-veja-o-teste-falhar">
+  
+  
+    Garanta que você veja o teste falhar <a href="#garanta-que-você-veja-o-teste-falhar" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>Garantir que cada teste falhe pelo menos uma vez antes de ser aprovado. Se você vê o teste falhar quando acha que deveria estar falhando e vice-versa, isso é um sinal de que você está se movendo na direção certa. Não garante nada, mas diminui a probabilidade de o teste estar passando devido a uma coincidência.</p>
 
 <p>Como fazer isso? Assim que você chegar à fase verde, danifique o código de implementação de tal maneira que um ou mais testes devem falhar. Você poderia inverter os condicionantes, substituir strings ou literais numéricos por valores aleatórios, ou mesmo apagar um if. Se você conseguir sabotar o código de produção e se safar, isso não é um bom sinal. Seu conjunto de testes ou está errado ou incompleto. Em certo sentido, você está testando os testes.</p>
 
 <p>Desenvolvedores que empregam <a href="https://carlosschults.net/pt/testes-unitarios-csharp-intro-tdd/">TDD (desenvolvimento orientado a testes)</a> já fazem isso, por definição. Uma vez que você escreve um teste falho e depois procede para que ele seja aprovado, você está vendo o teste falhar. É claro, o teste deve falhar da maneira esperada. Isso significa que se você estiver realizando uma asserção, o teste deve falhar devido a uma falha na asserção e não, digamos, porque o método sob teste lança uma exceção. Sim, isto é melhor do que nada, mas ainda assim pode não ser suficiente. Como um teste unitário representa um caso de uso único, é totalmente possível introduzir um defeito no código de produção de tal forma que este teste em particular ainda passe.</p>
-
-<h2 id="temos-que-fazer-melhor-é-aí-que-entra-o-teste-de-mutação">Temos que fazer melhor: É Aí Que Entra o Teste de Mutação</h2>
+<h2 id="temos-que-fazer-melhor-é-aí-que-entra-o-teste-de-mutação">
+  
+  
+    Temos que fazer melhor: É Aí Que Entra o Teste de Mutação <a href="#temos-que-fazer-melhor-é-aí-que-entra-o-teste-de-mutação" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>Então, você acabou de aplicar a técnica descrita na última seção. Ótimo! Não é perfeita, porém. Aí vem um problema. Você não pode simplesmente inserir muitos defeitos e executar os testes, pois não seria capaz de identificar qual defeito foi responsável pelo fracasso dos testes. A maneira correta de fazer isso é inserir um único defeito deliberado, executar todos os testes, verificar seu resultado e <em>então</em> reverter a mudança. Depois disso, você pode introduzir outro erro, executar todos os testes novamente, verificar o resultado, reverter a mudança…e repetir, muitas vezes. Nem precisa dizer que tal abordagem é extremamente lenta, entediante e propensa a erros.</p>
 
 <p>É aí que entram os testes de mutação.</p>
-
-<h3 id="o-que-é-teste-de-mutação-afinal">O que é teste de mutação, afinal?</h3>
+<h3 id="o-que-é-teste-de-mutação-afinal">
+  
+  
+    O que é teste de mutação, afinal? <a href="#o-que-é-teste-de-mutação-afinal" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>O teste de mutação é nada mais, nada menos, do que automatizar todo o processo de “sabotar o código de produção e executar testes para ver se eles falham” que você acabou de ver. Para usar o teste de mutação, você precisa de um framework, ou ferramenta, de teste de mutação. O framework irá alterar o código de produção, introduzindo defeitos que são chamados de “mutações”. Para cada mutação introduzida, o framework executará novamente o conjunto de testes unitários. Se todos os testes forem aprovados, dizemos que a mutação sobreviveu. Isso é uma coisa ruim. Significa que ou seu conjunto de testes está faltando ou os testes existentes estão errados.</p>
 
 <p>Se, por outro lado, um ou mais testes falharem, isso significa que a mutação foi morta, o que é uma coisa boa. A ferramenta repetirá esse processo até que se teste a parte relevante da base de código. Quando tudo estiver feito, você poderá verificar os resultados, que conterão o número de mutações introduzidas, assim como a proporção de mutantes sobreviventes vs. mutantes mortos.</p>
-
-<h3 id="os-testes-de-mutação-melhoram-a-cobertura-do-código">Os testes de mutação melhoram a cobertura do código</h3>
+<h3 id="os-testes-de-mutação-melhoram-a-cobertura-do-código">
+  
+  
+    Os testes de mutação melhoram a cobertura do código <a href="#os-testes-de-mutação-melhoram-a-cobertura-do-código" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>Um dos tópicos mais controversos no mundo dos testes de unidade é o argumento sobre a cobertura de código. Alguns desenvolvedores dizem que chegar à cobertura total é essencial; outros argumentarão que é uma métrica inútil. Quem está certo?</p>
 
@@ -190,15 +239,20 @@
 <p>Uma ocorrência mais comum seria ter apenas testes que não exercitam suficientemente os caminhos no software. Em resumo: baixa cobertura de código é definitivamente uma coisa ruim, mas alta (ou total) cobertura de código não é <em>necessariamente</em> uma coisa boa, uma vez que não diz nada sobre a qualidade dos testes na suíte.</p>
 
 <p>Como os testes de mutação verificam a qualidade da suíte de testes, é a peça que falta no quebra-cabeça. Se sua base de código tem uma alta cobertura de código e os resultados dos testes de mutação mostram que a maioria ou todas as mutações introduzidas estão sendo mortas, então sorria! Você provavelmente tem uma ótima suíte de teste no lugar!</p>
-
-<h2 id="testes-de-mutação-abrace-hoje">Testes de Mutação Abrace Hoje</h2>
+<h2 id="testes-de-mutação-abrace-hoje">
+  
+  
+    Testes de Mutação Abrace Hoje <a href="#testes-de-mutação-abrace-hoje" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>No post de hoje, falamos sobre o problema da confiabilidade dos testes, depois procedemos a uma revisão de algumas técnicas e diretrizes que você pode usar para superar esse desafio. Finalmente, vimos como o teste de mutação é a abordagem superior para resolver esse problema.</p>
 
 <p>Eis o seguinte: As técnicas que abordamos são boas diretrizes a serem seguidas ao escrever testes unitários. Seus testes serão beneficiados por cumpri-los, quer você empregue ou não testes de mutação. Mas as diretrizes só podem levá-lo até agora. Elas dependem muito da força de vontade e disciplina humanas, e todos nós temos quantidades limitadas delas. A fim de levar a qualidade de seus testes ao próximo nível, você precisa adotar a automação.</p>
 
 <p>São necessários apenas alguns minutos de pesquisa no Google para encontrar uma ferramenta de teste de mutação para a plataforma de sua preferência. Faça isso hoje e comece a aproveitar os benefícios que os testes de mutação podem oferecer a você e à sua equipe!</p>
-
 
     
     
@@ -618,6 +672,9 @@
 
     <script src="/js/dark-mode.js"></script>
     <script src="/js/copy-code.js"></script>
+    
+    <script src="/js/post-enhancements.js"></script>
+    
   </body>
 
 </html>

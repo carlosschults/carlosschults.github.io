@@ -127,6 +127,7 @@
   </header>
 
   <div class="post-content" itemprop="articleBody">
+    
     <p><img src="https://res.cloudinary.com/dz5ppacuo/image/upload/v1593715153/null-evill-1068x437_ztikwf.jpg" alt="" />
 <span>Photo by <a href="https://unsplash.com/@benhershey?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Ben Hershey</a> on <a href="https://unsplash.com/s/photos/null?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span></p>
 
@@ -139,8 +140,14 @@
 <p>Bashing poor old null tends to get old, so authors don’t do just that. They also offer alternatives. And while I do believe that many of the presented alternatives have their merits, I also think we may have overlooked the best solution for the whole thing.</p>
 
 <p>In this post, we’re going to examine some of the common alternatives for returning null before making the argument that the best alternative is null itself. Let’s get started!</p>
-
-<h2 id="null-is-toxic">Null Is Toxic…</h2>
+<h2 id="null-is-toxic">
+  
+  
+    Null Is Toxic… <a href="#null-is-toxic" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>I won’t dwell too much on the whole “null is evil” thing, since a lot has been written about it already. Some examples:</p>
 
@@ -148,20 +155,38 @@
 <a href="&quot;http://blog.ploeh.dk/2015/11/13/null-has-no-type-but-maybe-has/&quot;&gt;">Null has no type, but Maybe has</a></p>
 
 <p><a href="https://softwareengineering.stackexchange.com/questions/12777/are-null-references-really-a-bad-thing">This Stack Overflow answer</a> also has some valuable information.</p>
-
-<h2 id="but-useful-what-are-the-alternatives">…But Useful. What Are the Alternatives?</h2>
+<h2 id="but-useful-what-are-the-alternatives">
+  
+  
+    …But Useful. What Are the Alternatives? <a href="#but-useful-what-are-the-alternatives" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>Now, I hope we’re on the same page regarding null’s status as a problematic language feature. But toxic or not, null serves some purposes. People use it to represent an absent, invalid, or unknown piece of data, or even to indicate that an error has occurred.</p>
 
 <p>What should they be doing instead?</p>
-
-<h3 id="throw-an-exception">Throw an Exception</h3>
+<h3 id="throw-an-exception">
+  
+  
+    Throw an Exception <a href="#throw-an-exception" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>In some situations in which people return null, the reasonable thing to do is to throw an exception. Think of it this way: if a method promises to perform something and fails to do so, it should throw. In other words: when a method fails to fulfill its contract, then it is reasonable to throw.</p>
 
 <p>Of course, you should reserve exceptions for scenarios that are truly exceptional. If a certain situation happens often, then an exception is not the best solution.</p>
-
-<h3 id="null-object-pattern">Null Object Pattern</h3>
+<h3 id="null-object-pattern">
+  
+  
+    Null Object Pattern <a href="#null-object-pattern" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>Consider the following lines of code:</p>
 
@@ -185,18 +210,36 @@
 <span class="p">}</span></code></pre></figure>
 
 <p>By employing the null object pattern you could—theoretically, at least—be sure that you’ll always get an object that fulfills the contract you expect it to honor without blowing up in your face.</p>
-
-<h3 id="maybeoption">Maybe/Option</h3>
+<h3 id="maybeoption">
+  
+  
+    Maybe/Option <a href="#maybeoption" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>Finally, we have a very interesting alternative that is often found in <a href="https://blog.ndepend.com/functional-programming-makes-code-not-oo/">functional programming</a> languages. This alternative is the use of a dedicated type meant to represent the use case of a potentially absent value. For instance, <a href="https://docs.microsoft.com/en-us/dotnet/fsharp/language-reference/options">in F# this is called the option type</a>; Haskell calls it <a href="https://hackage.haskell.org/package/base-4.11.0.0/docs/Data-Maybe.html">Maybe</a>. Starting in version 8, Java introduced the <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html">Optional</a> class.</p>
 
 <p>At this time, C# doesn’t offer something along those lines natively.</p>
-
-<h2 id="alternatives-to-null-are-they-any-good">Alternatives to Null: Are They Any Good?</h2>
+<h2 id="alternatives-to-null-are-they-any-good">
+  
+  
+    Alternatives to Null: Are They Any Good? <a href="#alternatives-to-null-are-they-any-good" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>Having presented the more commonly used alternatives for null, it’s time for the final verdict. Let’s start with the “throw exception” option.</p>
-
-<h3 id="exceptions">Exceptions</h3>
+<h3 id="exceptions">
+  
+  
+    Exceptions <a href="#exceptions" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>If the caller fails to supply the correct arguments for the function they’re calling, then we could say they’re breaking the function’s contract. Throwing an exception is the correct thing do to in this situation.</p>
 
@@ -241,8 +284,14 @@
 <span class="p">}</span></code></pre></figure>
 
 <p>Also, <a href="https://blogs.msdn.microsoft.com/ericlippert/2008/09/10/vexing-exceptions/">don’t catch exogenous exceptions</a> that might happen inside your method and return null; instead, just let them bubble up since these type of exceptions represent problems outside of your control. Issues like a failure in the network are problems that you couldn’t have prevented anyway, code-wise.</p>
-
-<h3 id="null-object-pattern-1">Null Object Pattern</h3>
+<h3 id="null-object-pattern-1">
+  
+  
+    Null Object Pattern <a href="#null-object-pattern-1" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>Let’s consider the null object pattern, which I’m certainly not a huge fan of. One problem with this pattern is that you should only use it when the calling code doesn’t care about the outcome of whatever it’s trying to accomplish. Consider again our contract example:</p>
 
@@ -261,16 +310,28 @@
 </ul>
 
 <p>You could argue that these problems aren’t relevant in the context of a single team working with the same codebase. The developers could agree on using the pattern correctly. But if everything amounts to trust and convention at the end of the day, you might as well just agree to never return null and you’d have the same result.</p>
-
-<h3 id="maybeoption-1">Maybe/Option</h3>
+<h3 id="maybeoption-1">
+  
+  
+    Maybe/Option <a href="#maybeoption-1" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>Last but not least, what about Maybe/Option types? This is an alternative that’s both elegant and robust, especially in languages such as F# where you’re actually forced, in a sense, to handle both cases by using pattern matching.</p>
 
 <p>But the sad reality is this: while maybe/option types are amazing approaches, they can’t change the fact that null exists and will continue existing. You can’t really stop people from using it, nor can you remove it from all the lines of code people have been writing since the dawn of C#.</p>
 
 <p>So, even though they are great approaches, they still suffer from the problem of being yet another type of null for the developers to deal with.</p>
-
-<h2 id="the-solution-for-null-null-itself">The Solution for Null: Null Itself</h2>
+<h2 id="the-solution-for-null-null-itself">
+  
+  
+    The Solution for Null: Null Itself <a href="#the-solution-for-null-null-itself" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>Do you know the old saying “When in a hole, stop digging?” For better or worse, null exists. Toxic or not, it’s a feature people use. So maybe the solution for this whole thing is just to fix null.</p>
 
@@ -649,6 +710,9 @@
 
     <script src="/js/dark-mode.js"></script>
     <script src="/js/copy-code.js"></script>
+    
+    <script src="/js/post-enhancements.js"></script>
+    
   </body>
 
 </html>

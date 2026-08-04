@@ -127,6 +127,7 @@
   </header>
 
   <div class="post-content" itemprop="articleBody">
+    
     <p><img src="https://res.cloudinary.com/dz5ppacuo/image/upload/v1673926044/git-beautiful-history/git-beautiful-history-cover.png" alt="" /></p>
 
 <p><span>Photo by <a href="https://unsplash.com/@yancymin?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Yancy Min</a> on <a href="https://unsplash.com/photos/842ofHC6MaI?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span></p>
@@ -140,8 +141,14 @@
 <p>In this post, I’ll show you how to use amend and interactive rebase to make your Git history look beautiful before publishing it. There won’t be much theory; I’ll walk you through some common scenarios, showing how I’d go about solving them.</p>
 
 <p>Before wrapping up, I’ll teach you how to not shoot yourself in the foot with these commands. As I’ll explain, amending and rebasing are destructive actions, and there are situations in which you should not perform them.</p>
-
-<h2 id="requirements">Requirements</h2>
+<h2 id="requirements">
+  
+  
+    Requirements <a href="#requirements" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 <p>To follow along with this post, I assume you:</p>
 
 <ul>
@@ -151,8 +158,14 @@
 </ul>
 
 <p>As I write this post, I’m on Windows, using Git version <strong>2.38.1.windows.1</strong> and typing my commands on Git Bash. If you’re on Linux or OSX, I guess everything will work just as fine, but I haven’t tested it myself.</p>
-
-<h2 id="defining-vs-code-as-your-default-text-editor">Defining VS Code as Your Default Text Editor</h2>
+<h2 id="defining-vs-code-as-your-default-text-editor">
+  
+  
+    Defining VS Code as Your Default Text Editor <a href="#defining-vs-code-as-your-default-text-editor" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 <p>Just a last digression before we really get started. Some of the commands you’ll be seeing throughout this post will require you to edit and save a text file. They do this by opening your default text editor as configured in your Git configuration file and waiting until you edit, save and close the file.</p>
 
 <p>If you’re on Windows like me, using Git Bash, you’re default editor will be Vim. Vim is a command-line text editor, and some people find it intimidating. Though learning Vim requires some work, it’s not that hard to get the hang of it, and I’d recommend you invest some time to learn at least the most basic commands—specially how to quit!</p>
@@ -160,11 +173,23 @@
 <p>However, Git allows you to pick other text editors as your default. If you have Visual Studio Code installed and want to use it, run the following command:</p>
 
 <p><code class="language-plaintext highlighter-rouge">git config --global core.editor "code --wait"</code></p>
-
-<h2 id="rewriting-history-n-common-scenarios">Rewriting History: N Common Scenarios</h2>
+<h2 id="rewriting-history-n-common-scenarios">
+  
+  
+    Rewriting History: N Common Scenarios <a href="#rewriting-history-n-common-scenarios" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 <p>I’ll walk you through a few common scenarios you might find yourself in which rewriting history will save you.</p>
-
-<h3 id="my-git-commit-message-has-a-typo">My Git Commit Message Has a Typo</h3>
+<h3 id="my-git-commit-message-has-a-typo">
+  
+  
+    My Git Commit Message Has a Typo <a href="#my-git-commit-message-has-a-typo" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 <p>You’re in a hjurry to fix this high priority bug. After hours of grueling debugging, you find the offending code, fix it and commit the change.</p>
 
 <p>Only then you see you made a typo. How to fix that?</p>
@@ -210,8 +235,14 @@
 <p>You’ll notice that the identifier (SHA-1) of the commit is now different than it was before—and also different than the one from the image above. I’ll get back to this later.</p>
 
 <p>For now, you’ve successfully amended your commit message. Congrats!</p>
-
-<h3 id="i-forgot-to-include-a-file">I Forgot to Include a File</h3>
+<h3 id="i-forgot-to-include-a-file">
+  
+  
+    I Forgot to Include a File <a href="#i-forgot-to-include-a-file" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 <p>Sometimes you have several changed files and want to commit some but not all of them. In your hurry, you leave one or more files behind. How to fix this?</p>
 
 <p>Amend to the rescue again.</p>
@@ -252,8 +283,14 @@ nothing added to commit but untracked files present (use "git add" to track)
 <p><code class="language-plaintext highlighter-rouge">git commit –-amend –-no-edit</code></p>
 
 <p>This way, Git won’t open your text editor, keeping the original commit message.</p>
-
-<h3 id="i-want-to-merge-several-commits-into-one">I Want to Merge Several Commits into One</h3>
+<h3 id="i-want-to-merge-several-commits-into-one">
+  
+  
+    I Want to Merge Several Commits into One <a href="#i-want-to-merge-several-commits-into-one" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 <p>Merging several commits into one is an operation called “squashing.” But why would you want to do that?</p>
 
 <p>Well, it all boils down to your Git style. I like to make small commits, very often. Then, when I’m about to make them public (for instance, by opening a pull request) I squash them into a single commit, with a well-crafted message.</p>
@@ -326,8 +363,14 @@ squash a76fd60 empty commit 3 <span class="c"># empty</span>
 <p><img src="/img/git-beautiful-history/img6.png" alt="" /></p>
 
 <p>As you can see, the three empty commits were replaced by a single commit. You’ve successfully performed your first squash. Congrats!</p>
-
-<h2 id="when-you-shouldnt-mess-with-history">When You Shouldn’t Mess with History</h2>
+<h2 id="when-you-shouldnt-mess-with-history">
+  
+  
+    When You Shouldn’t Mess with History <a href="#when-you-shouldnt-mess-with-history" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 <p>Before wrapping up, let’s understand when changing history is problematic.</p>
 
 <p>First, understand that both <code class="language-plaintext highlighter-rouge">amend</code> and <code class="language-plaintext highlighter-rouge">rebase</code> produce <strong>destructive changes</strong>. It’s like they’re destroying history and creating a new one.</p>
@@ -339,8 +382,14 @@ squash a76fd60 empty commit 3 <span class="c"># empty</span>
 <p>So, the golden rule is <strong>never rewrite history that other people depend upon.</strong> What this means in specific will depend on whatever branching workflow you and your team use.</p>
 
 <p>If you use <a href="https://trunkbaseddevelopment.com/">trunk-based development,</a> never rewrite the master/main branch. The same is true if your work with <a href="https://docs.github.com/en/get-started/quickstart/github-flow">GitHub Flow</a>. If you use git-flow, that means never rewriting the “eternal” branches, i.e., master/main and develop.</p>
-
-<h2 id="ok-i-lied-heres-a-bit-of-theory">OK, I Lied: Here’s a Bit of Theory</h2>
+<h2 id="ok-i-lied-heres-a-bit-of-theory">
+  
+  
+    OK, I Lied: Here’s a Bit of Theory <a href="#ok-i-lied-heres-a-bit-of-theory" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 <p>Throughout this post, I’ve been using language like “change the commit’s message”, “merge multiple commits into one”, and so forth.</p>
 
 <p>Technically speaking, those were all lies. When you use commands like <code class="language-plaintext highlighter-rouge">git commit --amend</code>  or <code class="language-plaintext highlighter-rouge">git rebase -i</code>, you’re not changing anything. What Git is doing <strong>is creating new commits</strong>.</p>
@@ -362,8 +411,14 @@ squash a76fd60 empty commit 3 <span class="c"># empty</span>
 <p>The astute reader will notice that even the images above are a simplification. “We should have more commits in the image!”, they say, with their accusatory index finger pointing at the scream. And guess what, they’re right.</p>
 
 <p>Remember we started this whole thing by amending two commits? Well, since amend doesn’t change commits but create new ones, we have two extra lost commits in our repository. I omitted them from the diagrams above <del>because I was feeling kind of lazy</del> for brevity’s sake. But as an exercise for the reader, you can add them yourself.</p>
-
-<h2 id="rewrite-the-past-to-look-and-be-smarter">Rewrite the Past to Look (And Be) Smarter</h2>
+<h2 id="rewrite-the-past-to-look-and-be-smarter">
+  
+  
+    Rewrite the Past to Look (And Be) Smarter <a href="#rewrite-the-past-to-look-and-be-smarter" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 <p>Rewriting history is a powerful capability of Git. With commands such as <code class="language-plaintext highlighter-rouge">git commit --amend</code> and <code class="language-plaintext highlighter-rouge">git rebase -i</code> you can “change” your past commits, hiding your mistakes and making it look like you got everything right from the start. I do this all the time and I reap the benefits: my coworkers think I’m way smarter than what I’m really—please don’t tell them my secret.</p>
 
 <p>Seriously now: these commands are fantastic tools for getting a more organized history. With them, you can lose the fear of committing frequently once and for all. Make commits small and frequent, and don’t pay too much attention to the message-for example, if you use <a href="/en/csharp-unit-testing-intro-tdd/">TDD</a>, you can commit every time the tests pass.</p>
@@ -739,6 +794,9 @@ squash a76fd60 empty commit 3 <span class="c"># empty</span>
 
     <script src="/js/dark-mode.js"></script>
     <script src="/js/copy-code.js"></script>
+    
+    <script src="/js/post-enhancements.js"></script>
+    
   </body>
 
 </html>

@@ -129,6 +129,7 @@
   </header>
 
   <div class="post-content" itemprop="articleBody">
+    
     <p><img src="https://res.cloudinary.com/dz5ppacuo/image/upload/v1595528879/mutation/mutation-testing-1038x437.jpg" alt="" /></p>
 
 <p><span>Photo by <a href="https://unsplash.com/@wocintechchat?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Christina @ wocintechchat.com</a> on <a href="https://unsplash.com/s/photos/software-testing?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span></p>
@@ -140,50 +141,98 @@
 <p>Then, I was dumbstruck as I realized that very few developers shared my interest in mutation testing. In fact, I dare say that most developers haven’t even heard about it. And that’s a shame because they—and we, as an industry—are missing out on so many benefits.</p>
 
 <p>So, this post is my humble attempt to remedy the situation. I’ll start by explaining the current dilemmas developers face regarding the reliability of the tests they write. Then, I’ll proceed to show you how mutation testing is the answer to these dilemmas. I’ll explain what it is, how it can make your tests more trustworthy, and how it can turn code coverage into the valuable metric it should be.</p>
-
-<h2 id="the-problem-trustworthiness-of-tests">The Problem: Trustworthiness of Tests</h2>
+<h2 id="the-problem-trustworthiness-of-tests">
+  
+  
+    The Problem: Trustworthiness of Tests <a href="#the-problem-trustworthiness-of-tests" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>When learning about <a href="https://carlosschults.net/en/unit-testing-for-beginners-part1/">unit tests</a>—or automated tests in general—most people will ask the same or a similar question: <em>How do I know my tests are right?</em> That’s a legitimate concern. If your tests aren’t trustworthy, then you might be better off with no tests at all.</p>
 
 <p>So what’s the answer? How do people deal with the problem of test trustworthiness without relying on mutation testing?</p>
-
-<h2 id="making-tests-reliable-without-mutation-testing">Making Tests Reliable Without Mutation Testing</h2>
+<h2 id="making-tests-reliable-without-mutation-testing">
+  
+  
+    Making Tests Reliable Without Mutation Testing <a href="#making-tests-reliable-without-mutation-testing" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>There are techniques developers employ to improve the reliability of their tests, and we’ll briefly cover some of them in this section. If you’re experienced with unit testing, you’re probably familiar with them. Let’s dive in.</p>
-
-<h3 id="keep-your-tests-simple">Keep Your Tests Simple</h3>
+<h3 id="keep-your-tests-simple">
+  
+  
+    Keep Your Tests Simple <a href="#keep-your-tests-simple" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>The first technique we’ll cover here to improve the reliability of your tests is just to keep them simple. And by “simple” I mean with less cyclomatic complexity. The lower the <a href="https://en.wikipedia.org/wiki/Cyclomatic_complexity">cyclomatic complexity</a> of a given piece of code, the likelier it is that it actually does what you think it does. Simple code is easier to reason about, which is a property you definitely want your unit tests to have.</p>
 
 <p>Keep test code simple to the point of being obvious. That means, for instance, avoiding loops or decision structures. Also, avoid doing anything fancy to compute the expected result (more on that in the next section). Hard-code it instead.</p>
-
-<h3 id="dont-duplicate-implementation-code">Don’t Duplicate Implementation Code</h3>
+<h3 id="dont-duplicate-implementation-code">
+  
+  
+    Don’t Duplicate Implementation Code <a href="#dont-duplicate-implementation-code" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>Let’s say you’re doing the <a href="https://codingdojo.org/kata/RomanNumerals/">Roman numerals kata</a>. Resist the temptation to automatically generate the expected values (“I” for 1, “II” for 2, and so on). Instead, hard-code the values. If the repetition really bothers you and your test framework allows it, use parametrized tests.</p>
 
 <p>Why would that be a problem? Simple: The fancier your test code gets, the more likely it’s duplicating production code. If that’s the case, you might be unlucky enough to find yourself in the situation where your production code is wrong (it doesn’t solve the problem as it’s supposed to do) but the tests pass. That’s one of the worst possible scenarios. It’s even worse than having no tests at all.</p>
-
-<h3 id="ensure-you-see-the-test-failing">Ensure You See the Test Failing</h3>
+<h3 id="ensure-you-see-the-test-failing">
+  
+  
+    Ensure You See the Test Failing <a href="#ensure-you-see-the-test-failing" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>Ensure each test fails at least once before it passes. If you see the test failing when you think it should be failing and vice versa, that’s a sign you’re moving in the right direction. It doesn’t guarantee anything, but it decreases the likelihood the test is passing due to a coincidence.</p>
 
 <p>Here’s how you’d do it. As soon as you get to the green phase, damage the implementation code in such a way that one or more tests should fail. You could invert conditionals, replace strings or numeric literals with random values, or even delete an if-statement. If you manage to sabotage production code and get away with it, that’s not a good sign. Your test suite is either wrong or incomplete. In a sense, you’re testing the tests.</p>
 
 <p>Developers who employ <a href="https://carlosschults.net/en/csharp-unit-testing-intro-tdd/">TDD (test-driven development)</a> kind of already do that by definition. Since you write a failing test and then proceed to make it pass, you’re seeing the test fail. Of course, the test should fail in the expected manner. Meaning that if you’re performing an assertion, the test should fail due to an assertion failure and not, say, because the method under test throws an exception. Yes, this is better than nothing, but it still might not be enough. Since a unit test represents a single-use case, it’s totally possible to introduce a defect to production code in such a way that this particular test still passes.</p>
-
-<h2 id="we-must-do-better-enter-mutation-testing">We Must Do Better: Enter Mutation Testing</h2>
+<h2 id="we-must-do-better-enter-mutation-testing">
+  
+  
+    We Must Do Better: Enter Mutation Testing <a href="#we-must-do-better-enter-mutation-testing" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>So you’ve just applied the technique described in the last section. Good! Not perfect, though. Here comes a problem. You can’t just insert a lot of defects and run the tests, because you wouldn’t be able to identify which defect was responsible for the tests failing. The correct way to do it is to insert a single deliberate defect, run all the tests, verify their result, and <em>then</em> roll back the change. After that, you can introduce another mistake, run all the tests again, verify the result, roll back the change…rinse and repeat. Needless to say, such an approach is extremely slow, tedious, and error-prone.</p>
 
 <p>That’s where mutation testing comes in.</p>
-
-<h3 id="whats-mutation-testing-anyway">What’s Mutation Testing, Anyway?</h3>
+<h3 id="whats-mutation-testing-anyway">
+  
+  
+    What’s Mutation Testing, Anyway? <a href="#whats-mutation-testing-anyway" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>Mutation testing is nothing more, nothing less, than automating the whole “sabotaging production code and running tests to see if they fail” process you just saw. To use mutation testing, you need a mutation testing framework. The framework will alter production code, introducing defects that are called “mutations.” For each mutation introduced, the framework will again run the suite of unit tests. If all tests pass, we say the mutation survived. That’s a bad thing. It means that either your suite is lacking tests or the existing ones are wrong.</p>
 
 <p>If, on the other hand, one or more tests fail, that means the mutation was killed, which is a good thing. The framework will repeat that process until it’s tested the relevant portion of the codebase. When it’s all done you can check the results, which will contain the number of mutations introduced, as well as the ratio of surviving vs. killed mutants.</p>
-
-<h3 id="mutation-testing-makes-code-coverage-better">Mutation Testing Makes Code Coverage Better</h3>
+<h3 id="mutation-testing-makes-code-coverage-better">
+  
+  
+    Mutation Testing Makes Code Coverage Better <a href="#mutation-testing-makes-code-coverage-better" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>One of the most controversial topics in the unit testing world is the argument about code coverage. Some developers say that getting to full coverage is essential; others will argue that’s a useless metric. Who’s right?</p>
 
@@ -192,15 +241,20 @@
 <p>A more common occurrence would be to just have tests that don’t exercise enough paths in the software. In short: Low code coverage is definitely a bad thing, but high (or full) code coverage is not <em>necessarily</em> a good thing since it says nothing about the quality of the tests in the suite.</p>
 
 <p>Since mutation testing does verify the quality of the test suite, it’s the missing piece of the puzzle. If your codebase has a high code coverage and the results of mutation tests show that most or all mutations introduced are being killed, then smile! You probably have a great test suite in place!</p>
-
-<h2 id="embrace-mutation-testing-today">Embrace Mutation Testing Today</h2>
+<h2 id="embrace-mutation-testing-today">
+  
+  
+    Embrace Mutation Testing Today <a href="#embrace-mutation-testing-today" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>In today’s post, we talked about the problem of test trustworthiness, then proceeded to review some techniques and guidelines you can use to overcome that challenge. Finally, we saw how mutation testing is the superior approach to solving that problem.</p>
 
 <p>Here’s the thing: The techniques we covered are good guidelines to follow when writing unit tests. Your tests will benefit from abiding by them, whether you employ mutation testing or not. But guidelines can only take you so far. They depend too much on human willpower and discipline, and we all have limited amounts of those. In order to take the quality of your tests to the next level, you need to embrace automation.</p>
 
 <p>It takes just a few minutes of googling to find a mutation testing tool for your preferred tech stack. Do that today, and stop missing out on the benefits that mutation testing can provide you and your team!</p>
-
 
     
     
@@ -571,6 +625,9 @@
 
     <script src="/js/dark-mode.js"></script>
     <script src="/js/copy-code.js"></script>
+    
+    <script src="/js/post-enhancements.js"></script>
+    
   </body>
 
 </html>

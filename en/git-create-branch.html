@@ -126,13 +126,20 @@
   </header>
 
   <div class="post-content" itemprop="articleBody">
+    
     <p><img src="https://res.cloudinary.com/dz5ppacuo/image/upload/v1673926044/git-beautiful-history/git-beautiful-history-cover.png" alt="" /></p>
 
 <p><em>Editorial note: I originally wrote this post for the Cloudbees blog.  You can <a href="https://www.cloudbees.com/blog/git-create-branch">check out the original here, at their site</a>.</em></p>
 
 <p>If you write software for a living, then I can say with confidence you’re familiar with Git. The tool created by Linus Torvalds has become synonymous with version control. And without a doubt, one of Git’s best features is how it takes away the pain of branching and merging. There are several ways you can create a branch in Git. In this post, we’ll review some of them. Then we’ll end with a little reflection on Git’s branching model and branching in general.</p>
-
-<h2 id="creating-a-branch-from-main">Creating a Branch From main</h2>
+<h2 id="creating-a-branch-from-main">
+  
+  
+    Creating a Branch From main <a href="#creating-a-branch-from-main" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>You create branches in Git, unsurprisingly, by using the <code class="language-plaintext highlighter-rouge">branch</code> command. Like many other Git commands, <code class="language-plaintext highlighter-rouge">branch</code> is very powerful and flexible. Besides creating branches, it can also be used to list and delete them, and you can further customize the command by employing a broad list of parameters. We’ll begin with the first way of creating a branch. Let’s say you want to create a new folder called “my-app”, enter it, and start a new Git repository. That’s exactly how you’d do it:</p>
 
@@ -176,8 +183,14 @@ nothing added to commit but untracked files present (use "git add" to track)
 </code></pre></div></div>
 
 <p>So now we have a new branch called “exp”, for experimentation. Some people who are used to using different versioning systems, especially centralized ones, could say the branches have the same “content.” This isn’t entirely accurate when talking about Git, though. Think of branches like references that point to a given commit.</p>
-
-<h2 id="creating-a-branch-from-a-commit">Creating a Branch From a Commit</h2>
+<h2 id="creating-a-branch-from-a-commit">
+  
+  
+    Creating a Branch From a Commit <a href="#creating-a-branch-from-a-commit" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>Suppose that, for whatever reason, we give up on our experiment, without adding a single commit to the new branch. Let’s go back to <code class="language-plaintext highlighter-rouge">main</code> and delete the <code class="language-plaintext highlighter-rouge">exp</code> branch:</p>
 
@@ -203,8 +216,14 @@ git commit -a -m "Add one last line"
 </code></pre></div></div>
 
 <p>As an aside, you don’t even need the whole hash most of the time. Just the first five or six characters will do it.</p>
-
-<h2 id="creating-a-branch-from-a-tag">Creating a Branch From a Tag</h2>
+<h2 id="creating-a-branch-from-a-tag">
+  
+  
+    Creating a Branch From a Tag <a href="#creating-a-branch-from-a-tag" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>If you’re a little bit more experienced with Git, then you should be familiar with the concept of <a href="https://git-scm.com/book/en/v2/Git-Basics-Tagging">tags</a>. You use tags to indicate that a given commit is important or special in some way. For instance, tags are generally used to indicate the actual versions of a product. If you’ve been working in your application for a while and you believe it’s time to release version 1.0, what you’d typically do is bump the version numbers wherever necessary, committing those changes and then adding a tag to that specific point in time. To create a tag, you’d usually run something like this:</p>
 
@@ -229,8 +248,14 @@ git commit -a -m "Add one last line"
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git checkout -b fix-bug-1234 v1.0
 </code></pre></div></div>
-
-<h2 id="creating-a-branch-in-detached-head-state">Creating a Branch in Detached Head State</h2>
+<h2 id="creating-a-branch-in-detached-head-state">
+  
+  
+    Creating a Branch in Detached Head State <a href="#creating-a-branch-in-detached-head-state" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>Have you ever wished to go back in time? With Git this is possible…at least in regard to the files in our repository. You can, at any time, check out a commit if you know its hash:</p>
 
@@ -259,8 +284,14 @@ git checkout new-branch-to-keep-commits
 </code></pre></div></div>
 
 <p>Pretty easy, right?</p>
-
-<h2 id="just-because-you-candoesnt-mean-you-should">Just Because You Can…Doesn’t Mean You Should</h2>
+<h2 id="just-because-you-candoesnt-mean-you-should">
+  
+  
+    Just Because You Can…Doesn’t Mean You Should <a href="#just-because-you-candoesnt-mean-you-should" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>Git’s branching model is one of its selling points. It turns what in other source control systems is a painful and even slow process into a breeze. One could say that Git has successfully democratized branching for the masses. But there lies a serious danger. Due to the cheapness of branching in Git, some developers might fall into the trap of working with <a href="https://rollout.io/blog/pitfalls-feature-branching/">extremely long-lived branches</a> or employing workflows or branching models that delay integration.</p>
 
@@ -637,6 +668,9 @@ git checkout new-branch-to-keep-commits
 
     <script src="/js/dark-mode.js"></script>
     <script src="/js/copy-code.js"></script>
+    
+    <script src="/js/post-enhancements.js"></script>
+    
   </body>
 
 </html>

@@ -126,6 +126,7 @@
   </header>
 
   <div class="post-content" itemprop="articleBody">
+    
     <p><img src="https://res.cloudinary.com/dz5ppacuo/image/upload/v1540385528/value-object-tool/value-object-tool-1038x437.jpg" alt="" /></p>
 
 <p>*NOTA: Eu escrevi este post originalmente para o blog da NDepend. Você pode <a href="https://blog.ndepend.com/value-objects-tool-self-documented-code-fewer-errors/">conferir o artigo original, em inglês, no site deles</a>. *</p>
@@ -133,18 +134,36 @@
 <p>Você já ouviu falar de <em>value objects</em>? Eu imagino que sim. Apesar de não se falar tanto a respeito deles como eu gostaria, eles ainda são mencionados o bastante para que muitos desenvolvedores tenham no mínimo alguma familiaridade com o termo.</p>
 
 <p>Porém, “alguma familiaridade” não é bom o bastante. Então é isso que vamos consertar com esse post. Hoje vamos aprender o que <em>value objects</em> são e como você, por meio do C#, pode usar todo o poder deles para tornar seu código mais claro, auto-documentável e menos propenso a erros.</p>
-
-<h2 id="o-que-sãovalue-objects">O que são Value Objects?</h2>
+<h2 id="o-que-sãovalue-objects">
+  
+  
+    O que são Value Objects? <a href="#o-que-sãovalue-objects" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p><em>Value objects</em> são um dos blocos fundamentais do DDD (Domain Driven Design, ou Projeto Guiado por Domínio, em tradução livre), conforme proposto por Eric Evans em seu livro <a href="https://www.amazon.com/Domain-Driven-Design-Tackling-Complexity-Software/dp/0321125215">Domain-Driven Design: Tackling Complexity in the Heart of Software.</a></p>
 
 <p>Da maneira mais simples possível, um value object é um objeto que representa um valor. E sim, eu estou ciente de que isso soa óbvio e tedioso quando dito dessa forma. Então, por que tanto barulho por causa desse conceito?</p>
-
-<h2 id="algumas-propriedades">Algumas Propriedades</h2>
+<h2 id="algumas-propriedades">
+  
+  
+    Algumas Propriedades <a href="#algumas-propriedades" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>Eu acho que é mais fácil de entender value objects se eu parar de tentar explicar o que eles são e, ao invés disso, falar sobre as suas características.</p>
-
-<h3 id="value-objects-não-têm-identidade">Value Objects Não Têm Identidade</h3>
+<h3 id="value-objects-não-têm-identidade">
+  
+  
+    Value Objects Não Têm Identidade <a href="#value-objects-não-têm-identidade" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>Eu acho que é justo dizer que a principal característica dos value objects é que eles não possuem <em>identidade</em>. Mas o que isso realmente quer dizer na prática?</p>
 
@@ -155,16 +174,28 @@
 <p>Em outras palavras, nós não damos a mínima para a <em>identidade</em> daquela cédula em particular. A única coisa com a qual nós nos importamos é o seu valor.</p>
 
 <p>Não é coincidência o fato de que dinheiro é um exemplo clássico de value object na literatura.</p>
-
-<h3 id="value-objects-são-imutáveis">Value Objects São Imutáveis</h3>
+<h3 id="value-objects-são-imutáveis">
+  
+  
+    Value Objects São Imutáveis <a href="#value-objects-são-imutáveis" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>Você consegue mudar o número cinco? Não. Não há nada que você (ou qualquer outra pessoa) possa fazer para mudar o valor do número 5. Se você adicionar 1, ele não muda. Você tem agora 6, que é um <em>outro</em> número.</p>
 
 <p>É possível alterar uma data? Não, também não dá para fazer isso. Se você inicia com “2018-01-09” e adiciona um dia, você chega em “2018-01-10.” O valor original não é alterado de forma alguma. Na verdade, a imutabilidade de um value object é uma consequência direta do ponto anterior; como um value object não possui identidade, podemos dizer que o value object <em>é</em> o seu valor. Portanto, nem sequer faz sentido falar sobre mudá-lo.</p>
 
 <p>A implicação disso no desenvolvimento é que value objects são intrinsecamente mais seguros e mais fáceis de serem compreendidos. Não tem perigo de mudar por acidente aquilo que você não pode mudar de jeito nenhum.</p>
-
-<h3 id="value-objects-têm-igualdade-estrutural">Value Objects Têm Igualdade Estrutural</h3>
+<h3 id="value-objects-têm-igualdade-estrutural">
+  
+  
+    Value Objects Têm Igualdade Estrutural <a href="#value-objects-têm-igualdade-estrutural" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 <p>Imagine que você pudesse magicamente transportar pessoas para qualquer lugar que você quisesse e, por alguma razão bizarra, você tenha decidido trocar dois homens chamados “João da Silva” durante a noite. Como você acha que as suas respectivas famílias reagiriam ao encontrar um estranho em casa na manhã seguinte?</p>
 
 <p>Obviamente, pessoas não são intercambiáveis, mesmo que compartilhem uma ou mais características. Mesmo se nossos dois “Joães” (Joões?) tivessem não apenas o mesmo nome, mas também a mesma altura, peso, cor de pele e cabelo, eles ainda seriam duas pessoas completamente diferentes. Mesmo gêmeos idênticos (ou clones, caso você esteja numa onda meio Black Mirror) continuam sendo pessoas completamente diferentes, apesar de serem tão iguais um ao outro quanto é possível ser.</p>
@@ -174,8 +205,14 @@
 <p>Você talvez esteja se perguntando se eu divaguei demais aqui, mas é tudo de propósito. Tudo isso serve apenas para ilustrar a diferença crucial entre entidades e value objects. Com as entidades, nós nos importamos com a  sua identidade, não com o valor de seus atributos. Com value objects, é exatamente o oposto.</p>
 
 <p>A implicação disso, em termos de programação, é que value objects tipicamente apresentam igualidade estrutural. Faz sentido compará-los pelos seus valores, não suas referências ou identidades. Então, quando for implementar um value object, sempre faça <em>override</em> dos métodos <code class="language-plaintext highlighter-rouge">Equals</code> e <code class="language-plaintext highlighter-rouge">GetHashCode</code>.</p>
-
-<h2 id="o-que-você-ganha-com-isso">O que Você Ganha Com Isso?</h2>
+<h2 id="o-que-você-ganha-com-isso">
+  
+  
+    O que Você Ganha Com Isso? <a href="#o-que-você-ganha-com-isso" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 <p>A essa altura você já deve ter uma boa ideia do que value objects são. O que ainda não está claro é: por que você deveria usá-los? Para responder isso, vamos dar uma olhada na linha de código a seguir:</p>
 
 <figure class="highlight"><pre><code class="language-c#" data-lang="c#">    <span class="kt">double</span>  <span class="n">distance</span>  <span class="p">=</span>  <span class="m">4.5</span><span class="p">;</span></code></pre></figure>
@@ -183,8 +220,14 @@
 <p>Tem algo errado com a linha acima? Bom, eu poderia dar uma de <em><a href="https://starwars.wikia.com/wiki/Wookieepedia:Quote_of_the_Day/Archive/Obi-Wan_Kenobi">Ben Kenobi</a> </em>e dizer que está errada “de um certo ponto de vista.” Mas eu não vou. Ao invés disso, vou dizer que está definitivamente, sem sombra de dúvidas, errada. Não importa que compila corretamente. Também não importa que funciona um pouco (ou até na maioria) do tempo.</p>
 
 <p>O problema aqui é o <em>code smell</em> conhecido como “obsessão primitiva”, isto é, a modelagem de conceitos de domínio usando tipos primitivos. As próximas seções vão explicar melhor porque isso é um problema tão sério e como o uso de <em>value objects</em> podem ajudar.</p>
-
-<h3 id="value-objects-proporcionam-contexto">Value Objects Proporcionam Contexto</h3>
+<h3 id="value-objects-proporcionam-contexto">
+  
+  
+    Value Objects Proporcionam Contexto <a href="#value-objects-proporcionam-contexto" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>Por que <a href="https://blog.ndepend.com/easy-miss-code-smells/">obsessão primitiva é algo ruim</a>? Há várias razões, mas um dos principais problemas com a linha de código que você viu na seção anterior é que há uma informação extremamente importante faltando. Como você pode ver, o código atribui o valor 4.5 à variável. Mas 4.5 o que? Metros? Quilômetros? Milhas? Parsecs? Em outras palavras, falta uma <strong>unidade de medida</strong>.</p>
 
@@ -203,8 +246,14 @@
 	<span class="n">Assert</span><span class="p">.</span><span class="nf">AreEqual</span><span class="p">(</span><span class="n">distance</span><span class="p">,</span>  <span class="n">distance2</span><span class="p">);</span></code></pre></figure>
 
 <p>Você poderia ainda sobrecarregar o operador “+” (ou criar um método <code class="language-plaintext highlighter-rouge">Plus</code>). Dessa forma seria possível somar duas distâncias que se originaram de diferentes unidades de medida já que a representação interna é a mesma.</p>
-
-<h3 id="value-objects-apresentam-segurança-de-tipo">Value Objects Apresentam Segurança de Tipo</h3>
+<h3 id="value-objects-apresentam-segurança-de-tipo">
+  
+  
+    Value Objects Apresentam Segurança de Tipo <a href="#value-objects-apresentam-segurança-de-tipo" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>Digamos que você tem um método com a seguinte assinatura:</p>
 
@@ -217,14 +266,26 @@
 <figure class="highlight"><pre><code class="language-c#" data-lang="c#">	<span class="kt">double</span>  <span class="nf">PerformSomeImportantCalculation</span><span class="p">(</span><span class="n">Distance</span> <span class="n">distance</span><span class="p">,</span>  <span class="n">Temperature</span> <span class="n">temperature</span><span class="p">);</span></code></pre></figure>
 
 <p>Dessa forma, se torna impossível passar os parâmetros na ordem errada: o compilador simplesmente não deixa!</p>
-
-<h3 id="value-objects-evitam-duplicação-de-lógica-de-domínio">Value Objects Evitam Duplicação de Lógica de Domínio</h3>
+<h3 id="value-objects-evitam-duplicação-de-lógica-de-domínio">
+  
+  
+    Value Objects Evitam Duplicação de Lógica de Domínio <a href="#value-objects-evitam-duplicação-de-lógica-de-domínio" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>Quando você usa tipos primitivos para modelar conceitos de domínio, a tendência é você ter um monte de código relacionado a esses conceitos espalhados por toda a aplicação. Imagine que você está criando um programa que tem o conceito de uma placa de carro, e você está usando <code class="language-plaintext highlighter-rouge">strings</code> para representá-las. É claro que nem todas as strings válidas são placas válidas. Então o seu código acaba entupido de validações de placas de carro por todo lugar.</p>
 
 <p>Isso seria evitado criando uma classe chamada <code class="language-plaintext highlighter-rouge">LicensePlate</code> e fazendo todas as validações necessárias em seu construtor. Dessa forma você consolidaria todo o código de validação em apenas um lugar; se esse código precisar mudar no futuro, você tem que mudar em apenas um lugar.</p>
-
-<h2 id="value-objects-e-tipos-de-valor-não-são-sinônimos">Value Objects e Tipos de Valor Não São Sinônimos</h2>
+<h2 id="value-objects-e-tipos-de-valor-não-são-sinônimos">
+  
+  
+    Value Objects e Tipos de Valor Não São Sinônimos <a href="#value-objects-e-tipos-de-valor-não-são-sinônimos" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>Essa seção é necessária para clarificar um erro comum, que é confundir  value objects com o conceito de value types (tipos de valor) que existe no C#. É assim: na linguagem C# nós temos <a href="https://carlosschults.net/pt/tipos-valor-referencia-em-csharp/">duas categorias de tipos: tipos de referência e tipos de valor.</a></p>
 
@@ -233,8 +294,14 @@
 <p>Por outro lado, structs não podem ser considerados value objects automaticamente. Por exemplo, embora manter structs imutáveis seja uma prática recomendada, eles não são imutáveis por padrão.</p>
 
 <p>Resumidamente, “tipo de valor” é um detalhe de implementação em C#/.NET e “value object” é um padrão de projeto. Mantenha isso em mente e consulte <a href="https://docs.microsoft.com/pt-br/dotnet/standard/design-guidelines/choosing-between-class-and-struct">as diretrizes de design da Microsoft</a> e tudo vai ficar bem.</p>
-
-<h2 id="value-objects-valem-a-pena">Value Objects Valem a Pena!</h2>
+<h2 id="value-objects-valem-a-pena">
+  
+  
+    Value Objects Valem a Pena! <a href="#value-objects-valem-a-pena" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>O uso de value objects é uma técnica com um custo relativamente baixo que pode aumentar bastante a manutenibilidade e claridade do seu código. Colocando value objects em prática, você pode tornar seu código mais fácil de ser compreendido, criando interfaces que são auto-documentáveis, difíceis de serem usadas da maneira errada, e intrinsecamente <em>type-safe</em>.</p>
 
@@ -656,6 +723,9 @@
 
     <script src="/js/dark-mode.js"></script>
     <script src="/js/copy-code.js"></script>
+    
+    <script src="/js/post-enhancements.js"></script>
+    
   </body>
 
 </html>

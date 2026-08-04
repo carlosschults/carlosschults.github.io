@@ -128,6 +128,7 @@
   </header>
 
   <div class="post-content" itemprop="articleBody">
+    
     <p><img src="https://res.cloudinary.com/dz5ppacuo/image/upload/v1459979937/testes-unitarios-iniciantes-min_povcse.png" alt="" /></p>
 
 <p><em>Este post faz parte de uma série. <a href="http://carlosschults.net/tag_ptbr/serie-testes-unitarios/">Veja os outros artigos.</a></em></p>
@@ -139,12 +140,24 @@
 <p>Começamos o post com uma breve definição de TDD. Você aprenderá não apenas que TDD significa Desenvolvimento Orientado por Testes, mas também que não é uma técnica de teste, apesar do nome. Depois disso, eu explico o que é TDD e quais são seus benefícios.</p>
 
 <p>Após o “o quê” e o “porquê” estarem ambos fora do nosso caminho, estaremos prontos para nos divertir um pouco. Vou lhes mostrar, na prática, como começar com a TDD, desenvolvendo uma solução para um famoso exercício de programação. Soa bem? Então, vamos começar.</p>
-
-<h2 id="testes-unitários-em-c--tdd-começando-pelo-básico">Testes Unitários em C# &amp; TDD: Começando Pelo Básico</h2>
+<h2 id="testes-unitários-em-c--tdd-começando-pelo-básico">
+  
+  
+    Testes Unitários em C# &amp; TDD: Começando Pelo Básico <a href="#testes-unitários-em-c--tdd-começando-pelo-básico" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>Já mencionei anteriormente que o TDD não é uma técnica de teste. Mas o que é isso? E como está relacionado ao teste de unidade C# (ou teste de unidade em geral, já agora?)</p>
-
-<h3 id="definindo-tdd">Definindo TDD</h3>
+<h3 id="definindo-tdd">
+  
+  
+    Definindo TDD <a href="#definindo-tdd" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>Como você já viu, TDD significa “Test-Driven Development”, ou “Desenvolvimento guiado por testes.” É uma técnica ou metodologia de desenvolvimento de software que utiliza testes unitários para guiar ou dirigir o desenvolvimento da aplicação.</p>
 
@@ -158,8 +171,14 @@
 </ul>
 
 <p>É o que vamos ver a seguir.</p>
-
-<h3 id="as-fases-do-tdd">As fases do TDD</h3>
+<h3 id="as-fases-do-tdd">
+  
+  
+    As fases do TDD <a href="#as-fases-do-tdd" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>O desenvolvimento orientado por testes depende da repetição de um ciclo incrivelmente curto. Este ciclo é composto de três fases:</p>
 
@@ -176,20 +195,38 @@
 <p>Finalmente, a terceira fase é a única que permite a você escrever o código de produção sem ter que criar primeiro um teste de reprovação. Mas você não pode criar novas classes ou funções; você só pode refatorar o código que você escreveu na etapa anterior, para torná-lo mais legível, para eliminar a duplicação ou para resolver outro problema. E, é claro, o teste ainda deve ser aprovado.</p>
 
 <p>As pessoas freqüentemente usam o TDD como “red green-refactor” porque a maioria das ferramentas de teste de unidade usa vermelho para denotar testes fracassados e verde para passar nos testes.</p>
-
-<h3 id="por-que-usar-o-tdd">Por que usar o TDD?</h3>
+<h3 id="por-que-usar-o-tdd">
+  
+  
+    Por que usar o TDD? <a href="#por-que-usar-o-tdd" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>O difícil de entender quando se começa a usar o TDD não é o como. O “como” é trivial: escrever um teste, faze-lo passar, talvez refatorar, enxaguar, repetir. A parte preocupante é o “por quê”. Por que desenvolver software de uma maneira tão não-intuitiva?</p>
 
 <p>Vou falar mais sobre a filosofia TDD em artigos futuros. Em poucas palavras, aplicar TDD garante que você terá um código testável desde o início. Ele o incentivará a projetar seu código de uma maneira simples e modular.</p>
 
 <p>Mas talvez a principal vantagem do TDD seja aumentar a confiança do desenvolvedor em seu código. Ao desenvolver um pequeno passo de cada vez, você nunca será capaz de errar muito, já que está fazendo muito pouco. Saber que você está apenas a um teste de reprovação de ter um código de trabalho é reconfortante.</p>
-
-<h2 id="testes-unitários-em-c--tdd-o-guia-mão-na-massa">Testes Unitários em C# &amp; TDD: O Guia Mão-Na-Massa</h2>
+<h2 id="testes-unitários-em-c--tdd-o-guia-mão-na-massa">
+  
+  
+    Testes Unitários em C# &amp; TDD: O Guia Mão-Na-Massa <a href="#testes-unitários-em-c--tdd-o-guia-mão-na-massa" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>Eu cobri como começar com os testes de unidade C# no passado. Eu também cobri as ferramentas necessárias e como começar. Entretanto, não vou assumir que você tenha lido esses artigos. Em vez disso, vou cobrir tudo a partir do zero. Assim, você será capaz de seguir o tutorial mesmo que tenha zero de experiência com testes unitários.</p>
-
-<h3 id="nosso-problema-o-kata-string-calculator">Nosso problema: O Kata String Calculator</h3>
+<h3 id="nosso-problema-o-kata-string-calculator">
+  
+  
+    Nosso problema: O Kata String Calculator <a href="#nosso-problema-o-kata-string-calculator" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>Para nosso tutorial, escreveremos uma solução para o <a href="https://osherove.com/tdd-kata-1">coding kata String Calculator</a>, idealizado pelo Roy Osherov. Um kata de codificação é um exercício de programação, destinado a permitir que os desenvolvedores pratiquem práticas de engenharia de software ágeis fundamentais, como a refatoração, e - você adivinhou - TDD.</p>
 
@@ -203,8 +240,14 @@
   <li>Se passarmos números negativos, o método deve lançar uma ArgumentException, com a mensagem “Números negativos não permitidos:” seguida dos negativos que foram especificados.</li>
   <li>O método deve ignorar números maiores que 1000 devem. Portanto, “1.2.1000” deve resultar em 1003, mas “1.2.1001” deve resultar em 3.</li>
 </ol>
-
-<h3 id="criando-o-projeto-de-produção">Criando o Projeto de Produção</h3>
+<h3 id="criando-o-projeto-de-produção">
+  
+  
+    Criando o Projeto de Produção <a href="#criando-o-projeto-de-produção" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>Para este tutorial, estarei usando a edição comunitária do Visual Studio 2019. Se você ainda não o tem, pode baixá-lo e instalá-lo de graça.</p>
 
@@ -219,8 +262,14 @@
 <p>A tela seguinte simplesmente pede um nome para o projeto e a solução. Eu escolhi” StringCalculatorKata” tanto para o projeto quanto para a solução. Você também terá que fornecer um local para salvar os arquivos do projeto. Quando terminar, basta clicar em “Criar”.</p>
 
 <p>Se tudo correr bem, você deverá ver a classe padrão aberta para você no Visual Studio. Vá ao Solution Explorer e exclua essa classe; não vamos precisar dela.</p>
-
-<h3 id="criando-o-projeto-de-teste">Criando o Projeto de Teste</h3>
+<h3 id="criando-o-projeto-de-teste">
+  
+  
+    Criando o Projeto de Teste <a href="#criando-o-projeto-de-teste" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>Agora, é hora de criar o projeto de teste. Poderíamos fazer isso de duas maneiras: criando um projeto regular de “Biblioteca de Classe” e depois adicionando as dependências necessárias a ele, ou criando um projeto de teste de unidade imediatamente. Iremos com este último, já que facilita tudo isso.</p>
 
@@ -269,8 +318,14 @@
 <p><img src="https://res.cloudinary.com/dz5ppacuo/image/upload/v1594235427/unit3/add-reference.png" alt="" /></p>
 
 <p>Depois, basta clicar em “OK”, e agora você está pronto para continuar.</p>
-
-<h2 id="iniciando-nosso-kata-de-codificação">Iniciando nosso Kata de Codificação</h2>
+<h2 id="iniciando-nosso-kata-de-codificação">
+  
+  
+    Iniciando nosso Kata de Codificação <a href="#iniciando-nosso-kata-de-codificação" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>Agora, estamos prontos para escrever nosso primeiro teste de reprovação. Portanto, abra a classe StringCalculatorTest e acrescente a ela o seguinte método</p>
 
@@ -341,8 +396,14 @@ Add_EmptyStringAsParam_ReturnsZero
       Expected: 0
       But was:  -1
 </pre>
-
-<h3 id="fazendo-o-teste-passar">Fazendo o teste passar</h3>
+<h3 id="fazendo-o-teste-passar">
+  
+  
+    Fazendo o teste passar <a href="#fazendo-o-teste-passar" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>Estamos agora finalmente prontos para fazer o teste passar. Como disse anteriormente, para passar no teste, você não só é permitido, mas também encorajado a fazer batota. Em nosso caso, podemos simplesmente fazer com que o método Add retorne zero:</p>
 
@@ -350,8 +411,14 @@ Add_EmptyStringAsParam_ReturnsZero
 <span class="p">{</span>
     <span class="k">return</span> <span class="m">0</span><span class="p">;</span>
 <span class="p">}</span></code></pre></figure>
-
-<h3 id="escrevendo-o-segundo-teste-um-único-número">Escrevendo o segundo teste: Um único número</h3>
+<h3 id="escrevendo-o-segundo-teste-um-único-número">
+  
+  
+    Escrevendo o segundo teste: Um único número <a href="#escrevendo-o-segundo-teste-um-único-número" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>Os requisitos dizem que a passagem de um único número deve retornar o próprio número. Isso soa como uma coisa útil para testar:</p>
 
@@ -383,8 +450,14 @@ Add_StringContainingSingleNumber_ReturnsTheNumberItself
 
     <span class="k">return</span> <span class="m">5</span><span class="p">;</span>
 <span class="p">}</span></code></pre></figure>
-
-<h3 id="testando-dois-números">Testando Dois Números</h3>
+<h3 id="testando-dois-números">
+  
+  
+    Testando Dois Números <a href="#testando-dois-números" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>Como já testamos o método Add passando por números zero (uma seqüência vazia) e um único número, parece que o próximo passo natural para nós agora seria escrever um teste para o cenário de adição de dois números. Então, vamos fazer exatamente isso.</p>
 
@@ -410,8 +483,14 @@ Add_StringContainingSingleNumber_ReturnsTheNumberItself
 
     <span class="k">return</span> <span class="m">5</span><span class="p">;</span>
 <span class="p">}</span></code></pre></figure>
-
-<h3 id="testando-três-números">Testando Três Números</h3>
+<h3 id="testando-três-números">
+  
+  
+    Testando Três Números <a href="#testando-três-números" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>Você já notou que, até agora, não fizemos nenhuma refatoração? Bem, estamos nos aproximando do ponto em que nossos testes nos levam a incluir alguma duplicação desagradável em nosso código. Então, usaremos a refatoração para alterar o código de uma forma que se aproxime de uma solução geral.</p>
 
@@ -458,8 +537,14 @@ Add_StringContainingSingleNumber_ReturnsTheNumberItself
 <p>Aproveitando o método <code class="language-plaintext highlighter-rouge">TryParse</code> do tipo <code class="language-plaintext highlighter-rouge">System.Int32</code>, consegui me livrar do primeiro if. Também usamos um recurso introduzido no <a href="https://carlosschults.net/pt/funcionalidades-csharp-7/">C# 7</a> chamado “out variables”. Este recurso nos permite utilizar parâmetros sem ter que declará-los previamente.</p>
 
 <p>Todos os testes ainda passam, portanto, não posso escrever mais código de produção. Qual deve ser o próximo teste?</p>
-
-<h3 id="testando-mais-de-três-números">Testando Mais de Três Números</h3>
+<h3 id="testando-mais-de-três-números">
+  
+  
+    Testando Mais de Três Números <a href="#testando-mais-de-três-números" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>Os requisitos não dizem que devemos ser capazes de lidar apenas com três números. Portanto, vamos criar outro caso de teste para cobrir os cenários com 4, 5, ou mais números. Já que estamos nisso, podemos também incluir a exigência de ignorar números maiores que 1000.</p>
 
@@ -497,8 +582,14 @@ Add_StringContainingSingleNumber_ReturnsTheNumberItself
 <span class="p">}</span></code></pre></figure>
 
 <p>O código acima deve ser fácil de entender. Nós apenas dividimos o fio em partes usando a vírgula como delimitador. Então, para cada parte, nós a dividimos em um inteiro, verificamos se é igual ou inferior a mil e, se for o caso, adicionamo-la à variável de resultado. Finalmente, retornamos o resultado.</p>
-
-<h2 id="ainda-não-terminamos">Ainda não terminamos</h2>
+<h2 id="ainda-não-terminamos">
+  
+  
+    Ainda não terminamos <a href="#ainda-não-terminamos" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>Os requisitos dizem que números negativos não devem ser permitidos. Vamos acrescentar um teste para isso! Por uma questão de brevidade, acrescentaremos um único método de teste com vários casos de teste, de modo que somos forçados a ir imediatamente para a implementação correta:</p>
 
@@ -543,8 +634,14 @@ Add_StringContainingSingleNumber_ReturnsTheNumberItself
 <p>Como você pode ver, logo no início, nós definimos uma instância de <code class="language-plaintext highlighter-rouge">List&lt;int&gt;</code> para armazenar os negativos que encontramos enquanto iteramos sobre todos os números. Dentro do laço, verificamos se o número atual é negativo. Se for, adicionamo-lo à lista. Se não for, verificamos se é menor ou igual a 1000, caso em que o adicionamos à variável de resultado.</p>
 
 <p>Após o loop, verificamos se a lista negativa tem algum elemento. Se tiver, criamos uma mensagem de exceção que inclui os negativos especificados e, em seguida, lançamos uma nova ArgumentException. Caso contrário, devolvemos o resultado.</p>
-
-<h2 id="conclusão">Conclusão</h2>
+<h2 id="conclusão">
+  
+  
+    Conclusão <a href="#conclusão" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>Este post foi um guia prático sobre como começar com o TDD em C#. Então, para onde você vai a partir daqui?</p>
 
@@ -978,6 +1075,9 @@ Add_StringContainingSingleNumber_ReturnsTheNumberItself
 
     <script src="/js/dark-mode.js"></script>
     <script src="/js/copy-code.js"></script>
+    
+    <script src="/js/post-enhancements.js"></script>
+    
   </body>
 
 </html>

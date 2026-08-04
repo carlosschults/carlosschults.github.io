@@ -123,6 +123,7 @@
   </header>
 
   <div class="post-content" itemprop="articleBody">
+    
     <p><img src="https://res.cloudinary.com/dz5ppacuo/image/upload/v1539703469/coding-best-practices-1038x437_ugnhab.jpg" alt="" />
 Photo by Ales Nesetril on Unsplash</p>
 
@@ -147,14 +148,26 @@ Photo by Ales Nesetril on Unsplash</p>
 </ul>
 
 <p>As práticas a seguir atendem os critérios listados. E sem mais enrolação, aqui está: meu pacote emergencial de boas práticas de codificação, com itens listados na ordem que eles deveriam ser adotados, começando pelo mais crítico.</p>
-
-<h2 id="sistema-de-controle-de-versão">Sistema de Controle de Versão</h2>
+<h2 id="sistema-de-controle-de-versão">
+  
+  
+    Sistema de Controle de Versão <a href="#sistema-de-controle-de-versão" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>Eu trabalhei uma vez em uma empresa de desenvolvimento de software na qual nenhum sistema de controle de versão era usado. Os arquivos de código fonte ficavam em uma pasta compartilhada que qualquer desenvolvedor podia acessar. Qual era o processo usado para poder editar um arquivo? Você provavelmente adivinhou: nós criávamos uma cópia do arquivo e adicionávamos “_OLD” ao final do nome.</p>
 
 <p>Isso aconteceu há oito ou nove anos, o que significa que as coisas devem ter melhorado, certo? Bom, provavelmente melhoraram, um pouco, mas não totalmente. Ainda tem <a href="https://twitter.com/_m_b_j_/status/938785388268806146">empresas por aí que não usam controle de versão</a>.</p>
-
-<h3 id="como-proceder">Como proceder?</h3>
+<h3 id="como-proceder">
+  
+  
+    Como proceder? <a href="#como-proceder" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>De agora em diante, eu vou assumir que você concorda que versionamento é uma boa prática fundamental. Caso esse não seja o caso, há muitos recursos pela web afora explicando <a href="https://www.git-tower.com/learn/git/ebook/en/desktop-gui/basics/what-is-version-control#start">o que um versionador é</a> e <a href="https://www.atlassian.com/git/tutorials/what-is-version-control#benefits-of-version-control">porque você deveria usar um.</a></p>
 
@@ -165,20 +178,38 @@ Photo by Ales Nesetril on Unsplash</p>
 <p>Mas é possível que o Git não seja a melhor escolha para o seu time <strong>agora</strong>. Lembre-se, você não tem muito tempo. Nós precisamos que a sua equipe adote as boas práticas o mais rápido possível.</p>
 
 <p>Como nós podemos fazer isso? Suponha que você tenha experiência com <a href="https://subversion.apache.org/">Subversion</a>, pois esse era o versionador usado na empresa que você trabalhou anteriormente. Sua experiência com Git, porém, é nenhuma. Se esse é o caso, eu diria que Subversion é a melhor escolha para você. Ter que aprender um novo sistema e ensiná-lo para seus colegas ao mesmo tempo que o coloca em vigor na empresa seria demais: você iria apenas se sobrecarregar.</p>
-
-<h2 id="revisão-de-código">Revisão de Código</h2>
+<h2 id="revisão-de-código">
+  
+  
+    Revisão de Código <a href="#revisão-de-código" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>Eu não vou mentir: eu sou um grande fã de revisão de código. E <a href="https://www.codinghorror.com/blog/archives/000495.html">eu não estou sozinho nisso.</a>. Eu já testemunhei em primeira mão como um bom processo de revisão de código pode reduzir o número de problemas em uma aplicação, tornar o código mais consistente e, mais importante ainda, espalhar conhecimento por todo o time de desenvolvimento.</p>
 
 <p>E aqui vai uma ótima vantagem dessa prática: revisão de código é algo relativamente fácil de ser implementado. Comece da maneira mais simples possível, e então faça adaptações na sua abordagem conforme as necessidades aparecerem.</p>
-
-<h3 id="minha-definição-de-revisão-de-código">Minha Definição de Revisão de Código</h3>
+<h3 id="minha-definição-de-revisão-de-código">
+  
+  
+    Minha Definição de Revisão de Código <a href="#minha-definição-de-revisão-de-código" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>Falar de revisão de código pode ser complicado. As pessoas às vezes tem ideias totalmente diferentes sobre o que a expressão significa. Então eu acho que uma clarificação se faz necessária.</p>
 
 <p>Eu <strong>não</strong> sou a favor de um processo de revisão de código altamente burocrático e estressante, no qual o seu código é esmiuçado, em público, durante horas. Eu não acredito que envergonhar as pessoas em público é uma forma eficaz de aumentar a qualidade de um projeto. Ao contrário, <a href="https://carlosschults.net/pt/revisao-codigo-vs-programacao-em-par/">o tipo de revisão de código que eu defendo</a> é um processo simples, geralmente iniciado ao submeter um pull request ou usando sua IDE favorita.</p>
-
-<h3 id="como-proceder-1">Como Proceder</h3>
+<h3 id="como-proceder-1">
+  
+  
+    Como Proceder <a href="#como-proceder-1" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>Agora que nós estamos sintonizados em relação ao significado de “revisão de código”, a próxima pergunta é: “como implementar isso na prática?” Da maneira mais simples possível que funcione.</p>
 
@@ -197,16 +228,28 @@ Photo by Ales Nesetril on Unsplash</p>
 <p>Por exemplo, <a href="https://submain.com/codeit.right/features">SubMain possui um produto chamado CodeIt.Right</a> que oferece feedback em tempo real de dentro do Visual Studio, lhe alertando de possíveis problemas de codificação, inclusive corrigindo problemas quando possível.</p>
 
 <p>Ao abraçar a automação, você deixa as pessoas da equipe livres para se preocuparem com questões de mais alto nível durante as revisões, como claridade do código ou decisões arquiteturais.</p>
-
-<h2 id="builds-automatizados">Builds Automatizados</h2>
+<h2 id="builds-automatizados">
+  
+  
+    Builds Automatizados <a href="#builds-automatizados" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>Talvez você esteja pensando que eu me equivoquei nessa seção. Afinal de contas, sequer faz sentido falar de builds automatizados sem mencionar testes automatizados?</p>
 
 <p>Eu vou argumentar que sim, faz sentido, por uma razão muito simples: builds automatizados eliminam o famoso problema de “<a href="https://blog.codinghorror.com/the-works-on-my-machine-certification-program/">na minha máquina funciona</a>”. </p>
 
 <p>Ter um local central onde os builds são feitos joga luz em vários tipos de problemas, de mal gerenciamento de dependências a falta de disciplina em testes.</p>
-
-<h3 id="como-proceder-2">Como Proceder</h3>
+<h3 id="como-proceder-2">
+  
+  
+    Como Proceder <a href="#como-proceder-2" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>Meu conselho aqui é o mesmo que na seção anterior: faça a coisa mais simples possível que funcione.</p>
 
@@ -215,16 +258,28 @@ Photo by Ales Nesetril on Unsplash</p>
 <p>Com o tempo, você vai melhorando a sua estratégia. Lembra dos analisadores de código que eu mencionei anteriormente? É possível integrá-los no seu processo de build. <a href="https://carlosschults.net/pt/testes-unitarios-iniciantes-parte1">Testes unitários</a> e outros tipos de testes automatizados também são uma valiosa adição.</p>
 
 <p>E por falar nisso…</p>
-
-<h2 id="ausências-notáveis">Ausências Notáveis</h2>
+<h2 id="ausências-notáveis">
+  
+  
+    Ausências Notáveis <a href="#ausências-notáveis" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>Você talvez tenha se surpreendido por minha lista de boas práticas não incluir testes unitários, mesmo eu sendo um defensor da importância de testes automatizados para a qualidade de uma aplicação. Qual é a razão disso?</p>
 
 <p>Infelizmente, adicionar testes unitários a uma aplicação legada é muito difícil, ao ponto de existir até <a href="https://www.amazon.com/Working-Effectively-Legacy-Michael-Feathers/dp/0131177052/ref=sr_1_1?ie=UTF8&amp;qid=1515443597&amp;sr=8-1&amp;keywords=working+effectively+with+legacy+code">um livro famoso</a> que foca apenas nisso. Não é uma tarefa fácil de se fazer em pouco tempo.</p>
 
 <p>Também é possível que muitos de vocês esperavam que eu falasse sobre código limpo ou os princípios <a href="https://en.wikipedia.org/wiki/SOLID_(object-oriented_design)">SOLID</a>. Eu encorajo vocês a lerem e pesquisarem sobre esses tópicos, mas eu não acredito que eles encaixam no propósito do post de hoje. Como o próprio nome deixa claro, eles são <em>princípios</em>. Pense neles como diretrizes filosóficas. Úteis? Claro. Mas não tão fáceis de decompor em conselhos pequenos, simples e acionáveis.</p>
-
-<h2 id="implemente-essas-práticas-para-ontem">Implemente Essas Práticas Para Ontem!</h2>
+<h2 id="implemente-essas-práticas-para-ontem">
+  
+  
+    Implemente Essas Práticas Para Ontem! <a href="#implemente-essas-práticas-para-ontem" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>É possível que vários de vocês tenha achado essas práticas extremamente básicas e não dignas de um post. “Quem é que não usa controle de versão em 2018???”</p>
 
@@ -654,6 +709,9 @@ Photo by Ales Nesetril on Unsplash</p>
 
     <script src="/js/dark-mode.js"></script>
     <script src="/js/copy-code.js"></script>
+    
+    <script src="/js/post-enhancements.js"></script>
+    
   </body>
 
 </html>

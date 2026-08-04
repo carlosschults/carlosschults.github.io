@@ -130,20 +130,33 @@
   </header>
 
   <div class="post-content" itemprop="articleBody">
+    
     <p><img src="https://res.cloudinary.com/dz5ppacuo/image/upload/v1459979937/testes-unitarios-iniciantes-min_povcse.png" alt="" /></p>
 
 <p>Better late than later! Time to continue our series on unit testing for beginners. Today you’re going to write your first unit test.
 <!--more--></p>
-
-<h2 id="introduction">Introduction</h2>
+<h2 id="introduction">
+  
+  
+    Introduction <a href="#introduction" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p><em>This post is part of a series. <a href="http://carlosschults.net/tag/unit-testing-series/">See all the articles in the series.</a></em></p>
 
 <p>In the <a href="https://carlosschults.net/en/unit-testing-for-beginners-part1/">previous article</a> you learned what unit tests are and what are the motivations for writing them.</p>
 
 <p>Today you’re going to learn how to create unit tests. I’ll show you how to install and use the a unit test framework called <strong>NUnit</strong>. Together, we’re going to write some tests in order for you to know some of its features.</p>
-
-<h2 id="nunit-installation">NUnit Installation</h2>
+<h2 id="nunit-installation">
+  
+  
+    NUnit Installation <a href="#nunit-installation" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>If you recall my <a href="https://carlosschults.net/pt/testes-unitarios-iniciantes-parte1">previous article</a>, you’ll remember that, in order to write and run unit tests, you need a <strong>unit testing framework.</strong></p>
 
@@ -196,8 +209,14 @@ After creating the project, I delete the default class, same as before.</p>
 <p>Don’t forget to check if the right project is selected before pressing <em>ENTER</em>. The installation will be done in a few seconds.</p>
 
 <p>This is it.</p>
-
-<h2 id="creating-and-running-the-first-test">Creating and running the first test</h2>
+<h2 id="creating-and-running-the-first-test">
+  
+  
+    Creating and running the first test <a href="#creating-and-running-the-first-test" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>Let’s create some tests. First, let’s add a new class to our production project. The class’s name will be <code class="language-plaintext highlighter-rouge">Employee</code> and its code will look like this:</p>
 
@@ -319,8 +338,14 @@ But was:  “Hi! My name is Alice and I work as a JobTitle.”
 <script src="https://gist.github.com/carlosschults/a91d41ff7ac732fc9c57e63c03a6be07.js"></script>
 
 <p>Even though it isn’t really need, I suggest you use comments like the ones above to indicate the test phases, at least in the beginning of your learning.</p>
-
-<h2 id="testing-the-giveraise-method">Testing the <code class="language-plaintext highlighter-rouge">GiveRaise</code> method</h2>
+<h2 id="testing-the-giveraise-method">
+  
+  
+    Testing the <code class="language-plaintext highlighter-rouge">GiveRaise</code> method <a href="#testing-the-giveraise-method" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>A salary raise is always welcome, wouldn’t you agree? Let’s test the <code class="language-plaintext highlighter-rouge">GiveRaise</code> method to see if it’s working properly. Add the following method to your test class:</p>
 
@@ -340,8 +365,14 @@ But was:  “Hi! My name is Alice and I work as a JobTitle.”
 </blockquote>
 
 <p>Ok, as we can see, the test did fail. Switch the method back to the correct implementation.</p>
-
-<h2 id="one-last-test">One last test</h2>
+<h2 id="one-last-test">
+  
+  
+    One last test <a href="#one-last-test" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>Let’s say the Product Owner just showed up with a new requirement: the <code class="language-plaintext highlighter-rouge">GiveRaise</code> method should ignore negative raise rates. First, let’s edit the <code class="language-plaintext highlighter-rouge">GiveRaise</code> method to deal with this scenario:</p>
 
@@ -361,8 +392,14 @@ Run the test to be sure that all of them are passing.</p>
 <script src="https://gist.github.com/carlosschults/a474698655450da6547dbfa6b9dbcb8c.js"></script>
 
 <p>Nothing really surprising here, right? At this point I’m sure you’ve already got this. So, now it is up to you to <strong>test the test</strong>: ruin the production code in one or more ways to see if the test fails as expected.</p>
-
-<h2 id="a-quick-recap">A quick recap</h2>
+<h2 id="a-quick-recap">
+  
+  
+    A quick recap <a href="#a-quick-recap" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>Today’s article was more dense than the previous one. We’ve managed to cover several topics::</p>
 
@@ -380,16 +417,28 @@ Run the test to be sure that all of them are passing.</p>
 <p>Some naming conventions were covered as well, for both classes and methods.</p>
 
 <p>Last but not least, you’ve learned about the importance of seeing the test fail, and how we can gain confidence in our tests by deliberately sabotaging the production code.</p>
-
-<h2 id="some-notes">Some notes</h2>
+<h2 id="some-notes">
+  
+  
+    Some notes <a href="#some-notes" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <ul>
   <li>You’ve probably noticed that my Visual Studio is not in English in the screen-captures. That is because I’m Brazilian and my Visual Studio is configured in Portuguese (and I first wrote this post in pt-br). I apologize for that.</li>
   <li>All of the code for today’s post <a href="https://github.com/carlosschults/learning-unit-testing/">can be found on Github</a>.</li>
   <li>Once again, I thank my friend Gunter Italiano Ribeiro for proof-reading this post.</li>
 </ul>
-
-<h2 id="conclusion">Conclusion</h2>
+<h2 id="conclusion">
+  
+  
+    Conclusion <a href="#conclusion" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>This was my second article in the series about unit testing. As I already mentioned, it is deliberately longer and more practical than the previous one. Still, all we’ve covered today is just the tip of the iceberg. Whole books were written about unit testing; by the way I’m indicating some in the following articles, along with more references.</p>
 
@@ -768,6 +817,9 @@ Run the test to be sure that all of them are passing.</p>
 
     <script src="/js/dark-mode.js"></script>
     <script src="/js/copy-code.js"></script>
+    
+    <script src="/js/post-enhancements.js"></script>
+    
   </body>
 
 </html>

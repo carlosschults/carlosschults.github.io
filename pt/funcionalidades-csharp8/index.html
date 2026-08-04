@@ -124,6 +124,7 @@
   </header>
 
   <div class="post-content" itemprop="articleBody">
+    
     <p><img src="https://res.cloudinary.com/dz5ppacuo/image/upload/v1513817072/csharp8-1037x438_skogpz.jpg" alt="" /></p>
 
 <p>C# 8.0 está chegando e vai trazer algumas funcionalidades muito interessantes. Vamos dar uma olhada no que o futuro reserva.
@@ -140,8 +141,14 @@
 <p>É claro que sim. A Microsoft tem desenvolvido o C# de maneira transparante já faz um bom tempo. Você pode <a href="https://github.com/dotnet/csharplang">acessar o repositório do GitHub</a> para ler (e participar, por que não?) nas discussões.</p>
 
 <p>Hoje, nó abordaremos três propostas de funcionalidades para o C# 8.0: <strong>extension everything</strong>, <strong>implementações default em interfaces,</strong> e <strong>tipos de referência nuláveis</strong>.</p>
-
-<h2 id="extension-everything">Extension Everything</h2>
+<h2 id="extension-everything">
+  
+  
+    Extension Everything <a href="#extension-everything" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p><em>Extension everything</em> - em tradução livre seria algo como “extensão em tudo” - é provavelmente a menos controversa das três propostas e também, de certa forma, a menos desenvolvida. Então eu achei que ela daria um bom ponto de partida.</p>
 
@@ -150,8 +157,14 @@
 <p>Porém, em algum momento você deve ter se perguntado: por que apenas <em>métodos</em> de extensão? E você não estaria só. Propriedades de extensão, por exemplo, tem sido um desejo dos desenvolvedores C# por muito tempo, como mostra <a href="https://stackoverflow.com/questions/619033/does-c-sharp-have-extension-properties">esta questão de 2009 no Stack Overflow</a> ou este <a href="https://channel9.msdn.com/forums/Coffeehouse/257556-C-Extension-Properties/">tópico em um fórum de 2007(!)</a>.</p>
 
 <p>Mas agora parece que a espera está finalmente chegando ao fim. Segundo Mads Torgersen, o <em>program manager</em> do time de design do C#, <a href="https://channel9.msdn.com/Blogs/Seth-Juarez/A-Preview-of-C-8-with-Mads-Torgersen">um estagiário da Microsoft propôs uma nova sintaxe para métodos de extensão que também possibilitará “outras coisas de extensão”</a>.</p>
-
-<h3 id="vamos-ver-o-código">Vamos ver o código</h3>
+<h3 id="vamos-ver-o-código">
+  
+  
+    Vamos ver o código <a href="#vamos-ver-o-código" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>Se eu fosse você estaria ansioso para ver algum código Logo abaixo temos um exemplo de um método de extensão, utilizando a sintaxe atual:</p>
 
@@ -176,12 +189,24 @@
 <p>Essa nova funcionalidade deverá suportar métodos, propriedades, operadores e membros estáticos, pelo menos no início; suporte a eventos e construtores pode ser adicionado posteriormente.</p>
 
 <p>Você não será capaz de criar estado adicional para a instância original, i.e. criar um campo privado na classe de extensão. De acordo com Torgersen, isso iria requerer uma complexidade indesejada para rastrear o valor desse novo estado.</p>
-
-<h3 id="status-atual">Status atual</h3>
+<h3 id="status-atual">
+  
+  
+    Status atual <a href="#status-atual" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>Você pode <a href="https://github.com/dotnet/csharplang/issues/192">acompanhar o desenvolvimento da feature na sua issue no GitHub.</a></p>
-
-<h2 id="implementação-default-em-interfaces">Implementação default em interfaces.</h2>
+<h2 id="implementação-default-em-interfaces">
+  
+  
+    Implementação default em interfaces. <a href="#implementação-default-em-interfaces" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>Eu admito que fiquei surpreso - e não muito feliz - quando ouvi sobre essa feature pela primeira vez, <a href="https://channel9.msdn.com/Events/Build/2017/B8104">em uma palestra Mads Torgersen ministrou em maio, na conferência Build 2017.</a></p>
 
@@ -196,8 +221,14 @@
 <p>Além de métodos, também será permitido adicionar implementações em indexadores, propriedades e assessores de eventos. Membros estáticos como métodos, propriedades e indexadores também serão permitidos.</p>
 
 <p>Estado de instância não será permitido nas interfaces, no entanto. Você será capaz de usar campos estáticos mas não campos de instância. Como consequência disso, propriedades automáticas também não serão permitidas, já que elas declaram um campo privado implicitamente.</p>
-
-<h3 id="casos-de-uso">Casos de uso</h3>
+<h3 id="casos-de-uso">
+  
+  
+    Casos de uso <a href="#casos-de-uso" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>Conforme declarado na <a href="https://github.com/dotnet/csharplang/blob/master/proposals/default-interface-methods.md">proposta da feature</a>, o principal caso de uso para implementações padrão nas interfaces é possibilitar que uma interface possa evoluir de maneira segura. Você vai poder adicionar novos membros à interface, contato que você forneça uma implementação padrão, clientes existentes não serão forçados à implementá-los.</p>
 
@@ -206,22 +237,46 @@
 <p>É aí que as implementações padrão brilham.</p>
 
 <p>Outra proposta de valor importação dessa feature tem relação com os sistemas Android e iOs. Já que tanto Java e Swift oferecem implementações padrão em interfaces, pode ser complicado <em>envelopar</em> APIs do Android e iOs que fazem uso desta funcionalidade. Com a oitava versão do C#, será possível adaptar tais APIs de maneira mais fiel.</p>
-
-<h3 id="as-interfaces-vão-virar-classes-abstratas">As interfaces vão virar classes abstratas?</h3>
+<h3 id="as-interfaces-vão-virar-classes-abstratas">
+  
+  
+    As interfaces vão virar classes abstratas? <a href="#as-interfaces-vão-virar-classes-abstratas" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>Mais ou menos, mas não realmente. Como você sabe, não há herança múltipla em linguagens coo C# e Java, o que significa que não é possível herdar de mais de uma classe. Por outro lado, uma classe é (e continuará sendo) capaz de implementar várias interfaces.</p>
-
-<h3 id="status-atual-1">Status atual</h3>
+<h3 id="status-atual-1">
+  
+  
+    Status atual <a href="#status-atual-1" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>Essa funcionalidade está sendo prototipada. <a href="https://github.com/dotnet/csharplang/blob/master/proposals/default-interface-methods.md">Você pode seguir seu desenvolvimento na issue no GitHub.</a></p>
-
-<h2 id="tipos-de-referência-nuláveis">Tipos de Referência Nuláveis</h2>
+<h2 id="tipos-de-referência-nuláveis">
+  
+  
+    Tipos de Referência Nuláveis <a href="#tipos-de-referência-nuláveis" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>“O quê?”, você talvez esteja pensando. “Não seria ‘tipos de referência <strong>não</strong>-nuláveis’?” O nome dessa funcionalidade pode realmente confundir um pouco. Vou voltar a isso mais tarde, mas antes, vamos explicar a razão de uma feature como essa ser sequer considerada.</p>
 
 <p>Eu aposto que você conhece a frase “o erro de um bilhão de dólares”. Na remota possibilidade de que você não conheça, ela ser refere à referência nula, e foi <a href="https://en.wikipedia.org/wiki/Tony_Hoare#Apologies_and_retractions">criada por ninguém mais ninguém menos que Sir Tony Hoare, o próprio criador da referência nula.</a></p>
-
-<h3 id="mas-por-que-null-é-tão-ruim">Mas por que <code class="language-plaintext highlighter-rouge">null</code> é tão ruim?</h3>
+<h3 id="mas-por-que-null-é-tão-ruim">
+  
+  
+    Mas por que <code class="language-plaintext highlighter-rouge">null</code> é tão ruim? <a href="#mas-por-que-null-é-tão-ruim" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>Existem várias possíveis respostas para essa pergunta mas o maior problema é, claro, o risco da famosa <em>null-reference exception</em> (também conhecida como <em>null-pointer exception</em> na Java-lândia). Já que tudo (“tudo” no contexto do C# significa tipos os <a href="https://carlosschults.net/pt/tipos-valor-referencia-em-csharp/">tipos de referência</a>) pode ser nulo, você sempre corre o risco de receber uma exceção quando tenta acessar algum membro de um objeto.</p>
 
@@ -236,8 +291,14 @@
 <p>O pulo do gato é o seguinte: o time de design do C# - em uma decisão com uma boa dose de controvérsia - pretende tornar não-nulabilidade o novo padrão para os tipos de referência. Interpretando assim, a “nova” coisa seriam os tipos nuláveis.</p>
 
 <p>Para manter a linguagem consistente, a proposta é que seja usada a mesma sintaxe que já existe para tipos de valor nuláveis - em outras palavras, o ponto de interrogação.</p>
-
-<h3 id="chega-de-falar-vamos-ver-código">Chega de falar. Vamos ver código!</h3>
+<h3 id="chega-de-falar-vamos-ver-código">
+  
+  
+    Chega de falar. Vamos ver código! <a href="#chega-de-falar-vamos-ver-código" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>Eu imagino que usar uma classe “Pessoa” como exemplo é o equivalente de tocar “Stairway to Heaven” numa loja de instrumentos musicais: originalidade zero. Mas usar um exemplo mais elaborado seria uma distração desnecessária, então me dá um desconto desta vez.</p>
 
@@ -266,8 +327,14 @@
 <script src="https://gist.github.com/carlosschults/518c1b35560cafe17fca829aa2aef27b.js"></script>
 
 <p>Em resumo, você tem várias opções. Assim que você conseguir convencer o compilador que seu código não tem risco de disparar uma <em>null reference exception</em>, o aviso vai embora.</p>
-
-<h3 id="impedindo-atribuição-de-nulável-para-não-nulável">Impedindo atribuição de nulável para não-nulável</h3>
+<h3 id="impedindo-atribuição-de-nulável-para-não-nulável">
+  
+  
+    Impedindo atribuição de nulável para não-nulável <a href="#impedindo-atribuição-de-nulável-para-não-nulável" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>A nova versão do C# também vai impedir atribuição de uma variável nulável para uma não-nulável, então o código a seguir também vai resultar em um aviso:</p>
 
@@ -284,20 +351,38 @@
 <script src="https://gist.github.com/carlosschults/008709a0b9ff6a72abc8fc4882a467d3.js"></script>
 
 <p>É importante lembrar que quando usar esse operador, você basicamente está dizendo ao compilador: “Confie em mim! Eu sei o que eu estou fazendo.” Então, é bom você realmente saber o que está fazendo!</p>
-
-<h3 id="e-retro-compatibilidade">E retro-compatibilidade?</h3>
+<h3 id="e-retro-compatibilidade">
+  
+  
+    E retro-compatibilidade? <a href="#e-retro-compatibilidade" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>Eu sei o que você deve estar pensando agora. “Isso parece legal e tal, mas não vai dar problema com um monte de código existente?”</p>
 
 <p>Bom, é claro que vai. E é por isso que essa será uma alteração <strong>opt-in</strong>, ativada a nível de cada projeto.</p>
-
-<h3 id="status-atual-2">Status atual</h3>
+<h3 id="status-atual-2">
+  
+  
+    Status atual <a href="#status-atual-2" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>Esta já está com o protótipo pronto. Caso se interesse, <a href="https://github.com/dotnet/csharplang/wiki/Nullable-Reference-Types-Preview">você pode baixar, instalar, e testar um preview agora mesmo.</a></p>
 
 <p>Assim como as outras funcionalidades, você pode se <a href="https://github.com/dotnet/csharplang/blob/master/proposals/nullable-reference-types.md">antenar com o que está acontecendo por meio da issue no GitHub.</a></p>
-
-<h2 id="c-tem-um-futuro-e-vai-ser-incrível">C# tem um futuro. E vai ser incrível.</h2>
+<h2 id="c-tem-um-futuro-e-vai-ser-incrível">
+  
+  
+    C# tem um futuro. E vai ser incrível. <a href="#c-tem-um-futuro-e-vai-ser-incrível" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>Agora você sabe um pouco mais sobre três das funcionalidades que nós provavelmente ganharemos com a próxima versão da linguagem C#.</p>
 
@@ -721,6 +806,9 @@
 
     <script src="/js/dark-mode.js"></script>
     <script src="/js/copy-code.js"></script>
+    
+    <script src="/js/post-enhancements.js"></script>
+    
   </body>
 
 </html>

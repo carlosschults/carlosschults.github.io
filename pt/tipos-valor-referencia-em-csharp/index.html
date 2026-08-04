@@ -125,6 +125,7 @@
   </header>
 
   <div class="post-content" itemprop="articleBody">
+    
     <p><img src="https://res.cloudinary.com/dz5ppacuo/image/upload/v1466341001/csharp-min_buiizq.png" alt="" /></p>
 
 <p>Este é o meu primeiro post pra valer aqui no meu blog, e eu decidi escrever sobre tipos de valor e tipos de referência em C#. Isso é um assunto relativamente básico, no sentido de que é algo que você já deveria entender caso você programe em C# profissionalmente. Mas ao mesmo tempo, é algo que pode ser um pouco contra-intuitivo caso você não seja um desenvolvedor experiente.
@@ -199,8 +200,14 @@ Vou escrever sobre essas coisas no futuro, mas por hoje vamos focar no básico.<
 <p>Então, podemos resumir da seguinte forma: tipos de valor armazenam dados. Quando você atribuir o valor de uma variável a outra, o que é copiado são os próprios dados (como um número inteiro, por exemplo). Isso é parecido com quando você copia um arquivo de uma pasta em seu computador e cola em outro lugar. Você fez uma cópia, mas de agora em diante eles são arquivos independentes e não têm nada a ver um com o outro.</p>
 
 <p>Tipos de referência armazenam uma referência, que apontam para os dados, que vivem em algum outro lugar na memória do computador. Quando você atribui o valor de uma variável de referência para outra, o que é copiado é a referência. Pode ser útil pensar nas referências como atalhos para arquivos. Se você tem um ou mais atalhos que apontam para um arquivo em particular no seu HD, quando você fizer alterações no arquivo, tais alterações serão visíveis quando você acessar o arquivo pelo atalho. Pois eles não passam disso, atalhos.</p>
-
-<h2 id="quais-tipos-são-tipos-de-valor">Quais tipos são tipos de valor?</h2>
+<h2 id="quais-tipos-são-tipos-de-valor">
+  
+  
+    Quais tipos são tipos de valor? <a href="#quais-tipos-são-tipos-de-valor" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>De acordo com o MSDN, os tipos de valor são:</p>
 
@@ -210,8 +217,14 @@ Vou escrever sobre essas coisas no futuro, mas por hoje vamos focar no básico.<
   <li>Todas as estruturas</li>
   <li>Enumerações</li>
 </ul>
-
-<h2 id="quais-tipos-são-tipos-de-referência">Quais tipos são tipos de referência?</h2>
+<h2 id="quais-tipos-são-tipos-de-referência">
+  
+  
+    Quais tipos são tipos de referência? <a href="#quais-tipos-são-tipos-de-referência" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>Novamente, de acordo com o MSDN:</p>
 
@@ -221,14 +234,26 @@ Vou escrever sobre essas coisas no futuro, mas por hoje vamos focar no básico.<
   <li>Classes</li>
   <li>Delegates</li>
 </ul>
-
-<h2 id="espera-um-pouco-string-é-um-tipo-de-referência">Espera um pouco! String é um tipo de referência?!</h2>
+<h2 id="espera-um-pouco-string-é-um-tipo-de-referência">
+  
+  
+    Espera um pouco! String é um tipo de referência?! <a href="#espera-um-pouco-string-é-um-tipo-de-referência" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>Talvez você tenha se surpreendido em ver String listada como um tipo de referência. Afinal de contas, ela parece se comportar como um tipo de valor. Bom, a razão para isso é que a string é um tipo <strong>imutável</strong>. Como eu disse antes, não vou falar sobre isso hoje, mas em breve teremos um post inteiro sobre System.String.</p>
 
 <p>Bom, por hoje é só. Espero que tenham gostado do post, e eu adoraria ter o feedback de vocês. Eu me expressei claramente? Eu disse algo um pouco impreciso - ou mesmo totalmente errado? Deixe um comentário aqui embaixo ou <a href="https://twitter.com/carlosschults">me chame no twitter</a>.</p>
-
-<h2 id="referências-em-inglês">Referências (em inglês):</h2>
+<h2 id="referências-em-inglês">
+  
+  
+    Referências (em inglês): <a href="#referências-em-inglês" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <ul>
   <li><a href="https://jonskeet.uk/csharp/references.html">https://jonskeet.uk/csharp/references.html</a></li>
@@ -653,6 +678,9 @@ Vou escrever sobre essas coisas no futuro, mas por hoje vamos focar no básico.<
 
     <script src="/js/dark-mode.js"></script>
     <script src="/js/copy-code.js"></script>
+    
+    <script src="/js/post-enhancements.js"></script>
+    
   </body>
 
 </html>

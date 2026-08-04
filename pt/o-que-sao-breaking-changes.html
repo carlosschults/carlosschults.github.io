@@ -125,6 +125,7 @@
   </header>
 
   <div class="post-content" itemprop="articleBody">
+    
     <p><img src="/img/what-are-breaking-changes/cover.jpg" alt="" />
 Foto por <a href="https://unsplash.com/@denisolvr?utm_content=creditCopyText&amp;utm_medium=referral&amp;utm_source=unsplash">Denis Oliveira</a> no <a href="https://unsplash.com/photos/grayscale-photography-of-speedboat-yplNhhXxBtM?utm_content=creditCopyText&amp;utm_medium=referral&amp;utm_source=unsplash">Unsplash</a></p>
 
@@ -142,8 +143,14 @@ Foto por <a href="https://unsplash.com/@denisolvr?utm_content=creditCopyText&amp
 
 <p>Então, estou escrevendo esses artigos pra ajudar os iniciantes por aí a entender um pouco melhor alguns conceitos chave do desenvolvimento de software, um de cada vez, de forma simples e interessante, espero. Tudo cortesia do seu amigo aqui.
 Vamos começar?</p>
-
-<h2 id="o-que-é-um-breaking-change">O que é um breaking change?</h2>
+<h2 id="o-que-é-um-breaking-change">
+  
+  
+    O que é um breaking change? <a href="#o-que-é-um-breaking-change" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 <p>“Breaking change” significa qualquer mudança que você faz no seu software que pode fazer o código dos seus usuários quebrar, depois que eles fizerem o upgrade. Breaking changes só fazem sentido quando você pensa em software que você cria e de alguma forma distribui para usuários terceiros.</p>
 
 <p><img src="https://imgs.xkcd.com/comics/workflow.png" alt="Uma tira de quadrinhos sobre breaking changes" title="Sempre tem um XKCD relevante" /></p>
@@ -173,8 +180,14 @@ Vamos começar?</p>
 
   </div>
 </div>
-
-<h2 id="exemplos-de-breaking-changes">Exemplos de Breaking Changes</h2>
+<h2 id="exemplos-de-breaking-changes">
+  
+  
+    Exemplos de Breaking Changes <a href="#exemplos-de-breaking-changes" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>Na prática, que tipos de mudanças são breaking changes?</p>
 
@@ -187,32 +200,68 @@ Vamos começar?</p>
 <p><em>Cadê o método que estava aqui?</em></p>
 
 <p>Existem outros tipos de breaking changes, então vamos revisar alguns deles.</p>
-
-<h3 id="novos-parâmetros-obrigatórios">Novos Parâmetros Obrigatórios</h3>
+<h3 id="novos-parâmetros-obrigatórios">
+  
+  
+    Novos Parâmetros Obrigatórios <a href="#novos-parâmetros-obrigatórios" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>Se você adiciona novos parâmetros a um método, e eles são obrigatórios, então todo código existente que chama o método vai falhar na compilação. A solução aqui seria adicionar novos parâmetros como opcionais, ou até criar um novo método.</p>
-
-<h3 id="parâmetros-opcionais-removidos-ou-tornados-obrigatórios">Parâmetros opcionais removidos ou tornados obrigatórios</h3>
+<h3 id="parâmetros-opcionais-removidos-ou-tornados-obrigatórios">
+  
+  
+    Parâmetros opcionais removidos ou tornados obrigatórios <a href="#parâmetros-opcionais-removidos-ou-tornados-obrigatórios" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>Essa é uma continuação lógica da anterior. Se você remove um parâmetro opcional, código que chama aquele método passando o parâmetro vai quebrar. Por outro lado, se você torna um parâmetro opcional obrigatório, acontece o oposto: agora todos os lugares que não passam o parâmetro vão quebrar.</p>
-
-<h3 id="novos-membros-adicionados-a-uma-interface">Novos Membros Adicionados a Uma Interface</h3>
+<h3 id="novos-membros-adicionados-a-uma-interface">
+  
+  
+    Novos Membros Adicionados a Uma Interface <a href="#novos-membros-adicionados-a-uma-interface" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>Aqui estou falando especificamente de linguagens estaticamente tipadas que têm o conceito de interface onde você define comportamentos que classes cliente precisam implementar.</p>
 
 <p>Adicionar um novo membro a uma interface é um breaking change porque agora todas as classes que a implementam não teriam implementado o novo membro.</p>
 
 <p>Recentemente, o time do C# resolveu esse problema de uma forma que gerou alguma controvérsia: adicionando a possibilidade de <a href="https://devblogs.microsoft.com/dotnet/default-implementations-in-interfaces/">implementar métodos nas próprias interfaces!</a></p>
-
-<h3 id="mudou-o-tipo-de-um-parâmetro-de-método">Mudou o Tipo de um Parâmetro de Método</h3>
+<h3 id="mudou-o-tipo-de-um-parâmetro-de-método">
+  
+  
+    Mudou o Tipo de um Parâmetro de Método <a href="#mudou-o-tipo-de-um-parâmetro-de-método" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>Se você muda o tipo de um parâmetro de, digamos, <code class="language-plaintext highlighter-rouge">string</code> para <code class="language-plaintext highlighter-rouge">int</code>, você está garantindo que muito código cliente vai quebrar.</p>
-
-<h3 id="mudou-o-tipo-de-retorno-de-um-método-ou-função">Mudou o tipo de retorno de um método ou função</h3>
+<h3 id="mudou-o-tipo-de-retorno-de-um-método-ou-função">
+  
+  
+    Mudou o tipo de retorno de um método ou função <a href="#mudou-o-tipo-de-retorno-de-um-método-ou-função" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>Novamente, dependendo dos tipos antigo e novo, isso pode nem quebrar, mas ainda é um breaking change em geral.</p>
-
-<h3 id="mudou-a-ordem-dos-parâmetros">Mudou a ordem dos parâmetros</h3>
+<h3 id="mudou-a-ordem-dos-parâmetros">
+  
+  
+    Mudou a ordem dos parâmetros <a href="#mudou-a-ordem-dos-parâmetros" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>Esse é interessante porque pode quebrar de uma forma diferente dos outros. Para a maioria dos exemplos que eu tenho dado até agora, “quebrar” significa que o código que consome seu código vai falhar na compilação.</p>
 
@@ -229,28 +278,64 @@ Vamos começar?</p>
 <p>Se você invertesse a ordem entre <code class="language-plaintext highlighter-rouge">categoryId</code> e <code class="language-plaintext highlighter-rouge">companyId</code>, o código ainda compilaria mas não funcionaria corretamente. Ainda seria um breaking change, mas um que falha de forma mais sutil.</p>
 
 <p>Claro que se os dois parâmetros são de tipos diferentes, então falharia no sentido de falhar na compilação. E é por isso que muita gente argumenta que você não deveria usar primitivos pra coisas como ids, mas criar seus próprios <a href="https://carlosschults.net/pt-br/genai-tiny-types">tiny types</a> pra isso.</p>
-
-<h3 id="comportamento-de-tratamento-de-erro-modificado-lançando-exceções-diferentes">Comportamento de tratamento de erro modificado (lançando exceções diferentes)</h3>
+<h3 id="comportamento-de-tratamento-de-erro-modificado-lançando-exceções-diferentes">
+  
+  
+    Comportamento de tratamento de erro modificado (lançando exceções diferentes) <a href="#comportamento-de-tratamento-de-erro-modificado-lançando-exceções-diferentes" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>Se o seu método costumava lançar um certo tipo de exceção e agora lança uma diferente, isso é um breaking change, porque código que foi escrito pra capturar aquela primeira exceção específica não vai funcionar pra nova, a menos que ela herde da primeira.</p>
-
-<h3 id="tornou-métodos-ou-propriedades-públicas-privadas">Tornou métodos ou propriedades públicas privadas</h3>
+<h3 id="tornou-métodos-ou-propriedades-públicas-privadas">
+  
+  
+    Tornou métodos ou propriedades públicas privadas <a href="#tornou-métodos-ou-propriedades-públicas-privadas" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>Na prática, do pontos de vista do cliente, isso é o mesmo que excluir algo, então é um breaking change óbvio.</p>
-
-<h3 id="adicionou-requisitos-de-autenticação-onde-não-existiam">Adicionou requisitos de autenticação onde não existiam</h3>
+<h3 id="adicionou-requisitos-de-autenticação-onde-não-existiam">
+  
+  
+    Adicionou requisitos de autenticação onde não existiam <a href="#adicionou-requisitos-de-autenticação-onde-não-existiam" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>Até agora, todos os exemplos foram pra bibliotecas ou pacotes. Agora vamos ver alguns exemplos pra APIs web. O primeiro tem a ver com autenticação: se um endpoint não requeria autenticação mas agora requer, isso é um breaking change, porque código existente que costumava chamar isso agora vai receber um erro <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status/401">401 Unauthorized</a>.</p>
-
-<h3 id="adicionou-novas-propriedades-obrigatórias-a-um-payload">Adicionou novas propriedades obrigatórias a um payload</h3>
+<h3 id="adicionou-novas-propriedades-obrigatórias-a-um-payload">
+  
+  
+    Adicionou novas propriedades obrigatórias a um payload <a href="#adicionou-novas-propriedades-obrigatórias-a-um-payload" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>Isso é similar a adicionar novas propriedades obrigatórias a um método público, certo? Se seu endpoint agora espera um payload diferente do que esperava antes, código existente vai quebrar, provavelmente recebendo um erro <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status/400">400 Bad Request</a>.</p>
-
-<h3 id="renomear-ou-deletar-um-endpoint">Renomear ou deletar um endpoint</h3>
+<h3 id="renomear-ou-deletar-um-endpoint">
+  
+  
+    Renomear ou deletar um endpoint <a href="#renomear-ou-deletar-um-endpoint" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>Esse é auto-explicativo.</p>
-
-<h2 id="o-que-fazer-sobre-breaking-changes">O que fazer sobre breaking changes?</h2>
+<h2 id="o-que-fazer-sobre-breaking-changes">
+  
+  
+    O que fazer sobre breaking changes? <a href="#o-que-fazer-sobre-breaking-changes" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>Isso deveria ser óbvio agora, mas vamos deixar claro: breaking changes são Uma Coisa Ruim™. Tente ao máximo evitá-las.</p>
 
@@ -259,16 +344,28 @@ Vamos começar?</p>
 <p>Às vezes não tem jeito. Você simplesmente precisa fazer um breaking change, seja removendo um método ou classe que se tornou obsoleta, ou mudando a assinatura de uma função.</p>
 
 <p>Quando você tem que fazer algo assim, algumas coisas são aconselhadas.</p>
-
-<h3 id="depreciação-gradual">Depreciação Gradual</h3>
+<h3 id="depreciação-gradual">
+  
+  
+    Depreciação Gradual <a href="#depreciação-gradual" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>Adicionar um breaking change é algo que você não deveria levar de forma leviana porque pode dramaticamente interromper o workflow dos seus usuários. Além disso, não faça isso de repente, do nada, e de uma vez.</p>
 
 <p>Antes de remover classes/métodos/etc obsoletos, primeiro anuncie publicamente que você está fazendo isso, várias versões antes. Então, você marca aquele artefato como deprecated de alguma forma, mas ainda não remove. Por exemplo, em C# você pode usar o atributo <a href="https://learn.microsoft.com/en-us/dotnet/api/system.obsoleteattribute?view=net-9.0">Obsolete</a>.</p>
 
 <p>Então, depois de algumas versões, você finalmente faz seu breaking change.</p>
-
-<h3 id="adicione-instruções-às-suas-release-notes">Adicione Instruções às Suas Release Notes</h3>
+<h3 id="adicione-instruções-às-suas-release-notes">
+  
+  
+    Adicione Instruções às Suas Release Notes <a href="#adicione-instruções-às-suas-release-notes" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>Se você está publicando software publicamente pra uso de terceiros, você provavelmente tem algum tipo de release notes onde comunica quais foram as mudanças nesta nova versão. Aproveite isso.</p>
 
@@ -277,8 +374,14 @@ Vamos começar?</p>
 <p>Geralmente, quando um breaking change consiste em aposentar um método/classe/endpoint, vem acompanhado de uma nova forma de fazer a mesma coisa. Afinal, você não estaria aposentando a forma antiga só porque sim.</p>
 
 <p>Nesses casos, também use suas release notes pra explicar em detalhes como os usuários podem adaptar seu código pra migrar da forma antiga pra nova de fazer a tarefa.</p>
-
-<h3 id="use-semantic-versioning">Use Semantic Versioning</h3>
+<h3 id="use-semantic-versioning">
+  
+  
+    Use Semantic Versioning <a href="#use-semantic-versioning" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 
 <p>Finalmente, use <a href="https://semver.org/">Semantic Versioning</a> e use o número da versão pra comunicar que isso é um breaking change, lançando uma versão major.</p>
 
@@ -302,8 +405,14 @@ Vamos começar?</p>
 </code></pre></div></div>
 
 <p>Dessa forma, você comunica claramente aos seus usuários a presença ou ausência de breaking changes na sua release mais recente.</p>
-
-<h2 id="conclusão">Conclusão</h2>
+<h2 id="conclusão">
+  
+  
+    Conclusão <a href="#conclusão" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p>Neste post, expliquei o conceito de breaking change, por que geralmente é ruim, e o que fazer sobre isso. Resumo rápido:</p>
 
@@ -733,6 +842,9 @@ Vamos começar?</p>
 
     <script src="/js/dark-mode.js"></script>
     <script src="/js/copy-code.js"></script>
+    
+    <script src="/js/post-enhancements.js"></script>
+    
   </body>
 
 </html>

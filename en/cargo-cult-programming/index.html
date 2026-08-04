@@ -126,6 +126,7 @@
   </header>
 
   <div class="post-content" itemprop="articleBody">
+    
     <p><img src="https://res.cloudinary.com/dz5ppacuo/image/upload/v1516152067/cargo-cult-programming-1037x438_spoxet.jpg" alt="" /></p>
 
 <p><em>Editorial note: I originally wrote this post for the NDepend blog.  You can <a href="https://blog.ndepend.com/cargo-cult-programming/">check out the original here, at their site</a>. While you’re there, download NDepend and give it a try.</em></p>
@@ -135,8 +136,14 @@
 <p>If you share my past self’s astonishment, then today’s post is for you!</p>
 
 <p>First, you’ll see what cargo cult programming is and why you should care. Then, we’re going to look at some practical examples, using the C# language. Finally, we’ll close with advice about what you can do, as a developer, to avoid falling into this trap.</p>
-
-<h2 id="cargo-cult-programming-doing-stuff-just-because">Cargo Cult Programming: Doing Stuff Just Because</h2>
+<h2 id="cargo-cult-programming-doing-stuff-just-because">
+  
+  
+    Cargo Cult Programming: Doing Stuff Just Because <a href="#cargo-cult-programming-doing-stuff-just-because" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 
 <p><a href="https://en.wikipedia.org/wiki/Cargo_cult_programming">According to Wikipedia</a>, “Cargo cult programming is a style of computer programming characterized by the ritual inclusion of code or program structures that serve no real purpose.”</p>
 
@@ -145,8 +152,14 @@
 <p>Or maybe they tried to use an idiom they picked up from another developer while failing to understand that the contexts are different and it’s useless in the current situation.</p>
 
 <p>Finally, it might just be lack of education: maybe the developer has a poor mental model of how the tools they’re using really work.</p>
-
-<h2 id="why-is-cargo-cult-programming-a-problem">Why is Cargo Cult Programming a Problem?</h2>
+<h2 id="why-is-cargo-cult-programming-a-problem">
+  
+  
+    Why is Cargo Cult Programming a Problem? <a href="#why-is-cargo-cult-programming-a-problem" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 <p>As Eric Lippert puts it, <a href="https://blogs.msdn.microsoft.com/ericlippert/2004/03/01/syntax-semantics-micronesian-cults-and-novice-programmers/">cargo cult programmers struggle to make meaningful changes to a program</a> and end up using a trial-and-error approach since they don’t understand the inner workings of the code they’re about to change.</p>
 
 <p>This is not so different from what the <a href="https://pragprog.com/the-pragmatic-programmer/extracts/coincidence">Pragmatic Bookshelf calls “programming by coincidence”</a>:</p>
@@ -156,18 +169,36 @@
 </blockquote>
 
 <p>That single sentence pretty much sums it up for me: if you don’t know how or why your code works, neither will you understand what happened when it no longer works.</p>
-
-<h2 id="origin-of-the-term">Origin of the Term</h2>
+<h2 id="origin-of-the-term">
+  
+  
+    Origin of the Term <a href="#origin-of-the-term" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 <p>Although practices that are considered cargo cult today <a href="https://en.wikipedia.org/wiki/Cargo_cult#First_occurrences">have been recorded as early as the late 19th century</a>, the term itself dates from 1945, when it was first used to describe practices that emerged during and after World War II between Melanesian islanders.</p>
 
 <p>These islanders would mimic the soldiers’ behavior, such as dressing up as flight controllers and waving sticks, hoping that airplanes would descend from the skies with a lot of cargo.</p>
 
 <p>Since then, the term cargo cult has been used in a variety of contexts to mean <strong>to imitate form without content</strong>—to perfectly copy the superficial elements while failing to understand the deeper meanings and workings of whatever one’s trying to emulate.</p>
-
-<h2 id="talk-is-cheap-show-me-the-code">Talk is Cheap; Show Me the Code!</h2>
+<h2 id="talk-is-cheap-show-me-the-code">
+  
+  
+    Talk is Cheap; Show Me the Code! <a href="#talk-is-cheap-show-me-the-code" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 <p>Enough with the history lesson. Time to see some code! I’m going to show you five examples of cargo cult programming in the C# language.</p>
-
-<h3 id="checking-a-non-nullable-value-type-for-null">Checking a Non-Nullable Value Type for Null</h3>
+<h3 id="checking-a-non-nullable-value-type-for-null">
+  
+  
+    Checking a Non-Nullable Value Type for Null <a href="#checking-a-non-nullable-value-type-for-null" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 <p>This one is a pet peeve of mine since I see it a lot in production code. It goes like this:</p>
 
 <figure class="highlight"><pre><code class="language-c#" data-lang="c#">	<span class="k">public</span> <span class="n">Product</span> <span class="nf">Find</span><span class="p">(</span><span class="kt">int</span> <span class="n">id</span><span class="p">)</span>
@@ -191,8 +222,14 @@
 <p>There are plenty of worse problems, granted. Yes, the application won’t <em>crash</em> because of this. So what’s the big deal?</p>
 
 <p>Well, for starters, I’d be worried about a development shop where the sole quality measure was “it runs without crashing.” But the real problem is that this type of code shows a lack of understanding of some fundamental characteristics of the language and platform that can bite you in the future.</p>
-
-<h3 id="unnecessary-use-of-tolist-in-linq-to-object-queries">Unnecessary Use of ToList() in LINQ to Object Queries</h3>
+<h3 id="unnecessary-use-of-tolist-in-linq-to-object-queries">
+  
+  
+    Unnecessary Use of ToList() in LINQ to Object Queries <a href="#unnecessary-use-of-tolist-in-linq-to-object-queries" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 <p>Like the previous one, this is something I routinely see in production code. Consider the code below:</p>
 
 <figure class="highlight"><pre><code class="language-c#" data-lang="c#">	<span class="kt">var</span> <span class="n">result</span> <span class="p">=</span> <span class="n">users</span><span class="p">.</span><span class="nf">ToList</span><span class="p">()</span>
@@ -210,8 +247,14 @@
 <p>You could rewrite the code above like this:</p>
 
 <figure class="highlight"><pre><code class="language-c#" data-lang="c#">	<span class="kt">var</span> <span class="n">result</span> <span class="p">=</span> <span class="n">users</span><span class="p">.</span><span class="nf">Where</span><span class="p">(</span><span class="n">x</span> <span class="p">=&gt;</span> <span class="n">x</span><span class="p">.</span><span class="n">PremiumUser</span><span class="p">).</span><span class="nf">Select</span><span class="p">(</span><span class="n">x</span> <span class="p">=&gt;</span> <span class="k">new</span> <span class="p">{</span> <span class="n">Name</span> <span class="p">=</span> <span class="n">x</span><span class="p">.</span><span class="n">Name</span><span class="p">,</span> <span class="n">Birth</span> <span class="p">=</span> <span class="n">x</span><span class="p">.</span><span class="n">DateOfBirth</span> <span class="p">});</span></code></pre></figure>
-
-<h3 id="unnecessary-conversions">Unnecessary Conversions</h3>
+<h3 id="unnecessary-conversions">
+  
+  
+    Unnecessary Conversions <a href="#unnecessary-conversions" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 <p>Consider the following line:</p>
 
 <figure class="highlight"><pre><code class="language-c#" data-lang="c#">	<span class="n">DateTime</span> <span class="n">creationDate</span> <span class="p">=</span> <span class="n">DateTime</span><span class="p">.</span><span class="nf">Parse</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s">"creation_date"</span><span class="p">].</span><span class="nf">ToString</span><span class="p">());</span></code></pre></figure>
@@ -221,8 +264,14 @@
 <figure class="highlight"><pre><code class="language-c#" data-lang="c#">	<span class="n">DateTime</span> <span class="n">creationDate</span> <span class="p">=</span> <span class="p">(</span><span class="n">DateTime</span><span class="p">)</span><span class="n">row</span><span class="p">[</span><span class="s">"creation_date"</span><span class="p">];</span></code></pre></figure>
 
 <p>This example assumes that the underlying database type is some specific type for dealing with dates (for instance, <code class="language-plaintext highlighter-rouge">date</code> or <code class="language-plaintext highlighter-rouge">datetime</code> in SQL Server). Of course, if you were using an inadequate type (such as <code class="language-plaintext highlighter-rouge">varchar</code>) then this would be a problem of its own.</p>
-
-<h3 id="try-catch-everywhere">Try-Catch Everywhere</h3>
+<h3 id="try-catch-everywhere">
+  
+  
+    Try-Catch Everywhere <a href="#try-catch-everywhere" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 <p>Also known as Pokémon syndrome (“Gotta catch ’em all!”), the anti-pattern here is to add a try-catch block to every single line that could possibly throw an exception.</p>
 
 <p>Bonus points if the code is attempting to catch <code class="language-plaintext highlighter-rouge">System.Exception</code> instead of a more specific exception, thus blurring the distinction between expected and unexpected errors.</p>
@@ -232,8 +281,14 @@
 <p>The general advice here is this: never catch unless you have a very specific reason for doing so. Otherwise, just the let the exception bubble up until it’s dealt with by the top-level exception handler.</p>
 
 <p>If this advice seems vague (“How would I know if I have the right reason for catching an exception?”), that’s because it is vague. It’s beyond the scope of this post to go deeper into this matter, but <a href="https://blogs.msdn.microsoft.com/ericlippert/2008/09/10/vexing-exceptions/">Eric Lippert’s excellent article called “Vexing Exceptions”</a> will greatly improve your understanding of exception handling.</p>
-
-<h3 id="using-stringbuilder-everywhere">Using StringBuilder Everywhere</h3>
+<h3 id="using-stringbuilder-everywhere">
+  
+  
+    Using StringBuilder Everywhere <a href="#using-stringbuilder-everywhere" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 <p>It’s the stuff of superhero movies: after reading somewhere that concatenating strings by using the ‘+’ operator is incredibly inefficient, the well-meaning developer takes upon themselves the Herculean task of updating every single concatenation in the codebase to <code class="language-plaintext highlighter-rouge">StringBuilder</code>.</p>
 
 <p>The reasoning for this is, of course, that <code class="language-plaintext highlighter-rouge">System.String</code> is immutable. So every time you “modify” a string, you’re in fact creating a new instance in memory, which can hurt performance pretty badly.</p>
@@ -255,8 +310,14 @@
 <blockquote>
   <p>Unnecessary code changes are expensive and dangerous; <strong>don’t make performance-based changes unless you’ve identified a performance problem.</strong></p>
 </blockquote>
-
-<h2 id="is-there-a-remedy">Is There a Remedy?</h2>
+<h2 id="is-there-a-remedy">
+  
+  
+    Is There a Remedy? <a href="#is-there-a-remedy" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 <p>I’d say it’s fair to assume that more inexperienced developers are more prone to commit mistakes due to cargo cult programming. But no developer is really immune to it, independent of their knowledge or experience.</p>
 
 <p>We’re only human after all. Tiredness, deadlines, cognitive biases, and (to be really honest) the eventual laziness can turn even the best developer into a cargo cult programmer.</p>
@@ -264,24 +325,54 @@
 <p>Unfortunately, there’s no 100%  guaranteed way of preventing this from happening. Yet there are some measures you could take to, at least, decrease the odds.</p>
 
 <p>Let’s take a look at some of them.</p>
-
-<h3 id="use-code-reviewpair-programming">Use Code Review/Pair Programming</h3>
+<h3 id="use-code-reviewpair-programming">
+  
+  
+    Use Code Review/Pair Programming <a href="#use-code-reviewpair-programming" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 <p>The first measure you could take to avoid cargo cult programming is to simply get a second pair of eyes on your code. The benefits of having a second person reviewing each line of code before it goes to production can’t be overstated. And while code review and pair programming aren’t perfect equivalents, both of these practices will bring you this benefit.</p>
-
-<h3 id="always-test-your-hypothesis">Always Test Your Hypothesis</h3>
+<h3 id="always-test-your-hypothesis">
+  
+  
+    Always Test Your Hypothesis <a href="#always-test-your-hypothesis" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 <p>Write unit tests (and other types of tests as well). Monitor your application in production. If something doesn’t perform well, benchmark the heck out of it. Don’t just assume things. Testing your hypothesis can bring valuable insights and save you when your intuition gets it wrong.</p>
-
-<h3 id="read-other-peoples-code">Read Other People’s Code</h3>
+<h3 id="read-other-peoples-code">
+  
+  
+    Read Other People’s Code <a href="#read-other-peoples-code" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 <p>Reading other people’s code is a great way to learn. It’s a perfect tool to compare your own ideas and assumptions against what other developers are doing, exposing you to novel concepts that can force you to gain a deeper understanding of the issues at hand.</p>
 
 <p>In the era of <a href="https://github.com/">GitHub</a>, there isn’t much of an excuse for not doing that.</p>
-
-<h3 id="learn-from-your-tools">Learn From Your Tools</h3>
+<h3 id="learn-from-your-tools">
+  
+  
+    Learn From Your Tools <a href="#learn-from-your-tools" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
 <p>There are currently a plethora of tools that can help <a href="https://www.ndepend.com/">your team improve the quality of their code</a>. Here’s the thing, though: you shouldn’t just use these tools. You should also learn from them. If you use NDepend, <a href="https://www.ndepend.com/default-rules/webframe.html">read about its rules</a>. Try and understand the rationale behind them. What are the principles and best practices that guided its authors when coming up with the rules?</p>
 
 <p>The same goes for other types of tools—and even the warnings the compiler gives you.</p>
-
-<h2 id="computer-science-not-computer-superstition">Computer Science, Not Computer <em>Superstition</em></h2>
+<h2 id="computer-science-not-computer-superstition">
+  
+  
+    Computer Science, Not Computer <em>Superstition</em> <a href="#computer-science-not-computer-superstition" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
 <p>Even though no one is immune to cargo cult programming, we should strive to overcome it. There’s hard-earned industry wisdom at our disposal, slowly generated over more than seven decades. Let’s use it. Let’s understand our tools and our craft and write better software.</p>
 
     
@@ -653,6 +744,9 @@
 
     <script src="/js/dark-mode.js"></script>
     <script src="/js/copy-code.js"></script>
+    
+    <script src="/js/post-enhancements.js"></script>
+    
   </body>
 
 </html>
