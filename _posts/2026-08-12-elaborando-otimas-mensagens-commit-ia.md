@@ -16,7 +16,7 @@ tags:
 - best-practices
 ---
 
-Um tempo atrás, expliquei que [as suas mensagens de commit são uma porcaria e o que fazer a respeito](/pt/your-commit-messages-suck). Naquele post, falei rapidinho sobre IA, afirmando que não acho que o uso de LLMs (_Large Language Models_, ou Grandes Modelos de Linguagem) mude fundamentalmente nenhum dos pontos que levantei no post.
+Um tempo atrás, expliquei que [as suas mensagens de commit são uma porcaria e o que fazer a respeito](/pt/suas-mensagens-de-commit-sao-um-lixo). Naquele post, falei rapidinho sobre IA, afirmando que não acho que o uso de LLMs (_Large Language Models_, ou Grandes Modelos de Linguagem) mude fundamentalmente nenhum dos pontos que levantei no post.
 
 Mas o tema das mensagens de commit geradas por LLM é relevante o suficiente para merecer um post próprio, especialmente agora que cada vez mais pessoas estão usando agentes para gerar código.
 
