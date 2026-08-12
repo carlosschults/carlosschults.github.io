@@ -5,14 +5,14 @@
     <description>Artigos sobre desenvolvimento de software e tecnologia.</description>
     <link>https://carlosschults.net/</link>
     <atom:link href="https://carlosschults.net/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Wed, 12 Aug 2026 11:05:15 +0000</pubDate>
-    <lastBuildDate>Wed, 12 Aug 2026 11:05:15 +0000</lastBuildDate>
+    <pubDate>Wed, 12 Aug 2026 11:07:58 +0000</pubDate>
+    <lastBuildDate>Wed, 12 Aug 2026 11:07:58 +0000</lastBuildDate>
     <generator>Jekyll v4.3.1</generator>
     
     
       <item>
         <title>Elaborando Ótimas Mensagens de Commit na Era da IA</title>
-        <description>&lt;p&gt;Um tempo atrás, expliquei que &lt;a href=&quot;/pt/your-commit-messages-suck&quot;&gt;as suas mensagens de commit são uma porcaria e o que fazer a respeito&lt;/a&gt;. Naquele post, falei rapidinho sobre IA, afirmando que não acho que o uso de LLMs (&lt;em&gt;Large Language Models&lt;/em&gt;, ou Grandes Modelos de Linguagem) mude fundamentalmente nenhum dos pontos que levantei no post.&lt;/p&gt;
+        <description>&lt;p&gt;Um tempo atrás, expliquei que &lt;a href=&quot;/pt/suas-mensagens-de-commit-sao-um-lixo&quot;&gt;as suas mensagens de commit são uma porcaria e o que fazer a respeito&lt;/a&gt;. Naquele post, falei rapidinho sobre IA, afirmando que não acho que o uso de LLMs (&lt;em&gt;Large Language Models&lt;/em&gt;, ou Grandes Modelos de Linguagem) mude fundamentalmente nenhum dos pontos que levantei no post.&lt;/p&gt;
 
 &lt;p&gt;Mas o tema das mensagens de commit geradas por LLM é relevante o suficiente para merecer um post próprio, especialmente agora que cada vez mais pessoas estão usando agentes para gerar código.&lt;/p&gt;
 
