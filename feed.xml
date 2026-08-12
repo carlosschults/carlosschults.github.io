@@ -5,10 +5,150 @@
     <description>Articles on software development and technology.</description>
     <link>https://carlosschults.net/</link>
     <atom:link href="https://carlosschults.net/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Tue, 04 Aug 2026 19:50:46 +0000</pubDate>
-    <lastBuildDate>Tue, 04 Aug 2026 19:50:46 +0000</lastBuildDate>
+    <pubDate>Wed, 12 Aug 2026 11:05:15 +0000</pubDate>
+    <lastBuildDate>Wed, 12 Aug 2026 11:05:15 +0000</lastBuildDate>
     <generator>Jekyll v4.3.1</generator>
     
+    
+      <item>
+        <title>Crafting Great Commit Messages in the AI Era</title>
+        <description>&lt;p&gt;A while ago, I told you why &lt;a href=&quot;/en/your-commit-messages-suck&quot;&gt;your commit messages suck and what to do about it&lt;/a&gt;. On that occasion, I talked briefly about AI, stating that I don’t think that the usage of LLMs (Large Language Models) fundamentally changes any of the points I made in the post.&lt;/p&gt;
+
+&lt;p&gt;However, the topic of LLM-generated commit messages is relevant enough to deserve its own treatment, especially now that more and more people are using agents to generate code.&lt;/p&gt;
+
+&lt;p&gt;So, this is what this post is about. I’ll be essentially sharing my experiences about what works and what doesn’t work regarding creating great commit messages.&lt;/p&gt;
+
+&lt;h2 id=&quot;why-llms-are-not-automatically-good-at-creating-great-commit-messages&quot;&gt;Why LLMs Are Not Automatically Good At Creating Great Commit Messages&lt;/h2&gt;
+&lt;p&gt;When it comes to writing commit messages, there is one area where LLMs perform really well. They’re great at looking at a diff and generating a summary of those changes.&lt;/p&gt;
+
+&lt;p&gt;In other words, they excel at describing what you did in detail…which, if you’ve read my other post, you know it’s exactly what you shouldn’t be doing!&lt;/p&gt;
+
+&lt;p&gt;What LLMs are not good at by default is understanding the context. They can look at a diff and say, “Ok, the user has disabled the OUTPUT clause for SQL Server in their EF Core configuration” and then write a detailed commit message describing those changes. Which is useless, because the commit diff already shows the changes.&lt;/p&gt;
+
+&lt;p&gt;What the LLM &lt;em&gt;can’t&lt;/em&gt; do is figure out that I made the change because we had introduced triggers to a few tables and EF Core started failing because the OUTPUT clause conflicts with triggers, so we had to disable it.&lt;/p&gt;
+
+&lt;p&gt;You see, there’s a whole narrative behind a change, but the AI won’t be able to learn the narrative if nobody tells it.&lt;/p&gt;
+
+&lt;h2 id=&quot;ai-cant-read-your-mind&quot;&gt;AI Can’t Read Your Mind&lt;/h2&gt;
+&lt;p&gt;I see that many people get frustrated with AI-generated code, and it’s a common pattern. People will make an incredibly vague and broad request, then get something in return, then get frustrated it’s not what they had in mind. Well, if you have something specific in mind that the AI should take into account, make sure to get that out of your mind and into the AI!&lt;/p&gt;
+
+&lt;p&gt;Repeat with me: &lt;strong&gt;AI doesn’t read minds.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Besides that, AI is incredibly confident. It will always give you &lt;em&gt;something&lt;/em&gt; back. Which might be what you want, kind of, but it also might be not, since it will be biased towards approaches the LLM has seen the most in its training data.&lt;/p&gt;
+
+&lt;p&gt;For instance, if you ask for a commit message for a diff, without further instructions, it will very likely spit out something using &lt;a href=&quot;https://www.conventionalcommits.org/en/v1.0.0/&quot;&gt;conventional commits&lt;/a&gt;, simply because a lot of people use that. Personally, I don’t like that standard and don’t want to use it, but of course Claude doesn’t know that about me unless I tell it.&lt;/p&gt;
+
+&lt;h2 id=&quot;what-to-do-then&quot;&gt;What To Do Then?&lt;/h2&gt;
+&lt;p&gt;In the other post I shared the prompt I was using with Claude at the time:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Write a concise, well-crafted commit message for the diff I&apos;m going to give you.
+Make it more high-level, focusing on the why rather than listing all changes in great detail.
+Follow these rules:
+- Summary
+	- Brief description of what was done
+	- 50 chars at the most
+	- Use imperative mood
+	- Do not use conventional commits
+- Body
+	- Brief description of the &quot;how&quot;, but focus more on the reason for the changes
+	- Use prose rather than bullet points.
+	- Use past tense
+	- Lines no longer than 72 chars
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;I wasn’t entirely satisfied with the results I was getting from this prompt, though, and kept iterating on it. One thing that I added at some point was that Claude should ask me about the context if it wasn’t sure about it. This worked, but somewhat inconsistently.&lt;/p&gt;
+
+&lt;p&gt;Then, I don’t remember when exactly, another thing happened. But before going into that, I need to digress a little bit and explain why I don’t use Conventional Commits.&lt;/p&gt;
+
+&lt;h2 id=&quot;conventional-commits-is-not-a-good-standard&quot;&gt;Conventional Commits Is Not a Good Standard&lt;/h2&gt;
+&lt;p&gt;I don’t like or use Conventional Commits. In the past, I did, but started changing my mind after some time.&lt;/p&gt;
+
+&lt;p&gt;For a while, I couldn’t quite articulate why I disliked this standard, until I read &lt;a href=&quot;https://sumnerevans.com/posts/software-engineering/stop-using-conventional-commits/&quot;&gt;this blog post&lt;/a&gt; by Sumner Evans.&lt;/p&gt;
+
+&lt;p&gt;The gist of why Evans dislikes Conventional Commits is that it focuses on the wrong things, making the type of commit (“feat”, “fix”, etc.) the most important piece of information, instead of the scope. That is, what areas or part of the system the commit changes.&lt;/p&gt;
+
+&lt;p&gt;Conventional Commits is often paired with tools that automatically generate changelogs and bump version numbers based on the messages. Evans argues, and I agree, that this is a fundamentally bad idea.&lt;/p&gt;
+
+&lt;p&gt;There are more reasons why this widespread standard is not as great as you might think, but go read Evans’ post to know more.&lt;/p&gt;
+
+&lt;p&gt;The question then becomes: what to use instead?&lt;/p&gt;
+
+&lt;h2 id=&quot;enter-scoped-commits&quot;&gt;Enter Scoped Commits&lt;/h2&gt;
+&lt;p&gt;In his post, after making a compelling case against Conventional Commits, Evans offers &lt;a href=&quot;https://sumnerevans.com/posts/software-engineering/stop-using-conventional-commits/#a-better-way&quot;&gt;a different alternative&lt;/a&gt;. Based on the standards used by successful open-source projects such as Git, the Linux kernel, Go, among others, he proposes a new standard which he called &lt;a href=&quot;https://scopedcommits.com/&quot;&gt;Scoped Commits&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Giving a super complete treatment of Scoped Commits would be…you know…out of scope for this blog post. But the gist of it is incredibly simple. You stop using the type of change as the prefix for your message, and use a scope, which relates to the area, subsystem, or part of your application that the commit touches.&lt;/p&gt;
+
+&lt;p&gt;This is one example:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;auth: Add SSO login controller
+
+The login page previously relied on a legacy form-based flow that
+was being decommissioned. Introduced a new controller and service
+layer to handle SSO natively, preserving existing session logic
+while decoupling it from the legacy system.
+
+Closes: AB998
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;enter-the-claude-skill&quot;&gt;Enter The Claude Skill&lt;/h2&gt;
+&lt;p&gt;It was around this time that I started experimenting with Claude skills, because I was getting sick of repeating the same instructions over and over. I decided to try to encapsulate all of those preferences into a skill I could use. After a good deal of trial-and-error and rewrites, I reached something that I think is useful.&lt;/p&gt;
+
+&lt;p&gt;The most important parts of the skill, for me, are the following:&lt;/p&gt;
+
+&lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt; Read the full diff carefully before writing anything
+&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt; If the scope isn&apos;t clear from the diff, ask one focused question
+&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;gs&quot;&gt;**If the diff shows *what* changed but not *why**&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;*&lt;/span&gt; — the underlying
+  problem, bug, or motivation isn&apos;t inferable from the code itself — ask
+  one focused question about the reason for the change before writing the
+  body. A body written without knowing the &quot;why&quot; tends to just restate the
+  diff in prose, which isn&apos;t useful. It&apos;s fine to write the summary line
+  in the meantime, but hold off on the body until you know the reason, or
+  proceed with summary-only (ticket in parentheses) if the user doesn&apos;t
+  have more context to give.
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;They help me make sure Claude gets the right context for the change. Otherwise, it will just provide a detailed list of changes, which is not what I’m after.&lt;/p&gt;
+
+&lt;p&gt;If you’re interested, see the complete skill &lt;a href=&quot;https://github.com/carlosschults/claude-config/blob/main/skills/commit-message/SKILL.md&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2 id=&quot;my-verdict&quot;&gt;My Verdict?&lt;/h2&gt;
+&lt;p&gt;I’ve been satisfied with the results I’ve been getting so far from the skill. It’s not perfect, though.&lt;/p&gt;
+
+&lt;p&gt;One problem that I have often is that Claude sometimes “forgets” to use the skill. It just goes on and writes whatever as the commit message, and then I have to reprimand it and remind it of the skill. Most times, it uses the skill, though, so that’s not that big of a deal.&lt;/p&gt;
+
+&lt;p&gt;Another issue is that sometimes it will not respect the 50/72 rule for the maximum lengths of lines. Lines in the body will often be as long as 75 or 76 characters. Sometimes, it takes two or three iterations until it gets it right. Often, I just get sick of it and fix it myself.&lt;/p&gt;
+
+&lt;p&gt;Speaking of which, I often amend and edit the generated commit message myself. Sometimes, there is a critical piece of context missing, or Claude misunderstood something, and it’s just easier and quicker to fix it myself rather than keep prompting the &lt;a href=&quot;https://en.wikipedia.org/wiki/Clanker&quot;&gt;clanker&lt;/a&gt; until it gets it right.&lt;/p&gt;
+
+&lt;p&gt;So, what’s the verdict? Overall, I’m satisfied, but there is room for improvement for sure.&lt;/p&gt;
+
+&lt;h2 id=&quot;what-should-you-do&quot;&gt;What Should You Do?&lt;/h2&gt;
+&lt;p&gt;You can do whatever you want, of course, but if you’re looking for advice on how to get the best commit messages possible from your LLM of choice, here it goes: &lt;strong&gt;make sure you give it context.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;You don’t have to use scoped commits, though I recommend giving it a try. You don’t have to use my &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;commit-message&lt;/code&gt; skill, or any skill at all if you don’t want to.&lt;/p&gt;
+
+&lt;p&gt;Just make sure that, whatever workflow you use when generating commit messages, there is a step in there where you provide the context, the “why” behind your change. That’s the most important piece of information a commit message should contain, and your little robot minion won’t get that alone. It needs your help.&lt;/p&gt;
+</description>
+        <pubDate>Wed, 12 Aug 2026 00:00:00 +0000</pubDate>
+        <link>https://carlosschults.net/en/great-commit-messages-ai-era</link>
+        <guid isPermaLink="true">https://carlosschults.net/en/great-commit-messages-ai-era</guid>
+        
+        <category>tutorial</category>
+        
+        <category>git</category>
+        
+        <category>ai</category>
+        
+        <category>llm</category>
+        
+        <category>claude</category>
+        
+        <category>version-control-system</category>
+        
+        <category>best-practices</category>
+        
+        
+      </item>
     
       <item>
         <title>PostgreSQL LIKE Operator: A Detailed Guide</title>
@@ -2261,201 +2401,6 @@ Photo by &lt;a href=&quot;https://unsplash.com/@francisco_legarreta?utm_content=
         <category>opinion</category>
         
         <category>career</category>
-        
-        
-      </item>
-    
-      <item>
-        <title>Git Detached Head: What This Means and How to Recover</title>
-        <description>&lt;p&gt;&lt;img src=&quot;https://res.cloudinary.com/dz5ppacuo/image/upload/v1673926044/git-beautiful-history/git-beautiful-history-cover.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;div class=&quot;callout callout-info&quot;&gt;
-  &lt;div class=&quot;callout-title&quot;&gt;
-    &lt;span class=&quot;callout-icon&quot;&gt;ℹ️&lt;/span&gt;
-    Info
-  &lt;/div&gt;
-  &lt;div class=&quot;callout-content&quot;&gt;
-    
-&lt;p&gt;&lt;em&gt;Editorial note: I originally wrote this post for the Cloudbees blog.  You can &lt;a href=&quot;https://www.cloudbees.com/blog/git-detached-head&quot;&gt;check out the original here, at their site&lt;/a&gt;.&lt;/em&gt;&lt;/p&gt;
-
-  &lt;/div&gt;
-&lt;/div&gt;
-
-&lt;h1 id=&quot;table-of-contents&quot;&gt;Table of Contents&lt;/h1&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;&lt;a href=&quot;#introduction&quot;&gt;Introduction&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;#git-detached-head-reproducing-the-problem&quot;&gt;Reproducing the “Problem”&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;#what-is-a-head-in-git&quot;&gt;What Is a HEAD in Git?&lt;/a&gt;
-    &lt;ul&gt;
-      &lt;li&gt;&lt;a href=&quot;#are-you-in-detached-head-state&quot;&gt;Are you in ‘detached HEAD’ state?&lt;/a&gt;&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;#benefits-of-a-git-detached-head&quot;&gt;Benefits of a Git Detached HEAD&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;#how-do-i-fix-a-detached-head-in-git&quot;&gt;How Do I Fix a Detached HEAD in Git?&lt;/a&gt;
-    &lt;ul&gt;
-      &lt;li&gt;&lt;a href=&quot;#scenario-1-im-here-by-accident&quot;&gt;Scenario #1: I’m Here by Accident&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#scenario-2-ive-made-experimental-changes-and-i-want-to-discard-them&quot;&gt;Scenario #2: I’ve Made Experimental Changes and I Want to Discard Them&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#scenario-3-ive-made-experimental-changes-and-i-want-to-keep-them&quot;&gt;Scenario #3: I’ve Made Experimental Changes and I Want to Keep Them&lt;/a&gt;&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;#getting-rid-of-the-git-detached-head-message&quot;&gt;Getting Rid of the “Git Detached HEAD” Message&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;#git-detached-head-less-scary-than-it-sounds&quot;&gt;Conclusion&lt;/a&gt;&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;h2 id=&quot;introduction&quot;&gt;Introduction&lt;/h2&gt;
-
-&lt;p&gt;Newcomers to Git often get confused with some of the messages that the &lt;a href=&quot;https://www.atlassian.com/git/tutorials/what-is-version-control&quot;&gt;VCS tool&lt;/a&gt; throws at them. The “You are in ‘detached HEAD’ state” one is certainly one of the weirdest. After coming across this message, most people start furiously Googling “git detached HEAD,” “git detached HEAD fix,” or similar terms, looking for anything that might be of help. If that’s your case, you’ve come to the right place.&lt;/p&gt;
-
-&lt;p&gt;Here’s the first thing you should know: &lt;em&gt;you haven’t done anything wrong&lt;/em&gt;. Your repo isn’t broken or anything like that. The expression “Detached HEAD” might sound somewhat bizarre, but it’s a perfectly valid repository state in Git. Sure, it’s not the &lt;em&gt;normal&lt;/em&gt; state, which would be—you’ve guessed it!—when HEAD is attached. The second thing you need to know is that going back to normal is super easy. If you just want to do that and get on with your day, go to the &lt;a href=&quot;#how-do-i-fix-a-detached-head-in-git&quot;&gt;“How Do I Fix a Detached Head in Git?”&lt;/a&gt; section of this post to see how it’s done.&lt;/p&gt;
-
-&lt;p&gt;But if you want to know more—and I guess you do—stick around and we’ll help you. What does HEAD mean in Git? What does it mean for it to be attached or detached? These are the kind of questions we’ll answer in this post. By the end of it, you’ll have a better understanding of Git’s fundamentals, and detached HEADs will never trouble you again. Let’s dig in.&lt;/p&gt;
-
-&lt;h2 id=&quot;git-detached-head-reproducing-the-problem&quot;&gt;Git Detached HEAD: Reproducing the “Problem”&lt;/h2&gt;
-
-&lt;p&gt;Let’s start with a quick demo showing how to reach the detached HEAD state. We’ll create a repository and add some commits to it:&lt;/p&gt;
-
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;mkdir &lt;/span&gt;git-head-demo
-&lt;span class=&quot;nb&quot;&gt;cd &lt;/span&gt;git-head-demo 
-git init
-&lt;span class=&quot;nb&quot;&gt;touch &lt;/span&gt;file.txt
-git add &lt;span class=&quot;nb&quot;&gt;.&lt;/span&gt;
-git commit &lt;span class=&quot;nt&quot;&gt;-m&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Create file&quot;&lt;/span&gt;
-&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Hello World!&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; file.txt
-git commit &lt;span class=&quot;nt&quot;&gt;-a&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-m&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Add line to the file&quot;&lt;/span&gt;
-&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Second file&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; file2.txt
-git add &lt;span class=&quot;nb&quot;&gt;.&lt;/span&gt;
-git commit &lt;span class=&quot;nt&quot;&gt;-m&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Create second file&quot;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;With the commands above, we’ve created a new folder with a new repository inside it. Then we created a new empty file and committed that with the message “Create file.” Next, we added a line to that file and committed the change, with the message “Add a line to the file.” Finally, we’ve created another file with one line of text and committed that as well. If you use the &lt;strong&gt;git log –oneline&lt;/strong&gt; command, you’ll see something like this:&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/img/git-detached-head/image3.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Let’s say that, for testing purposes, we need to see how things were at the time of the second commit. How would we do that? As it turns out, we can check out a commit the same way we’d check out branches. Remember, branches are just names for commits. So, based on the example output above, we’d run &lt;strong&gt;git checkout 87ec91d&lt;/strong&gt;. Keep in mind that if you’re following along by executing these commands on your own system, the hash for your commits will be different from those in the example. Use the log command to find it.&lt;/p&gt;
-
-&lt;p&gt;After running the command, we get the “You are in ‘detached HEAD’ state[…]” message. Before we go on, make sure you keep this in mind: you get to the detached HEAD state by checking out a commit directly.&lt;/p&gt;
-
-&lt;h2 id=&quot;what-is-a-head-in-git&quot;&gt;What Is a HEAD in Git?&lt;/h2&gt;
-
-&lt;p&gt;What does HEAD mean in Git? To understand that, we have to take a step back and talk fundamentals.&lt;/p&gt;
-
-&lt;p&gt;A Git repository is a collection of &lt;strong&gt;objects&lt;/strong&gt; and &lt;strong&gt;references&lt;/strong&gt;. Objects have relationships with each other, and references point to objects and to other references. The main objects in a Git repository are commits, but other objects include &lt;a href=&quot;https://developer.github.com/v3/git/blobs/&quot;&gt;blobs&lt;/a&gt; and &lt;a href=&quot;https://developer.github.com/v3/git/trees/&quot;&gt;trees&lt;/a&gt;. The most important references in Git are &lt;a href=&quot;/en/git-create-branch&quot;&gt;branches&lt;/a&gt;, which you can think of as labels you put on a commit.&lt;/p&gt;
-
-&lt;p&gt;HEAD is another important type of reference. The purpose of HEAD is to keep track of the current point in a Git repo. In other words, HEAD answers the question, “Where am I right now?”&lt;/p&gt;
-
-&lt;p&gt;For instance, when you use the &lt;strong&gt;log&lt;/strong&gt; command, how does Git know which commit it should start displaying results from? HEAD provides the answer. When you create a new commit, its parent is indicated by where HEAD currently points to.&lt;/p&gt;
-
-&lt;h3 id=&quot;are-you-in-detached-head-state&quot;&gt;Are you in ‘detached HEAD’ state?&lt;/h3&gt;
-
-&lt;p&gt;You’ve just seen that HEAD in Git is only the name of a reference that indicates the current point in a repository. So, what does it mean for it to be attached or detached?&lt;/p&gt;
-
-&lt;p&gt;Most of the time, HEAD points to a branch name. When you add a new commit, your branch reference is updated to point to it, but HEAD remains the same. When you change branches, HEAD is updated to point to the branch you’ve switched to. All of that means that, in these scenarios, HEAD is synonymous with “the last commit in the current branch.” This is the &lt;em&gt;normal&lt;/em&gt; state, in which HEAD is &lt;em&gt;attached&lt;/em&gt; to a branch.&lt;/p&gt;
-
-&lt;p&gt;A visual representation of our demo repository would look like this:
-&lt;img src=&quot;/img/git-detached-head/image5.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;As you can see, HEAD points to the master branch, which points to the last commit. Everything looks perfect. After running &lt;strong&gt;git checkout 87ec91d,&lt;/strong&gt; the repo looks like this:
-&lt;img src=&quot;/img/git-detached-head/image4.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;This is the detached HEAD state; HEAD is pointing directly to a commit instead of a branch.&lt;/p&gt;
-
-&lt;h3 id=&quot;benefits-of-a-git-detached-head&quot;&gt;Benefits of a Git Detached HEAD&lt;/h3&gt;
-
-&lt;p&gt;Are there good reasons for you to be in the detached HEAD state? You bet there are!&lt;/p&gt;
-
-&lt;p&gt;As you’ve seen, you detach the HEAD by checking out a commit. That’s already useful by itself since it allows you to go to a previous point in the project’s history. Let’s say you want to check if a given bug already existed last Tuesday. You can use the &lt;strong&gt;log&lt;/strong&gt; command, filtering by date, to start the relevant commit hash. Then you can check out the commit and test the application, either by hand or by running your automated test suite.&lt;/p&gt;
-
-&lt;p&gt;What if you could not only take a look at the past, but also change it? That’s what a detached HEAD allows you to do. Let’s review how the detached message starts:&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;You are in &apos;detached HEAD&apos; state. 
-You can look around, make experimental changes and commit them,
-and you can discard any commits you make in this state without
-impacting any branches by switching back to a branch.
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;In this state, you can make experimental changes, effectively creating an alternate history. So, let’s create some additional commits in the detached HEAD state and see how our repo looks afterward:&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Welcome to the alternate timeline, Morty!&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; new-file.txt
-git add &lt;span class=&quot;nb&quot;&gt;.&lt;/span&gt;
-git commit &lt;span class=&quot;nt&quot;&gt;-m&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Create new file&quot;&lt;/span&gt;
-&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Another line&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&lt;/span&gt; new-file.txt
-git commit &lt;span class=&quot;nt&quot;&gt;-a&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-m&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Add a new line to the file&quot;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;We now have two additional commits that descend from our second commit. Let’s run &lt;strong&gt;git log –oneline&lt;/strong&gt; and see the result:
-&lt;img src=&quot;/img/git-detached-head/image7.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;This is what the diagram looks like now:
-&lt;img src=&quot;/img/git-detached-head/image6.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;What should you do if you want to keep those changes? And what should you do if you want to discard them? That’s what we’ll see next.&lt;/p&gt;
-
-&lt;h2 id=&quot;how-do-i-fix-a-detached-head-in-git&quot;&gt;How Do I Fix a Detached HEAD in Git?&lt;/h2&gt;
-
-&lt;p&gt;You can’t fix what isn’t broken. As I’ve said before, a detached HEAD is a valid state in Git. It’s not a problem. But you may still want to know how to get back to normal, and that depends on why you’re in this situation in the first place.&lt;/p&gt;
-
-&lt;h3 id=&quot;scenario-1-im-here-by-accident&quot;&gt;Scenario #1: I’m Here by Accident&lt;/h3&gt;
-
-&lt;p&gt;If you’ve reached the detached HEAD state by accident—that is to say, you didn’t mean to check out a commit—going back is easy. Just check out the branch you were in before:&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;git checkout &amp;lt;branch-name&amp;gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;If you’re using Git 2.23.0 or newer, you can also use &lt;strong&gt;switch&lt;/strong&gt; instead of &lt;strong&gt;checkout&lt;/strong&gt;:&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;git switch &amp;lt;branch-name&amp;gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;h3 id=&quot;scenario-2-ive-made-experimental-changes-and-i-want-to-discard-them&quot;&gt;Scenario #2: I’ve Made Experimental Changes and I Want to Discard Them&lt;/h3&gt;
-
-&lt;p&gt;You’ve entered the detached HEAD state and made a few commits. The experiment went nowhere, and you’ll no longer work on it. What do you do? You just do the same as in the previous scenario: go back to your original branch. The changes you made while in the alternate timeline won’t have any impact on your current branch.&lt;/p&gt;
-
-&lt;h3 id=&quot;scenario-3-ive-made-experimental-changes-and-i-want-to-keep-them&quot;&gt;Scenario #3: I’ve Made Experimental Changes and I Want to Keep Them&lt;/h3&gt;
-
-&lt;p&gt;If you want to keep changes made with a detached HEAD, just &lt;a href=&quot;https://www.cloudbees.com/blog/git-create-branch&quot;&gt;create a new branch&lt;/a&gt; and switch to it. You can create it right after arriving at a detached HEAD or after creating one or more commits. The result is the same. The only restriction is that you should do it before returning to your normal branch.&lt;/p&gt;
-
-&lt;p&gt;Let’s do it in our demo repo:&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;git branch alt-history
-git checkout alt-history&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;Notice how the result of &lt;strong&gt;git log –oneline&lt;/strong&gt; is exactly the same as before (the only difference being the name of the branch indicated in the last commit):
-&lt;img src=&quot;/img/git-detached-head/image2.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;We could just run &lt;strong&gt;git branch alt-history&lt;/strong&gt;, and we’d be all set. That’s the new—and final—version of our diagram:
-&lt;img src=&quot;/img/git-detached-head/image1.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;getting-rid-of-the-git-detached-head-message&quot;&gt;Getting Rid of the “Git Detached HEAD” Message&lt;/h2&gt;
-
-&lt;p&gt;Before wrapping up, let’s share a final quick tip. Now that you understand everything about detached HEAD in Git and know that it’s not that big of a deal, seeing that message every time you check out a commit might become tiring. Fortunately, there’s a way to not see the warning anymore. Just run the following command:&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;git config advice.detached &lt;span class=&quot;nb&quot;&gt;head false&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;Easy, right? You can also use the &lt;strong&gt;–global&lt;/strong&gt; modifier if you want the change to apply to every repository and not only the current one.&lt;/p&gt;
-
-&lt;h2 id=&quot;git-detached-head-less-scary-than-it-sounds&quot;&gt;Git Detached HEAD: Less Scary Than It Sounds&lt;/h2&gt;
-
-&lt;p&gt;A message talking about heads not being attached doesn’t sound like your routine software error message, right? Well, it’s not an error message.&lt;/p&gt;
-
-&lt;p&gt;As you’ve seen in this post, a detached HEAD doesn’t mean something is wrong with your repo. &lt;strong&gt;Detached HEAD&lt;/strong&gt; is just a less usual state your repository can be in. Aside from not being an error, it can actually be quite useful, allowing you to run experiments that you can then choose to keep or discard.&lt;/p&gt;
-
-&lt;p&gt;Would you like to learn more about Git? Check-out some of the following posts:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;a href=&quot;/en/git-beautiful-history/&quot;&gt;Make Your Git History Look Beautiful Using Amend and Rebase&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;/git-bisect-intro/&quot;&gt;Git Bisect: An Introduction To Beginners&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;/en/git-create-branch&quot;&gt;Git Create Branch: 4 Ways To Do It&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Thanks for reading!&lt;/p&gt;
-</description>
-        <pubDate>Mon, 16 Sep 2024 00:00:00 +0000</pubDate>
-        <link>https://carlosschults.net/en/git-detached-head</link>
-        <guid isPermaLink="true">https://carlosschults.net/en/git-detached-head</guid>
-        
-        <category>git</category>
-        
-        <category>tutorial</category>
-        
-        <category>version-control-system</category>
         
         
       </item>

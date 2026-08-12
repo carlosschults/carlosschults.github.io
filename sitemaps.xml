@@ -3,6 +3,34 @@
   
     
       <url>
+        <loc>/pt/great-commit-messages-ai-era</loc>
+        
+        
+          <xhtml:link rel="alternate" hreflang="pt" href="/pt/great-commit-messages-ai-era" />
+        
+          <xhtml:link rel="alternate" hreflang="en" href="/en/great-commit-messages-ai-era" />
+        
+        <lastmod>2026-08-12T00:00:00+00:00</lastmod>
+        <changefreq>weekly</changefreq>
+      </url>
+    
+  
+    
+      <url>
+        <loc>/en/great-commit-messages-ai-era</loc>
+        
+        
+          <xhtml:link rel="alternate" hreflang="pt" href="/pt/great-commit-messages-ai-era" />
+        
+          <xhtml:link rel="alternate" hreflang="en" href="/en/great-commit-messages-ai-era" />
+        
+        <lastmod>2026-08-12T00:00:00+00:00</lastmod>
+        <changefreq>weekly</changefreq>
+      </url>
+    
+  
+    
+      <url>
         <loc>/en/postgresql-like-operator-guide</loc>
         
         
@@ -2609,6 +2637,32 @@
   
     
       <url>
+        <loc>/tag/llm/</loc>
+        
+        
+          <xhtml:link rel="alternate" hreflang="en" href="/tag/llm/" />
+        
+          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/llm/" />
+        
+        <changefreq>weekly</changefreq>
+      </url>
+    
+  
+    
+      <url>
+        <loc>/tag/claude/</loc>
+        
+        
+          <xhtml:link rel="alternate" hreflang="en" href="/tag/claude/" />
+        
+          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/claude/" />
+        
+        <changefreq>weekly</changefreq>
+      </url>
+    
+  
+    
+      <url>
         <loc>/tag_ptbr/blog/</loc>
         
         
@@ -3746,6 +3800,32 @@
           <xhtml:link rel="alternate" hreflang="en" href="/tag/sql/" />
         
           <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/sql/" />
+        
+        <changefreq>weekly</changefreq>
+      </url>
+    
+  
+    
+      <url>
+        <loc>/tag_ptbr/llm/</loc>
+        
+        
+          <xhtml:link rel="alternate" hreflang="en" href="/tag/llm/" />
+        
+          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/llm/" />
+        
+        <changefreq>weekly</changefreq>
+      </url>
+    
+  
+    
+      <url>
+        <loc>/tag_ptbr/claude/</loc>
+        
+        
+          <xhtml:link rel="alternate" hreflang="en" href="/tag/claude/" />
+        
+          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/claude/" />
         
         <changefreq>weekly</changefreq>
       </url>

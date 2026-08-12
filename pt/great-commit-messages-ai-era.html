@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Elaborando Ótimas Mensagens de Commit na Era da IA | carlos schults / blog</title>
+  <link rel="apple-touch-icon" sizes="57x57" href="/img/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/img/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/img/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/img/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/img/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/img/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/img/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/img/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"  href="/img/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/img/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon-16x16.png">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="description" content="Um tempo atrás, expliquei que as suas mensagens de commit são uma porcaria e o que fazer a respeito. Naquele post, falei rapidinho sobre IA, afirmando que nã...">
+  
+  <!-- Twitter card -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:creator" content="@carlosschults">
+  <meta name="twitter:site" content="@carlosschults">
+  <meta name="twitter:domain" content="carlosschults.net">
+  <meta name="twitter:title" content="Elaborando Ótimas Mensagens de Commit na Era da IA">
+  <meta name="twitter:description" content="Um tempo atrás, expliquei que as suas mensagens de commit são uma porcaria e o que fazer a respeito. Naquele post, falei rapidinho sobre IA, afirmando que nã...">
+
+   <!-- Facebook meta -->
+  
+  
+  <meta property="og:title" content="Elaborando Ótimas Mensagens de Commit na Era da IA">
+  <meta property="og:site_name" content="Carlos Schults / Blog" />
+  <meta property="og:locale" content="pt_BR">  
+  <meta property="og:type" content="article" />
+  
+  <meta property="og:article:published_time" content="2026-08-12T00:00:00+00:00" />  
+  <meta property="og:article:author" content="Carlos Schults" />
+  
+  <meta property="og:article:tag" content="tutorial" />
+  <meta property="og:article:tag" content="git" />
+  <meta property="og:article:tag" content="ai" />
+  <meta property="og:article:tag" content="llm" />
+  <meta property="og:article:tag" content="claude" />
+  <meta property="og:article:tag" content="version-control-system" />
+  <meta property="og:article:tag" content="best-practices" />    
+  
+  <meta property="og:url" content="https://carlosschults.net/pt/great-commit-messages-ai-era"/>
+  <meta property="og:description" content="Um tempo atrás, expliquei que as suas mensagens de commit são uma porcaria e o que fazer a respeito. Naquele post, falei rapidinho sobre IA, afirmando que nã...">
+  <link rel="stylesheet" href="/css/main.css">  
+  
+   <link rel="canonical" href="https://carlosschults.net/pt/great-commit-messages-ai-era">
+   
+  
+  <link rel="alternate" hreflang="en" href="/en/great-commit-messages-ai-era" />
+  <link rel="alternate" hreflang="pt" href="/pt/great-commit-messages-ai-era" />
+  
+  <link rel="alternate" type="application/rss+xml" title="carlos schults / blog" href="https://carlosschults.net/rss.xml">
+</head>
+
+  <body>
+    <script>
+      // Apply the theme before first paint to avoid a flash of the
+      // wrong theme (and the load-time color transition).
+      (function () {
+        var theme = localStorage.getItem('theme') ||
+          (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        document.body.setAttribute('data-theme', theme);
+      })();
+    </script>
+    <header class="site-header">
+  <div class="wrapper">    
+    <a class="site-title" href="/pt/">carlos schults / blog</a>
+    
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg viewBox="0 0 18 15">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+
+      <div class="trigger">        
+          
+          <a class="page-link" href="/pt/arquivo/">Arquivo</a>
+          <a class="page-link" href="/sobre/">Sobre</a>
+          <a class="page-link" href="/busca/">Busca</a>
+                  
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+<div class="wrapper lang-switcher">
+  
+   <a href="/en/great-commit-messages-ai-era" class="en">en</a>  <a href="/pt/great-commit-messages-ai-era" class="pt">pt</a> 
+
+  
+  
+</div>
+
+
+    <div class="page-content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">    
+    <h2 class="postTitle" itemprop="headline">Elaborando Ótimas Mensagens de Commit na Era da IA</h2>
+    <p class="post-meta">   
+    <time datetime="2026-08-12T00:00:00+00:00" itemprop="datePublished">12/08/2026
+    </time> • <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">Carlos Schults</span></span>
+  <span class="tags" itemprop="keywords"> • Tags: <a href="/tag_ptbr/tutorial">tutorial </a> <a href="/tag_ptbr/git">git </a> <a href="/tag_ptbr/ai">ai </a> <a href="/tag_ptbr/llm">llm </a> <a href="/tag_ptbr/claude">claude </a> <a href="/tag_ptbr/version-control-system">version-control-system </a> <a href="/tag_ptbr/best-practices">best-practices </a> </span>
+  </p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    
+    <p>Um tempo atrás, expliquei que <a href="/pt/your-commit-messages-suck">as suas mensagens de commit são uma porcaria e o que fazer a respeito</a>. Naquele post, falei rapidinho sobre IA, afirmando que não acho que o uso de LLMs (<em>Large Language Models</em>, ou Grandes Modelos de Linguagem) mude fundamentalmente nenhum dos pontos que levantei no post.</p>
+
+<p>Mas o tema das mensagens de commit geradas por LLM é relevante o suficiente para merecer um post próprio, especialmente agora que cada vez mais pessoas estão usando agentes para gerar código.</p>
+
+<p>É sobre isso que este post trata. Vou basicamente compartilhar minhas experiências sobre o que funciona e o que não funciona na hora de criar boas mensagens de commit.</p>
+<h2 id="por-que-llms-não-são-automaticamente-boas-em-criar-boas-mensagens-de-commit">
+  
+  
+    Por Que LLMs Não São Automaticamente Boas em Criar Boas Mensagens de Commit <a href="#por-que-llms-não-são-automaticamente-boas-em-criar-boas-mensagens-de-commit" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
+<p>Quando se trata de escrever mensagens de commit, há uma área em que as IAs são muito boas: olhar para um diff e gerar um resumo.</p>
+
+<p>Em outras palavras, elas se destacam em descrever o que você fez em detalhes… o que, se você leu meu outro post, sabe que é exatamente o que não é pra você fazer!</p>
+
+<p>O que os LLMs não fazem bem é entender o contexto. Eles conseguem olhar para um diff e dizer algo como “Ok, o usuário desabilitou a cláusula OUTPUT do SQL Server na configuração do EF Core” e então escrever uma mensagem de commit detalhada descrevendo essas mudanças. O que é inútil, porque o diff do commit já mostra as mudanças.</p>
+
+<p>O que o LLM <em>não consegue</em> fazer é descobrir que eu fiz a mudança porque tínhamos introduzido triggers em algumas tabelas e o EF Core começou a falhar porque a cláusula OUTPUT conflita com triggers, então tivemos que desabilitá-la.</p>
+
+<p>Existe toda uma história por trás de uma mudança, e a AI não vai conseguir adivinhar essa história se ninguém contar pra ela.</p>
+<h2 id="a-ia-não-lê-sua-mente">
+  
+  
+    A IA Não Lê Sua Mente <a href="#a-ia-não-lê-sua-mente" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
+<p>Vejo que muitas pessoas ficam frustradas com código gerado por IA, e é um padrão comum. As pessoas fazem um pedido vago pra caramba, depois recebem algo em troca, e então ficam frustradas porque não era o que tinham em mente. Bom, se você tem algo específico em mente que a IA deveria levar em conta, garanta que isso saia da sua cabeça e chegue até a IA!</p>
+
+<p>Repitam comigo: <strong>a IA não lê mentes.</strong></p>
+
+<p>Além disso, a IA é incrivelmente confiante. Ela sempre vai te dar <em>alguma coisa</em> de volta. O que pode ser o que você quer, mais ou menos, mas também pode não ser, já que ela será tendenciosa em relação às abordagens que o LLM mais viu em seus dados de treinamento.</p>
+
+<p>Por exemplo, se você pedir uma mensagem de commit para um diff, sem instruções adicionais, é bem provável que ela cuspa algo usando <a href="https://www.conventionalcommits.org/en/v1.0.0/">conventional commits</a>, simplesmente porque muita gente usa esse padrão. Pessoalmente, não gosto desse padrão e não quero usá-lo, mas é claro que o Claude não sabe disso sobre mim a menos que eu diga.</p>
+<h2 id="o-que-fazer-então">
+  
+  
+    O Que Fazer Então? <a href="#o-que-fazer-então" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
+<p>No outro post, compartilhei o prompt que eu estava usando com o Claude na época:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Write a concise, well-crafted commit message for the diff I'm going to give you.
+Make it more high-level, focusing on the why rather than listing all changes in great detail.
+Follow these rules:
+- Summary
+	- Brief description of what was done
+	- 50 chars at the most
+	- Use imperative mood
+	- Do not use conventional commits
+- Body
+	- Brief description of the "how", but focus more on the reason for the changes
+	- Use prose rather than bullet points.
+	- Use past tense
+	- Lines no longer than 72 chars
+</code></pre></div></div>
+
+<p>Eu não estava totalmente satisfeito com os resultados que estava obtendo com esse prompt, então continuei iterando sobre ele. Uma coisa que adicionei em algum momento foi que o Claude deveria me perguntar sobre o contexto quando não tivesse certeza. Isso funcionou, mas de forma um tanto inconsistente.</p>
+
+<p>Então, não me lembro exatamente quando, outra coisa aconteceu. Mas antes de entrar nisso, preciso fazer uma pequena digressão e explicar por que não uso Conventional Commits.</p>
+<h2 id="conventional-commits-não-é-um-bom-padrão">
+  
+  
+    Conventional Commits Não É um Bom Padrão <a href="#conventional-commits-não-é-um-bom-padrão" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
+<p>Não gosto nem uso Conventional Commits. No passado, eu usava, mas comecei a mudar de ideia depois de um tempo.</p>
+
+<p>Por um bom tempo, não conseguia articular direito por que não gostava desse padrão, até ler <a href="https://sumnerevans.com/posts/software-engineering/stop-using-conventional-commits/">este post</a> de Sumner Evans.</p>
+
+<p>A essência do motivo pelo qual Evans não gosta do Conventional Commits é que ele foca nas coisas erradas, tornando o tipo do commit (“feat”, “fix”, etc.) a informação mais importante, em vez do escopo. Ou seja, quais áreas ou partes do sistema o commit modifica.</p>
+
+<p>O Conventional Commits costuma ser combinado com ferramentas que geram changelogs automaticamente e incrementam números de versão com base nas mensagens. Evans argumenta, e eu concordo, que isso é uma ideia fundamentalmente ruim.</p>
+
+<p>Há mais motivos pelos quais esse padrão tão difundido não é tão bom quanto parece, mas vá ler o post do Evans para saber mais.</p>
+
+<p>A pergunta então se torna: o que usar no lugar?</p>
+<h2 id="chegam-os-scoped-commits">
+  
+  
+    Chegam os Scoped Commits <a href="#chegam-os-scoped-commits" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
+<p>Em seu post, depois de construir um argumento convincente contra o Conventional Commits, Evans oferece <a href="https://sumnerevans.com/posts/software-engineering/stop-using-conventional-commits/#a-better-way">uma alternativa diferente</a>. Baseado nos padrões usados por projetos open-source de sucesso, como Git, o kernel do Linux, Go, entre outros, ele propõe um novo padrão que chamou de <a href="https://scopedcommits.com/">Scoped Commits</a>.</p>
+
+<p>O básico desse padrão é incrivelmente simples. Você para de usar o tipo da mudança como prefixo da sua mensagem e passa a usar um escopo, que se relaciona à área, subsistema ou parte da sua aplicação que o commit afeta.</p>
+
+<p>Este é um exemplo:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>auth: Add SSO login controller
+
+The login page previously relied on a legacy form-based flow that
+was being decommissioned. Introduced a new controller and service
+layer to handle SSO natively, preserving existing session logic
+while decoupling it from the legacy system.
+
+Closes: AB998
+</code></pre></div></div>
+<h2 id="chega-a-skill-do-claude">
+  
+  
+    Chega a Skill do Claude <a href="#chega-a-skill-do-claude" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
+<p>Foi mais ou menos nessa época que comecei a experimentar com skills do Claude, porque estava cansado de repetir as mesmas instruções sempre. Decidi tentar encapsular todas essas preferências em uma skill que eu pudesse usar. Depois de bastante tentativa e erro e reescritas, cheguei a algo que acho útil.</p>
+
+<p>As partes mais importantes da skill, para mim, são as seguintes:</p>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">-</span> Read the full diff carefully before writing anything
+<span class="p">-</span> If the scope isn't clear from the diff, ask one focused question
+<span class="p">-</span> <span class="gs">**If the diff shows *what* changed but not *why**</span><span class="err">*</span> — the underlying
+  problem, bug, or motivation isn't inferable from the code itself — ask
+  one focused question about the reason for the change before writing the
+  body. A body written without knowing the "why" tends to just restate the
+  diff in prose, which isn't useful. It's fine to write the summary line
+  in the meantime, but hold off on the body until you know the reason, or
+  proceed with summary-only (ticket in parentheses) if the user doesn't
+  have more context to give.
+</code></pre></div></div>
+
+<p>Elas me ajudam a garantir que o Claude receba o contexto certo para a mudança. Caso contrário, ele vai apenas fornecer uma lista detalhada de mudanças, que não é o que estou buscando.</p>
+
+<p>Se tiver interesse, veja a skill completa <a href="https://github.com/carlosschults/claude-config/blob/main/skills/commit-message/SKILL.md">aqui</a>.</p>
+<h2 id="meu-veredito">
+  
+  
+    Meu Veredito? <a href="#meu-veredito" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
+<p>Estou razoavelmente satisfeito com os resultados que consigo com a skill até agora. Não é perfeita, porém.</p>
+
+<p>Um problema que tenho com frequência é que o Claude às vezes “esquece” de usar a skill. Ele simplesmente segue em frente e escreve qualquer coisa como mensagem de commit, e aí eu tenho que dar uma bronca nele. Na maioria das vezes, ele usa a skill, então isso não chega a ser um grande problema.</p>
+
+<p>Outro problema é que às vezes ele não respeita a regra do 50/72 para o comprimento máximo das linhas. As linhas no corpo da mensagem costumam chegar a 75 ou 76 caracteres. Às vezes, são necessárias duas ou três tentativas até ele acertar. Chega um ponto que eu desisto é conserto manualmente.</p>
+
+<p>Por falar nisso, costumo alterar e editar a mensagem de commit gerada eu mesmo. Às vezes, falta uma parte crítica de contexto, ou o Claude entendeu algo errado, e é simplesmente mais fácil e rápido consertar por conta própria do que ficar insistindo com o <a href="https://en.wikipedia.org/wiki/Clanker">clanker</a> até ele fazer certo.</p>
+
+<p>Então, qual é o veredito? No geral, estou satisfeito, mas certamente há espaço para melhorias.</p>
+<h2 id="o-que-você-deveria-fazer">
+  
+  
+    O Que Você Deveria Fazer? <a href="#o-que-você-deveria-fazer" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
+<p>Você pode fazer o que quiser, claro, mas se está buscando conselhos sobre como obter as melhores mensagens de commit possíveis do seu LLM de preferência, aqui vai: <strong>garanta que você dê contexto a ele.</strong></p>
+
+<p>Você não precisa usar scoped commits, embora eu recomende experimentar. Você não precisa usar minha skill <code class="language-plaintext highlighter-rouge">commit-message</code>, nem nenhuma skill, se não quiser.</p>
+
+<p>Apenas garanta que, seja qual for o fluxo de trabalho que você use para gerar mensagens de commit, exista uma etapa em que você forneça o contexto, o “porquê” por trás da sua mudança. Essa é a informação mais importante que uma mensagem de commit deve conter, e seu pequeno robô assistente não vai conseguir isso sozinho. Ele precisa da sua ajuda.</p>
+
+    
+    
+      
+    
+    
+        Encontrou algum erro no post? <a href="http://github.com/carlosschults/carlosschults.github.io/edit/master/_posts/2026-08-12-elaborando-otimas-mensagens-commit-ia.md">Sugira uma edição</a>      
+    
+    
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+                    
+            <a rel="previous" class="previous" href="/pt/guia-operador-like-postgresql">&larr; Operador LIKE do PostgreSQL: Um Guia Detalhado </a>
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+    
+    
+
+
+
+
+<aside class="related-posts">
+  <h3>Posts relacionados</h3>
+  <ul>
+    
+    
+    <li><a href="/pt/suas-mensagens-de-commit-sao-um-lixo">Suas Mensagens de Commit São Um Lixo. Vou Te Ajudar a Melhorar</a></li>
+    
+    
+    <li><a href="/pt/git-switch-branch">Git Switch Branch: Tudo o Que Você Precisa Saber</a></li>
+    
+    
+    <li><a href="/pt/git-detached-head">Erro 'Git Detached Head': O Que Significa e Como Resolver</a></li>
+    
+  </ul>
+</aside>
+
+
+    <div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+        this.page.identifier = window.location.pathname;
+        this.page.url = window.location.href;
+        this.language = 'pt_BR';
+    };
+
+    // Disqus picks its light/dark scheme from the page's computed colors
+    // at embed time, so it must load only after dark-mode.js has applied
+    // the theme AND the 0.3s color transition (_base.scss) has finished,
+    // or it samples the wrong colors.
+    function loadDisqus() {
+        setTimeout(function () {
+            var d = document, s = d.createElement('script');
+            s.src = '//carlosschultsblog.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        }, 400);
+    }
+
+    if (document.readyState === 'complete') {
+        loadDisqus();
+    } else {
+        window.addEventListener('load', loadDisqus);
+    }
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>    
+  </div>
+
+</article>
+
+      </div>
+    </div>
+
+    <footer class="site-footer">
+  <div class="wrapper">
+    <p class="footer-copyright">&copy; 2026 Carlos Schults. All rights reserved.</p>
+  </div>
+</footer>
+
+    <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-92788641-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+    <script src="/js/dark-mode.js"></script>
+    <script src="/js/copy-code.js"></script>
+    
+    <script src="/js/post-enhancements.js"></script>
+    
+  </body>
+
+</html>

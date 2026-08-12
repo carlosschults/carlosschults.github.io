@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Crafting Great Commit Messages in the AI Era | carlos schults / blog</title>
+  <link rel="apple-touch-icon" sizes="57x57" href="/img/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/img/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/img/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/img/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/img/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/img/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/img/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/img/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"  href="/img/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/img/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon-16x16.png">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="description" content="A while ago, I told you why your commit messages suck and what to do about it. On that occasion, I talked briefly about AI, stating that I don’t think that t...">
+  
+  <!-- Twitter card -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:creator" content="@carlosschults">
+  <meta name="twitter:site" content="@carlosschults">
+  <meta name="twitter:domain" content="carlosschults.net">
+  <meta name="twitter:title" content="Crafting Great Commit Messages in the AI Era">
+  <meta name="twitter:description" content="A while ago, I told you why your commit messages suck and what to do about it. On that occasion, I talked briefly about AI, stating that I don’t think that t...">
+
+   <!-- Facebook meta -->
+  
+  
+  <meta property="og:title" content="Crafting Great Commit Messages in the AI Era">
+  <meta property="og:site_name" content="Carlos Schults / Blog" />
+  <meta property="og:locale" content="en_US">  
+  <meta property="og:type" content="article" />
+  
+  <meta property="og:article:published_time" content="2026-08-12T00:00:00+00:00" />  
+  <meta property="og:article:author" content="Carlos Schults" />
+  
+  <meta property="og:article:tag" content="tutorial" />
+  <meta property="og:article:tag" content="git" />
+  <meta property="og:article:tag" content="ai" />
+  <meta property="og:article:tag" content="llm" />
+  <meta property="og:article:tag" content="claude" />
+  <meta property="og:article:tag" content="version-control-system" />
+  <meta property="og:article:tag" content="best-practices" />    
+  
+  <meta property="og:url" content="https://carlosschults.net/en/great-commit-messages-ai-era"/>
+  <meta property="og:description" content="A while ago, I told you why your commit messages suck and what to do about it. On that occasion, I talked briefly about AI, stating that I don’t think that t...">
+  <link rel="stylesheet" href="/css/main.css">  
+  
+   <link rel="canonical" href="https://carlosschults.net/en/great-commit-messages-ai-era">
+   
+  
+  <link rel="alternate" hreflang="en" href="/en/great-commit-messages-ai-era" />
+  <link rel="alternate" hreflang="pt" href="/pt/great-commit-messages-ai-era" />
+  
+  <link rel="alternate" type="application/rss+xml" title="carlos schults / blog" href="https://carlosschults.net/feed.xml">
+</head>
+
+  <body>
+    <script>
+      // Apply the theme before first paint to avoid a flash of the
+      // wrong theme (and the load-time color transition).
+      (function () {
+        var theme = localStorage.getItem('theme') ||
+          (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        document.body.setAttribute('data-theme', theme);
+      })();
+    </script>
+    <header class="site-header">
+  <div class="wrapper">    
+    <a class="site-title" href="/">carlos schults / blog</a>
+    
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg viewBox="0 0 18 15">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+
+      <div class="trigger">        
+          
+          <a class="page-link" href="/archive/">Archive</a>
+          <a class="page-link" href="/footprints/">Dev Footprints</a>
+          <a class="page-link" href="/readings/">Readings</a>
+          <a class="page-link" href="/about/">About</a>
+		      <a class="page-link" href="/search/">Search</a>
+                  
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+<div class="wrapper lang-switcher">
+  
+   <a href="/en/great-commit-messages-ai-era" class="en">en</a>  <a href="/pt/great-commit-messages-ai-era" class="pt">pt</a> 
+
+  
+  
+</div>
+
+
+    <div class="page-content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">    
+    <h2 class="postTitle" itemprop="headline">Crafting Great Commit Messages in the AI Era</h2>
+    <p class="post-meta">   
+    <time datetime="2026-08-12T00:00:00+00:00" itemprop="datePublished">Aug 12, 2026
+    </time> • <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">Carlos Schults</span></span>
+  <span class="tags" itemprop="keywords"> • Tags: <a href="/tag/tutorial">tutorial </a> <a href="/tag/git">git </a> <a href="/tag/ai">ai </a> <a href="/tag/llm">llm </a> <a href="/tag/claude">claude </a> <a href="/tag/version-control-system">version-control-system </a> <a href="/tag/best-practices">best-practices </a> </span>
+  </p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    
+    <p>A while ago, I told you why <a href="/en/your-commit-messages-suck">your commit messages suck and what to do about it</a>. On that occasion, I talked briefly about AI, stating that I don’t think that the usage of LLMs (Large Language Models) fundamentally changes any of the points I made in the post.</p>
+
+<p>However, the topic of LLM-generated commit messages is relevant enough to deserve its own treatment, especially now that more and more people are using agents to generate code.</p>
+
+<p>So, this is what this post is about. I’ll be essentially sharing my experiences about what works and what doesn’t work regarding creating great commit messages.</p>
+<h2 id="why-llms-are-not-automatically-good-at-creating-great-commit-messages">
+  
+  
+    Why LLMs Are Not Automatically Good At Creating Great Commit Messages <a href="#why-llms-are-not-automatically-good-at-creating-great-commit-messages" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
+<p>When it comes to writing commit messages, there is one area where LLMs perform really well. They’re great at looking at a diff and generating a summary of those changes.</p>
+
+<p>In other words, they excel at describing what you did in detail…which, if you’ve read my other post, you know it’s exactly what you shouldn’t be doing!</p>
+
+<p>What LLMs are not good at by default is understanding the context. They can look at a diff and say, “Ok, the user has disabled the OUTPUT clause for SQL Server in their EF Core configuration” and then write a detailed commit message describing those changes. Which is useless, because the commit diff already shows the changes.</p>
+
+<p>What the LLM <em>can’t</em> do is figure out that I made the change because we had introduced triggers to a few tables and EF Core started failing because the OUTPUT clause conflicts with triggers, so we had to disable it.</p>
+
+<p>You see, there’s a whole narrative behind a change, but the AI won’t be able to learn the narrative if nobody tells it.</p>
+<h2 id="ai-cant-read-your-mind">
+  
+  
+    AI Can’t Read Your Mind <a href="#ai-cant-read-your-mind" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
+<p>I see that many people get frustrated with AI-generated code, and it’s a common pattern. People will make an incredibly vague and broad request, then get something in return, then get frustrated it’s not what they had in mind. Well, if you have something specific in mind that the AI should take into account, make sure to get that out of your mind and into the AI!</p>
+
+<p>Repeat with me: <strong>AI doesn’t read minds.</strong></p>
+
+<p>Besides that, AI is incredibly confident. It will always give you <em>something</em> back. Which might be what you want, kind of, but it also might be not, since it will be biased towards approaches the LLM has seen the most in its training data.</p>
+
+<p>For instance, if you ask for a commit message for a diff, without further instructions, it will very likely spit out something using <a href="https://www.conventionalcommits.org/en/v1.0.0/">conventional commits</a>, simply because a lot of people use that. Personally, I don’t like that standard and don’t want to use it, but of course Claude doesn’t know that about me unless I tell it.</p>
+<h2 id="what-to-do-then">
+  
+  
+    What To Do Then? <a href="#what-to-do-then" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
+<p>In the other post I shared the prompt I was using with Claude at the time:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Write a concise, well-crafted commit message for the diff I'm going to give you.
+Make it more high-level, focusing on the why rather than listing all changes in great detail.
+Follow these rules:
+- Summary
+	- Brief description of what was done
+	- 50 chars at the most
+	- Use imperative mood
+	- Do not use conventional commits
+- Body
+	- Brief description of the "how", but focus more on the reason for the changes
+	- Use prose rather than bullet points.
+	- Use past tense
+	- Lines no longer than 72 chars
+</code></pre></div></div>
+
+<p>I wasn’t entirely satisfied with the results I was getting from this prompt, though, and kept iterating on it. One thing that I added at some point was that Claude should ask me about the context if it wasn’t sure about it. This worked, but somewhat inconsistently.</p>
+
+<p>Then, I don’t remember when exactly, another thing happened. But before going into that, I need to digress a little bit and explain why I don’t use Conventional Commits.</p>
+<h2 id="conventional-commits-is-not-a-good-standard">
+  
+  
+    Conventional Commits Is Not a Good Standard <a href="#conventional-commits-is-not-a-good-standard" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
+<p>I don’t like or use Conventional Commits. In the past, I did, but started changing my mind after some time.</p>
+
+<p>For a while, I couldn’t quite articulate why I disliked this standard, until I read <a href="https://sumnerevans.com/posts/software-engineering/stop-using-conventional-commits/">this blog post</a> by Sumner Evans.</p>
+
+<p>The gist of why Evans dislikes Conventional Commits is that it focuses on the wrong things, making the type of commit (“feat”, “fix”, etc.) the most important piece of information, instead of the scope. That is, what areas or part of the system the commit changes.</p>
+
+<p>Conventional Commits is often paired with tools that automatically generate changelogs and bump version numbers based on the messages. Evans argues, and I agree, that this is a fundamentally bad idea.</p>
+
+<p>There are more reasons why this widespread standard is not as great as you might think, but go read Evans’ post to know more.</p>
+
+<p>The question then becomes: what to use instead?</p>
+<h2 id="enter-scoped-commits">
+  
+  
+    Enter Scoped Commits <a href="#enter-scoped-commits" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
+<p>In his post, after making a compelling case against Conventional Commits, Evans offers <a href="https://sumnerevans.com/posts/software-engineering/stop-using-conventional-commits/#a-better-way">a different alternative</a>. Based on the standards used by successful open-source projects such as Git, the Linux kernel, Go, among others, he proposes a new standard which he called <a href="https://scopedcommits.com/">Scoped Commits</a>.</p>
+
+<p>Giving a super complete treatment of Scoped Commits would be…you know…out of scope for this blog post. But the gist of it is incredibly simple. You stop using the type of change as the prefix for your message, and use a scope, which relates to the area, subsystem, or part of your application that the commit touches.</p>
+
+<p>This is one example:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>auth: Add SSO login controller
+
+The login page previously relied on a legacy form-based flow that
+was being decommissioned. Introduced a new controller and service
+layer to handle SSO natively, preserving existing session logic
+while decoupling it from the legacy system.
+
+Closes: AB998
+</code></pre></div></div>
+<h2 id="enter-the-claude-skill">
+  
+  
+    Enter The Claude Skill <a href="#enter-the-claude-skill" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
+<p>It was around this time that I started experimenting with Claude skills, because I was getting sick of repeating the same instructions over and over. I decided to try to encapsulate all of those preferences into a skill I could use. After a good deal of trial-and-error and rewrites, I reached something that I think is useful.</p>
+
+<p>The most important parts of the skill, for me, are the following:</p>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">-</span> Read the full diff carefully before writing anything
+<span class="p">-</span> If the scope isn't clear from the diff, ask one focused question
+<span class="p">-</span> <span class="gs">**If the diff shows *what* changed but not *why**</span><span class="err">*</span> — the underlying
+  problem, bug, or motivation isn't inferable from the code itself — ask
+  one focused question about the reason for the change before writing the
+  body. A body written without knowing the "why" tends to just restate the
+  diff in prose, which isn't useful. It's fine to write the summary line
+  in the meantime, but hold off on the body until you know the reason, or
+  proceed with summary-only (ticket in parentheses) if the user doesn't
+  have more context to give.
+</code></pre></div></div>
+
+<p>They help me make sure Claude gets the right context for the change. Otherwise, it will just provide a detailed list of changes, which is not what I’m after.</p>
+
+<p>If you’re interested, see the complete skill <a href="https://github.com/carlosschults/claude-config/blob/main/skills/commit-message/SKILL.md">here</a>.</p>
+<h2 id="my-verdict">
+  
+  
+    My Verdict? <a href="#my-verdict" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
+<p>I’ve been satisfied with the results I’ve been getting so far from the skill. It’s not perfect, though.</p>
+
+<p>One problem that I have often is that Claude sometimes “forgets” to use the skill. It just goes on and writes whatever as the commit message, and then I have to reprimand it and remind it of the skill. Most times, it uses the skill, though, so that’s not that big of a deal.</p>
+
+<p>Another issue is that sometimes it will not respect the 50/72 rule for the maximum lengths of lines. Lines in the body will often be as long as 75 or 76 characters. Sometimes, it takes two or three iterations until it gets it right. Often, I just get sick of it and fix it myself.</p>
+
+<p>Speaking of which, I often amend and edit the generated commit message myself. Sometimes, there is a critical piece of context missing, or Claude misunderstood something, and it’s just easier and quicker to fix it myself rather than keep prompting the <a href="https://en.wikipedia.org/wiki/Clanker">clanker</a> until it gets it right.</p>
+
+<p>So, what’s the verdict? Overall, I’m satisfied, but there is room for improvement for sure.</p>
+<h2 id="what-should-you-do">
+  
+  
+    What Should You Do? <a href="#what-should-you-do" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
+<p>You can do whatever you want, of course, but if you’re looking for advice on how to get the best commit messages possible from your LLM of choice, here it goes: <strong>make sure you give it context.</strong></p>
+
+<p>You don’t have to use scoped commits, though I recommend giving it a try. You don’t have to use my <code class="language-plaintext highlighter-rouge">commit-message</code> skill, or any skill at all if you don’t want to.</p>
+
+<p>Just make sure that, whatever workflow you use when generating commit messages, there is a step in there where you provide the context, the “why” behind your change. That’s the most important piece of information a commit message should contain, and your little robot minion won’t get that alone. It needs your help.</p>
+
+    
+    
+      
+    
+    
+        Found a typo or mistake in the post? <a href="http://github.com/carlosschults/carlosschults.github.io/edit/master/_posts/2026-08-12-crafting-great-commit-messages-ai.md">Suggest edit</a>
+        
+    
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+                    
+            <a rel="previous" class="previous" href="/en/postgresql-like-operator-guide">&larr; PostgreSQL LIKE Operator: A Detailed Guide </a>
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+    
+    
+
+
+
+
+<aside class="related-posts">
+  <h3>Related posts</h3>
+  <ul>
+    
+    
+    <li><a href="/en/your-commit-messages-suck">Your Commit Messages Suck. Let Me Show You How To Fix That</a></li>
+    
+    
+    <li><a href="/en/git-beautiful-history/">Make Your Git History Look Beautiful Using Amend and Rebase</a></li>
+    
+    
+    <li><a href="/en/git-switch-branch">Git Switch Branch: Everything You Need to Know</a></li>
+    
+  </ul>
+</aside>
+
+
+    <div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+        this.page.identifier = window.location.pathname;
+        this.page.url = window.location.href;
+        this.language = 'en';
+    };
+
+    // Disqus picks its light/dark scheme from the page's computed colors
+    // at embed time, so it must load only after dark-mode.js has applied
+    // the theme AND the 0.3s color transition (_base.scss) has finished,
+    // or it samples the wrong colors.
+    function loadDisqus() {
+        setTimeout(function () {
+            var d = document, s = d.createElement('script');
+            s.src = '//carlosschultsblog.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        }, 400);
+    }
+
+    if (document.readyState === 'complete') {
+        loadDisqus();
+    } else {
+        window.addEventListener('load', loadDisqus);
+    }
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>    
+  </div>
+
+</article>
+
+      </div>
+    </div>
+
+    <footer class="site-footer">
+  <div class="wrapper">
+    <p class="footer-copyright">&copy; 2026 Carlos Schults. All rights reserved.</p>
+  </div>
+</footer>
+
+    <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-92788641-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+    <script src="/js/dark-mode.js"></script>
+    <script src="/js/copy-code.js"></script>
+    
+    <script src="/js/post-enhancements.js"></script>
+    
+  </body>
+
+</html>
