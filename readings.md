@@ -41,6 +41,9 @@ I copied the idea from [here](https://blog.royalsloth.eu/interesting-articles/).
 
 ## Programming
 
+- [Execution in the Kingdom of Nouns](https://steve-yegge.blogspot.com/2006/03/execution-in-kingdom-of-nouns.html) by Steve Yegge  
+  A witty allegory critiquing Java's extreme object orientation, written back when the language had no support for first-class functions. It's dated now, but it's a fun and historically important read.
+
 - [The Grug Brained Developer](https://grugbrain.dev/)  
   A humorous guide about software development learnings, collected over the author's career. In a way, it's a warning against unnecessary complexity.
 
