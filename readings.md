@@ -5,6 +5,7 @@ permalink: /readings/
 ref: readings
 lang: en
 menuitem: true
+page_enhancements: true
 ---
 
 The purpose of this page is to keep track of interesting content I've read. While primarily focused on blog posts, the collection may eventually include books, academic papers, and other media forms.
