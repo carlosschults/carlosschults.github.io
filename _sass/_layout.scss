@@ -590,6 +590,106 @@
     }
 }
 
+// Table of Contents sidebar
+.toc {
+    position: fixed;
+    top: 5rem;
+    right: 2rem;
+    width: 210px;
+    max-height: calc(100vh - 6rem);
+    overflow-y: auto;
+    font-size: 13px;
+    z-index: 500;
+
+    // Only show when there's room beside the content column
+    @media screen and (max-width: 1200px) {
+        display: none;
+    }
+
+    .toc-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 0.6rem;
+    }
+
+    .toc-title {
+        font-size: 13px;
+        font-weight: 700;
+        letter-spacing: 0.06em;
+        color: $text-color;
+    }
+
+    .toc-toggle {
+        background: none;
+        border: none;
+        cursor: pointer;
+        font-size: 12px;
+        color: $grey-color;
+        padding: 0;
+        transition: color 0.15s ease;
+
+        &:hover { color: $brand-color; }
+    }
+
+    .toc-list {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+
+        &.toc-list--hidden { display: none; }
+    }
+
+    .toc-item {
+        border-left: 2px solid $grey-color-light;
+        transition: border-left-color 0.2s ease;
+
+        a {
+            display: block;
+            padding: 0.28rem 0 0.28rem 0.65rem;
+            color: $grey-color;
+            line-height: 1.4;
+            transition: color 0.15s ease;
+
+            &:hover {
+                color: $text-color;
+                text-decoration: none;
+            }
+        }
+
+        &.toc-item--active {
+            border-left-color: $brand-color;
+
+            > a { color: $text-color; font-weight: 500; }
+        }
+
+        &.toc-h3 { padding-left: 0.75rem; }
+    }
+
+    [data-theme="dark"] & {
+        .toc-title { color: $text-color-dark; }
+
+        .toc-toggle {
+            color: $grey-color-dark-theme;
+            &:hover { color: $brand-color-dark; }
+        }
+
+        .toc-item {
+            border-left-color: $border-color-dark;
+
+            a {
+                color: $grey-color-dark-theme;
+                &:hover { color: $text-color-dark; }
+            }
+
+            &.toc-item--active {
+                border-left-color: $brand-color-dark;
+                > a { color: $text-color-dark; }
+            }
+        }
+    }
+}
+
 // Footnotes section at bottom of post
 .footnotes {
     margin-top: 2.5rem;
