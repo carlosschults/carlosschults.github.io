@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Building git in Go From Scratch - Part 3 | carlos schults / blog</title>
+  <link rel="apple-touch-icon" sizes="57x57" href="/img/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/img/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/img/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/img/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/img/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/img/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/img/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/img/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"  href="/img/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/img/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon-16x16.png">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="description" content="Welcome back to my journey of building git from scratch in Go, in order to learn more about both. If you don’t know whatI’m talking about, go read the first ...">
+  
+  <!-- Twitter card -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:creator" content="@carlosschults">
+  <meta name="twitter:site" content="@carlosschults">
+  <meta name="twitter:domain" content="carlosschults.net">
+  <meta name="twitter:title" content="Building git in Go From Scratch - Part 3">
+  <meta name="twitter:description" content="Welcome back to my journey of building git from scratch in Go, in order to learn more about both. If you don’t know whatI’m talking about, go read the first ...">
+
+   <!-- Facebook meta -->
+  
+  
+  <meta property="og:title" content="Building git in Go From Scratch - Part 3">
+  <meta property="og:site_name" content="Carlos Schults / Blog" />
+  <meta property="og:locale" content="en_US">  
+  <meta property="og:type" content="article" />
+  
+  <meta property="og:article:published_time" content="2026-09-08T00:00:00+00:00" />  
+  <meta property="og:article:author" content="Carlos Schults" />
+  
+  <meta property="og:article:tag" content="projects" />
+  <meta property="og:article:tag" content="git" />
+  <meta property="og:article:tag" content="go" />
+  <meta property="og:article:tag" content="go-gitter" />
+  <meta property="og:article:tag" content="version-control-system" />    
+  
+  <meta property="og:url" content="https://carlosschults.net/en/building-git-in-go-part3"/>
+  <meta property="og:description" content="Welcome back to my journey of building git from scratch in Go, in order to learn more about both. If you don’t know whatI’m talking about, go read the first ...">
+  <link rel="stylesheet" href="/css/main.css">  
+  
+   <link rel="canonical" href="https://carlosschults.net/en/building-git-in-go-part3">
+   
+  
+  <link rel="alternate" hreflang="en" href="/en/building-git-in-go-part3" />
+  <link rel="alternate" hreflang="pt" href="/pt/construindo-git-em-go-parte-3" />
+  
+  <link rel="alternate" type="application/rss+xml" title="carlos schults / blog" href="https://carlosschults.net/feed.xml">
+</head>
+
+  <body>
+    <script>
+      // Apply the theme before first paint to avoid a flash of the
+      // wrong theme (and the load-time color transition).
+      (function () {
+        var theme = localStorage.getItem('theme') ||
+          (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        document.body.setAttribute('data-theme', theme);
+      })();
+    </script>
+    <header class="site-header">
+  <div class="wrapper">    
+    <a class="site-title" href="/">carlos schults / blog</a>
+    
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg viewBox="0 0 18 15">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+
+      <div class="trigger">        
+          
+          <a class="page-link" href="/archive/">Archive</a>
+          <a class="page-link" href="/footprints/">Dev Footprints</a>
+          <a class="page-link" href="/readings/">Readings</a>
+          <a class="page-link" href="/about/">About</a>
+		      <a class="page-link" href="/search/">Search</a>
+                  
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+<div class="wrapper lang-switcher">
+  
+   <a href="/en/building-git-in-go-part3" class="en">en</a>  <a href="/pt/construindo-git-em-go-parte-3" class="pt">pt</a> 
+
+  
+  
+</div>
+
+
+    <div class="page-content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">    
+    <h2 class="postTitle" itemprop="headline">Building git in Go From Scratch - Part 3</h2>
+    <p class="post-meta">   
+    <time datetime="2026-09-08T00:00:00+00:00" itemprop="datePublished">Sep 8, 2026
+    </time> • <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">Carlos Schults</span></span>
+  <span class="tags" itemprop="keywords"> • Tags: <a href="/tag/projects">projects </a> <a href="/tag/git">git </a> <a href="/tag/go">go </a> <a href="/tag/go-gitter">go-gitter </a> <a href="/tag/version-control-system">version-control-system </a> </span>
+  </p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    
+    <p>Welcome back to my journey of building git from scratch in Go, in order to learn more about both. If you don’t know what
+I’m talking about, go read <a href="/en/implementing-git-in-go">the first post</a>. You should of course then proceed to also read <a href="/en/building-git-in-go-part2">the second entry</a>.</p>
+<h2 id="its-been-a-while-again">
+  
+  
+    It’s Been a While, Again <a href="#its-been-a-while-again" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
+<p>It’s September already, can you believe it? I know, it’s been a longer while this time. And the <del>excuse</del> explanation is the same: I didn’t have much time.</p>
+
+<p>Also, to be honest, I kind of forgot to update this, as I was working through the project. It’s like I didn’t want to lose the momentum I was in, so my brain sort of blocked this idea of stopping to write this update…? Anyway, it makes sense to me. Let’s continue.</p>
+<h2 id="recap">
+  
+  
+    Recap <a href="#recap" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
+<p>At the end of last post, I mentioned that <a href="https://carlosschults.net/en/building-git-in-go-part2#whats-next">the next step would be implementing the <code class="language-plaintext highlighter-rouge">update-index</code> command</a>. That is done, and you’ll read some about it.</p>
+
+<p>But this update will be, in general, less about the command in itself and more about everything else around it.</p>
+
+<p>That’s because, after implementing this command, I decided to do a much needed refactoring. The code was reaching a level of messiness that was making me uncomfortable. But, as Martin Fowler<sup id="fnref:1" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup> himself would certainly tell you, refactoring is risky without automated testing.</p>
+
+<p>So, I decided to add automated tests so I could ensure my commands still worked fine as I refactored them. This post is the story of that refactoring.</p>
+<h2 id="implementing-update-index">
+  
+  
+    Implementing <code class="language-plaintext highlighter-rouge">update-index</code> <a href="#implementing-update-index" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
+<p>Let’s start by talking about the implementation of <code class="language-plaintext highlighter-rouge">update-index</code>. This command is not one you would use normally in your day-to-day, since it’s a plumbing<sup id="fnref:2" role="doc-noteref"><a href="#fn:2" class="footnote" rel="footnote">2</a></sup> command. Why implement it, then?</p>
+<h3 id="motivation">
+  
+  
+    Motivation <a href="#motivation" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
+<p>I’m working my way towards being able to commit changes. You’ll remember that, before you commit some change in git, you need to stage it first. “Staging” a change means adding that to the index, so that when you commit, the change present in your index is the one which gets added to the commit.</p>
+
+<p><code class="language-plaintext highlighter-rouge">update-index</code> gets file paths as arguments and adds those to the index. My implementation, at the moment, only handles one file. There is future work for me to do so that it actually handles multiple files.</p>
+
+<p>My implementation was done in two steps. First, I created a <a href="https://github.com/carlosschults/go-gitter/commit/1f90b863b6f77d75f1ab85f2031f457b515c1efa">skeleton for the command</a>, writing a minimum index file which was structurally correct but was not right, in the sense that it wasn’t actually writing a real file to the index at that point.</p>
+
+<p>The <a href="https://github.com/carlosschults/go-gitter/commit/f82f8612b3ad9e6b00a27eeb0ded9bf701bd7862">commit after that</a> finished the implementation, by taking the file into account and saving it correctly. The result was that I now had a command that could write to the index file in a totally valid way. I could verify this by using real git to read the index file back, using another plumbing command, <code class="language-plaintext highlighter-rouge">git ls-files</code>.</p>
+<h3 id="what-the-heck-is-an-index-file">
+  
+  
+    What the heck is an index file? <a href="#what-the-heck-is-an-index-file" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
+<p>I’ve been saying “adding to the index”, as if it’s something that everyone understands. So, what does exactly mean to add something to the index file, and what even is the index file to begin with?</p>
+
+<p>The index file is a binary file that git writes at <code class="language-plaintext highlighter-rouge">.git/index</code>. Unlike objects like blobs which, when decompressed, give back readable text, the index doesn’t. Its contents are, basically, byte sequences that follow a very specific format. The reason for that is efficiency: storing this data in binary format ensures that writing and reading it is faster than it would’ve been doing the same to a text-based file, and it also ensures the file doesn’t get too large.</p>
+
+<p>If you read the <a href="https://github.com/carlosschults/go-gitter/blob/f82f8612b3ad9e6b00a27eeb0ded9bf701bd7862/ggt/main.go#L176">implementation</a>, you can see what is the format for the index file. I won’t cover it in too much detail here, but the gist of it is:</p>
+
+<ol>
+  <li>A header, always containing DIRC as a signature, a version number, and a count of files staged, which in my case, is hardcoded to 1</li>
+  <li>One entry per staged file, containing metadata, the SHA-1 hash of the file, and its file name.</li>
+  <li>A checksum, consisting of a SHA-1 hash of all of the information that preceded it, so git can detect corruption in the index file.</li>
+</ol>
+
+<p>For the metadata fields, I just hardcoded a lot of stuff. Many of those fields aren’t really relevant on Windows, and they’re mostly for performance optimizations either way. In other words, they are a nice-to-have rather than a must-have, so I zeroed them out for simplicity’s sake.</p>
+<h3 id="i-found-a-bug">
+  
+  
+    I found a bug <a href="#i-found-a-bug" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
+<p>This is kind of embarrassing, but while writing this post I found a bug with my implementation. I mean, the implementation was already partially complete by design, since it currently can handle only one file. But I’ve found an actual bug: my <code class="language-plaintext highlighter-rouge">update-index</code> doesn’t create a blob object after hashing the file.</p>
+
+<p>Here, this is the offending part of the code:</p>
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// append the hash</span>
+<span class="n">_</span><span class="p">,</span> <span class="n">hash</span> <span class="o">:=</span> <span class="n">hashData</span><span class="p">(</span><span class="n">contents</span><span class="p">,</span> <span class="s">"blob"</span><span class="p">)</span>
+<span class="n">dataToSave</span><span class="p">,</span> <span class="n">err</span> <span class="o">=</span> <span class="n">binary</span><span class="o">.</span><span class="n">Append</span><span class="p">(</span><span class="n">dataToSave</span><span class="p">,</span> <span class="n">binary</span><span class="o">.</span><span class="n">BigEndian</span><span class="p">,</span> <span class="n">hash</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>See how <code class="language-plaintext highlighter-rouge">hashData</code> has two return values and we discard the first? That’s the issue. Instead of discarding it, we should have used that return and saved it to the disk as a blob. Like the way the <code class="language-plaintext highlighter-rouge">hash-object</code> command <a href="https://github.com/carlosschults/go-gitter/blob/f82f8612b3ad9e6b00a27eeb0ded9bf701bd7862/ggt/main.go#L149-L170">does it</a>.</p>
+
+<p>I found the bug while <a href="https://en.wikipedia.org/wiki/Rubber_duck_debugging">rubber-ducking</a> with Claude about the roadmap. As I stated <a href="/en/implementing-git-in-go">in the first entry</a>, I’m not using AI to generate any of the code for this, which is also one of the reasons this is taking so long. But I am using Claude to help me plan the roadmap, the correct sequence of commands, and understand Git’s inner workings so I can implement them.</p>
+
+<p>Anyway, the bug is there, what will I do? For now, nothing. I’ll just put a pin on it and come back to it in the future, after I’m done with my refactoring.</p>
+
+<p>This is something I’ve mentioned briefly at the start of the post, but after I had <code class="language-plaintext highlighter-rouge">update-index</code> sort of working, I decided the next step would be to refactor the existing code, which was becoming too messy.</p>
+<h2 id="tests-before-refactoring">
+  
+  
+    Tests before refactoring <a href="#tests-before-refactoring" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
+<p>Look at the state of the <a href="https://github.com/carlosschults/go-gitter/blob/f82f8612b3ad9e6b00a27eeb0ded9bf701bd7862/ggt/main.go">main file at that point in history</a> and you’ll agree with me it’s not an example of separation of concerns. It’s a big file that mixes argument parsing, command dispatching, pure and impure functions all jumbled together.</p>
+
+<p>My plan for the refactoring was two-fold: first, extract all commands into their own files, using proper argument parsing. Then, segregate pure and impure functions, so I could easily unit test the pure ones.</p>
+
+<p>But such a refactoring is risky, and I decided to first create integration tests, that would:</p>
+<ul>
+  <li>build the project and generate an executable</li>
+  <li>create a temporary repository for testing</li>
+  <li>use the generated executable to run some commands inside the temp repo</li>
+  <li>assert the expected outcomes</li>
+</ul>
+
+<p>And that’s basically what I did. First, I <a href="https://github.com/carlosschults/go-gitter/commit/496442c83924bd89893d36a58d86111ebc0079a8">set up the test infrastructure</a>, by creating one helper function that generates the executable and saves its path for later usage and another one that sets up the temporary repository.</p>
+
+<p>Then, the <a href="https://github.com/carlosschults/go-gitter/commit/3c0c6e260d10df68a974377c1c44534299257f86">commit after that</a> added tests for the <code class="language-plaintext highlighter-rouge">update-index</code> command. Which was incorrect, as you’ve just seen, but I didn’t know it at the time and, thus, my test passed.</p>
+
+<p>An interesting learning I had regarding tests in Go is that they usually don’t write assertions, apparently? There are third-party libraries you can use that introduce assertions, but if you use just the built-in testing facilities of Go, you have to assert “manually”. Here, see an example:</p>
+
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">func</span> <span class="n">TestUpdateIndexAddSingleFile</span><span class="p">(</span><span class="n">t</span> <span class="o">*</span><span class="n">testing</span><span class="o">.</span><span class="n">T</span><span class="p">)</span> <span class="p">{</span>
+	<span class="n">testRepoPath</span> <span class="o">:=</span> <span class="n">setupGitRepo</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+	<span class="k">if</span> <span class="n">err</span> <span class="o">:=</span> <span class="n">os</span><span class="o">.</span><span class="n">WriteFile</span><span class="p">(</span><span class="n">filepath</span><span class="o">.</span><span class="n">Join</span><span class="p">(</span><span class="n">testRepoPath</span><span class="p">,</span> <span class="s">"file.txt"</span><span class="p">),</span> <span class="p">[]</span><span class="kt">byte</span><span class="p">(</span><span class="s">"hello world"</span><span class="p">),</span> <span class="m">0666</span><span class="p">);</span> <span class="n">err</span> <span class="o">!=</span> <span class="no">nil</span> <span class="p">{</span>
+		<span class="n">t</span><span class="o">.</span><span class="n">Fatalf</span><span class="p">(</span><span class="s">"Creating the test file failed: %s"</span><span class="p">,</span> <span class="n">err</span><span class="p">)</span>
+	<span class="p">}</span>
+
+	<span class="n">cmd</span> <span class="o">:=</span> <span class="n">exec</span><span class="o">.</span><span class="n">Command</span><span class="p">(</span><span class="n">ggtBinaryPath</span><span class="p">,</span> <span class="s">"update-index"</span><span class="p">,</span> <span class="s">"--add"</span><span class="p">,</span> <span class="s">"file.txt"</span><span class="p">)</span>
+	<span class="n">cmd</span><span class="o">.</span><span class="n">Dir</span> <span class="o">=</span> <span class="n">testRepoPath</span>
+	<span class="n">_</span><span class="p">,</span> <span class="n">err</span> <span class="o">:=</span> <span class="n">cmd</span><span class="o">.</span><span class="n">Output</span><span class="p">()</span>
+	<span class="k">if</span> <span class="n">err</span> <span class="o">!=</span> <span class="no">nil</span> <span class="p">{</span>
+		<span class="n">t</span><span class="o">.</span><span class="n">Fatalf</span><span class="p">(</span><span class="s">"Command failed: %s"</span><span class="p">,</span> <span class="n">err</span><span class="p">)</span>
+	<span class="p">}</span>
+
+	<span class="n">cmd</span> <span class="o">=</span> <span class="n">exec</span><span class="o">.</span><span class="n">Command</span><span class="p">(</span><span class="s">"git"</span><span class="p">,</span> <span class="s">"ls-files"</span><span class="p">)</span>
+	<span class="n">cmd</span><span class="o">.</span><span class="n">Dir</span> <span class="o">=</span> <span class="n">testRepoPath</span>
+	<span class="n">result</span><span class="p">,</span> <span class="n">err</span> <span class="o">:=</span> <span class="n">cmd</span><span class="o">.</span><span class="n">Output</span><span class="p">()</span>
+	<span class="k">if</span> <span class="n">err</span> <span class="o">!=</span> <span class="no">nil</span> <span class="p">{</span>
+		<span class="n">t</span><span class="o">.</span><span class="n">Fatalf</span><span class="p">(</span><span class="s">"Command failed: %s"</span><span class="p">,</span> <span class="n">err</span><span class="p">)</span>
+	<span class="p">}</span>
+
+	<span class="k">if</span> <span class="o">!</span><span class="n">strings</span><span class="o">.</span><span class="n">Contains</span><span class="p">(</span><span class="kt">string</span><span class="p">(</span><span class="n">result</span><span class="p">),</span> <span class="s">"file.txt"</span><span class="p">)</span> <span class="p">{</span>
+		<span class="n">t</span><span class="o">.</span><span class="n">Fatalf</span><span class="p">(</span><span class="s">"Test failed"</span><span class="p">)</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>In the test above, I run my command <code class="language-plaintext highlighter-rouge">update-index</code>, then after that I run real Git’s <code class="language-plaintext highlighter-rouge">ls-files</code> command, and verify that its output includes the name of the file I added.
+If it doesn’t, I error out. If the method makes it to the end without returning an error code, it means the test succeeded.</p>
+
+<p>After that, I kept adding tests until all commands were covered, then added a GitHub Actions pipeline to test after every push or PR merged to <code class="language-plaintext highlighter-rouge">main</code>.</p>
+<h2 id="extracting-commands">
+  
+  
+    Extracting commands <a href="#extracting-commands" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
+<p>For the next step, I wanted to extract all commands to their own file and use proper argument parsing. After a bit of research, I learned that <a href="https://github.com/spf13/cobra">Cobra</a> is the main library for argument parsing in Go, so I decided to use it.</p>
+
+<p>The resulting change was done over <a href="https://github.com/carlosschults/go-gitter/commit/9c4976fd77d3822b85d50523377694c0f275f035">a single commit</a>. The extraction required some changes to the folder structure, but I made sure the tests kept passing.</p>
+
+<p>After that, I did some clean-up and added some niceties, such as a make file (because I kept forgetting how to run all tests) and accurate descriptions for all commands.</p>
+
+<p>The resulting code is much more pleasing now. This is what my entry point looks like now:</p>
+
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">package</span> <span class="n">main</span>
+
+<span class="k">import</span> <span class="s">"github.com/carlosschults/go-gitter/cmd"</span>
+
+<span class="k">func</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
+	<span class="n">cmd</span><span class="o">.</span><span class="n">Execute</span><span class="p">()</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p>And this is the file for the <code class="language-plaintext highlighter-rouge">init</code> command:</p>
+
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">package</span> <span class="n">cmd</span>
+
+<span class="k">import</span> <span class="p">(</span>
+	<span class="s">"fmt"</span>
+	<span class="s">"log"</span>
+	<span class="s">"os"</span>
+	<span class="s">"path/filepath"</span>
+
+	<span class="s">"github.com/spf13/cobra"</span>
+<span class="p">)</span>
+
+<span class="k">var</span> <span class="n">initCmd</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">cobra</span><span class="o">.</span><span class="n">Command</span><span class="p">{</span>
+	<span class="n">Use</span><span class="o">:</span>   <span class="s">"init"</span><span class="p">,</span>
+	<span class="n">Short</span><span class="o">:</span> <span class="s">"Create an empty Git repository or reinitialize an existing one"</span><span class="p">,</span>
+	<span class="n">Run</span><span class="o">:</span> <span class="k">func</span><span class="p">(</span><span class="n">cmd</span> <span class="o">*</span><span class="n">cobra</span><span class="o">.</span><span class="n">Command</span><span class="p">,</span> <span class="n">args</span> <span class="p">[]</span><span class="kt">string</span><span class="p">)</span> <span class="p">{</span>
+		<span class="n">path</span><span class="p">,</span> <span class="n">_</span> <span class="o">:=</span> <span class="n">filepath</span><span class="o">.</span><span class="n">Abs</span><span class="p">(</span><span class="s">".git"</span><span class="p">)</span>
+		<span class="n">standardizedPath</span> <span class="o">:=</span> <span class="n">filepath</span><span class="o">.</span><span class="n">ToSlash</span><span class="p">(</span><span class="n">path</span><span class="p">)</span> <span class="o">+</span> <span class="s">"/"</span>
+
+		<span class="k">if</span> <span class="n">_</span><span class="p">,</span> <span class="n">err</span> <span class="o">:=</span> <span class="n">os</span><span class="o">.</span><span class="n">Stat</span><span class="p">(</span><span class="s">".git"</span><span class="p">);</span> <span class="n">err</span> <span class="o">==</span> <span class="no">nil</span> <span class="p">{</span>
+			<span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="s">"Reinitialized existing Git repository in"</span><span class="p">,</span> <span class="n">standardizedPath</span><span class="p">)</span>
+			<span class="n">os</span><span class="o">.</span><span class="n">Exit</span><span class="p">(</span><span class="m">0</span><span class="p">)</span>
+		<span class="p">}</span>
+
+		<span class="k">if</span> <span class="n">err</span> <span class="o">:=</span> <span class="n">os</span><span class="o">.</span><span class="n">Mkdir</span><span class="p">(</span><span class="s">".git"</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">ModePerm</span><span class="p">);</span> <span class="n">err</span> <span class="o">!=</span> <span class="no">nil</span> <span class="p">{</span>
+			<span class="n">log</span><span class="o">.</span><span class="n">Fatal</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
+		<span class="p">}</span>
+
+		<span class="k">if</span> <span class="n">err</span> <span class="o">:=</span> <span class="n">os</span><span class="o">.</span><span class="n">WriteFile</span><span class="p">(</span><span class="s">".git/HEAD"</span><span class="p">,</span> <span class="p">[]</span><span class="kt">byte</span><span class="p">(</span><span class="s">"ref: refs/heads/main"</span><span class="p">),</span> <span class="m">0666</span><span class="p">);</span> <span class="n">err</span> <span class="o">!=</span> <span class="no">nil</span> <span class="p">{</span>
+			<span class="n">log</span><span class="o">.</span><span class="n">Fatal</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
+		<span class="p">}</span>
+
+		<span class="k">if</span> <span class="n">err</span> <span class="o">:=</span> <span class="n">os</span><span class="o">.</span><span class="n">MkdirAll</span><span class="p">(</span><span class="s">".git/objects/info"</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">ModePerm</span><span class="p">);</span> <span class="n">err</span> <span class="o">!=</span> <span class="no">nil</span> <span class="p">{</span>
+			<span class="n">log</span><span class="o">.</span><span class="n">Fatal</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
+		<span class="p">}</span>
+
+		<span class="k">if</span> <span class="n">err</span> <span class="o">:=</span> <span class="n">os</span><span class="o">.</span><span class="n">MkdirAll</span><span class="p">(</span><span class="s">".git/objects/pack"</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">ModePerm</span><span class="p">);</span> <span class="n">err</span> <span class="o">!=</span> <span class="no">nil</span> <span class="p">{</span>
+			<span class="n">log</span><span class="o">.</span><span class="n">Fatal</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
+		<span class="p">}</span>
+
+		<span class="k">if</span> <span class="n">err</span> <span class="o">:=</span> <span class="n">os</span><span class="o">.</span><span class="n">MkdirAll</span><span class="p">(</span><span class="s">".git/refs/heads"</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">ModePerm</span><span class="p">);</span> <span class="n">err</span> <span class="o">!=</span> <span class="no">nil</span> <span class="p">{</span>
+			<span class="n">log</span><span class="o">.</span><span class="n">Fatal</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
+		<span class="p">}</span>
+
+		<span class="k">if</span> <span class="n">err</span> <span class="o">:=</span> <span class="n">os</span><span class="o">.</span><span class="n">MkdirAll</span><span class="p">(</span><span class="s">".git/refs/tags"</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">ModePerm</span><span class="p">);</span> <span class="n">err</span> <span class="o">!=</span> <span class="no">nil</span> <span class="p">{</span>
+			<span class="n">log</span><span class="o">.</span><span class="n">Fatal</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
+		<span class="p">}</span>
+
+		<span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="s">"Initialized empty Git repository in"</span><span class="p">,</span> <span class="n">standardizedPath</span><span class="p">)</span>
+		<span class="n">os</span><span class="o">.</span><span class="n">Exit</span><span class="p">(</span><span class="m">0</span><span class="p">)</span>
+	<span class="p">},</span>
+<span class="p">}</span>
+
+<span class="k">func</span> <span class="n">init</span><span class="p">()</span> <span class="p">{</span>
+	<span class="n">rootCmd</span><span class="o">.</span><span class="n">AddCommand</span><span class="p">(</span><span class="n">initCmd</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<h2 id="whats-next">
+  
+  
+    What’s next? <a href="#whats-next" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
+<p>Oh boy, do I have some work ahead of me!</p>
+
+<p>First of all, I want to fix this bug with <code class="language-plaintext highlighter-rouge">update-index</code>. Then, I need to complete its implementation. That is, make it save any number of files, since it currently only handles one file.</p>
+
+<p>After that, I will do the refactoring I mentioned earlier: segregate the pure from the impure functions, and write tests for the pure ones.</p>
+
+<p>Only when I’m done with all of that I’ll move to the next commands: <code class="language-plaintext highlighter-rouge">ls-files</code>, then <code class="language-plaintext highlighter-rouge">write-tree</code> and <code class="language-plaintext highlighter-rouge">commit-tree</code>, finally working my way towards being able to create a real commit.</p>
+
+<p>I promise I’ll bring updates more frequently. For now, thanks for reading.</p>
+
+<div class="footnotes" role="doc-endnotes">
+  <ol>
+    <li id="fn:1" role="doc-endnote">
+      <p>Famous software thought-leader, and author of the <a href="https://martinfowler.com/books/refactoring.html">Refactoring book</a>, among many others. <a href="#fnref:1" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:2" role="doc-endnote">
+      <p>Plumbing commands are the internal commands of git, which manipulate objects at the lowest level. The porcelain (high-level) commands then call and orchestrate the plumbing commands in order to carry out the tasks a git user normally does. <a href="#fnref:2" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+
+    
+    
+      
+    
+    
+        Found a typo or mistake in the post? <a href="http://github.com/carlosschults/carlosschults.github.io/edit/master/_posts/2026-09-08-building-git-in-go-part3.md">Suggest edit</a>
+        
+    
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+                    
+            <a rel="previous" class="previous" href="/en/great-commit-messages-ai-era">&larr; Crafting Great Commit Messages in the AI Era </a>
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+    
+    
+
+
+
+
+<aside class="related-posts">
+  <h3>Related posts</h3>
+  <ul>
+    
+    
+    <li><a href="/en/building-git-in-go-part2">Building git in Go From Scratch - Part 2</a></li>
+    
+    
+    <li><a href="/en/implementing-git-in-go">Implementing git in Go From Scratch, For Fun and...Profit?</a></li>
+    
+    
+    <li><a href="/en/great-commit-messages-ai-era">Crafting Great Commit Messages in the AI Era</a></li>
+    
+  </ul>
+</aside>
+
+
+    <div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+        this.page.identifier = window.location.pathname;
+        this.page.url = window.location.href;
+        this.language = 'en';
+    };
+
+    // Disqus picks its light/dark scheme from the page's computed colors
+    // at embed time, so it must load only after dark-mode.js has applied
+    // the theme AND the 0.3s color transition (_base.scss) has finished,
+    // or it samples the wrong colors.
+    function loadDisqus() {
+        setTimeout(function () {
+            var d = document, s = d.createElement('script');
+            s.src = '//carlosschultsblog.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        }, 400);
+    }
+
+    if (document.readyState === 'complete') {
+        loadDisqus();
+    } else {
+        window.addEventListener('load', loadDisqus);
+    }
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>    
+  </div>
+
+</article>
+
+      </div>
+    </div>
+
+    <footer class="site-footer">
+  <div class="wrapper">
+    <p class="footer-copyright">&copy; 2026 Carlos Schults. All rights reserved.</p>
+  </div>
+</footer>
+
+    <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-92788641-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+    <script src="/js/dark-mode.js"></script>
+    <script src="/js/copy-code.js"></script>
+    
+    <script src="/js/post-enhancements.js"></script>
+    
+  </body>
+
+</html>

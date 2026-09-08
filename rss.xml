@@ -5,10 +5,238 @@
     <description>Artigos sobre desenvolvimento de software e tecnologia.</description>
     <link>https://carlosschults.net/</link>
     <atom:link href="https://carlosschults.net/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Wed, 02 Sep 2026 17:20:39 +0000</pubDate>
-    <lastBuildDate>Wed, 02 Sep 2026 17:20:39 +0000</lastBuildDate>
+    <pubDate>Tue, 08 Sep 2026 10:58:35 +0000</pubDate>
+    <lastBuildDate>Tue, 08 Sep 2026 10:58:35 +0000</lastBuildDate>
     <generator>Jekyll v4.3.1</generator>
     
+    
+      <item>
+        <title>Construindo o git em Go do Zero - Parte 3</title>
+        <description>&lt;p&gt;Bem-vindo de volta à minha jornada de construir o git do zero em Go, para aprender mais sobre os dois. Se você não sabe do que estou falando, vá ler &lt;a href=&quot;/pt/implementando-git-em-go&quot;&gt;o primeiro post&lt;/a&gt;. Depois, é claro, você deve seguir para &lt;a href=&quot;/pt/construindo-git-em-go-parte2&quot;&gt;a segunda parte&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2 id=&quot;já-faz-um-tempo-de-novo&quot;&gt;Já Faz um Tempo, de Novo&lt;/h2&gt;
+&lt;p&gt;Espero que tenham tido um ótimo feriado de independência. Já estamos em setembro, dá para acreditar? Eu sei, dessa vez demorou ainda mais. E a &lt;del&gt;desculpa&lt;/del&gt; explicação é a mesma: eu não tive muito tempo.&lt;/p&gt;
+
+&lt;p&gt;Além disso, para ser honesto, acabei meio que esquecendo de atualizar o post enquanto trabalhava no projeto. É como se eu não quisesse perder o ritmo em que estava, então meu cérebro meio que bloqueou a ideia de parar para escrever esta atualização…? Enfim, faz sentido para mim. Vamos continuar.&lt;/p&gt;
+
+&lt;h2 id=&quot;recapitulando&quot;&gt;Recapitulando&lt;/h2&gt;
+&lt;p&gt;No final do último post, mencionei que &lt;a href=&quot;/pt/construindo-git-em-go-parte2#o-que-vem-a-seguir&quot;&gt;o próximo passo seria implementar o comando &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;update-index&lt;/code&gt;&lt;/a&gt;. Isso está feito, e você vai ler um pouco sobre ele.&lt;/p&gt;
+
+&lt;p&gt;Mas esta atualização será, de modo geral, menos sobre o comando em si e mais sobre tudo o que está ao redor dele.&lt;/p&gt;
+
+&lt;p&gt;Isso porque, depois de implementar esse comando, decidi fazer uma refatoração que já estava bastante atrasada. O código estava chegando a um nível de bagunça que estava começando a me incomodar. Mas, como o próprio Martin Fowler&lt;sup id=&quot;fnref:1&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:1&quot; class=&quot;footnote&quot; rel=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt; certamente diria, refatorar sem testes automatizados é arriscado.&lt;/p&gt;
+
+&lt;p&gt;Então, decidi adicionar testes automatizados para garantir que meus comandos continuassem funcionando corretamente enquanto eu os refatorava. Este post é a história dessa refatoração.&lt;/p&gt;
+
+&lt;h2 id=&quot;implementando-update-index&quot;&gt;Implementando &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;update-index&lt;/code&gt;&lt;/h2&gt;
+&lt;p&gt;Vamos começar falando sobre a implementação do &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;update-index&lt;/code&gt;. Esse não é um comando que você usaria normalmente no dia a dia, já que ele é um comando de plumbing&lt;sup id=&quot;fnref:2&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:2&quot; class=&quot;footnote&quot; rel=&quot;footnote&quot;&gt;2&lt;/a&gt;&lt;/sup&gt;. Então por que implementá-lo?&lt;/p&gt;
+
+&lt;h3 id=&quot;motivação&quot;&gt;Motivação&lt;/h3&gt;
+&lt;p&gt;Estou avançando em direção ao objetivo de conseguir fazer commits. Você deve se lembrar de que, antes de fazer um commit no git, é preciso fazer o stage da alteração. Fazer o “staging” de uma alteração significa adicioná-la ao index, para que, quando você fizer o commit, a alteração presente no index seja a que será adicionada ao commit.&lt;/p&gt;
+
+&lt;p&gt;O &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;update-index&lt;/code&gt; recebe caminhos de arquivos como argumentos e os adiciona ao index. Minha implementação, no momento, só lida com um arquivo. Ainda preciso trabalhar para que ela realmente consiga lidar com múltiplos arquivos.&lt;/p&gt;
+
+&lt;p&gt;Minha implementação foi feita em duas etapas. Primeiro, criei um &lt;a href=&quot;https://github.com/carlosschults/go-gitter/commit/1f90b863b6f77d75f1ab85f2031f457b515c1efa&quot;&gt;esqueleto para o comando&lt;/a&gt;, escrevendo um arquivo de index mínimo que era estruturalmente correto, mas não estava certo no sentido de que, naquele momento, ele não estava realmente escrevendo um arquivo de verdade no index.&lt;/p&gt;
+
+&lt;p&gt;O &lt;a href=&quot;https://github.com/carlosschults/go-gitter/commit/f82f8612b3ad9e6b00a27eeb0ded9bf701bd7862&quot;&gt;commit seguinte&lt;/a&gt; terminou a implementação, levando o arquivo em consideração e salvando-o corretamente. O resultado foi que eu agora tinha um comando capaz de escrever no arquivo de index de uma maneira totalmente válida. Eu podia verificar isso usando o git de verdade para ler o arquivo de index novamente, usando outro comando de plumbing, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;git ls-files&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h3 id=&quot;mas-que-diabos-é-um-arquivo-de-index&quot;&gt;Mas que diabos é um arquivo de index?&lt;/h3&gt;
+&lt;p&gt;Eu venho falando em “adicionar ao index”, como se fosse algo que todo mundo entendesse. Então, o que exatamente significa adicionar algo ao arquivo de index? E, afinal, o que é esse arquivo de index?&lt;/p&gt;
+
+&lt;p&gt;O arquivo de index é um arquivo binário que o git grava em &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.git/index&lt;/code&gt;. Diferentemente de objetos como blobs que, quando descomprimidos, nos devolvem texto legível, o index não funciona assim. Seu conteúdo é, basicamente, uma sequência de bytes que segue um formato muito específico. O motivo disso é eficiência: armazenar esses dados em formato binário garante que a leitura e a escrita sejam mais rápidas do que seriam em um arquivo baseado em texto, além de evitar que o arquivo fique grande demais.&lt;/p&gt;
+
+&lt;p&gt;Se você ler a &lt;a href=&quot;https://github.com/carlosschults/go-gitter/blob/f82f8612b3ad9e6b00a27eeb0ded9bf701bd7862/ggt/main.go#L176&quot;&gt;implementação&lt;/a&gt;, poderá ver qual é o formato do arquivo de index. Não vou entrar em muitos detalhes aqui, mas, em linhas gerais, temos:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Um header, que sempre contém &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;DIRC&lt;/code&gt; como assinatura, um número de versão e a quantidade de arquivos staged, que no meu caso está fixada em 1.&lt;/li&gt;
+  &lt;li&gt;Uma entrada para cada arquivo staged, contendo metadados, o hash SHA-1 do arquivo e seu nome.&lt;/li&gt;
+  &lt;li&gt;Um checksum, composto por um hash SHA-1 de todas as informações que vieram antes dele, para que o git consiga detectar corrupção no arquivo de index.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Para os campos de metadados, simplesmente deixei muita coisa fixa. Muitos desses campos não são realmente relevantes no Windows e, de qualquer forma, são usados principalmente para otimizações de performance. Em outras palavras, são algo desejável, mas não essencial, então coloquei tudo como zero para simplificar.&lt;/p&gt;
+
+&lt;h3 id=&quot;encontrei-um-bug&quot;&gt;Encontrei um bug&lt;/h3&gt;
+&lt;p&gt;Isso é meio vergonhoso, mas enquanto escrevia este post encontrei um bug na minha implementação. Quer dizer, a implementação já estava parcialmente incompleta por design, já que atualmente consegue lidar com apenas um arquivo. Mas encontrei um bug de verdade: meu &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;update-index&lt;/code&gt; não cria um blob object depois de fazer o hash do arquivo.&lt;/p&gt;
+
+&lt;p&gt;Aqui está a parte problemática do código:&lt;/p&gt;
+
+&lt;div class=&quot;language-go highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;// append the hash&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;_&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;hash&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;hashData&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;contents&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;blob&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;dataToSave&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;err&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;binary&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Append&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dataToSave&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;binary&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;BigEndian&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;hash&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Perceba que &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;hashData&lt;/code&gt; retorna dois valores e nós descartamos o primeiro. Esse é o problema. Em vez de descartá-lo, deveríamos ter usado esse retorno e salvado o resultado no disco como um blob, &lt;a href=&quot;https://github.com/carlosschults/go-gitter/blob/f82f8612b3ad9e6b00a27eeb0ded9bf701bd7862/ggt/main.go#L149-L170&quot;&gt;assim como o comando &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;hash-object&lt;/code&gt; faz&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Encontrei o bug enquanto fazia &lt;a href=&quot;https://pt.wikipedia.org/wiki/Debug_com_Pato_de_Borracha&quot;&gt;rubber-ducking&lt;/a&gt; com o Claude sobre o roadmap. Como mencionei &lt;a href=&quot;/pt/implementando-git-em-go&quot;&gt;na primeira parte&lt;/a&gt;, não estou usando AI para gerar nenhum código desse projeto, o que também é uma das razões pelas quais isso está demorando tanto. Mas estou usando o Claude para me ajudar a planejar o roadmap, definir a sequência correta de comandos e entender como o Git funciona internamente, para que eu possa implementá-los.&lt;/p&gt;
+
+&lt;p&gt;Enfim, o bug está lá. O que vou fazer? Por enquanto, nada. Vou simplesmente deixá-lo anotado e voltar a ele no futuro, depois que terminar minha refatoração.&lt;/p&gt;
+
+&lt;p&gt;Isso é algo que mencionei brevemente no começo do post, mas, depois que o &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;update-index&lt;/code&gt; estava mais ou menos funcionando, decidi que o próximo passo seria refatorar o código existente, que estava ficando bagunçado demais.&lt;/p&gt;
+
+&lt;h2 id=&quot;testes-antes-da-refatoração&quot;&gt;Testes antes da refatoração&lt;/h2&gt;
+&lt;p&gt;Olhe para o estado do &lt;a href=&quot;https://github.com/carlosschults/go-gitter/blob/f82f8612b3ad9e6b00a27eeb0ded9bf701bd7862/ggt/main.go&quot;&gt;arquivo principal naquele momento da história&lt;/a&gt; e você provavelmente vai concordar comigo que ele não é exatamente um exemplo de separação de responsabilidades. É um arquivo grande que mistura parsing de argumentos, dispatching de comandos e funções puras e impuras, tudo junto.&lt;/p&gt;
+
+&lt;p&gt;Meu plano para a refatoração tinha duas partes: primeiro, extrair todos os comandos para seus próprios arquivos, usando um parsing de argumentos adequado. Depois, separar as funções puras das impuras, para que eu pudesse testar as primeiras facilmente com unit tests.&lt;/p&gt;
+
+&lt;p&gt;Mas uma refatoração desse tipo é arriscada, então decidi primeiro criar integration tests que iriam:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;buildar o projeto e gerar um executável&lt;/li&gt;
+  &lt;li&gt;criar um repositório temporário para os testes&lt;/li&gt;
+  &lt;li&gt;usar o executável gerado para executar alguns comandos dentro do repositório temporário&lt;/li&gt;
+  &lt;li&gt;verificar os resultados esperados&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;E foi basicamente isso que fiz. Primeiro, &lt;a href=&quot;https://github.com/carlosschults/go-gitter/commit/496442c83924bd89893d36a58d86111ebc0079a8&quot;&gt;configurei a infraestrutura de testes&lt;/a&gt;, criando uma função auxiliar que gera o executável e salva seu caminho para uso posterior, e outra que configura o repositório temporário.&lt;/p&gt;
+
+&lt;p&gt;Depois, o &lt;a href=&quot;https://github.com/carlosschults/go-gitter/commit/3c0c6e260d10df68a974377c1c44534299257f86&quot;&gt;commit seguinte&lt;/a&gt; adicionou testes para o comando &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;update-index&lt;/code&gt;. O que estava incorreto, como você acabou de ver, mas eu não sabia disso na época e, portanto, meu teste passou.&lt;/p&gt;
+
+&lt;p&gt;Uma coisa interessante que aprendi sobre testes em Go é que, aparentemente, eles normalmente não usam assertions? Existem bibliotecas de terceiros que adicionam assertions, mas, se você usar apenas os recursos de testing nativos do Go, precisa fazer as verificações “manualmente”. Veja um exemplo:&lt;/p&gt;
+
+&lt;div class=&quot;language-go highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;func&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TestUpdateIndexAddSingleFile&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;t&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;testing&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;T&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;testRepoPath&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;setupGitRepo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+	&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;err&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;os&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;WriteFile&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;filepath&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Join&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;testRepoPath&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;file.txt&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[]&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;byte&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;hello world&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0666&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;err&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;nil&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+		&lt;span class=&quot;n&quot;&gt;t&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Fatalf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Creating the test file failed: %s&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;err&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+	&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+	&lt;span class=&quot;n&quot;&gt;cmd&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;exec&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Command&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ggtBinaryPath&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;update-index&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;--add&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;file.txt&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;cmd&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Dir&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;testRepoPath&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;_&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;err&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cmd&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Output&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+	&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;err&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;nil&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+		&lt;span class=&quot;n&quot;&gt;t&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Fatalf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Command failed: %s&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;err&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+	&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+	&lt;span class=&quot;n&quot;&gt;cmd&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;exec&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Command&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;git&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;ls-files&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;cmd&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Dir&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;testRepoPath&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;result&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;err&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cmd&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Output&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+	&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;err&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;nil&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+		&lt;span class=&quot;n&quot;&gt;t&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Fatalf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Command failed: %s&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;err&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+	&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+	&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;strings&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Contains&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;result&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;file.txt&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+		&lt;span class=&quot;n&quot;&gt;t&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Fatalf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Test failed&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+	&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;No teste acima, eu executo meu comando &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;update-index&lt;/code&gt; e, depois disso, executo o comando &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ls-files&lt;/code&gt; do Git de verdade e verifico se a saída contém o nome do arquivo que adicionei.
+Se não contiver, eu sinalizo um erro. Se o método chegar até o final sem retornar um código de erro, significa que o teste passou.&lt;/p&gt;
+
+&lt;p&gt;Depois disso, continuei adicionando testes até que todos os comandos estivessem cobertos e, então, adicionei um pipeline do GitHub Actions para executar os testes a cada push ou quando um PR fosse mergeado em &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;main&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h2 id=&quot;extraindo-os-comandos&quot;&gt;Extraindo os comandos&lt;/h2&gt;
+&lt;p&gt;Para o próximo passo, eu queria extrair todos os comandos para seus próprios arquivos e usar um parsing de argumentos adequado. Depois de pesquisar um pouco, descobri que &lt;a href=&quot;https://github.com/spf13/cobra&quot;&gt;Cobra&lt;/a&gt; é a principal biblioteca para parsing de argumentos em Go, então decidi usá-la.&lt;/p&gt;
+
+&lt;p&gt;A mudança resultante foi feita em &lt;a href=&quot;https://github.com/carlosschults/go-gitter/commit/9c4976fd77d3822b85d50523377694c0f275f035&quot;&gt;um único commit&lt;/a&gt;. A extração exigiu algumas mudanças na estrutura de pastas, mas tomei cuidado para garantir que os testes continuassem passando.&lt;/p&gt;
+
+&lt;p&gt;Depois disso, fiz uma limpeza no código e adicionei algumas pequenas melhorias, como um make file (porque eu continuava esquecendo como executar todos os testes) e descrições corretas para todos os comandos.&lt;/p&gt;
+
+&lt;p&gt;O código resultante está muito mais agradável agora. Este é o meu entry point atualmente:&lt;/p&gt;
+
+&lt;div class=&quot;language-go highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;package&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;main&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;github.com/carlosschults/go-gitter/cmd&quot;&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;func&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;cmd&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Execute&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;E este é o arquivo do comando &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;init&lt;/code&gt;:&lt;/p&gt;
+
+&lt;div class=&quot;language-go highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;package&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cmd&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
+	&lt;span class=&quot;s&quot;&gt;&quot;fmt&quot;&lt;/span&gt;
+	&lt;span class=&quot;s&quot;&gt;&quot;log&quot;&lt;/span&gt;
+	&lt;span class=&quot;s&quot;&gt;&quot;os&quot;&lt;/span&gt;
+	&lt;span class=&quot;s&quot;&gt;&quot;path/filepath&quot;&lt;/span&gt;
+
+	&lt;span class=&quot;s&quot;&gt;&quot;github.com/spf13/cobra&quot;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;initCmd&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cobra&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Command&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;Use&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;   &lt;span class=&quot;s&quot;&gt;&quot;init&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;Short&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;Create an empty Git repository or reinitialize an existing one&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;Run&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;func&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cmd&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cobra&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Command&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;args&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[]&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+		&lt;span class=&quot;n&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;_&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;filepath&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Abs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;.git&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+		&lt;span class=&quot;n&quot;&gt;standardizedPath&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;filepath&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ToSlash&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;/&quot;&lt;/span&gt;
+
+		&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;_&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;err&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;os&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Stat&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;.git&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;err&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;nil&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+			&lt;span class=&quot;n&quot;&gt;fmt&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Println&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Reinitialized existing Git repository in&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;standardizedPath&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+			&lt;span class=&quot;n&quot;&gt;os&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Exit&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+		&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+		&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;err&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;os&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Mkdir&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;.git&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;os&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ModePerm&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;err&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;nil&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+			&lt;span class=&quot;n&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Fatal&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;err&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+		&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+		&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;err&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;os&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;WriteFile&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;.git/HEAD&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[]&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;byte&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;ref: refs/heads/main&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0666&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;err&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;nil&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+			&lt;span class=&quot;n&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Fatal&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;err&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+		&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+		&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;err&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;os&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;MkdirAll&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;.git/objects/info&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;os&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ModePerm&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;err&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;nil&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+			&lt;span class=&quot;n&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Fatal&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;err&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+		&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+		&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;err&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;os&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;MkdirAll&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;.git/objects/pack&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;os&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ModePerm&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;err&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;nil&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+			&lt;span class=&quot;n&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Fatal&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;err&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+		&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+		&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;err&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;os&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;MkdirAll&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;.git/refs/heads&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;os&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ModePerm&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;err&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;nil&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+			&lt;span class=&quot;n&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Fatal&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;err&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+		&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+		&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;err&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;os&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;MkdirAll&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;.git/refs/tags&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;os&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ModePerm&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;err&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;nil&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+			&lt;span class=&quot;n&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Fatal&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;err&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+		&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+		&lt;span class=&quot;n&quot;&gt;fmt&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Println&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Initialized empty Git repository in&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;standardizedPath&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+		&lt;span class=&quot;n&quot;&gt;os&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Exit&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+	&lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;func&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;init&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;rootCmd&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;AddCommand&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;initCmd&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;quais-são-os-próximos-passos&quot;&gt;Quais são os próximos passos?&lt;/h2&gt;
+&lt;p&gt;Ainda tem bastante trabalho pela frente.&lt;/p&gt;
+
+&lt;p&gt;Primeiro, quero corrigir esse bug no &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;update-index&lt;/code&gt;. Depois, preciso terminar sua implementação. Ou seja, fazer com que ele consiga salvar qualquer quantidade de arquivos, já que atualmente só lida com um arquivo.&lt;/p&gt;
+
+&lt;p&gt;Depois disso, vou fazer a refatoração que mencionei anteriormente: separar as funções puras das impuras e escrever testes para as funções puras.&lt;/p&gt;
+
+&lt;p&gt;Só depois de terminar tudo isso vou passar para os próximos comandos: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ls-files&lt;/code&gt;, depois &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;write-tree&lt;/code&gt; e &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;commit-tree&lt;/code&gt;, avançando finalmente em direção ao objetivo de conseguir criar um commit de verdade.&lt;/p&gt;
+
+&lt;p&gt;Prometo trazer atualizações com mais frequência. Por enquanto, obrigado por ler.&lt;/p&gt;
+
+&lt;div class=&quot;footnotes&quot; role=&quot;doc-endnotes&quot;&gt;
+  &lt;ol&gt;
+    &lt;li id=&quot;fn:1&quot; role=&quot;doc-endnote&quot;&gt;
+      &lt;p&gt;Um conhecido nome na área de software e autor do livro &lt;a href=&quot;https://martinfowler.com/books/refactoring.html&quot;&gt;Refactoring&lt;/a&gt;, entre vários outros. &lt;a href=&quot;#fnref:1&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li id=&quot;fn:2&quot; role=&quot;doc-endnote&quot;&gt;
+      &lt;p&gt;Comandos de plumbing são os comandos internos do git, que manipulam objetos no nível mais baixo. Os comandos de porcelain (de alto nível), por sua vez, chamam e orquestram os comandos de plumbing para realizar as tarefas que um usuário do git normalmente executa. &lt;a href=&quot;#fnref:2&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+  &lt;/ol&gt;
+&lt;/div&gt;
+</description>
+        <pubDate>Tue, 08 Sep 2026 00:00:00 +0000</pubDate>
+        <link>https://carlosschults.net/pt/construindo-git-em-go-parte-3</link>
+        <guid isPermaLink="true">https://carlosschults.net/pt/construindo-git-em-go-parte-3</guid>
+        
+        <category>projects</category>
+        
+        <category>git</category>
+        
+        <category>go</category>
+        
+        <category>go-gitter</category>
+        
+        <category>version-control-system</category>
+        
+        
+      </item>
     
       <item>
         <title>Elaborando Ótimas Mensagens de Commit na Era da IA</title>
@@ -2000,404 +2228,6 @@ tipo personalizado:&lt;/p&gt;
         <category>boas-praticas</category>
         
         <category>modelagem-de-software</category>
-        
-        
-      </item>
-    
-      <item>
-        <title>Erros de Aprendizado Para Se Evitar Como Desenvolvedor de Software</title>
-        <description>&lt;p&gt;&lt;img src=&quot;/img/software-developer-learning-mistakes/cover.webp&quot; alt=&quot;&quot; /&gt;
-Foto de &lt;a href=&quot;https://unsplash.com/pt-br/@francisco_legarreta?utm_content=creditCopyText&amp;amp;utm_medium=referral&amp;amp;utm_source=unsplash&quot;&gt;Francisco De Legarreta C.&lt;/a&gt; na &lt;a href=&quot;https://unsplash.com/pt-br/fotografias/um-homem-com-oculos-esta-olhando-para-um-laptop-hHg9MC-G8_Y?utm_content=creditCopyText&amp;amp;utm_medium=referral&amp;amp;utm_source=unsplash&quot;&gt;Unsplash&lt;/a&gt;&lt;/p&gt;
-
-&lt;div class=&quot;callout callout-info&quot;&gt;
-  &lt;div class=&quot;callout-title&quot;&gt;
-    &lt;span class=&quot;callout-icon&quot;&gt;ℹ️&lt;/span&gt;
-    Info
-  &lt;/div&gt;
-  &lt;div class=&quot;callout-content&quot;&gt;
-    
-&lt;p&gt;Agradeço ao amigo &lt;a href=&quot;https://www.linkedin.com/in/andre-godasi/&quot;&gt;André Gonçalves da Silva&lt;/a&gt; por ler e revisar esboços deste post, e sugerir melhorias.&lt;/p&gt;
-
-  &lt;/div&gt;
-&lt;/div&gt;
-
-&lt;p&gt;Se você trabalha com desenvolvimento de software, com certeza já ouviu frases do tipo “Nunca pare de estudar”, “Tem que se atualizar sempre”, “A nossa área muda muito rápido”, e assim por diante.&lt;/p&gt;
-
-&lt;p&gt;Claro, todas essas frases estão certas, em algum nível. Mas sair por aí repetindo como um papagaio “nunca pare de estudar” não é a coisa mais &lt;strong&gt;útil&lt;/strong&gt; do mundo no sentido de fornecer um direcionamento para o seu aprendizado.&lt;/p&gt;
-
-&lt;p&gt;O que acaba acontecendo na prática é que muita gente, por não ter aprendido a aprender da forma correta, comete muitos erros de aprendizado que comprometem seu desenvolvimento profissional. Esses erros podem levar a um progresso lento, frustração e até mesmo estagnação na carreira - algo que ninguém está a fim de passar.&lt;/p&gt;
-
-&lt;p&gt;Por isso, nesse post, resolvi trazer um compilado do que acredito serem os erros mais comuns de aprendizado que devs em geral cometem. Essa lista é fruto de anos de experiência pessoal, observação de colegas desenvolvedores e muitas conversas com gente da área. Eu sei na prática do que estou falando porque muitos desses erros são coisas que eu já cometi.&lt;/p&gt;
-
-&lt;p&gt;(Sendo sincero, alguns eu ainda cometo e tô sempre precisando me policiar para parar, mas não conta pra ninguém. ;))&lt;/p&gt;
-
-&lt;p&gt;Identificar e entender esses erros é o primeiro passo para superá-los. Ao evitá-los, você pode otimizar seu processo de aprendizado, acelerar seu crescimento profissional e se manter relevante em um campo que está sempre evoluindo.&lt;/p&gt;
-
-&lt;p&gt;Então, sem mais delongas, aqui vai a lista dos erros de aprendizado para você evitar. Para cada erro, você vai ver:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;a explicação do erro&lt;/li&gt;
-  &lt;li&gt;o problema que ele causa&lt;/li&gt;
-  &lt;li&gt;como remediá-lo&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Bora lá?&lt;/p&gt;
-
-&lt;h2 id=&quot;índice&quot;&gt;Índice&lt;/h2&gt;
-&lt;ul&gt;
-  &lt;li&gt;&lt;a href=&quot;#achar-que-apenas-consumo-de-conteúdo--aprendizado&quot;&gt;Achar Que Apenas Consumo de Conteúdo == Aprendizado&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;#não-aplicar-o-conteúdo-dos-recursos-de-aprendizado&quot;&gt;Não Aplicar o Conteúdo dos Recursos de Aprendizado&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;#falta-de-foco&quot;&gt;Falta de Foco&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;#falta-de-consistência&quot;&gt;Falta de Consistência&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;#subestimar-a-importância-das-bases&quot;&gt;Subestimar a Importância das Bases&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;#viver-embaixo-de-uma-pedra-não-se-antenar-com-o-que-está-acontecendo&quot;&gt;Viver Embaixo de Uma Pedra (Não se antenar com o que está acontecendo)&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;#conclusão&quot;&gt;Conclusão&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;achar-que-apenas-consumo-de-conteúdo--aprendizado&quot;&gt;Achar Que Apenas Consumo de Conteúdo == Aprendizado&lt;/h2&gt;
-
-&lt;p&gt;Comecei a lista com esse que acredito ser o erro de aprendizado mais comum atualmente, pelo simples fato de que a gente vive em uma época onde se produz conteúdo pra caramba.&lt;/p&gt;
-
-&lt;h3 id=&quot;por-que-caímos-nessa-armadilha&quot;&gt;Por que caímos nessa armadilha?&lt;/h3&gt;
-
-&lt;p&gt;Consumir conteúdo é &lt;strong&gt;fácil, conveniente e(potencialmente) divertido.&lt;/strong&gt; Vamos entender o porquê:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Fácil: É algo passivo, você não tem que pensar muito ou tomar decisões, e o ser humano tende a procurar o caminho do menor esforço.&lt;/li&gt;
-  &lt;li&gt;Conveniente: Você pode geralmente consumir o conteúdo enquanto faz outras coisas:
-    &lt;ul&gt;
-      &lt;li&gt;Ouvir um podcast enquanto se exercita ou lava a louça&lt;/li&gt;
-      &lt;li&gt;Assistir um vídeo enquanto almoça&lt;/li&gt;
-      &lt;li&gt;Ler posts no Reddit enquanto espera na fila do banco&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;Divertido: Muitos criadores percebem que, pra engajar o público, precisam adicionar um toque de entretenimento e transformar o conteúdo numa performance que segure a atenção.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Pronto, a armadilha está montada. Aí você vai lá, bola uma estratégia para preencher cada momento livre do dia com o consumo de podcasts, vídeos no Youtube, blog posts, Reddit, e sei lá o que mais.&lt;/p&gt;
-
-&lt;h3 id=&quot;as-consequências-desse-erro&quot;&gt;As consequências desse erro&lt;/h3&gt;
-
-&lt;p&gt;No fim, você vai ter:&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;Consumido seu tempo com informações superficiais&lt;/li&gt;
-  &lt;li&gt;Retido quase nada do que consumiu&lt;/li&gt;
-  &lt;li&gt;Um vago sentimento de que “aprendeu” alguma coisa&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;Mas e na hora de aplicar isso de maneira significativa no seu dia-a-dia? É aí que a conta não fecha.&lt;/p&gt;
-
-&lt;p&gt;A longo prazo, as consequências podem ser ainda mais sérias:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Estagnação profissional, pois você não está realmente desenvolvendo novas habilidades&lt;/li&gt;
-  &lt;li&gt;Frustração ao perceber que não está progredindo como esperava&lt;/li&gt;
-  &lt;li&gt;Possível burnout ao tentar constantemente “ficar por dentro” de tudo&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Pra deixar bem claro: o erro aqui não é “consumir conteúdo.” E sim achar que apenas o consumo desenfreado de conteúdo é o suficiente para você evoluir como profissional.&lt;/p&gt;
-
-&lt;h3 id=&quot;como-remediar-esse-erro&quot;&gt;Como remediar esse erro&lt;/h3&gt;
-
-&lt;p&gt;A solução é simples em teoria, o que não necessariamente significa que é fácil. Aqui vai:&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Diminua a parcela do seu tempo de aprendizado que você gasta com consumo passivo de conteúdos, e aumenta a parcela gasta com aprendizado prático, principalmente projetos pessoais.&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;As sugestões aqui são:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Crie ou contribua com um projeto open-source&lt;/li&gt;
-  &lt;li&gt;Faça um site ou aplicativo para uma ONG, entidade assistencial, ou sua igreja&lt;/li&gt;
-  &lt;li&gt;Solucione algum problema que você ou algum familiar tem criando uma automação simples&lt;/li&gt;
-  &lt;li&gt;Reinvente a roda:&lt;a href=&quot;https://github.com/codecrafters-io/build-your-own-x&quot;&gt; Implemente uma tecnologia ou ferramenta conhecida&lt;/a&gt; (exemplos: git, Docker, um servidor HTTP) simplesmente com o objetivo de aprender.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;A lista acima não é exaustiva, mas serve apenas pra começar a te inspirar. Cinco minutos de Google ou de conversa com o Chat GTP vai render muitas ideias de projetos legais para fazer.&lt;/p&gt;
-
-&lt;h2 id=&quot;não-aplicar-o-conteúdo-dos-recursos-de-aprendizado&quot;&gt;Não Aplicar o Conteúdo dos Recursos de Aprendizado&lt;/h2&gt;
-
-&lt;p&gt;Se você comprar um livro e não o ler, você joga dinheiro fora. Se você comprar o livro, ler, e o aprendizado daquilo não impactar a maneira como você faz seu trabalho, então você desperdiça o seu dinheiro e o seu tempo!&lt;/p&gt;
-
-&lt;p&gt;O mesmo se aplica a cursos, tutoriais, e outros recursos de aprendizado. Ser desenvolvedor de software é uma profissão prática; como você espera se beneficiar do que aprendeu, se não o colocar em prática?&lt;/p&gt;
-
-&lt;p&gt;Antes que alguém reclame: sim, é claro que existem livros, vídeos, etc., cujo conteúdo não tem uma aplicação prática direta. Talvez você tenha lido &lt;a href=&quot;https://pt.wikipedia.org/wiki/The_Mythical_Man-Month&quot;&gt;O Mítico Homem-Mês&lt;/a&gt; pra pegar alguns insights e aprender sobre a história do desenvolvimento de software, mas isso não muda necessariamente como você escreve código. E tá tudo bem, esses casos existem – use seu bom senso.&lt;/p&gt;
-
-&lt;p&gt;Como o erro #2 difere do anterior?&lt;/p&gt;
-
-&lt;p&gt;A gente pode resumir o primeiro erro como “gastar 100% do seu tempo de aprendizado com o consumo de conteúdo.” Ou seja, você não faz mais nada além de consumir coisas.&lt;/p&gt;
-
-&lt;p&gt;Este erro aqui é na linha de “não aplicar o que você aprende com o conteúdo assistido.”&lt;/p&gt;
-
-&lt;p&gt;Ou seja, é possível cometer o segundo erro sem cometer o primeiro. Por exemplo, você pode dedicar 60% do seu tempo de aprendizado à criação de projetos pessoais e 40% ao consumo de conteúdo. Mas se ainda sim você não aplicar de nenhuma forma o conteúdo que você aprendeu nesses 40% do tempo, você vai ter cometido o erro #2. Ficou claro?&lt;/p&gt;
-
-&lt;h3 id=&quot;motivo-desse-erro&quot;&gt;Motivo Desse Erro&lt;/h3&gt;
-
-&lt;p&gt;Por que tanta gente (este que vos fala incluso) comete esse erro? Provavelmente o que rola aqui é uma certa pressão psicológica que muitos sentimos, no sentido de atingir números. Quantas pessoas você conhece que criam umas metas assim?&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Ler x livros técnicos por ano&lt;/li&gt;
-  &lt;li&gt;Fazer y cursos até o segundo semestre&lt;/li&gt;
-  &lt;li&gt;etc…&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Se você se sente realmente a fim de atingir esse tipo de meta, não tem jeito: precisa “gastar” o menor tempo possível com cada conteúdo. Do contrário, a conta não fecha.&lt;/p&gt;
-
-&lt;h3 id=&quot;problemas-causados-por-este-erro&quot;&gt;Problemas Causados Por Este Erro&lt;/h3&gt;
-
-&lt;p&gt;Uma consequência grave que você pode sofrer com este erro é a falta de motivação. Você leu todos os livros famosos da área que te indicaram, concluiu todos os cursos no seu &lt;a href=&quot;https://mereo.com/blog/pdi/&quot;&gt;PDI&lt;/a&gt;, e parece que nada mudou. Assim fica difícil ter a motivação pra insistir no aprendizado, quando a sensação é de que nada disso gera impacto real na maneira como você trabalha.&lt;/p&gt;
-
-&lt;p&gt;É essa a tal da frustração com a falta de evolução na carreira, que a gente citou no erro anterior. Outra consequência séria desse erro é o próprio desperdício de tempo, dinheiro e energia: o aprendizado é um investimento que precisa ter um retorno para ser justificado.&lt;/p&gt;
-
-&lt;h3 id=&quot;qual-a-solução&quot;&gt;Qual a solução?&lt;/h3&gt;
-
-&lt;p&gt;O remédio para este erro tem dois passos:&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;Priorizar qualidade ao invés de quantidade&lt;/li&gt;
-  &lt;li&gt;Aplique constantemente o que aprendeu&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;Então, aqui fica a minha sugestão prática:: &lt;strong&gt;só inicie outro curso/livro/etc após ter aplicado o aprendizado do anterior.&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;Por exemplo, digamos que você está fazendo um curso na Udemy. Após cada aula ou seção, pare e crie um pequeno projeto no qual você exercita o que você acabou de aprender. Não precisa ser um projeto grande, nem mesmo útil. De preferência, jogue fora depois de terminar: o importante é a prática.&lt;/p&gt;
-
-&lt;p&gt;Aqui estão mais alguns exemplos:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Após assistir um tutorial de programação, dedique tempo para replicar o projeto por conta própria, sem olhar o vídeo&lt;/li&gt;
-  &lt;li&gt;Leu um artigo sobre uma nova técnica de refatoração? Aplique-a em um projeto pessoal ou no trabalho&lt;/li&gt;
-  &lt;li&gt;Ouviu um podcast sobre boas práticas de código? Revise um projeto antigo e veja onde você pode aplicar essas práticas&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Com relação à leitura de livros técnicos, recentemente eu criei uma regra pra mim: quando eu termino um livro, eu só posso começar outro depois que eu tiver aplicado o conteúdo do livro que acabei de ler. Essa aplicação pode ter diferentes formas:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;fazer os exercícios do livro, caso tenha&lt;/li&gt;
-  &lt;li&gt;criar um ou mais projetos para exercitar aquele conteúdo&lt;/li&gt;
-  &lt;li&gt;propor/implementar uma nova prática no meu trabalho baseado no que aprendi&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;No fim das contas, é isso que importa: que você dê um jeito de aplicar o conteúdo aprendido pra melhorar a sua vida profissional. Uma pilha de livros cujo conteúdo não te impactou só serve pra juntar poeira ou de suporte para monitor.&lt;/p&gt;
-
-&lt;h2 id=&quot;falta-de-foco&quot;&gt;Falta de Foco&lt;/h2&gt;
-
-&lt;p&gt;Existem muito mais coisas “aprendíveis” do que você tem tempo ou energia para aprender. Você nunca vai saber tudo, e nunca vai zerar a sua fila de coisas para aprender. Isso é um fato e você precisa aceitar e abraçar esse fato, a não ser que você esteja muito a fim de um burnout.&lt;/p&gt;
-
-&lt;p&gt;Infelizmente, a gente sente a pressão de “estar sempre estudando”, mesmo que essa frase em si não tenha nenhuma utilidade—não oferece nenhuma ajuda sobre &lt;em&gt;o quê&lt;/em&gt; estudar, ou que estratégias usar.&lt;/p&gt;
-
-&lt;p&gt;É comum que essa pressão venha das nossas próprias empresas:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Leia o livro x!&lt;/li&gt;
-  &lt;li&gt;Faça esse curso!&lt;/li&gt;
-  &lt;li&gt;Conclua essa trilha!&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;E essas pessoas são bem intencionadas, mas isso não muda o fato de que você tem uma quantidade limitada de tempo no seu dia e, mais importante, uma quantidade limitada de energia no tempo que você tem disponível&lt;/p&gt;
-
-&lt;p&gt;Mas aí você cede à pressão e acaba cometendo o erro desse item: ficar pulando de curso em curso, livro em livro, tutorial em tutorial, sem nunca concluir nada, ou pelo menos atingir algum progresso significativo.&lt;/p&gt;
-
-&lt;h3 id=&quot;um-disclaimer&quot;&gt;Um Disclaimer&lt;/h3&gt;
-
-&lt;p&gt;Olha só: eu sei que no dia-a-dia do trabalho, é muito comum a gente se deparar com um número enorme de problemas diferentes que precisam ser resolvidos, e o prazo é sempre pra ontem. Nestas situações, muitas vezes a coisa correta é sim aprender somente o superficial de um assunto para conseguir dar conta da demanda e gerar valor para o usuário o mais rápido possível.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;A habilidade de distinguir quando é a hora de investir em um certo item de maneira mais aprofundada e quando um conhecimento superficial basta&lt;/strong&gt; é algo que é extremamente valioso para a carreira de qualquer profissional, e a única maneira de aperfeiçoar essa habilidade é com a prática.&lt;/p&gt;
-
-&lt;p&gt;O erro que eu aponto neste item é uma situação diferente do cenário acima. Mais especificamente, o erro é sobre tentar aprender muitas coisas ao mesmo tempo, de maneira aprofundada, com recursos densos.&lt;/p&gt;
-
-&lt;h3 id=&quot;problemas-causados-por-este-erro-1&quot;&gt;Problemas Causados Por Este Erro&lt;/h3&gt;
-
-&lt;p&gt;O principal problema causado pela falta de foco é que você nunca se aprofunda em nada. Você fica com uma vaga impressão de conhecimento em um milhão de coisas, mas quando rola uma situação crítica no qual o conhecimento aprofundado faria falta, você não tem o que mostrar.&lt;/p&gt;
-
-&lt;p&gt;Como eu já disse antes, é impossível se aprofundar em tudo. Mas você deveria, sim, se aprofundar nas coisas que mais importam, aquelas que geram maior valor para sua carreira. Me refiro aos tais dos fundamentos que muita gente fala, mas vou falar mais a respeito disso em outro tópico.&lt;/p&gt;
-
-&lt;h3 id=&quot;como-remediar&quot;&gt;Como Remediar&lt;/h3&gt;
-
-&lt;p&gt;Este erro talvez seja o mais difícil de remediar, porque a solução envolve uma dose alta de autoconhecimento e um senso muito forte de priorização.&lt;/p&gt;
-
-&lt;p&gt;No geral, a dica é: &lt;strong&gt;defina UM ponto de evolução para sua carreira, e foque nele por um tempo considerável, até avaliar que fez progresso.&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;Alguns exemplos de pontos de melhoria:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Melhorar meus conhecimentos de paralelismo, concorrência, e performance&lt;/li&gt;
-  &lt;li&gt;Aprender os principais design patterns e saber aplicá-los em projetos reais&lt;/li&gt;
-  &lt;li&gt;Adquirir habilidades avançadas em SQL&lt;/li&gt;
-  &lt;li&gt;Aprender uma nova linguagem e chegar em um nível produtivo&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Não é fácil identificar este ponto de melhoria, mas aqui vão algumas dicas:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Peça feedback dos gestores e colegas.&lt;/li&gt;
-  &lt;li&gt;Converse com algum mentor técnico em quem você confia.&lt;/li&gt;
-  &lt;li&gt;Se você está ativamente participando de processos seletivos para vagas e tem falhado, analise os pontos nos quais foi mal nas entrevistas para identificar onde melhorar.&lt;/li&gt;
-  &lt;li&gt;Se não está ativamente procurando, finja que está. Peça para algum amigo ou mentor fazer uma mock interview com você, e depois peça feedback honesto.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;falta-de-consistência&quot;&gt;Falta de Consistência&lt;/h2&gt;
-
-&lt;p&gt;O que é melhor, dedicar 30 minutos por dia pra aprender, todos os dias, ou 5 horas no final de semana, uma vez a cada três meses? A resposta é óbvia.&lt;/p&gt;
-
-&lt;p&gt;A nossa profissão é prática, é necessária prática deliberada e consistente para que você internalize as coisas que aprende a saiba usar quando chegar a hora.&lt;/p&gt;
-
-&lt;h3 id=&quot;consequências&quot;&gt;Consequências&lt;/h3&gt;
-
-&lt;p&gt;As consequências aqui são bem óbvias, né? Simplesmente não tem como fazer progresso se você não se esforça com consistência. Isso na verdade se aplica em praticamente qualquer coisa na vida: atividade física, aprendizado de idiomas, tocar um instrumento, e por aí vai.&lt;/p&gt;
-
-&lt;p&gt;Se você investe, por exemplo, 1 hora por semana para aprender algo, isso dá um total de cerca de 51 horas no ano. Agora, se você aprender 15 minutos todos os dias, isso dá um total de 5475 minutos no ano, &lt;strong&gt;o que dá mais de 91 horas&lt;/strong&gt;!&lt;/p&gt;
-
-&lt;p&gt;Estudar só uma vez por semana tem outra desvantagem. Se surgir algum imprevisto e você precisar faltar, quando voltar já terão se passado duas semanas. Assim, fica complicado manter o ritmo; você precisa lembrar de onde parou 14 dias atrás, e retomar o contexto perdido não é nada fácil.&lt;/p&gt;
-
-&lt;h3 id=&quot;como-remediar-1&quot;&gt;Como Remediar&lt;/h3&gt;
-
-&lt;p&gt;Solucionar esse erro requer pensar em estratégias para que o aprendizado se torne uma parte natural da sua rotina diária.&lt;/p&gt;
-
-&lt;p&gt;Para começar, defina o &lt;strong&gt;tempo **que você vai dedicar diariamente, de forma &lt;em&gt;realista&lt;/em&gt;&lt;/strong&gt;. Não adianta se comprometer com 2 horas de aprendizado diário se a sua rotina simplesmente não permite isso.&lt;/p&gt;
-
-&lt;p&gt;Outra coisa essencial é escolher o &lt;strong&gt;horário&lt;/strong&gt; do seu tempo de aprendizado. Pra fixar bem o hábito, o ideal seria que fosse no mesmo horário todos os dias. Ao escolher esse horário, leve em consideração como seus níveis de energia mudam durante o dia. Você é uma pessoa matinal? Coloque seu tempo de aprendizado na parte da manhã. Do contrário, à noite.&lt;/p&gt;
-
-&lt;p&gt;Vou dar o exemplo do que funciona pra mim. Eu sei que se for deixar meu tempo de aprendizado para depois do trabalho, vou estar muito cansado e provavelmente não vou fazer. Então, para mim, o melhor é reservar cerca de 50 minutos antes do trabalho para o aprendizado.&lt;/p&gt;
-
-&lt;p&gt;Pra fazer do aprendizado um hábito, a chave é integrar na rotina e diminuir o atrito. Sabe aquela galera que dorme de roupa de academia? Mesma ideia pro estudo. Deixe o PC ligado com o VS Code aberto no seu projeto, ou configure o navegador pra abrir direto no curso da Udemy. Quanto mais fácil começar, melhor.&lt;/p&gt;
-
-&lt;p&gt;Também é interessante que a hora de decidir o que aprender e a hora de aprender sejam momentos distintos. Se você tem 50 minutos por dia para o aprendizado, mas gasta 20 desses minutos todos os dias decidindo o que vai ler/praticar/assistir, você está desperdiçando 40% do seu tempo.&lt;/p&gt;
-
-&lt;p&gt;Então vai a dica: no sábado, você vai definir a sua rotina de aprendizado para a semana seguinte. Você criar uma planilha definindo os dias e o que você vai fazer, ou criar um board no &lt;a href=&quot;https://trello.com/&quot;&gt;Trello&lt;/a&gt;, ou mesmo usar papel e caneta, não importa. O importante é você já ter isso definido de antemão. Aí, nos dias da semana, você simplesmente confere e segue o planejamento feito.&lt;/p&gt;
-
-&lt;p&gt;Finalmente, algo que funciona para muitas pessoas é fazer algum tipo de compromisso público. Você declara, publicamente—por exemplo, no seu Linkedin—que vai estudar sem faltar durante x dias. O simples fato de ter feito esse compromisso frequentemente ajuda as pessoas a manterem a rotina sem faltar.&lt;/p&gt;
-
-&lt;p&gt;Uma iniciativa legal nesse sentido é o &lt;a href=&quot;https://www.100diasdecodigo.dev/&quot;&gt;100 Dias de Código,&lt;/a&gt; que incentiva pessoas a codarem durante 100 dias seguidos, sem falta, interagindo com outros participantes no processo.&lt;/p&gt;
-
-&lt;h2 id=&quot;subestimar-a-importância-das-bases&quot;&gt;Subestimar a Importância das Bases&lt;/h2&gt;
-
-&lt;p&gt;Muita gente subestima a importância de se aprender os fundamentos da computação. Sim, estou falando daquelas coisas chatas que você não gostava de estudar na faculdade: algoritmos e estruturas de dados, teoria da computação, complexidade de algoritmos, e por aí vai.&lt;/p&gt;
-
-&lt;p&gt;Esse pessoal argumenta que você não precisa saber dessas coisas todas pra fazer o seu código funcionar. Sim, isso pode ser verdade boa parte do tempo, mas não sempre.&lt;/p&gt;
-
-&lt;p&gt;A gente pode pensar na computação como várias camadas que abstraem a camada anterior. Quando você está trabalhando em uma camada, você geralmente não precisa se preocupar com as outras. Isso é uma coisa boa, e é literalmente o motivo pelo qual a gente usa abstrações: “esconder” coisas que não são essenciais, diminuindo a complexidade do que você precisa lidar.&lt;/p&gt;
-
-&lt;h3 id=&quot;consequências-1&quot;&gt;Consequências&lt;/h3&gt;
-
-&lt;p&gt;Infelizmente, as abstrações não são perfeitas. Como já nos advertiu Joel Spolsky mais de 20 anos atrás, &lt;a href=&quot;https://www.joelonsoftware.com/2002/11/11/the-law-of-leaky-abstractions/&quot;&gt;as abstrações em algum momento vazam&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;Em outras palavras: só porque você usa um ORM não significa que você não tem que saber SQL. Mesmo quem usa uma linguagem gerenciada como C# ou Java pode se beneficiar de ter um entendimento sobre gerenciamento de memória: no mínimo, você vai ser capaz de escrever código que usa lifetimes de maneira correta, não cria alocações desnecessárias e coloca pressão no garbage collector.&lt;/p&gt;
-
-&lt;p&gt;Falta de entendimento de complexidade de algoritmos pode derrubar um sistema. Você testa localmente seu código com algumas poucas centenas de valores, mas quando aquilo vai ao ar e tem que lidar com milhões de itens, ele simplesmente não dá conta.&lt;/p&gt;
-
-&lt;p&gt;Em resumo: você consegue fazer algo que “funciona” sem conhecimento de fundamentos. Porém, funciona em parte dos cenários, parte do tempo, com desempenho inaceitável, e sem levar em conta edge cases.&lt;/p&gt;
-
-&lt;p&gt;Além dos problemas que a falta de uma base sólida pode causar nos sistemas em que você trabalha, este erro pode trazer outra consequência bem séria para sua carreira.&lt;/p&gt;
-
-&lt;p&gt;Sim, estou falando de você não ser capaz de passar nos processos seletivos das empresas. É muito comum que empresas, principalmente as de fora do país, utilizem desafios técnicos que requerem um bom conhecimento em tópicos como algoritmos, estrutura de dados, complexidade, concorrência e paralelismo, o modelo de memória da sua linguagem preferida, entre outros.&lt;/p&gt;
-
-&lt;p&gt;Não ter esse conhecimento significa ser reprovado sumariamente nos processos.&lt;/p&gt;
-
-&lt;h3 id=&quot;solução&quot;&gt;Solução&lt;/h3&gt;
-
-&lt;p&gt;Se você não tem faculdade, recomendo fortemente que estude Ciência da Computação. Caso já tenha terminado a faculdade mas esqueceu todos aqueles tópicos, procure relembrar/reforçar esses conceitos.&lt;/p&gt;
-
-&lt;p&gt;Na internet você pode achar de sobra conteúdo sobre Ciência da Computação. Por exemplo, o projeto &lt;a href=&quot;https://github.com/Clemensss/TeachYourselfCS-PT/blob/master/TeachYourselfCS-PT.md&quot;&gt;Teach Yourself Computer Science&lt;/a&gt; tem um roadmap de tópicos para aprender, com bibliografia e vídeos de aulas de universidades renomadas.&lt;/p&gt;
-
-&lt;p&gt;O &lt;a href=&quot;https://neetcode.io/roadmap&quot;&gt;NeetCode &lt;/a&gt;é um site que traz um roadmap de estudo de algoritmos e estruturas de dados. Também oferece cursos e a funcionalidade de praticar questões reais usadas em entrevistas de emprego.&lt;/p&gt;
-
-&lt;h2 id=&quot;viver-embaixo-de-uma-pedra-não-se-antenar-com-o-que-está-acontecendo&quot;&gt;Viver Embaixo de Uma Pedra (Não se antenar com o que está acontecendo)&lt;/h2&gt;
-
-&lt;p&gt;Achei que seria interessante que o último erro fosse exatamente o oposto do primeiro. Enquanto o erro que abre a lista era “apenas consumir conteúdo e achar que está aprendendo”, esse aqui é “nunca consumir conteúdo nenhum.”&lt;/p&gt;
-
-&lt;h3 id=&quot;por-que-isso-é-um-problema&quot;&gt;Por Que Isso é Um Problema?&lt;/h3&gt;
-
-&lt;p&gt;Nós trabalhamos em uma área que muda constantemente, e cada vez mais rápido. Não se manter atualizado pode levar a:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Obsolescência das suas habilidades&lt;/li&gt;
-  &lt;li&gt;Perda de oportunidades de carreira&lt;/li&gt;
-  &lt;li&gt;Dificuldade em resolver problemas usando abordagens mais eficientes&lt;/li&gt;
-  &lt;li&gt;Falta de inspiração para inovação no seu trabalho diário&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Em outras palavras: falta de atualização prejudica seu desempenho no seu trabalho atual, e ao mesmo tempo diminui suas chances de conseguir um potencial novo emprego. Não é isso que você quer, né?&lt;/p&gt;
-
-&lt;h3 id=&quot;encontrando-o-equilíbrio&quot;&gt;Encontrando o equilíbrio&lt;/h3&gt;
-
-&lt;p&gt;Por um lado, utilizar cada segundo livre para consumir cada podcast/artigo/vídeo que seja possível não é uma boa estratégia. É como comer muita porcaria que não é nutritiva: você vai se sentir cheio, mas aquela comida não vai trazer os benefícios que seu corpo precisa.&lt;/p&gt;
-
-&lt;p&gt;Mas por outro lado, não consumir conteúdo &lt;em&gt;nenhum&lt;/em&gt; é igualmente ruim. Como desenvolvedor, é importantíssimo que você tenha pelo menos uma noção do que está acontecendo no mundo do desenvolvimento de software.&lt;/p&gt;
-
-&lt;h3 id=&quot;o-que-manter-no-radar&quot;&gt;O que manter no radar&lt;/h3&gt;
-
-&lt;p&gt;Aqui vai uma pequena lista de coisas que seria interessante manter no seu radar:&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;Lançamento de livros técnicos sobre temas que você se interessa, ou de autores que você já acompanha&lt;/li&gt;
-  &lt;li&gt;Novas funcionalidades da versão mais recente da sua linguagem ou framework principais&lt;/li&gt;
-  &lt;li&gt;Ferramentas ou técnicas que podem facilitar a sua vida&lt;/li&gt;
-  &lt;li&gt;Tendências emergentes na indústria (por exemplo, IA.)&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;h3 id=&quot;onde-encontrar-conteúdo-relevante&quot;&gt;Onde encontrar conteúdo relevante&lt;/h3&gt;
-
-&lt;p&gt;Existem muitas fontes de informação valiosas para desenvolvedores. Aqui estão algumas sugestões:&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;&lt;strong&gt;Reddit&lt;/strong&gt;:
-    &lt;ul&gt;
-      &lt;li&gt;&lt;a href=&quot;https://old.reddit.com/r/programming&quot;&gt;r/programming&lt;/a&gt; para um apanhado geral&lt;/li&gt;
-      &lt;li&gt;Subreddits específicas como r&lt;a href=&quot;https://old.reddit.com/r/csharp&quot;&gt;/csharp&lt;/a&gt;, &lt;a href=&quot;https://old.reddit.com/r/java&quot;&gt;r/java&lt;/a&gt;, &lt;a href=&quot;https://old.reddit.com/r/golang&quot;&gt;r/golang&lt;/a&gt;, etc.&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;Hacker News&lt;/strong&gt;: Excelente para notícias e discussões sobre tecnologia em geral&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;YouTube&lt;/strong&gt;:
-    &lt;ul&gt;
-      &lt;li&gt;Pesquise por canais relacionados aos seus interesses específicos&lt;/li&gt;
-      &lt;li&gt;Assista a palestras de conferências de tecnologia&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;Blogs técnicos&lt;/strong&gt;:
-    &lt;ul&gt;
-      &lt;li&gt;De empresas de tecnologia (por exemplo, blog de engenharia do &lt;a href=&quot;https://netflixtechblog.com/&quot;&gt;Netflix&lt;/a&gt;, &lt;a href=&quot;https://engineering.atspotify.com/&quot;&gt;Spotify&lt;/a&gt;, etc.)&lt;/li&gt;
-      &lt;li&gt;De desenvolvedores influentes na sua área&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;Podcasts de tecnologia&lt;/strong&gt;: Ótimos para consumir informação enquanto faz outras atividades&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;h2 id=&quot;conclusão&quot;&gt;Conclusão&lt;/h2&gt;
-
-&lt;p&gt;Chegamos ao fim da lista. Espero que o compilado de erros de aprendizado que você acabou de ler seja útil para sua carreira. Com essa lista eu cobri o que não fazer, mas o que você deve fazer então?&lt;/p&gt;
-
-&lt;p&gt;Talvez no futuro eu escreva um post apenas sobre isso: como aprender da maneira correta, e no que focar. Deixa aí nos comentários caso você se interesse em algo assim.&lt;/p&gt;
-
-&lt;p&gt;Mas, por enquanto, para saber o que fazer, basta imaginar uma estratégia de aprendizado que seja o contrário dos erros acima:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Aprenda com &lt;strong&gt;consistência&lt;/strong&gt;, de preferência um pouco todos os dias;&lt;/li&gt;
-  &lt;li&gt;Tenha &lt;strong&gt;foco&lt;/strong&gt;: privilegia um ponto principal de melhoria por vez;&lt;/li&gt;
-  &lt;li&gt;Prefira um &lt;strong&gt;aprendizado baseado em projetos&lt;/strong&gt;, suplementado em partes por consumo de conteúdo&lt;/li&gt;
-  &lt;li&gt;Ao consumir conteúdo, sempre &lt;strong&gt;aplique o que aprendeu&lt;/strong&gt; de alguma forma prática&lt;/li&gt;
-  &lt;li&gt;Aprender sobre ferramentas é importante, mas ter &lt;strong&gt;fundamentos sólidos&lt;/strong&gt; é mais importante&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Agora vem a dica mais importante que eu posso deixar.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Feito é melhor que perfeito.&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;Pulou um dia de aprendizado? Não tem importância, continue no próximo. Dedicou 30 minutos ao seu projeto ao invés dos 50 que tinha planejado? Ainda é infinitamente melhor do que não ter feito nada.&lt;/p&gt;
-
-&lt;p&gt;Tendências são mais importantes do que data points. Estar indo na direção certa é mais significativo do que metas arbitrárias do tipo “vou ler 6 livros técnicos em 2024”.&lt;/p&gt;
-
-&lt;p&gt;É difícil lidar com a pressão de desenvolvimento constante que a gente sente nessa área, eu sei bem disso. Na medida do possível, tente relaxar. Não se martirize demais. Você está indo na direção certa.&lt;/p&gt;
-
-&lt;p&gt;Só o fato de ter lido até o final um post de quase 4 mil palavras demonstra que você é muito mais interessado(a) em seu desenvolvimento que a maioria. Por isso, eu lhe agradeço muito. Se precisar de ajuda, não hesite em &lt;a href=&quot;https://carlosschults.net/sobre/&quot;&gt;entrar em contato.&lt;/a&gt;&lt;/p&gt;
-</description>
-        <pubDate>Tue, 22 Oct 2024 00:00:00 +0000</pubDate>
-        <link>https://carlosschults.net/pt/erros-aprendizados</link>
-        <guid isPermaLink="true">https://carlosschults.net/pt/erros-aprendizados</guid>
-        
-        <category>opiniao</category>
-        
-        <category>carreira</category>
         
         
       </item>
