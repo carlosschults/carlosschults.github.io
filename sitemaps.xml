@@ -3,6 +3,34 @@
   
     
       <url>
+        <loc>/en/what-is-idempotency</loc>
+        
+        
+          <xhtml:link rel="alternate" hreflang="en" href="/en/what-is-idempotency" />
+        
+          <xhtml:link rel="alternate" hreflang="pt" href="/pt/o-que-e-idempotencia" />
+        
+        <lastmod>2026-10-21T00:00:00+00:00</lastmod>
+        <changefreq>weekly</changefreq>
+      </url>
+    
+  
+    
+      <url>
+        <loc>/pt/o-que-e-idempotencia</loc>
+        
+        
+          <xhtml:link rel="alternate" hreflang="en" href="/en/what-is-idempotency" />
+        
+          <xhtml:link rel="alternate" hreflang="pt" href="/pt/o-que-e-idempotencia" />
+        
+        <lastmod>2026-10-21T00:00:00+00:00</lastmod>
+        <changefreq>weekly</changefreq>
+      </url>
+    
+  
+    
+      <url>
         <loc>/pt/construindo-git-em-go-parte-3</loc>
         
         
@@ -2691,6 +2719,58 @@
   
     
       <url>
+        <loc>/tag/idempotencia/</loc>
+        
+        
+          <xhtml:link rel="alternate" hreflang="en" href="/tag/idempotencia/" />
+        
+          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/idempotencia/" />
+        
+        <changefreq>weekly</changefreq>
+      </url>
+    
+  
+    
+      <url>
+        <loc>/tag/sistemas-distribuidos/</loc>
+        
+        
+          <xhtml:link rel="alternate" hreflang="en" href="/tag/sistemas-distribuidos/" />
+        
+          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/sistemas-distribuidos/" />
+        
+        <changefreq>weekly</changefreq>
+      </url>
+    
+  
+    
+      <url>
+        <loc>/tag/idempotency/</loc>
+        
+        
+          <xhtml:link rel="alternate" hreflang="en" href="/tag/idempotency/" />
+        
+          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/idempotency/" />
+        
+        <changefreq>weekly</changefreq>
+      </url>
+    
+  
+    
+      <url>
+        <loc>/tag/distributed-systems/</loc>
+        
+        
+          <xhtml:link rel="alternate" hreflang="en" href="/tag/distributed-systems/" />
+        
+          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/distributed-systems/" />
+        
+        <changefreq>weekly</changefreq>
+      </url>
+    
+  
+    
+      <url>
         <loc>/tag_ptbr/blog/</loc>
         
         
@@ -3854,6 +3934,58 @@
           <xhtml:link rel="alternate" hreflang="en" href="/tag/claude/" />
         
           <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/claude/" />
+        
+        <changefreq>weekly</changefreq>
+      </url>
+    
+  
+    
+      <url>
+        <loc>/tag_ptbr/idempotencia/</loc>
+        
+        
+          <xhtml:link rel="alternate" hreflang="en" href="/tag/idempotencia/" />
+        
+          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/idempotencia/" />
+        
+        <changefreq>weekly</changefreq>
+      </url>
+    
+  
+    
+      <url>
+        <loc>/tag_ptbr/sistemas-distribuidos/</loc>
+        
+        
+          <xhtml:link rel="alternate" hreflang="en" href="/tag/sistemas-distribuidos/" />
+        
+          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/sistemas-distribuidos/" />
+        
+        <changefreq>weekly</changefreq>
+      </url>
+    
+  
+    
+      <url>
+        <loc>/tag_ptbr/idempotency/</loc>
+        
+        
+          <xhtml:link rel="alternate" hreflang="en" href="/tag/idempotency/" />
+        
+          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/idempotency/" />
+        
+        <changefreq>weekly</changefreq>
+      </url>
+    
+  
+    
+      <url>
+        <loc>/tag_ptbr/distributed-systems/</loc>
+        
+        
+          <xhtml:link rel="alternate" hreflang="en" href="/tag/distributed-systems/" />
+        
+          <xhtml:link rel="alternate" hreflang="pt" href="/tag_ptbr/distributed-systems/" />
         
         <changefreq>weekly</changefreq>
       </url>

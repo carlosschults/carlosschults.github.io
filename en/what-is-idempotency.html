@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>What Is Idempotency? | carlos schults / blog</title>
+  <link rel="apple-touch-icon" sizes="57x57" href="/img/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/img/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/img/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/img/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/img/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/img/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/img/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/img/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"  href="/img/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/img/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon-16x16.png">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="description" content="IntroductionThis post is part of a series in which I define important concepts in software development. The first post was about breaking changes. This one i...">
+  
+  <!-- Twitter card -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:creator" content="@carlosschults">
+  <meta name="twitter:site" content="@carlosschults">
+  <meta name="twitter:domain" content="carlosschults.net">
+  <meta name="twitter:title" content="What Is Idempotency?">
+  <meta name="twitter:description" content="IntroductionThis post is part of a series in which I define important concepts in software development. The first post was about breaking changes. This one i...">
+
+   <!-- Facebook meta -->
+  
+  
+  <meta property="og:title" content="What Is Idempotency?">
+  <meta property="og:site_name" content="Carlos Schults / Blog" />
+  <meta property="og:locale" content="en_US">  
+  <meta property="og:type" content="article" />
+  
+  <meta property="og:article:published_time" content="2026-10-21T00:00:00+00:00" />  
+  <meta property="og:article:author" content="Carlos Schults" />
+  
+  <meta property="og:article:tag" content="from-a-to-z" />
+  <meta property="og:article:tag" content="idempotency" />
+  <meta property="og:article:tag" content="software-engineering" />
+  <meta property="og:article:tag" content="distributed-systems" />
+  <meta property="og:article:tag" content="best-practices" />    
+  
+  <meta property="og:url" content="https://carlosschults.net/en/what-is-idempotency"/>
+  <meta property="og:description" content="IntroductionThis post is part of a series in which I define important concepts in software development. The first post was about breaking changes. This one i...">
+  <link rel="stylesheet" href="/css/main.css">  
+  
+   <link rel="canonical" href="https://carlosschults.net/en/what-is-idempotency">
+   
+  
+  <link rel="alternate" hreflang="en" href="/en/what-is-idempotency" />
+  <link rel="alternate" hreflang="pt" href="/pt/o-que-e-idempotencia" />
+  
+  <link rel="alternate" type="application/rss+xml" title="carlos schults / blog" href="https://carlosschults.net/feed.xml">
+</head>
+
+  <body>
+    <script>
+      // Apply the theme before first paint to avoid a flash of the
+      // wrong theme (and the load-time color transition).
+      (function () {
+        var theme = localStorage.getItem('theme') ||
+          (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        document.body.setAttribute('data-theme', theme);
+      })();
+    </script>
+    <header class="site-header">
+  <div class="wrapper">    
+    <a class="site-title" href="/">carlos schults / blog</a>
+    
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg viewBox="0 0 18 15">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+
+      <div class="trigger">        
+          
+          <a class="page-link" href="/archive/">Archive</a>
+          <a class="page-link" href="/footprints/">Dev Footprints</a>
+          <a class="page-link" href="/readings/">Readings</a>
+          <a class="page-link" href="/about/">About</a>
+		      <a class="page-link" href="/search/">Search</a>
+                  
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+<div class="wrapper lang-switcher">
+  
+   <a href="/en/what-is-idempotency" class="en">en</a>  <a href="/pt/o-que-e-idempotencia" class="pt">pt</a> 
+
+  
+  
+</div>
+
+
+    <div class="page-content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">    
+    <h2 class="postTitle" itemprop="headline">What Is Idempotency?</h2>
+    <p class="post-meta">   
+    <time datetime="2026-10-21T00:00:00+00:00" itemprop="datePublished">Oct 21, 2026
+    </time> • <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">Carlos Schults</span></span>
+  <span class="tags" itemprop="keywords"> • Tags: <a href="/tag/from-a-to-z">from-a-to-z </a> <a href="/tag/idempotency">idempotency </a> <a href="/tag/software-engineering">software-engineering </a> <a href="/tag/distributed-systems">distributed-systems </a> <a href="/tag/best-practices">best-practices </a> </span>
+  </p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    
+    <h2 id="introduction">
+  
+  
+    Introduction <a href="#introduction" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
+
+<p>This post is part of a series in which I define important concepts in software development. The first post was about <a href="en/what-are-breaking-changes">breaking changes.</a> This one is about <strong>idempotency</strong>.</p>
+
+<p>Idempotency is a key concept for developers to understand, particularly if you live in the distributed systems space. Though it’s a simple concept, there is some nuance to it, and there are common misconceptions people have. You will learn about some of those.</p>
+
+<p>And when it comes to implementation, that’s where things can get quite tricky. This post isn’t a deep guide on implementation, but I’ll talk briefly about it.</p>
+<h2 id="what-is-idempotency">
+  
+  
+    What is idempotency? <a href="#what-is-idempotency" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
+
+<p>In the simplest possible way, an operation is idempotent when you can execute it multiple times but its effects on the state of the system are the same as if it had been executed once.</p>
+
+<p>Let’s use a non-programming example to illustrate this. A while ago I was listening to the <a href="https://www.youtube.com/watch?v=a0sZV0qIbI0">Pragmatic Engineer Podcast episode with Sam Newman</a><sup id="fnref:1" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup>. He was talking about resiliency in distributed systems and, when asked to talk about idempotency, came up with a neat analogy.</p>
+
+<p>If you press the “down” button to call the elevator, it becomes lit, but if you press it again and again, that causes no further changes in its state. It just stays lit. It’s idempotent. On the other hand, most light switches are toggles. You press it, the light turns on. You press it again, the light turns off. They are not idempotent.</p>
+
+<p>The classical programming example for idempotency is payment processing. Imagine you have an endpoint or microservice that processes payments. If, for some reason, it gets the same request twice, you shouldn’t charge the customer twice. The service must be able to, somehow, deduplicate the request and only perform the side-effect once.</p>
+
+<p>Idempotency, as a concept, applies to operations in general. For instance, SQL statements. A DELETE statement is naturally idempotent. Run <code class="language-plaintext highlighter-rouge">DELETE FROM users WHERE id = 5</code>, and there is no user with id 5. Run it again, and there is still no user with that id. That’s idempotent.</p>
+
+<p>An INSERT statement is typically not idempotent. Run it twice and you end up with two rows. The UPDATE statement might or might not be idempotent. Setting a column to a specific value is idempotent, while incrementing it based on the previous value is not.</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">UPDATE</span> <span class="n">account</span> <span class="k">SET</span> <span class="n">balance</span> <span class="o">=</span> <span class="mi">4000</span> <span class="c1">-- idempotent</span>
+<span class="k">UPDATE</span> <span class="n">account</span> <span class="k">SET</span> <span class="n">balance</span> <span class="o">=</span> <span class="n">balance</span> <span class="o">+</span> <span class="mi">500</span> <span class="c1">-- not idempotent</span>
+</code></pre></div></div>
+<h2 id="intended-vs-incidental-effects">
+  
+  
+    Intended vs incidental effects <a href="#intended-vs-incidental-effects" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
+
+<p>It’s crucial here to make a distinction between intended and incidental effects in state. When it comes to idempotency, we typically care about the intended changes to the state of the server or system.</p>
+
+<p>For instance, the payment processing endpoint above probably generates log entries for each request. This is certainly a change in state, and a side-effect. But when evaluating idempotency, logging and things like that are considered incidental effects, and we only care about the main end-goal of the operation.</p>
+<h2 id="why-does-idempotency-matter">
+  
+  
+    Why does idempotency matter? <a href="#why-does-idempotency-matter" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
+
+<p>I hope it became clear why idempotency is desirable, after the payment example. That’s because often requests/messages can arrive more than once, and that could result in some serious side effects—a credit card being charged, a shipment being booked—happening more than once.</p>
+
+<p>But why is it that messages can be duplicated? Why can’t systems get their stuff together and just send one request?</p>
+
+<p>I’ll answer with more examples.</p>
+<h3 id="endpoints">
+  
+  
+    Endpoints <a href="#endpoints" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
+
+<p>Let’s say you are posting to an endpoint that causes a side effect. What are some of the possible scenarios?</p>
+
+<ul>
+  <li>You get back a 2xx success code, with the expected response. Everything is fine, you move on with your life.</li>
+  <li>You get a 400 BAD REQUEST. Something isn’t right with your request, go fix your code.</li>
+  <li>401 UNAUTHORIZED? Bad API key, expired token, etc. Again, go fix it.</li>
+</ul>
+
+<p>The scenarios above are all clear. For the 2xx scenario, you know for sure that it worked, and for the other two, you know for sure it didn’t work and you need to fix something.</p>
+
+<p>Let’s say now you got a 500 INTERNAL SERVER ERROR. You know this means something is wrong on their side and there is nothing you could reasonably do, except wait for some time and try again. Can you know for sure if it’s ok to retry, though? The side-effect might have happened by the time their code reached the point where it broke.</p>
+
+<p>What if you never get anything back? At some point your connection will time out, then what? How can you know if the intended effect was actually performed server side?</p>
+
+<p>At the end of the day, when it comes to communicating over a network, there is an intrinsic ambiguity you can’t escape. Sometimes, you simply can’t know whether the side-effect has been performed or not. You have to retry.</p>
+
+<p>The consequence of that is that the endpoint you’re using needs to be friendly to retries. To be safe, it should assume by default that the same request can arrive multiple times, and then deduplicate them on their side.</p>
+<h3 id="asynchronous-services">
+  
+  
+    Asynchronous services <a href="#asynchronous-services" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
+
+<p>When it comes to message brokers, the duplication problem can also happen. If a consuming application reads a message from a queue or subscription, performs the work that generates a side-effect, and then crashes before acknowledging, the broker will deliver the message again.</p>
+
+<p>Duplications can also start on the producer side. Imagine an endpoint which, when it gets a certain request, adds some data to its database and then publishes an event on a message bus, so that subscribers can react to it.</p>
+
+<p>In a scenario like this, you need the database write and the message publishing to be atomic. That is to say, either both succeed or both fail. Otherwise you can find yourself in a situation where an event happened and you told no one, or you told everybody about an event that didn’t happen.<sup id="fnref:2" role="doc-noteref"><a href="#fn:2" class="footnote" rel="footnote">2</a></sup></p>
+
+<p>One of the most well known approaches to solve that is the outbox pattern. Basically, you add a row both to the business table and to an outbox table, in a single transaction. A worker service then processes the outbox table, publishing its rows as messages and marking the rows as processed.</p>
+
+<p>But what if the worker publishes the message to the bus and then fails to flip the processed flag? It will retry at a later moment and publish the same message again.</p>
+
+<p>So, as you can see, the intrinsic ambiguity of communicating over the network makes guaranteeing exactly-once delivery generally out of reach. By implementing the outbox pattern and making sure the consumer services are idempotent we ensure effectively-once processing which is a powerful guarantee nonetheless.</p>
+<h2 id="common-misconceptions">
+  
+  
+    Common misconceptions <a href="#common-misconceptions" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
+
+<p>It’s somewhat easy to mix up idempotency with other concepts, especially when you’re first learning about it. Also, it doesn’t help when people use the term as if it were interchangeable with terms like “safe”, “readonly”, etc, even if they know it’s not. Semantic diffusion is a thing, after all.<sup id="fnref:3" role="doc-noteref"><a href="#fn:3" class="footnote" rel="footnote">3</a></sup></p>
+
+<p>Let’s clarify some of those misconceptions now.</p>
+<h3 id="idempotent--safe">
+  
+  
+    Idempotent != Safe <a href="#idempotent--safe" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
+
+<p>First of all, “safe” here means something that doesn’t cause effects to the state of the system. It’s important to point out that here we’re only talking about effects that the caller cares about. There could still be incidental changes, such as logs being generated. But the caller probably doesn’t know and doesn’t care about those effects, and from their point of view the call is essentially read-only.</p>
+
+<p>People often use idempotent when they mean safe, which isn’t accurate.</p>
+
+<p>Not all idempotent operations are safe. Creating/updating/deleting a resource, requesting a payment processing, scheduling a shipment, all of these cause an observable effect to happen in the state of the system. They aren’t safe, but could be idempotent, if implemented to be so.</p>
+
+<p>However, all safe operations are by definition idempotent.</p>
+<h3 id="idempotent--the-response-is-always-the-same">
+  
+  
+    Idempotent != “The response is always the same” <a href="#idempotent--the-response-is-always-the-same" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
+
+<p>If you run a delete statement to delete the user with id 5, you’ll get a result back saying “1 row affected”, or something to that effect, depending on your choice of relational database system and client. If you run the same delete statement again, you’ll then get back “0 rows affected”, which makes sense.</p>
+
+<p>The same could be true when using the DELETE method on a REST endpoint. The first time, you actually delete the resource and get back, typically, a 204 No Content. What about the second time? API designers don’t always agree, but it’d be reasonable to return 404 Not Found. Because now the resource no longer exists, thus 404 makes semantic sense.</p>
+
+<p>Both the SQL statement and the API endpoint are perfectly idempotent if we consider idempotent to be about state changes. The fact that they returned different responses doesn’t change that.</p>
+<h3 id="the-http-verb-doesnt-guarantee-idempotency">
+  
+  
+    The HTTP verb doesn’t guarantee idempotency <a href="#the-http-verb-doesnt-guarantee-idempotency" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h3>
+    
+
+<p>You might find people equating certain HTTP verbs/methods to idempotency or non-idempotency. “GET is always safe and idempotent”, “POST is never idempotent”, and so on. Things are more nuanced than that.</p>
+
+<p>To clarify misconceptions, I always prefer to go to the most authoritative source I can find about the subject. Regarding the semantics of HTTP methods, this source is RFC 9110.<sup id="fnref:4" role="doc-noteref"><a href="#fn:4" class="footnote" rel="footnote">4</a></sup></p>
+
+<p>Here’s what the document says about safe methods:</p>
+
+<blockquote>
+  <p>Request methods are considered “safe” if their defined semantics are essentially read-only; i.e., the client does not request, and does not expect, any state change on the origin server as a result of applying a safe method to a target resource. Likewise, reasonable use of a safe method is not expected to cause any harm, loss of property, or unusual burden on the origin server.</p>
+</blockquote>
+
+<p>A few paragraphs down, it goes on to say that the GET, HEAD, OPTIONS, and TRACE methods are safe.</p>
+
+<p>Here’s what it says about the idempotent methods:</p>
+
+<blockquote>
+  <p>A request method is considered “idempotent” if the intended effect on the server of multiple identical requests with that method is the same as the effect for a single such request. Of the request methods defined by this specification, PUT, DELETE, and safe request methods are idempotent.</p>
+</blockquote>
+
+<p>Those statements do not mean that those methods are idempotent and/or safe automatically. There’s nothing stopping you from writing a GET endpoint which mutates state, or a DELETE one which, let’s say, deletes random resources other than the one you intended to delete. Doing those things would be terrible, but it’s not like the REST police is going to arrest you.</p>
+
+<p>The HTTP semantics defined by the RFC are about the intended results of using those methods. The developer still must be responsible for implementing those correctly. The RFC even goes on to say:</p>
+
+<blockquote>
+  <p>This definition of safe methods does not prevent an implementation from including behavior that is potentially harmful, that is not entirely read-only, or that causes side effects while invoking a safe method.</p>
+</blockquote>
+
+<p>And the opposite of that is also true. By the RFC, POST isn’t considered an idempotent method. But you can make it idempotent and communicate that clearly to your API’s users, so they know that operation is friendly to retries.</p>
+<h2 id="how-to-implement-idempotency">
+  
+  
+    How to implement idempotency <a href="#how-to-implement-idempotency" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
+
+<p>Astute readers will have noticed that I’ve been talking about “the same request” without defining what that means. Also, when talking about microservices and the outbox pattern, I said that the consumers must be able to handle duplicate requests, without ever explaining how they detect a duplication.</p>
+
+<p>Back to the original payment processing example, how do we distinguish between a duplicated request or a customer legitimately making a new purchase with the same value?</p>
+
+<p>The typical solution for this is an idempotency key. This is a unique id the client/caller generates and attaches to every request. If a request must be retried, the same idempotency key is used.</p>
+
+<p>When the endpoint gets a request, the code looks into the database to check if that particular key has already been processed.</p>
+
+<p>If it hasn’t, then the application goes on to process the payment and return the appropriate response. But if the idempotency key has already been processed, then the code does not process payment again. That way, from the caller’s point of view, the process just works, transparently, regardless of whether it’s the first or nth time the same request is being processed.</p>
+
+<p>In order for the caller to handle things seamlessly, many implementations will store and replay the exact original response. Think of this practice as a “courtesy” to the caller: it makes their life easier, but it isn’t a requirement for making something idempotent.</p>
+<h2 id="conclusion">
+  
+  
+    Conclusion <a href="#conclusion" class="heading-anchor"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+  
+  
+</h2>
+    
+
+<p>This was a quick introduction to idempotency. Here are the main takeaways I’d like you to remember:</p>
+
+<ul>
+  <li>An operation is idempotent when you can execute it multiple times, and the intended effects on state will be the same as if it had been executed only once</li>
+  <li>Idempotency is necessary to make operations retry-friendly, since you often find yourself in situations where you would like to retry but the intended side-effect might have already happened</li>
+  <li>HTTP methods don’t guarantee idempotency. This is something that the application developer needs to implement on their own</li>
+  <li>Exactly-once delivery is typically impossible to achieve in a distributed setting, but with idempotency keys and idempotent consumers, you can achieve effectively-once processing</li>
+  <li>There are operations which are “naturally” idempotent, such as DELETE statements, while others can be made idempotent if you choose so</li>
+</ul>
+
+<p>I’ve also explained briefly the implementation of idempotency for backend code. That was much simplified, so don’t just assume what you’ve seen here is production-ready. Here’s a list of the main points missing:</p>
+
+<ul>
+  <li>What should you do with a request with an already used key, but different payload?</li>
+  <li>How to handle race conditions with two concurrent requests?</li>
+  <li>What if the application crashes mid-request?</li>
+</ul>
+
+<p>Thankfully, these topics are well documented online. In particular, search for <a href="https://stripe.com/blog/idempotency">Stripe’s articles on idempotency</a>. Stripe is a leading payment processor and their implementation has been considered the industry’s reference for a while.</p>
+
+<p>Thanks for reading.</p>
+
+<div class="footnotes" role="doc-endnotes">
+  <ol>
+    <li id="fn:1" role="doc-endnote">
+      <p>Sam Newman is a thought leader in the distributed services space, author of the <a href="https://samnewman.io/books/building_microservices_2nd_edition/">Building Microservices book</a>, among others. <a href="#fnref:1" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:2" role="doc-endnote">
+      <p>This problem is known as the dual write problem. That is, how to write to two independent targets—a database and a messaging bus, in our example—in an atomic way. <a href="#fnref:2" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:3" role="doc-endnote">
+      <p>“Semantic Diffusion” is the phenomenom of jargon/terms losing their meaning over time. Martin Fowler <a href="https://martinfowler.com/bliki/SemanticDiffusion.html">wrote about it</a>. <a href="#fnref:3" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:4" role="doc-endnote">
+      <p>RFC stands for “Request for Comments”, a type of publication from the Internet Engineering Task Force (IETF) that defines standards and protocols for the internet. <a href="https://www.rfc-editor.org/rfc/rfc9110">RFC 9110</a> specifically covers HTTP semantics. <a href="#fnref:4" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+
+    
+    
+      
+    
+    
+        Found a typo or mistake in the post? <a href="http://github.com/carlosschults/carlosschults.github.io/edit/master/_posts/2026-10-21-what-is-idempotency.md">Suggest edit</a>
+        
+    
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+         
+        
+        
+                
+                    
+            <a rel="previous" class="previous" href="/en/building-git-in-go-part3">&larr; Building git in Go From Scratch - Part 3 </a>
+        
+        
+                
+         
+        
+        
+                
+        
+        
+                
+    
+    
+
+
+
+
+<aside class="related-posts">
+  <h3>Related posts</h3>
+  <ul>
+    
+    
+    <li><a href="/en/what-are-breaking-changes">What Are Breaking Changes?</a></li>
+    
+    
+    <li><a href="/en/reduce-cyclomatic-complexity/">How To Reduce Cyclomatic Complexity: A Complete Guide</a></li>
+    
+    
+    <li><a href="/en/null-is-evil">Null Is Evil. What's The Best Alternative? Null.</a></li>
+    
+  </ul>
+</aside>
+
+
+    <div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+        this.page.identifier = window.location.pathname;
+        this.page.url = window.location.href;
+        this.language = 'en';
+    };
+
+    // Disqus picks its light/dark scheme from the page's computed colors
+    // at embed time, so it must load only after dark-mode.js has applied
+    // the theme AND the 0.3s color transition (_base.scss) has finished,
+    // or it samples the wrong colors.
+    function loadDisqus() {
+        setTimeout(function () {
+            var d = document, s = d.createElement('script');
+            s.src = '//carlosschultsblog.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        }, 400);
+    }
+
+    if (document.readyState === 'complete') {
+        loadDisqus();
+    } else {
+        window.addEventListener('load', loadDisqus);
+    }
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>    
+  </div>
+
+</article>
+
+      </div>
+    </div>
+
+    <footer class="site-footer">
+  <div class="wrapper">
+    <p class="footer-copyright">&copy; 2026 Carlos Schults. All rights reserved.</p>
+  </div>
+</footer>
+
+    <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-92788641-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+    <script src="/js/dark-mode.js"></script>
+    <script src="/js/copy-code.js"></script>
+    
+    <script src="/js/post-enhancements.js"></script>
+    
+  </body>
+
+</html>
